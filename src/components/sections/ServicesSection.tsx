@@ -1,0 +1,61 @@
+import { useEffect, useRef, useState } from 'react';
+import { Stethoscope, Cog, Activity, Phone, GraduationCap, Network } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+const ServicesSection = () => {
+  const { t } = useLanguage();
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setIsVisible(true);
+    }, { threshold: 0.1 });
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const services = [
+    { icon: Stethoscope, ...t.services.diagnostics },
+    { icon: Cog, ...t.services.automation },
+    { icon: Activity, ...t.services.monitoring },
+    { icon: Phone, ...t.services.support },
+    { icon: GraduationCap, ...t.services.training },
+    { icon: Network, ...t.services.integration },
+  ];
+
+  return (
+    <section ref={sectionRef} className="py-24">
+      <div className="container mx-auto px-4">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3 ${isVisible ? 'opacity-100 animate-fade-in' : 'opacity-0'}`}>
+            {t.services.title}
+          </span>
+          <h2 className={`text-3xl md:text-4xl font-bold text-foreground ${isVisible ? 'opacity-100 animate-fade-in delay-100' : 'opacity-0'}`}>
+            {t.services.subtitle}
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, i) => (
+            <div
+              key={service.title}
+              className={`glow-card p-6 group cursor-pointer ${isVisible ? 'opacity-100 animate-fade-in-up' : 'opacity-0'}`}
+              style={{ animationDelay: `${0.2 + i * 0.08}s` }}
+            >
+              <div className="icon-glow mb-4 group-hover:scale-110 transition-transform">
+                <service.icon className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                {service.title}
+              </h3>
+              <p className="text-sm text-muted-foreground">{service.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ServicesSection;
