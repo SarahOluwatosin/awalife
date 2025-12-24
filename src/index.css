@@ -8,6 +8,77 @@
 
 @layer base {
   :root {
+    /* Light mode - Clean medical tech palette */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Primary: Electric Teal */
+    --primary: 166 84% 38%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary: Light slate */
+    --secondary: 210 40% 94%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 90%;
+    --muted-foreground: 215 20% 45%;
+
+    /* Accent: Bright cyan */
+    --accent: 180 100% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 88%;
+    --input: 214 32% 88%;
+    --ring: 166 84% 38%;
+
+    --radius: 0.75rem;
+
+    /* Sidebar */
+    --sidebar-background: 210 40% 96%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 166 84% 38%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 40% 92%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 88%;
+    --sidebar-ring: 166 84% 38%;
+
+    /* Charts */
+    --chart-1: 166 84% 38%;
+    --chart-2: 180 100% 40%;
+    --chart-3: 200 100% 50%;
+    --chart-4: 145 80% 40%;
+    --chart-5: 280 80% 50%;
+
+    /* Typography */
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+
+    /* Premium shadows and glows */
+    --shadow-glow: 0 0 60px hsl(166 84% 45% / 0.1);
+    --shadow-glow-strong: 0 0 100px hsl(166 84% 45% / 0.2);
+    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.08);
+    --shadow-card-hover: 0 8px 40px hsl(0 0% 0% / 0.12), 0 0 30px hsl(166 84% 45% / 0.08);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(166 84% 38%), hsl(180 100% 40%));
+    --gradient-dark: linear-gradient(180deg, hsl(210 40% 98%), hsl(210 40% 96%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(210 40% 98%));
+    --gradient-border: linear-gradient(135deg, hsl(166 84% 45% / 0.2), hsl(180 100% 50% / 0.05));
+    --gradient-hero: radial-gradient(ellipse at 50% 0%, hsl(166 84% 45% / 0.05) 0%, transparent 60%);
+    --gradient-orb: radial-gradient(circle, hsl(166 84% 45% / 0.2) 0%, transparent 70%);
+  }
+
+  .dark {
     /* Dark premium background palette */
     --background: 222 47% 6%;
     --foreground: 210 40% 98%;
@@ -40,8 +111,6 @@
     --input: 222 30% 18%;
     --ring: 166 84% 45%;
 
-    --radius: 0.75rem;
-
     /* Sidebar */
     --sidebar-background: 222 47% 8%;
     --sidebar-foreground: 210 40% 98%;
@@ -59,10 +128,6 @@
     --chart-4: 145 80% 50%;
     --chart-5: 280 80% 60%;
 
-    /* Typography */
-    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
-
     /* Premium shadows and glows */
     --shadow-glow: 0 0 60px hsl(166 84% 45% / 0.15);
     --shadow-glow-strong: 0 0 100px hsl(166 84% 45% / 0.3);
@@ -76,10 +141,6 @@
     --gradient-border: linear-gradient(135deg, hsl(166 84% 45% / 0.3), hsl(180 100% 50% / 0.1));
     --gradient-hero: radial-gradient(ellipse at 50% 0%, hsl(166 84% 45% / 0.08) 0%, transparent 60%);
     --gradient-orb: radial-gradient(circle, hsl(166 84% 45% / 0.4) 0%, transparent 70%);
-  }
-
-  .dark {
-    /* Same as root - this is already dark mode */
   }
 }
 

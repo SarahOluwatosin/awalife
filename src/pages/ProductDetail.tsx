@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
+import ProductGallery from '@/components/product/ProductGallery';
+import ProductComparison from '@/components/product/ProductComparison';
 import { useLanguage } from '@/contexts/LanguageContext';
 import ai100vetImg from '@/assets/ai-100vet.png';
 import microscopeImg from '@/assets/microscope-station.png';
@@ -19,7 +21,7 @@ const ProductDetail = () => {
 
   const productData: Record<string, any> = {
     'ai-100vet-elite': {
-      image: ai100vetImg,
+      images: [ai100vetImg, ai100vetImg, ai100vetImg],
       name: 'AI-100Vet Elite Morphological Analyzer',
       tagline: 'Premium AI-Powered Diagnostics for Cats & Dogs',
       description: 'AI-100Vet Elite Morphological Analyzer is an AI-powered diagnostic device for cats and dogs, capable of automatically analyzing three sample types: blood, feces, and urine. Featuring microfluidic automated smearing, rapid liquid-based staining, and AI-powered recognition with auto-generated diagnostic reports.',
@@ -48,7 +50,7 @@ const ProductDetail = () => {
       flagship: true,
     },
     'ai-100vet': {
-      image: ai100vetImg,
+      images: [ai100vetImg, ai100vetImg],
       name: 'AI-100Vet Morphological Analyzer',
       tagline: 'Multi-Species Intelligent Diagnostics',
       description: 'AI-100Vet Morphological Analyzer is an intelligent diagnostic device tailored for veterinary applications. It supports automatic analysis of four sample types—blood, feces, urine sediment, and pleural fluid—meeting the diverse clinical needs of more than 10 species including dogs, cats, rabbits, turtles, birds, parrots, snakes, and lizards.',
@@ -78,7 +80,7 @@ const ProductDetail = () => {
       flagship: false,
     },
     'ai-80vet': {
-      image: ai100vetImg,
+      images: [ai100vetImg, ai100vetImg],
       name: 'AI-80Vet Morphological Analyzer',
       tagline: 'Configurable Testing for Diverse Needs',
       description: 'AI-80Vet Morphological Analyzer is an intelligent diagnostic device tailored for veterinary applications, which offers configurable sample testing functions to meet diverse veterinary needs. Supports comprehensive blood, feces, and urine analysis with advanced AI recognition.',
@@ -107,7 +109,7 @@ const ProductDetail = () => {
       flagship: false,
     },
     'microscope': {
-      image: microscopeImg,
+      images: [microscopeImg, microscopeImg],
       name: 'Digital Microscope Station',
       tagline: 'Professional HD Imaging Workstation',
       description: 'AWALIFE Digital Microscope Workstation features a built-in positive sample library and can be connected to a computer to generate examination reports. With 20% larger field of view, 4K professional camera with 8 million pixels, and infinite optical system, it\'s widely applied in microscopic examination of anemia, inflammation, parasite and pathogen detection.',
@@ -164,29 +166,17 @@ const ProductDetail = () => {
           </Link>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-            {/* Image */}
-            <div className="group relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 lg:p-16 bg-gradient-to-br from-secondary/50 via-card to-secondary/30 overflow-hidden">
-                {/* Background decorations */}
-                <div className="absolute top-8 right-8 w-32 h-32 rounded-full bg-primary/5 animate-float" />
-                <div className="absolute bottom-12 left-8 w-20 h-20 rounded-full bg-accent/5 animate-float" style={{ animationDelay: '2s' }} />
-                
-                {product.flagship && (
-                  <div className="absolute top-6 left-6 z-10">
-                    <div className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-xs font-semibold rounded-full shadow-lg shadow-primary/25">
-                      <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
-                      {t.products.flagship}
-                    </div>
+            {/* Image Gallery */}
+            <div className="relative">
+              {product.flagship && (
+                <div className="absolute -top-3 left-6 z-20">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-xs font-semibold rounded-full shadow-lg shadow-primary/25">
+                    <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
+                    {t.products.flagship}
                   </div>
-                )}
-                
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="relative z-10 w-full max-h-[400px] object-contain mx-auto group-hover:scale-105 transition-transform duration-700 drop-shadow-2xl"
-                />
-              </div>
+                </div>
+              )}
+              <ProductGallery images={product.images} productName={product.name} />
             </div>
 
             {/* Content */}
@@ -330,8 +320,13 @@ const ProductDetail = () => {
         </div>
       </section>
 
+      {/* Product Comparison */}
+      <div className="bg-card/50">
+        <ProductComparison />
+      </div>
+
       {/* Other Products */}
-      <section className="py-16 lg:py-20 bg-card/50">
+      <section className="py-16 lg:py-20">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
@@ -351,7 +346,7 @@ const ProductDetail = () => {
                 <div className="relative glow-card overflow-hidden h-full">
                   <div className="h-48 bg-gradient-to-br from-secondary/50 to-card flex items-center justify-center p-6">
                     <img 
-                      src={prod.image} 
+                      src={prod.images[0]} 
                       alt={prod.name}
                       className="max-h-full object-contain group-hover:scale-110 transition-transform duration-500"
                     />
@@ -368,7 +363,7 @@ const ProductDetail = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-20 lg:py-28">
+      <section className="py-20 lg:py-28 bg-card/50">
         <div className="container mx-auto px-6 lg:px-8 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">

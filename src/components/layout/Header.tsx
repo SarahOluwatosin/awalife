@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { languages, Language } from '@/lib/i18n';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -110,7 +111,8 @@ const Header = () => {
           </nav>
 
           {/* Right Section */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-3">
+            <ThemeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="gap-2 text-foreground/70 hover:text-foreground">
