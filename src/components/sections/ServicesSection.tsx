@@ -26,12 +26,12 @@ const ServicesSection = () => {
 
   return (
     <section ref={sectionRef} className="py-24">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3 ${isVisible ? 'opacity-100 animate-fade-in' : 'opacity-0'}`}>
+          <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             {t.services.title}
           </span>
-          <h2 className={`text-3xl md:text-4xl font-bold text-foreground ${isVisible ? 'opacity-100 animate-fade-in delay-100' : 'opacity-0'}`}>
+          <h2 className={`text-3xl md:text-4xl font-bold text-foreground transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             {t.services.subtitle}
           </h2>
         </div>
@@ -40,13 +40,13 @@ const ServicesSection = () => {
           {services.map((service, i) => (
             <div
               key={service.title}
-              className={`glow-card p-6 group cursor-pointer ${isVisible ? 'opacity-100 animate-fade-in-up' : 'opacity-0'}`}
-              style={{ animationDelay: `${0.2 + i * 0.08}s` }}
+              className={`glow-card p-6 group cursor-pointer transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              style={{ transitionDelay: `${0.2 + i * 0.08}s` }}
             >
-              <div className="icon-glow mb-4 group-hover:scale-110 transition-transform">
+              <div className="icon-glow mb-4 group-hover:scale-110 transition-transform duration-500">
                 <service.icon className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
                 {service.title}
               </h3>
               <p className="text-sm text-muted-foreground">{service.desc}</p>

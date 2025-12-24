@@ -24,17 +24,17 @@ const WhyUsSection = () => {
 
   return (
     <section ref={sectionRef} className="py-24 bg-card/30">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div>
-            <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3 ${isVisible ? 'opacity-100 animate-fade-in' : 'opacity-0'}`}>
+            <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               {t.whyUs.title}
             </span>
-            <h2 className={`text-3xl md:text-4xl font-bold text-foreground mb-4 ${isVisible ? 'opacity-100 animate-fade-in delay-100' : 'opacity-0'}`}>
+            <h2 className={`text-3xl md:text-4xl font-bold text-foreground mb-4 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               {t.whyUs.subtitle}
             </h2>
-            <p className={`text-muted-foreground mb-8 ${isVisible ? 'opacity-100 animate-fade-in delay-200' : 'opacity-0'}`}>
+            <p className={`text-muted-foreground mb-8 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               {t.whyUs.description}
             </p>
 
@@ -42,10 +42,10 @@ const WhyUsSection = () => {
               {reasons.map((reason, i) => (
                 <div
                   key={reason.title}
-                  className={`flex items-start gap-3 ${isVisible ? 'opacity-100 animate-fade-in-left' : 'opacity-0'}`}
-                  style={{ animationDelay: `${0.3 + i * 0.1}s` }}
+                  className={`flex items-start gap-3 transition-all duration-500 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
+                  style={{ transitionDelay: `${0.3 + i * 0.1}s` }}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 transition-transform duration-300 hover:scale-110">
                     <reason.icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
@@ -58,7 +58,7 @@ const WhyUsSection = () => {
           </div>
 
           {/* Stats Visual */}
-          <div className={`relative ${isVisible ? 'opacity-100 animate-fade-in-right delay-300' : 'opacity-0'}`}>
+          <div className={`relative transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
             <div className="glow-card p-8 text-center">
               <div className="text-6xl font-bold gradient-text mb-2">4.8/5</div>
               <p className="text-muted-foreground mb-4">Google Reviews</p>

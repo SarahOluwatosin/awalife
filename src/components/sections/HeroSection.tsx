@@ -20,9 +20,9 @@ const HeroSection = () => {
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 orb opacity-30" style={{ animationDelay: '3s' }} />
 
       {/* Content */}
-      <div className="container mx-auto px-4 relative z-10 text-center">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-8 opacity-0 animate-fade-in">
+      <div className="container mx-auto px-6 lg:px-12 relative z-10 text-center">
+        {/* Badge - Hidden on mobile for cleaner look */}
+        <div className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-8 opacity-0 animate-fade-in">
           <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-xs">{t.hero.badge}</span>
           {t.hero.badgeText}
           <ArrowRight className="w-4 h-4" />

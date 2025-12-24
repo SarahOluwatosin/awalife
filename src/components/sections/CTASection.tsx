@@ -13,7 +13,7 @@ const CTASection = () => {
       <div className="absolute top-0 left-1/4 w-96 h-96 orb opacity-20" />
       <div className="absolute bottom-0 right-1/4 w-64 h-64 orb opacity-15" style={{ animationDelay: '3s' }} />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
             {t.cta.title}

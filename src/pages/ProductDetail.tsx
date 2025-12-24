@@ -262,24 +262,40 @@ const ProductDetail = () => {
 
       {/* Tabs Section */}
       <section className="py-16 lg:py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-12">
           <Tabs defaultValue="specifications" className="w-full">
-            <TabsList className="w-full max-w-lg mx-auto mb-12 bg-card border border-border/50 p-1.5 rounded-xl">
-              <TabsTrigger value="specifications" className="flex-1 rounded-lg py-3">{t.products.specifications}</TabsTrigger>
-              <TabsTrigger value="downloads" className="flex-1 rounded-lg py-3">{t.products.downloads}</TabsTrigger>
+            <TabsList className="w-full max-w-2xl mx-auto mb-12 bg-secondary/50 border border-border/50 p-2 rounded-2xl grid grid-cols-3 gap-2">
+              <TabsTrigger 
+                value="specifications" 
+                className="rounded-xl py-4 px-6 text-sm font-medium transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg data-[state=active]:shadow-primary/25"
+              >
+                {t.products.specifications}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="downloads" 
+                className="rounded-xl py-4 px-6 text-sm font-medium transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg data-[state=active]:shadow-primary/25"
+              >
+                {t.products.downloads}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="certifications" 
+                className="rounded-xl py-4 px-6 text-sm font-medium transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg data-[state=active]:shadow-primary/25"
+              >
+                Certifications
+              </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="specifications">
+            <TabsContent value="specifications" className="animate-fade-in">
               <div className="max-w-4xl mx-auto">
                 <div className="glow-card overflow-hidden">
-                  <div className="p-6 lg:p-8 border-b border-border/50">
+                  <div className="p-6 lg:p-8 border-b border-border/50 bg-secondary/20">
                     <h3 className="text-xl font-semibold text-foreground">Technical Specifications</h3>
                     <p className="text-sm text-muted-foreground mt-1">Detailed specifications for {product.name}</p>
                   </div>
                   <table className="w-full">
                     <tbody>
                       {product.specs.map((spec: { label: string; value: string }, i: number) => (
-                        <tr key={spec.label} className={`border-b border-border/30 last:border-0 ${i % 2 === 0 ? 'bg-card' : 'bg-secondary/20'}`}>
+                        <tr key={spec.label} className={`border-b border-border/30 last:border-0 transition-colors duration-200 hover:bg-primary/5 ${i % 2 === 0 ? 'bg-card' : 'bg-secondary/10'}`}>
                           <td className="px-6 lg:px-8 py-5 font-medium text-foreground w-1/3">{spec.label}</td>
                           <td className="px-6 lg:px-8 py-5 text-muted-foreground">{spec.value}</td>
                         </tr>
@@ -290,7 +306,7 @@ const ProductDetail = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="downloads">
+            <TabsContent value="downloads" className="animate-fade-in">
               <div className="max-w-4xl mx-auto">
                 <div className="grid md:grid-cols-2 gap-6">
                   {[
@@ -301,18 +317,61 @@ const ProductDetail = () => {
                   ].map((doc) => (
                     <div key={doc.name} className="group relative">
                       <div className="absolute -inset-1 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <div className="relative glow-card p-6 flex items-center gap-5 cursor-pointer">
+                      <div className="relative glow-card p-6 flex items-center gap-5 cursor-pointer transition-all duration-300 hover:-translate-y-1">
                         <div className="icon-glow group-hover:scale-110 transition-transform duration-300">
                           <FileText className="w-6 h-6 text-primary" />
                         </div>
                         <div className="flex-1">
-                          <h4 className="font-medium text-foreground group-hover:text-primary transition-colors">{doc.name}</h4>
+                          <h4 className="font-medium text-foreground group-hover:text-primary transition-colors duration-300">{doc.name}</h4>
                           <p className="text-sm text-muted-foreground">{doc.type} • {doc.size}</p>
                         </div>
-                        <Download className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        <Download className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="certifications" className="animate-fade-in">
+              <div className="max-w-4xl mx-auto">
+                <div className="glow-card overflow-hidden">
+                  <div className="p-6 lg:p-8 border-b border-border/50 bg-secondary/20">
+                    <h3 className="text-xl font-semibold text-foreground">Patents & Regulatory Approvals</h3>
+                    <p className="text-sm text-muted-foreground mt-1">Quality certifications and intellectual property</p>
+                  </div>
+                  <div className="p-6 lg:p-8">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <h4 className="font-semibold text-foreground flex items-center gap-2">
+                          <Shield className="w-5 h-5 text-primary" />
+                          Regulatory Approvals
+                        </h4>
+                        <ul className="space-y-3">
+                          {['CE Marking (EU)', 'ISO 13485:2016', 'ISO 9001:2015', 'FDA Registration (USA)'].map((cert) => (
+                            <li key={cert} className="flex items-center gap-3 text-muted-foreground">
+                              <Check className="w-4 h-4 text-primary flex-shrink-0" />
+                              {cert}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="space-y-4">
+                        <h4 className="font-semibold text-foreground flex items-center gap-2">
+                          <FileText className="w-5 h-5 text-primary" />
+                          Patents & IP
+                        </h4>
+                        <ul className="space-y-3">
+                          {['50+ Proprietary Patents', 'AI Algorithm Patents', 'Microfluidic Technology Patents', 'Optical System Patents'].map((patent) => (
+                            <li key={patent} className="flex items-center gap-3 text-muted-foreground">
+                              <Check className="w-4 h-4 text-primary flex-shrink-0" />
+                              {patent}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </TabsContent>
