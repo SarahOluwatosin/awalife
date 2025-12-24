@@ -81,21 +81,26 @@ const News = () => {
       />
 
       {/* Introduction */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-center mb-8">
-            {t.news.description}
-          </p>
+      <section className="py-16 lg:py-20">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
+              Latest Updates
+            </span>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              {t.news.description}
+            </p>
+          </div>
 
           {/* Category filters */}
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-3">
             {categories.map((cat) => (
               <button
                 key={cat}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
                   cat === 'All'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground'
+                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
+                    : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground border border-border/30 hover:border-primary/30'
                 }`}
               >
                 {cat}
@@ -106,47 +111,58 @@ const News = () => {
       </section>
 
       {/* News Grid */}
-      <section className="py-12 pb-24">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {newsItems.map((item) => (
-              <article key={item.id} className="glow-card overflow-hidden group">
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-primary/90 text-primary-foreground text-xs font-semibold rounded-full">
-                      {item.category}
-                    </span>
+      <section className="py-12 lg:py-16 pb-24 lg:pb-32">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            {newsItems.map((item, index) => (
+              <article key={item.id} className="group relative">
+                {/* Decorative glow */}
+                <div className="absolute -inset-2 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative glow-card overflow-hidden h-full flex flex-col">
+                  {/* Image */}
+                  <div className="relative h-56 lg:h-64 overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    {/* Overlay gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-transparent to-transparent opacity-60" />
+                    
+                    <div className="absolute top-5 left-5">
+                      <span className="px-4 py-1.5 bg-primary/90 text-primary-foreground text-xs font-semibold rounded-full shadow-lg shadow-primary/25">
+                        {item.category}
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      {new Date(item.date).toLocaleDateString()}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <MapPin className="w-4 h-4" />
-                      {item.location}
-                    </span>
+                  {/* Content */}
+                  <div className="p-7 lg:p-8 flex flex-col flex-grow">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                      <span className="flex items-center gap-1.5">
+                        <Calendar className="w-4 h-4 text-primary/70" />
+                        {new Date(item.date).toLocaleDateString()}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <MapPin className="w-4 h-4 text-primary/70" />
+                        {item.location}
+                      </span>
+                    </div>
+                    
+                    <h3 className="text-xl lg:text-2xl font-semibold text-foreground mb-4 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                      {item.title}
+                    </h3>
+                    
+                    <p className="text-muted-foreground mb-6 line-clamp-3 flex-grow leading-relaxed">
+                      {item.excerpt}
+                    </p>
+                    
+                    <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary group/btn w-fit">
+                      {t.news.readMore}
+                      <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    </Button>
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                    {item.excerpt}
-                  </p>
-                  <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary group/btn">
-                    {t.news.readMore}
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
                 </div>
               </article>
             ))}
@@ -155,19 +171,24 @@ const News = () => {
       </section>
 
       {/* Newsletter */}
-      <section className="py-20 bg-card/50">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-4">Stay Updated</h2>
-          <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-            Subscribe to our newsletter for the latest product updates, event announcements, and industry insights.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:outline-none text-foreground"
-            />
-            <Button className="btn-gradient">Subscribe</Button>
+      <section className="py-20 lg:py-28 bg-card/50">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center">
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
+              Newsletter
+            </span>
+            <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">Stay Updated</h2>
+            <p className="text-lg text-muted-foreground mb-10">
+              Subscribe to our newsletter for the latest product updates, event announcements, and industry insights.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-5 py-4 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none text-foreground placeholder:text-muted-foreground/60"
+              />
+              <Button className="btn-gradient px-8">Subscribe</Button>
+            </div>
           </div>
         </div>
       </section>
