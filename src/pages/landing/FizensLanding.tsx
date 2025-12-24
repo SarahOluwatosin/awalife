@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Check, Star, ChevronDown, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Check, Star, ChevronDown, Menu, X, Apple, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ai100vet from '@/assets/ai-100vet.png';
+import reagents from '@/assets/reagents.png';
+import microscopeStation from '@/assets/microscope-station.png';
 
 // Custom hook for scroll animations
 const useInView = (threshold = 0.1) => {
@@ -66,171 +68,153 @@ const FizensLanding = () => {
   const blogRef = useInView();
   const faqRef = useInView();
   const ctaRef = useInView();
+  const allInOneRef = useInView();
 
   const stat1 = useCounter(99, 2000, statsRef.isInView);
-  const stat2 = useCounter(50, 2000, statsRef.isInView);
-  const stat3 = useCounter(85, 2000, statsRef.isInView);
+  const stat2 = useCounter(140, 2000, statsRef.isInView);
+  const stat3 = useCounter(2, 2000, statsRef.isInView);
 
   const navItems = ['Home', 'Features', 'About', 'Pricing', 'Blog'];
 
-  const features = [
-    {
-      title: 'Expense & Income Tracking',
-      description: 'Record and categorize expense & income automatically or manually.',
-      large: true,
-    },
-    {
-      title: 'Smart Savings Goals',
-      description: 'Set specific savings goals and track progress towards them.',
-      large: false,
-    },
-    {
-      title: 'Financial Analytics',
-      description: 'Generate reports and visualizations to analyze spending habits.',
-      large: true,
-    },
-  ];
-
   const additionalFeatures = [
-    { title: 'Budgeting', description: 'Track budgets for different categories.' },
-    { title: 'Debt Management', description: 'Track debt balances, interest rates, and create plans.' },
-    { title: 'Investment Tracking', description: 'Track investments, including stocks, bonds, and funds.' },
-    { title: 'Bill Payment', description: 'Pay bills directly through the app. One stop for all.' },
-    { title: 'Tax Preparation', description: 'Get assistance with tax preparation and filing.' },
+    { title: 'CBC Analysis', description: 'Complete blood count with 26 parameters.' },
+    { title: 'Coagulation Tests', description: 'PT, APTT, and fibrinogen testing.' },
+    { title: 'Fecal Analysis', description: 'Comprehensive fecal examination capabilities.' },
+    { title: 'Body Fluid Analysis', description: 'CSF and effusion fluid analysis.' },
+    { title: 'Quality Control', description: 'Built-in QC and calibration systems.' },
   ];
 
   const benefits = [
     {
       icon: '⏰',
-      label: 'Time and Stress Reduction',
-      title: 'Save your time and reduce financial anxiety',
-      description: 'Automate tasks like budgeting, tracking, and saving, freeing up your time for more important things.',
-      bullets: ['Stay on top of your budget.', 'Automate your finances for less stress.'],
+      label: 'Time and Efficiency',
+      title: 'Save your time and reduce diagnostic delays',
+      description: 'Automate analysis tasks with AI-powered recognition, freeing up your time for patient care.',
+      bullets: ['Results in under 3 minutes', 'Automated cell counting and classification'],
+      image: ai100vet,
     },
     {
       icon: '📈',
-      label: 'Financial Growth',
-      title: 'Take control of your financial future',
-      description: 'Provide valuable insights into your spending habits, helping you identify areas where you can cut back and save more.',
-      bullets: ['Reach your financial goals', 'Make informed decisions'],
+      label: 'Diagnostic Accuracy',
+      title: 'Take control of your diagnostic quality',
+      description: 'AI provides valuable insights into cell morphology, helping identify abnormalities with precision.',
+      bullets: ['99.5% accuracy rate', 'AI-assisted diagnosis'],
+      image: reagents,
     },
     {
       icon: '🔒',
-      label: 'Security and Privacy',
-      title: 'Experience the ultimate in financial security',
-      description: 'Protect your information from unauthorized access, focus on managing your money without worry.',
-      bullets: ['Protect your data', 'Peace of mind'],
+      label: 'Data Security',
+      title: 'Experience the ultimate in data protection',
+      description: 'Protect patient information with enterprise-grade security and HIPAA compliance.',
+      bullets: ['Encrypted data storage', 'Secure cloud backup'],
+      image: microscopeStation,
     },
   ];
 
   const testimonials = [
     {
-      name: 'Michael Brown',
+      name: 'Dr. Sarah Chen',
+      location: 'Los Angeles, CA',
+      rating: 5,
+      text: "AWALIFE has completely transformed our veterinary practice. The AI-powered analysis saves us hours every day.",
+    },
+    {
+      name: 'Dr. Michael Park',
+      location: 'Toronto, Canada',
+      rating: 5,
+      text: "The accuracy of the blood analysis is remarkable. Our diagnostic confidence has never been higher.",
+    },
+    {
+      name: 'Dr. Emma Wilson',
       location: 'London, UK',
       rating: 5,
-      text: "I was skeptical at first, but then I have completely transformed my relationship with money.",
+      text: "Easy to use, reliable results. AWALIFE has become an essential part of our clinic workflow.",
     },
     {
-      name: 'Sarah Jane',
-      location: 'Michigan, US',
+      name: 'Dr. James Lee',
+      location: 'Sydney, Australia',
       rating: 4,
-      text: "I've finally taken control of my finances. It's so easy to use and has helped me save more money than ever before.",
-    },
-    {
-      name: 'David Lee',
-      location: 'Montreal, Canada',
-      rating: 5,
-      text: "It has been a game-changer for my financial life. I love how it helps me stay organized my spending.",
-    },
-    {
-      name: 'Emily Smith',
-      location: 'Lyon, France',
-      rating: 4,
-      text: "The app is intuitive and easy to navigate, and it's helped me reach my financial goals faster than I ever thought possible.",
+      text: "The customer support is excellent, and the system integrates seamlessly with our existing setup.",
     },
   ];
 
   const pricingPlans = [
     {
-      name: 'Free',
+      name: 'Starter',
       price: '$0',
       period: '/Lifetime',
-      subtitle: 'Starter Plan',
-      description: 'Starter Plan grants you access to exclusive features',
-      features: ['Access 14+ Features', 'Support 24/7', 'Get Personalized Insights', '3 Months Data Storage'],
+      subtitle: 'Basic Plan',
+      description: 'Perfect for small clinics getting started',
+      features: ['Basic CBC Analysis', 'Email Support', 'Cloud Storage (1GB)', '3 Months Data Retention'],
       popular: false,
     },
     {
       name: 'Popular',
-      price: billingPeriod === 'monthly' ? '$20' : '$16',
+      price: billingPeriod === 'monthly' ? '$299' : '$239',
       period: '/Month',
-      subtitle: 'Standard Plan',
-      description: 'Standard Plan grants you access to exclusive features',
-      features: ['Access 23+ Features', 'Priority Support', 'Get Financial Analytics', 'Unlimited Data Storage'],
+      subtitle: 'Professional Plan',
+      description: 'Ideal for growing veterinary practices',
+      features: ['Full CBC + Coagulation', 'Priority Support', 'Unlimited Cloud Storage', 'AI Insights'],
       popular: true,
     },
     {
       name: 'Best Choice',
-      price: billingPeriod === 'monthly' ? '$40' : '$32',
+      price: billingPeriod === 'monthly' ? '$499' : '$399',
       period: '/Month',
-      subtitle: 'Advanced Plan',
-      description: 'Advanced Plan grants you access to all exclusive features',
-      features: ['Access All Features', 'Priority Support', 'Get Financial Advice', 'Unlimited Data Storage'],
+      subtitle: 'Enterprise Plan',
+      description: 'For multi-location veterinary groups',
+      features: ['All Analysis Types', '24/7 Dedicated Support', 'Advanced Analytics', 'Custom Integration'],
       popular: false,
     },
   ];
 
   const blogPosts = [
     {
-      title: "Navigating the Stock Market: A Beginner's Guide",
-      category: 'Advice',
-      date: 'Apr 24, 2025',
-      excerpt: "It's been an incredible journey over the past year, and what better way to commemorate this milestone than [...]",
+      title: "Understanding CBC Parameters in Veterinary Medicine",
+      category: 'Education',
+      date: 'Dec 20, 2024',
     },
     {
-      title: 'Why You Should Not Invest Your Emergency Fund',
-      category: 'Advice',
-      date: 'Apr 23, 2025',
-      excerpt: '',
+      title: 'How AI is Revolutionizing Pet Diagnostics',
+      category: 'Technology',
+      date: 'Dec 18, 2024',
     },
     {
-      title: 'Adjusting The Sails Of Your Investment To The Weather',
-      category: 'Investing',
-      date: 'Apr 22, 2025',
-      excerpt: '',
+      title: 'Best Practices for Blood Sample Collection',
+      category: 'Guide',
+      date: 'Dec 15, 2024',
     },
     {
-      title: '3 Essential Questions You Need to Ask Your Insurance Advisor',
-      category: 'Insurance',
-      date: 'Apr 21, 2025',
-      excerpt: '',
+      title: 'AWALIFE Achieves ISO 13485 Certification',
+      category: 'News',
+      date: 'Dec 10, 2024',
     },
   ];
 
   const faqs = [
     {
-      question: 'How often should I review my financial data?',
-      answer: 'We recommend reviewing your financial data at least once a week. Regular check-ins help you stay on top of your spending, track progress toward your goals, and make informed decisions.',
+      question: 'How accurate is the AI-powered analysis?',
+      answer: 'Our AI achieves 99.5% accuracy in cell identification and counting, validated against reference laboratories and peer-reviewed studies.',
     },
     {
-      question: 'What kind of financial data can I track with this app?',
-      answer: 'You can track a wide range of financial data, including income, expenses, budgets, savings, debt, and even investments. The app gives you a full picture of your financial health in one place.',
+      question: 'What types of samples can be analyzed?',
+      answer: 'AWALIFE analyzers can process whole blood, plasma, serum, urine, fecal samples, and various body fluids including CSF and effusions.',
     },
     {
-      question: 'Can I track my spending automatically?',
-      answer: 'Yes! You can connect your bank accounts and credit cards to the app to automatically import and categorize your transactions, making spending tracking effortless.',
+      question: 'How long does a typical analysis take?',
+      answer: 'A complete blood count with differential takes approximately 2-3 minutes. More complex panels may take up to 5 minutes.',
     },
     {
-      question: 'Does the app offer investment tracking?',
-      answer: 'Absolutely. You can link your investment accounts to monitor portfolio performance, asset allocation, and more — all in real time.',
+      question: 'Is training provided with the system?',
+      answer: 'Yes! We provide comprehensive onsite training, online tutorials, and ongoing support to ensure your team is confident using the system.',
     },
     {
-      question: 'How do I sign up for the app?',
-      answer: 'Signing up is simple. Just download the app from the App Store or Google Play, follow the on-screen setup steps, and you\'ll be up and running in minutes.',
+      question: 'What support options are available?',
+      answer: 'We offer email, phone, and live chat support. Enterprise customers receive 24/7 dedicated support with guaranteed response times.',
     },
   ];
 
-  const logos = ['Logoipsum', 'logo ipsum', 'Logoipsum', 'Logoipsum', 'IPSUM', 'LIIIII'];
+  const partnerLogos = ['VetMed Plus', 'PetCare Labs', 'Animal Health Co', 'DiagnoVet', 'BioAnalytics', 'VetTech'];
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-[#1a1a2e] overflow-x-hidden">
@@ -240,15 +224,15 @@ const FizensLanding = () => {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link to="/landing/fizens" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#2563EB] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">f</span>
+              <div className="w-10 h-10 bg-[#2563EB] rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-lg">A</span>
               </div>
-              <span className="font-semibold text-lg">fizens</span>
+              <span className="font-bold text-xl">AWALIFE</span>
             </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center">
-              <div className="flex items-center bg-white rounded-full px-2 py-1 shadow-sm border border-border/20">
+              <div className="flex items-center bg-white rounded-full px-2 py-1.5 shadow-sm border border-gray-100">
                 {navItems.map((item, index) => (
                   <a
                     key={item}
@@ -256,22 +240,22 @@ const FizensLanding = () => {
                     className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
                       index === 0
                         ? 'bg-white text-[#1a1a2e] shadow-sm'
-                        : 'text-muted-foreground hover:text-[#1a1a2e]'
+                        : 'text-gray-500 hover:text-[#1a1a2e]'
                     }`}
                   >
-                    {index === 0 && <span className="mr-1">•</span>}
+                    {index === 0 && <span className="mr-1 text-[#2563EB]">•</span>}
                     {item}
                   </a>
                 ))}
-                <a href="#pages" className="px-5 py-2 rounded-full text-sm font-medium text-muted-foreground hover:text-[#1a1a2e]">
+                <a href="#pages" className="px-5 py-2 rounded-full text-sm font-medium text-gray-500 hover:text-[#1a1a2e]">
                   All pages
                 </a>
               </div>
             </nav>
 
             {/* CTA Button */}
-            <Button className="hidden md:flex bg-[#2563EB] hover:bg-[#1d4ed8] text-white rounded-full px-6">
-              Get Template
+            <Button className="hidden md:flex bg-[#2563EB] hover:bg-[#1d4ed8] text-white rounded-full px-6 h-11">
+              Get Started
             </Button>
 
             {/* Mobile Menu Button */}
@@ -286,7 +270,7 @@ const FizensLanding = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-border/20 py-4">
+          <div className="md:hidden bg-white border-t border-gray-100 py-4">
             <nav className="flex flex-col gap-2 px-6">
               {navItems.map((item) => (
                 <a
@@ -299,7 +283,7 @@ const FizensLanding = () => {
                 </a>
               ))}
               <Button className="mt-4 bg-[#2563EB] hover:bg-[#1d4ed8] text-white rounded-full">
-                Get Template
+                Get Started
               </Button>
             </nav>
           </div>
@@ -313,112 +297,68 @@ const FizensLanding = () => {
         className="pt-32 pb-8 px-6 lg:px-8"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-8 items-start">
+          <div className="grid lg:grid-cols-[1fr_1.2fr_1fr] gap-8 items-start">
             {/* Left Content */}
             <div
               className={`transition-all duration-700 ${
                 heroRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
-              <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
+              <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
                 Start Managing
                 <br />
-                <span className="text-[#1a1a2e]">Your Finance</span>
+                <span className="text-[#1a1a2e]">Your Diagnostics</span>
                 <br />
-                <span className="relative">
-                  <span className="text-muted-foreground">With Our Tool</span>
-                  <svg className="absolute -left-8 top-1/2 -translate-y-1/2 w-6 h-6 text-[#2563EB]" viewBox="0 0 24 24" fill="none">
-                    <line x1="0" y1="12" x2="20" y2="12" stroke="currentColor" strokeWidth="2" />
+                <span className="relative inline-block">
+                  <svg className="absolute -left-8 top-1/2 -translate-y-1/2 w-6" viewBox="0 0 24 4" fill="none">
+                    <line x1="0" y1="2" x2="24" y2="2" stroke="#2563EB" strokeWidth="2" />
                   </svg>
+                  <span className="text-gray-400">With Our Tool</span>
                 </span>
               </h1>
               <div className="mt-8">
-                <Button className="bg-white hover:bg-gray-50 text-[#1a1a2e] rounded-full px-6 py-6 text-base font-medium shadow-lg border border-border/20 group">
-                  Get Started Free
-                  <div className="ml-2 w-10 h-10 bg-[#2563EB] rounded-full flex items-center justify-center group-hover:bg-[#1d4ed8] transition-colors">
+                <Button className="bg-white hover:bg-gray-50 text-[#1a1a2e] rounded-full pl-6 pr-2 py-6 text-base font-medium shadow-lg border border-gray-100 group h-auto">
+                  <span>Get Started Free</span>
+                  <div className="ml-3 w-10 h-10 bg-[#2563EB] rounded-full flex items-center justify-center group-hover:bg-[#1d4ed8] transition-colors">
                     <ArrowUpRight className="w-5 h-5 text-white" />
                   </div>
                 </Button>
               </div>
             </div>
 
-            {/* Center - Phone Mockup */}
+            {/* Center - Product Image with decorative elements */}
             <div
               className={`relative transition-all duration-700 delay-200 ${
                 heroRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -left-8 w-24 h-24 rounded-full border border-[#2563EB]/20" />
-              <div className="absolute -top-8 right-0 w-16 h-16 rounded-full border border-[#2563EB]/20" />
+              {/* Decorative circles */}
+              <div className="absolute -top-8 left-8 w-20 h-20 rounded-full border-2 border-gray-200 opacity-50" />
+              <div className="absolute -top-4 right-12 w-12 h-12 rounded-full border-2 border-gray-200 opacity-50" />
               
-              {/* Phone mockup - using a styled div */}
-              <div className="relative w-72 h-[500px] mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/5 rounded-[3rem] border-8 border-[#1a1a2e] shadow-2xl">
-                  <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-6 bg-[#1a1a2e] rounded-full" />
-                  <div className="p-6 pt-12">
-                    <div className="bg-white rounded-2xl p-4 shadow-lg mb-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm text-muted-foreground">Good morning,</span>
-                        <div className="flex gap-1">
-                          <div className="w-6 h-6 bg-[#2563EB]/10 rounded-full" />
-                          <div className="w-6 h-6 bg-[#2563EB]/10 rounded-full" />
-                        </div>
-                      </div>
-                      <p className="font-semibold">James Lee</p>
+              {/* Main product image */}
+              <div className="relative">
+                <img 
+                  src={ai100vet} 
+                  alt="AWALIFE AI-100Vet Analyzer" 
+                  className="w-full max-w-md mx-auto drop-shadow-2xl relative z-10"
+                />
+                
+                {/* Floating UI cards */}
+                <div className="absolute top-4 right-0 bg-white rounded-xl p-3 shadow-lg border border-gray-100 z-20">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                      <Check className="w-4 h-4 text-green-600" />
                     </div>
-                    <div className="bg-[#2563EB] rounded-2xl p-4 text-white mb-4">
-                      <p className="text-xs opacity-80">Fizen Card</p>
-                      <p className="text-2xl font-bold mt-2">$2,736.15</p>
-                      <div className="flex gap-2 mt-2">
-                        <span className="text-xs bg-white/20 px-2 py-1 rounded-full">USD</span>
-                        <span className="text-xs bg-white/20 px-2 py-1 rounded-full">IDR</span>
-                        <span className="text-xs bg-white/20 px-2 py-1 rounded-full">+ Add Currency</span>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 mb-4">
-                      <div className="bg-white rounded-xl p-3 text-center shadow-sm">
-                        <div className="w-8 h-8 bg-[#2563EB]/10 rounded-full mx-auto mb-1" />
-                        <span className="text-xs text-muted-foreground">Top-up</span>
-                      </div>
-                      <div className="bg-white rounded-xl p-3 text-center shadow-sm">
-                        <div className="w-8 h-8 bg-[#2563EB]/10 rounded-full mx-auto mb-1" />
-                        <span className="text-xs text-muted-foreground">Withdraw</span>
-                      </div>
-                      <div className="bg-white rounded-xl p-3 text-center shadow-sm">
-                        <div className="w-8 h-8 bg-[#2563EB]/10 rounded-full mx-auto mb-1" />
-                        <span className="text-xs text-muted-foreground">Transfer</span>
-                      </div>
-                    </div>
-                    <div className="bg-white rounded-xl p-3 shadow-sm">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-sm">Transactions</span>
-                        <span className="text-xs text-[#2563EB]">See all</span>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-gray-100 rounded-full" />
-                            <span className="text-sm">Apple Store</span>
-                          </div>
-                          <span className="text-sm text-red-500">-$120.90</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-gray-100 rounded-full" />
-                            <span className="text-sm">Ilya Vasil</span>
-                          </div>
-                          <span className="text-sm text-green-500">+$50.00</span>
-                        </div>
-                      </div>
-                    </div>
+                    <span className="text-sm font-medium">Analysis Complete</span>
                   </div>
                 </div>
+                
+                <div className="absolute bottom-20 -left-4 bg-white rounded-xl p-3 shadow-lg border border-gray-100 z-20">
+                  <div className="text-xs text-gray-500 mb-1">Accuracy Rate</div>
+                  <div className="text-xl font-bold text-[#2563EB]">99.5%</div>
+                </div>
               </div>
-
-              {/* Floating decorative elements */}
-              <div className="absolute -right-12 top-20 w-12 h-12 bg-[#2563EB]/10 rounded-full blur-xl" />
-              <div className="absolute -left-12 bottom-20 w-16 h-16 bg-[#2563EB]/10 rounded-full blur-xl" />
             </div>
 
             {/* Right Content */}
@@ -429,26 +369,26 @@ const FizensLanding = () => {
             >
               {/* Decorative cross */}
               <div className="flex justify-end mb-8">
-                <div className="relative w-8 h-8">
+                <div className="relative w-6 h-6">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0.5 h-full bg-[#2563EB]" />
                   <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-0.5 bg-[#2563EB]" />
                 </div>
               </div>
               
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                Simplify your financial life. Our intuitive app makes managing your money effortless.
+              <p className="text-gray-500 text-lg leading-relaxed mb-8">
+                Simplify your veterinary diagnostics. Our AI-powered analyzers make blood analysis effortless.
               </p>
 
               {/* Stats */}
               <div className="flex items-center gap-4">
                 <div className="flex -space-x-2">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-pink-500 border-2 border-white" />
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 border-2 border-white" />
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-cyan-500 border-2 border-white" />
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white" />
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-2 border-white" />
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">2.2M+</p>
-                  <p className="text-sm text-muted-foreground">Trusted to use by millions users over 140 countries</p>
+                  <p className="text-2xl font-bold">2.3M+</p>
+                  <p className="text-sm text-gray-500">Trusted by veterinarians in over 140 countries</p>
                 </div>
               </div>
             </div>
@@ -456,14 +396,14 @@ const FizensLanding = () => {
         </div>
       </section>
 
-      {/* App Preview Image */}
+      {/* Dashboard Preview */}
       <section className="px-6 lg:px-8 py-8">
         <div className="max-w-6xl mx-auto">
-          <div className="bg-gradient-to-r from-[#2563EB] to-[#3b82f6] rounded-3xl overflow-hidden p-8">
+          <div className="bg-gradient-to-r from-[#2563EB] to-[#3b82f6] rounded-[2rem] overflow-hidden">
             <img 
               src={ai100vet} 
-              alt="App Dashboard Preview" 
-              className="w-full max-w-4xl mx-auto drop-shadow-2xl"
+              alt="AWALIFE Dashboard" 
+              className="w-full max-w-4xl mx-auto p-8"
             />
           </div>
         </div>
@@ -472,23 +412,23 @@ const FizensLanding = () => {
       {/* Marquee Section */}
       <section className="py-4 overflow-hidden bg-[#2563EB]">
         <div className="flex animate-marquee whitespace-nowrap">
-          {[...Array(8)].map((_, i) => (
-            <span key={i} className="mx-8 text-3xl font-bold text-white/20">
-              FINANCE MANAGEMENT
+          {[...Array(10)].map((_, i) => (
+            <span key={i} className="mx-12 text-4xl font-bold text-white/20 uppercase tracking-wider">
+              VETERINARY DIAGNOSTICS
             </span>
           ))}
         </div>
       </section>
 
       {/* Partners Section */}
-      <section className="bg-[#2563EB] py-16 px-6 lg:px-8 rounded-b-[3rem]">
+      <section className="bg-[#2563EB] py-16 px-6 lg:px-8" style={{ borderRadius: '0 0 2rem 2rem' }}>
         <div className="max-w-5xl mx-auto text-center">
-          <h3 className="text-white text-lg lg:text-xl mb-8">
-            Partnering with top tier brands to revolutionize financial services.
+          <h3 className="text-white text-lg lg:text-xl font-medium mb-10">
+            Partnering with top tier brands to revolutionize veterinary diagnostics.
           </h3>
-          <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-16 opacity-60">
-            {logos.map((logo, index) => (
-              <div key={index} className="text-white font-semibold text-lg">
+          <div className="flex flex-wrap justify-center items-center gap-10 lg:gap-16">
+            {partnerLogos.map((logo, index) => (
+              <div key={index} className="text-white/50 font-semibold text-base lg:text-lg">
                 {logo}
               </div>
             ))}
@@ -496,119 +436,145 @@ const FizensLanding = () => {
         </div>
       </section>
 
-      {/* All-in-one Section */}
-      <section className="py-24 px-6 lg:px-8" ref={featuresRef.ref}>
+      {/* All-in-one Solution Section */}
+      <section className="py-24 px-6 lg:px-8" ref={allInOneRef.ref}>
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div
               className={`transition-all duration-700 ${
-                featuresRef.isInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+                allInOneRef.isInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
               }`}
             >
-              <img 
-                src={ai100vet} 
-                alt="App Features" 
-                className="w-full max-w-md mx-auto"
-              />
+              <div className="relative">
+                <img 
+                  src={ai100vet} 
+                  alt="AWALIFE Analyzer" 
+                  className="w-full max-w-sm mx-auto"
+                />
+                {/* Decorative elements */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-[#2563EB]/10 rounded-full blur-xl" />
+                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-[#2563EB]/10 rounded-full blur-xl" />
+              </div>
             </div>
             <div
               className={`transition-all duration-700 delay-200 ${
-                featuresRef.isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+                allInOneRef.isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
               }`}
             >
               {/* Decorative cross */}
-              <div className="relative w-8 h-8 mb-6">
+              <div className="relative w-6 h-6 mb-6">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0.5 h-full bg-[#2563EB]" />
                 <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-0.5 bg-[#2563EB]" />
               </div>
-              <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-                Our app is an all-in-one solution for managing your money and financial goals.
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6 leading-tight">
+                Our analyzer is an all-in-one solution for managing your diagnostics and patient care.
               </h2>
-              <p className="text-muted-foreground text-lg mb-8">
-                Experience the peace of mind that comes with having your finances under control.
+              <p className="text-gray-500 text-lg mb-8">
+                Experience the peace of mind that comes with having accurate diagnostics at your fingertips.
               </p>
-              <Button className="bg-white hover:bg-gray-50 text-[#1a1a2e] rounded-full px-6 py-6 text-base font-medium shadow-lg border border-border/20 group">
-                Get Started Free
-                <div className="ml-2 w-10 h-10 bg-[#2563EB] rounded-full flex items-center justify-center group-hover:bg-[#1d4ed8] transition-colors">
+              <Button className="bg-white hover:bg-gray-50 text-[#1a1a2e] rounded-full pl-6 pr-2 py-6 text-base font-medium shadow-lg border border-gray-100 group h-auto">
+                <span>Get Started Free</span>
+                <div className="ml-3 w-10 h-10 bg-[#2563EB] rounded-full flex items-center justify-center group-hover:bg-[#1d4ed8] transition-colors">
                   <ArrowUpRight className="w-5 h-5 text-white" />
                 </div>
               </Button>
             </div>
           </div>
-
-          {/* Feature Cards */}
-          <div className="grid lg:grid-cols-3 gap-6">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className={`bg-white rounded-3xl p-6 shadow-sm border border-border/10 transition-all duration-700 ${
-                  featuresRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <div className="aspect-video bg-gradient-to-br from-[#2563EB]/5 to-[#2563EB]/10 rounded-2xl mb-4" />
-                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground text-sm">{feature.description}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* Key Features Section */}
-      <section id="features" className="py-24 px-6 lg:px-8 bg-white">
+      <section id="features" className="py-24 px-6 lg:px-8 bg-white" ref={featuresRef.ref}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-[#2563EB] font-medium mb-4">Key Features</p>
+            <p className="text-[#2563EB] font-medium mb-4 text-sm uppercase tracking-wider">Key Features</p>
             <h2 className="text-4xl lg:text-5xl font-bold">
               Explore Our
               <br />
-              Standout Features
+              <span className="text-[#2563EB]">Standout</span> Features
             </h2>
           </div>
 
           {/* Features Bento Grid */}
-          <div className="grid lg:grid-cols-3 gap-6 mb-12">
-            <div className="lg:col-span-2 bg-[#FAFAFA] rounded-3xl p-8 relative overflow-hidden">
-              <div className="absolute top-4 right-4 w-32 h-32 bg-gradient-to-br from-[#2563EB]/10 to-transparent rounded-full" />
-              <img src={ai100vet} alt="Expense Tracking" className="w-full max-w-md mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Expense & Income Tracking</h3>
-              <p className="text-muted-foreground">Record and categorize expense & income automatically or manually.</p>
+          <div className="grid lg:grid-cols-3 gap-6 mb-8">
+            {/* Large feature card */}
+            <div 
+              className={`lg:col-span-2 bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8 relative overflow-hidden transition-all duration-700 ${
+                featuresRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              <div className="grid md:grid-cols-2 gap-6 items-center">
+                <div>
+                  <img src={ai100vet} alt="Blood Analysis" className="w-full max-w-xs mx-auto" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-3">Complete Blood Count</h3>
+                  <p className="text-gray-500">26-parameter CBC with automated 5-part differential and AI-powered cell classification.</p>
+                </div>
+              </div>
             </div>
-            <div className="bg-[#FAFAFA] rounded-3xl p-8">
-              <div className="aspect-square bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/5 rounded-2xl mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Smart Savings Goals</h3>
-              <p className="text-muted-foreground">Set specific savings goals and track progress towards them.</p>
+            
+            {/* Small feature card */}
+            <div 
+              className={`bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8 transition-all duration-700 delay-100 ${
+                featuresRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              <div className="aspect-square bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/5 rounded-2xl mb-4 flex items-center justify-center">
+                <img src={reagents} alt="Reagents" className="w-24 h-24 object-contain" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Smart Reagent System</h3>
+              <p className="text-gray-500 text-sm">Closed reagent system with automatic lot tracking.</p>
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6 mb-12">
-            <div className="bg-[#FAFAFA] rounded-3xl p-8">
-              <div className="aspect-video bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/5 rounded-2xl mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Financial Analytics</h3>
-              <p className="text-muted-foreground">Generate reports and visualizations to analyze spending habits.</p>
-            </div>
-            <div className="bg-[#2563EB] rounded-3xl p-8 text-white">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                  <span className="font-bold">f</span>
-                </div>
-                <p className="font-semibold">Get the app</p>
+          <div className="grid lg:grid-cols-2 gap-6 mb-8">
+            {/* Analytics card */}
+            <div 
+              className={`bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8 transition-all duration-700 delay-200 ${
+                featuresRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              <div className="aspect-video bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/5 rounded-2xl mb-4 flex items-center justify-center overflow-hidden">
+                <img src={microscopeStation} alt="Analytics" className="w-full h-full object-cover" />
               </div>
-              <Button className="bg-white text-[#2563EB] hover:bg-gray-100 rounded-full">
-                Get the template
+              <h3 className="text-xl font-bold mb-2">Diagnostic Analytics</h3>
+              <p className="text-gray-500 text-sm">Generate comprehensive reports and visualizations for accurate diagnosis.</p>
+            </div>
+            
+            {/* Get the app card */}
+            <div 
+              className={`bg-[#2563EB] rounded-3xl p-8 text-white flex flex-col justify-between transition-all duration-700 delay-300 ${
+                featuresRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <span className="font-bold text-xl">A</span>
+                  </div>
+                  <p className="font-semibold text-lg">Get the system</p>
+                </div>
+                <p className="text-white/80 mb-6">Request a demo or quote for your clinic today.</p>
+              </div>
+              <Button className="bg-white text-[#2563EB] hover:bg-gray-100 rounded-full w-fit">
+                Request Demo
               </Button>
             </div>
           </div>
 
           {/* Additional Features */}
-          <div className="bg-[#FAFAFA] rounded-3xl p-8">
-            <h3 className="text-2xl font-bold mb-8">...and more additional features</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div 
+            className={`bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8 transition-all duration-700 delay-400 ${
+              featuresRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
+            <h3 className="text-xl font-bold mb-8">...and more additional features</h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
               {additionalFeatures.map((feature, index) => (
-                <div key={index} className="flex flex-col">
+                <div key={index}>
                   <h4 className="font-semibold mb-1">{feature.title}</h4>
-                  <p className="text-muted-foreground text-sm">{feature.description}</p>
+                  <p className="text-gray-500 text-sm">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -620,12 +586,12 @@ const FizensLanding = () => {
       <section className="py-24 px-6 lg:px-8" ref={benefitsRef.ref}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-[#2563EB] font-medium mb-4">FEATURES</p>
-            <p className="text-muted-foreground mb-2">Benefit</p>
+            <p className="text-gray-400 font-medium mb-2 text-sm uppercase tracking-wider">Features</p>
+            <p className="text-[#2563EB] font-medium mb-4 text-sm">Benefit</p>
             <h2 className="text-4xl lg:text-5xl font-bold">
               Experience The
               <br />
-              Future of Finance
+              <span className="text-[#2563EB]">Future</span> of Diagnostics
             </h2>
           </div>
 
@@ -633,29 +599,33 @@ const FizensLanding = () => {
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className={`bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-border/10 grid lg:grid-cols-2 gap-8 items-center transition-all duration-700 ${
+                className={`bg-white rounded-3xl p-8 lg:p-10 shadow-sm border border-gray-100 transition-all duration-700 ${
                   benefitsRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                style={{ transitionDelay: `${index * 150}ms` }}
               >
-                <div className="order-2 lg:order-1">
-                  <div className="w-16 h-16 bg-[#2563EB]/10 rounded-2xl flex items-center justify-center text-3xl mb-6">
-                    {benefit.icon}
+                <div className={`grid lg:grid-cols-2 gap-8 items-center ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
+                  <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
+                    <div className="w-14 h-14 bg-[#2563EB]/10 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                      {benefit.icon}
+                    </div>
+                    <p className="text-[#2563EB] font-medium mb-2 text-sm">{benefit.label}</p>
+                    <h3 className="text-2xl lg:text-3xl font-bold mb-4">{benefit.title}</h3>
+                    <p className="text-gray-500 mb-6">{benefit.description}</p>
+                    <ul className="space-y-3">
+                      {benefit.bullets.map((bullet, i) => (
+                        <li key={i} className="flex items-center gap-3">
+                          <div className="w-5 h-5 bg-[#2563EB]/10 rounded-full flex items-center justify-center">
+                            <Check className="w-3 h-3 text-[#2563EB]" />
+                          </div>
+                          <span className="text-gray-600">{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <p className="text-[#2563EB] font-medium mb-2">{benefit.label}</p>
-                  <h3 className="text-2xl lg:text-3xl font-bold mb-4">{benefit.title}</h3>
-                  <p className="text-muted-foreground mb-6">{benefit.description}</p>
-                  <ul className="space-y-2">
-                    {benefit.bullets.map((bullet, i) => (
-                      <li key={i} className="flex items-center gap-2">
-                        <Check className="w-5 h-5 text-[#2563EB]" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="order-1 lg:order-2">
-                  <div className="aspect-square bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/5 rounded-3xl" />
+                  <div className={`bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+                    <img src={benefit.image} alt={benefit.title} className="w-full max-w-xs mx-auto" />
+                  </div>
                 </div>
               </div>
             ))}
@@ -667,36 +637,36 @@ const FizensLanding = () => {
       <section className="py-24 px-6 lg:px-8 bg-white" ref={statsRef.ref}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-[#2563EB] font-medium mb-4">Statistics</p>
+            <p className="text-[#2563EB] font-medium mb-4 text-sm uppercase tracking-wider">Statistics</p>
             <h2 className="text-4xl lg:text-5xl font-bold">
-              See Your <span className="text-[#2563EB]">Wealth</span> Grow
+              See Your <span className="text-[#2563EB]">Practice</span> Grow
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
             <div
               className={`text-center transition-all duration-700 ${
                 statsRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
               <p className="text-5xl lg:text-6xl font-bold text-[#2563EB]">{stat1}%</p>
-              <p className="text-muted-foreground mt-2">Transactions are processed successfully</p>
+              <p className="text-gray-500 mt-3">Accuracy in cell identification</p>
             </div>
             <div
               className={`text-center transition-all duration-700 delay-100 ${
                 statsRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
-              <p className="text-5xl lg:text-6xl font-bold text-[#2563EB]">${stat2}K+</p>
-              <p className="text-muted-foreground mt-2">Our users' average saving amount</p>
+              <p className="text-5xl lg:text-6xl font-bold text-[#2563EB]">{stat2}+</p>
+              <p className="text-gray-500 mt-3">Countries using AWALIFE</p>
             </div>
             <div
               className={`text-center transition-all duration-700 delay-200 ${
                 statsRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
-              <p className="text-5xl lg:text-6xl font-bold text-[#2563EB]">{stat3}%</p>
-              <p className="text-muted-foreground mt-2">Effective in financial growth than before</p>
+              <p className="text-5xl lg:text-6xl font-bold text-[#2563EB]">&lt;{stat3 + 1}min</p>
+              <p className="text-gray-500 mt-3">Average analysis time</p>
             </div>
           </div>
         </div>
@@ -706,40 +676,40 @@ const FizensLanding = () => {
       <section className="py-24 px-6 lg:px-8" ref={howItWorksRef.ref}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-[#2563EB] font-medium mb-4">How It Works</p>
+            <p className="text-[#2563EB] font-medium mb-4 text-sm uppercase tracking-wider">How It Works</p>
             <h2 className="text-4xl lg:text-5xl font-bold">
-              How Fizens <span className="text-[#2563EB]">Can Help</span> You
+              How AWALIFE <span className="text-[#2563EB]">Can Help</span> You
             </h2>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative">
-              {/* Phone mockups stack */}
-              <div className="flex justify-center gap-4">
-                <div className="w-48 h-96 bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/5 rounded-[2rem] border-4 border-[#1a1a2e]" />
-                <div className="w-48 h-96 bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/5 rounded-[2rem] border-4 border-[#1a1a2e] mt-8" />
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="relative order-2 lg:order-1">
+              {/* Product images stack */}
+              <div className="flex justify-center items-end gap-4">
+                <img src={ai100vet} alt="AWALIFE Analyzer" className="w-40 lg:w-48 drop-shadow-xl" />
+                <img src={reagents} alt="Reagents" className="w-32 lg:w-40 drop-shadow-xl -mb-4" />
               </div>
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-8 order-1 lg:order-2">
               {[
-                { step: 1, title: 'Connect Your Accounts', description: 'Securely link your bank, credit cards, and investments to get a complete financial overview in one place.' },
-                { step: 2, title: 'Track Expenses', description: 'Securely link your bank, credit cards, and investments to get a complete financial overview in one place.' },
-                { step: 3, title: 'Set budget', description: 'Securely link your bank, credit cards, and investments to get a complete financial overview in one place.' },
+                { step: 1, title: 'Prepare Your Sample', description: 'Collect the blood sample using standard protocols. Our system works with minimal sample volumes.' },
+                { step: 2, title: 'Load & Analyze', description: 'Simply load the sample into the analyzer. AI-powered recognition handles the rest automatically.' },
+                { step: 3, title: 'Review Results', description: 'Get comprehensive results with AI insights in under 3 minutes. Export or share instantly.' },
               ].map((item, index) => (
                 <div
                   key={index}
                   className={`flex gap-6 transition-all duration-700 ${
                     howItWorksRef.isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
                   }`}
-                  style={{ transitionDelay: `${index * 100}ms` }}
+                  style={{ transitionDelay: `${index * 150}ms` }}
                 >
-                  <div className="w-12 h-12 bg-[#2563EB] rounded-full flex items-center justify-center text-white font-bold shrink-0">
+                  <div className="w-12 h-12 bg-[#2563EB] rounded-full flex items-center justify-center text-white font-bold shrink-0 shadow-lg shadow-[#2563EB]/30">
                     {item.step}
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                    <p className="text-muted-foreground">{item.description}</p>
+                    <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                    <p className="text-gray-500">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -753,20 +723,20 @@ const FizensLanding = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-start mb-12">
             <div>
-              <p className="text-[#2563EB] font-medium mb-4">Testimonials</p>
+              <p className="text-[#2563EB] font-medium mb-4 text-sm uppercase tracking-wider">Testimonials</p>
               <h2 className="text-4xl lg:text-5xl font-bold">
                 Our Users <span className="text-[#2563EB]">Talk</span> About Us
               </h2>
             </div>
-            <div className="flex items-center gap-8">
-              <div className="flex -space-x-4">
+            <div className="flex items-center gap-6 lg:justify-end">
+              <div className="flex -space-x-3">
                 {[1, 2, 3].map((_, i) => (
-                  <div key={i} className="w-16 h-16 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 border-4 border-white" />
+                  <div key={i} className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 border-3 border-white shadow-sm" />
                 ))}
               </div>
               <div>
                 <p className="text-3xl font-bold">4.8/5</p>
-                <p className="text-muted-foreground">Based on 14K+ reviews</p>
+                <p className="text-gray-500 text-sm">Based on 14K+ reviews</p>
               </div>
             </div>
           </div>
@@ -776,27 +746,27 @@ const FizensLanding = () => {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className={`bg-[#FAFAFA] rounded-3xl p-6 transition-all duration-700 ${
+                className={`bg-gray-50 rounded-3xl p-6 transition-all duration-700 hover:shadow-lg ${
                   testimonialsRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-300 to-gray-400" />
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#2563EB] to-[#3b82f6]" />
                   <div>
                     <p className="font-semibold text-sm">{testimonial.name}</p>
-                    <p className="text-muted-foreground text-xs">{testimonial.location}</p>
+                    <p className="text-gray-400 text-xs">{testimonial.location}</p>
                   </div>
                 </div>
-                <div className="flex gap-1 mb-4">
+                <div className="flex gap-0.5 mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`w-4 h-4 ${i < testimonial.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+                      className={`w-4 h-4 ${i < testimonial.rating ? 'fill-yellow-400 text-yellow-400' : 'fill-gray-200 text-gray-200'}`}
                     />
                   ))}
                 </div>
-                <p className="text-sm text-muted-foreground">{testimonial.text}</p>
+                <p className="text-sm text-gray-600 leading-relaxed">{testimonial.text}</p>
               </div>
             ))}
           </div>
@@ -807,33 +777,33 @@ const FizensLanding = () => {
       <section id="pricing" className="py-24 px-6 lg:px-8" ref={pricingRef.ref}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-[#2563EB] font-medium mb-4">Pricing</p>
+            <p className="text-[#2563EB] font-medium mb-4 text-sm uppercase tracking-wider">Pricing</p>
             <h2 className="text-4xl lg:text-5xl font-bold">
               Try For Free And <span className="text-[#2563EB]">Start</span>
               <br />
-              Controlling Your Finances
+              Transforming Your Diagnostics
             </h2>
           </div>
 
           {/* Billing Toggle */}
           <div className="flex justify-center mb-12">
-            <div className="flex items-center gap-4 bg-white rounded-full p-1 shadow-sm border border-border/20">
+            <div className="flex items-center bg-white rounded-full p-1.5 shadow-sm border border-gray-100">
               <button
                 onClick={() => setBillingPeriod('monthly')}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                  billingPeriod === 'monthly' ? 'bg-[#2563EB] text-white' : 'text-muted-foreground'
+                className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
+                  billingPeriod === 'monthly' ? 'bg-[#2563EB] text-white shadow-lg shadow-[#2563EB]/30' : 'text-gray-500'
                 }`}
               >
                 Monthly
               </button>
               <button
                 onClick={() => setBillingPeriod('yearly')}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
-                  billingPeriod === 'yearly' ? 'bg-[#2563EB] text-white' : 'text-muted-foreground'
+                className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
+                  billingPeriod === 'yearly' ? 'bg-[#2563EB] text-white shadow-lg shadow-[#2563EB]/30' : 'text-gray-500'
                 }`}
               >
                 Yearly
-                <span className="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">-20%</span>
+                <span className="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full font-medium">-20%</span>
               </button>
             </div>
           </div>
@@ -843,39 +813,41 @@ const FizensLanding = () => {
             {pricingPlans.map((plan, index) => (
               <div
                 key={index}
-                className={`relative bg-white rounded-3xl p-8 shadow-sm border ${
-                  plan.popular ? 'border-[#2563EB] ring-2 ring-[#2563EB]/20' : 'border-border/10'
-                } transition-all duration-700 ${
+                className={`relative bg-white rounded-3xl p-8 shadow-sm border-2 transition-all duration-700 hover:shadow-xl ${
+                  plan.popular ? 'border-[#2563EB]' : 'border-gray-100'
+                } ${
                   pricingRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 {plan.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#2563EB] text-white text-xs px-4 py-1 rounded-full">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#2563EB] text-white text-xs px-4 py-1.5 rounded-full font-medium shadow-lg shadow-[#2563EB]/30">
                     {plan.name}
                   </span>
                 )}
-                <div className="text-center mb-6">
+                <div className="text-center mb-6 pt-2">
                   <p className="text-4xl font-bold">{plan.price}</p>
-                  <p className="text-muted-foreground">{plan.period}</p>
+                  <p className="text-gray-400">{plan.period}</p>
                 </div>
                 <div className="mb-6">
                   <p className="font-semibold mb-1">{plan.subtitle}</p>
-                  <p className="text-sm text-muted-foreground">{plan.description}</p>
+                  <p className="text-sm text-gray-500">{plan.description}</p>
                 </div>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check className="w-5 h-5 text-[#2563EB]" />
+                    <li key={i} className="flex items-center gap-3 text-sm">
+                      <div className="w-5 h-5 bg-[#2563EB]/10 rounded-full flex items-center justify-center shrink-0">
+                        <Check className="w-3 h-3 text-[#2563EB]" />
+                      </div>
                       {feature}
                     </li>
                   ))}
                 </ul>
                 <Button
-                  className={`w-full rounded-full ${
+                  className={`w-full rounded-full h-12 ${
                     plan.popular
-                      ? 'bg-[#2563EB] hover:bg-[#1d4ed8] text-white'
-                      : 'bg-white hover:bg-gray-50 text-[#1a1a2e] border border-border/20'
+                      ? 'bg-[#2563EB] hover:bg-[#1d4ed8] text-white shadow-lg shadow-[#2563EB]/30'
+                      : 'bg-white hover:bg-gray-50 text-[#1a1a2e] border-2 border-gray-100'
                   }`}
                 >
                   Get Started Now
@@ -890,11 +862,11 @@ const FizensLanding = () => {
       <section id="blog" className="py-24 px-6 lg:px-8 bg-white" ref={blogRef.ref}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-[#2563EB] font-medium mb-4">Blog</p>
+            <p className="text-[#2563EB] font-medium mb-4 text-sm uppercase tracking-wider">Blog</p>
             <h2 className="text-4xl lg:text-5xl font-bold">
               Read the Articles
               <br />
-              Written By Professionals
+              Written By <span className="text-[#2563EB]">Professionals</span>
             </h2>
           </div>
 
@@ -907,12 +879,14 @@ const FizensLanding = () => {
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div className="aspect-[4/3] bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/20 rounded-2xl mb-4 group-hover:scale-105 transition-transform" />
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs text-[#2563EB]">{post.category}</span>
-                  <span className="text-xs text-muted-foreground">{post.date}</span>
+                <div className="aspect-[4/3] bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/20 rounded-2xl mb-4 group-hover:scale-105 transition-transform overflow-hidden">
+                  <img src={ai100vet} alt={post.title} className="w-full h-full object-cover opacity-50" />
                 </div>
-                <h3 className="font-semibold text-sm group-hover:text-[#2563EB] transition-colors">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-xs text-[#2563EB] font-medium">{post.category}</span>
+                  <span className="text-xs text-gray-400">{post.date}</span>
+                </div>
+                <h3 className="font-semibold text-sm group-hover:text-[#2563EB] transition-colors leading-snug">
                   {post.title}
                 </h3>
               </div>
@@ -925,9 +899,9 @@ const FizensLanding = () => {
       <section className="py-24 px-6 lg:px-8" ref={faqRef.ref}>
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-[#2563EB] font-medium mb-4">FAQ</p>
+            <p className="text-[#2563EB] font-medium mb-4 text-sm uppercase tracking-wider">FAQ</p>
             <h2 className="text-4xl lg:text-5xl font-bold">
-              Frequently Asked Questions
+              Frequently Asked <span className="text-[#2563EB]">Questions</span>
             </h2>
           </div>
 
@@ -935,27 +909,27 @@ const FizensLanding = () => {
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className={`bg-white rounded-2xl border border-border/10 overflow-hidden transition-all duration-700 ${
+                className={`bg-white rounded-2xl border border-gray-100 overflow-hidden transition-all duration-700 ${
                   faqRef.isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
                 style={{ transitionDelay: `${index * 50}ms` }}
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full flex items-center justify-between p-6 text-left"
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
                 >
-                  <span className="font-medium">{faq.question}</span>
+                  <span className="font-medium pr-4">{faq.question}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-muted-foreground transition-transform ${
+                    className={`w-5 h-5 text-gray-400 transition-transform shrink-0 ${
                       openFaq === index ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
-                {openFaq === index && (
-                  <div className="px-6 pb-6 text-muted-foreground">
+                <div className={`overflow-hidden transition-all duration-300 ${openFaq === index ? 'max-h-40' : 'max-h-0'}`}>
+                  <div className="px-6 pb-6 text-gray-500">
                     {faq.answer}
                   </div>
-                )}
+                </div>
               </div>
             ))}
           </div>
@@ -966,27 +940,32 @@ const FizensLanding = () => {
       <section className="py-24 px-6 lg:px-8" ref={ctaRef.ref}>
         <div className="max-w-5xl mx-auto">
           <div
-            className={`bg-gradient-to-br from-[#2563EB] to-[#3b82f6] rounded-3xl p-12 lg:p-16 text-center text-white relative overflow-hidden transition-all duration-700 ${
+            className={`bg-gradient-to-br from-[#2563EB] to-[#3b82f6] rounded-[2rem] p-12 lg:p-16 text-center text-white relative overflow-hidden transition-all duration-700 ${
               ctaRef.isInView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
             }`}
           >
             {/* Decorative elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
+            <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-white/5 rounded-full" />
             
             <div className="relative z-10">
-              <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-                Your First Step To Financial Freedom Begins Here
+              <h2 className="text-3xl lg:text-5xl font-bold mb-6 leading-tight">
+                Your First Step To
+                <br />
+                Better Diagnostics Begins Here
               </h2>
-              <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-                Watch your money grow. Download the app now and start taking control of your money today.
+              <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
+                Transform your veterinary practice. Request a demo now and see the difference AWALIFE can make.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button className="bg-white text-[#2563EB] hover:bg-gray-100 rounded-full px-8 py-6 text-base font-medium">
-                  Download for iOS
+                <Button className="bg-white text-[#2563EB] hover:bg-gray-100 rounded-full px-8 py-6 text-base font-medium h-auto">
+                  <Apple className="w-5 h-5 mr-2" />
+                  Request Demo
                 </Button>
-                <Button className="bg-white/20 text-white hover:bg-white/30 rounded-full px-8 py-6 text-base font-medium border border-white/20">
-                  Download for Android
+                <Button className="bg-white/20 text-white hover:bg-white/30 rounded-full px-8 py-6 text-base font-medium border border-white/30 h-auto">
+                  <Play className="w-5 h-5 mr-2" />
+                  Watch Video
                 </Button>
               </div>
             </div>
@@ -995,24 +974,24 @@ const FizensLanding = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 lg:px-8 border-t border-border/10">
+      <footer className="py-12 px-6 lg:px-8 border-t border-gray-100">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <Link to="/landing/fizens" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#2563EB] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">f</span>
+              <div className="w-10 h-10 bg-[#2563EB] rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-lg">A</span>
               </div>
-              <span className="font-semibold text-lg">fizens</span>
+              <span className="font-bold text-xl">AWALIFE</span>
             </Link>
-            <nav className="flex flex-wrap justify-center gap-6">
+            <nav className="flex flex-wrap justify-center gap-8">
               {navItems.map((item) => (
-                <a key={item} href={`#${item.toLowerCase()}`} className="text-sm text-muted-foreground hover:text-[#1a1a2e]">
+                <a key={item} href={`#${item.toLowerCase()}`} className="text-sm text-gray-500 hover:text-[#1a1a2e] transition-colors">
                   {item}
                 </a>
               ))}
             </nav>
-            <p className="text-sm text-muted-foreground">
-              © 2024 Fizens. All rights reserved.
+            <p className="text-sm text-gray-400">
+              © 2024 AWALIFE. All rights reserved.
             </p>
           </div>
         </div>
