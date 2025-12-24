@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation, useStaggerAnimation, useCountUp } from '@/hooks/use-scroll-animation';
 import ai100vet from '@/assets/ai-100vet.png';
+import awalHero from '@/assets/awal-hero.webp';
 import reagents from '@/assets/reagents.png';
 import microscopeStation from '@/assets/microscope-station.png';
 import Layout from '@/components/layout/Layout';
@@ -157,9 +158,9 @@ const ModernLanding = () => {
                 }}
               >
                 <img 
-                  src={ai100vet} 
-                  alt="AI-100Vet Analyzer" 
-                  className="w-full max-w-md mx-auto drop-shadow-2xl"
+                  src={awalHero} 
+                  alt="AWALIFE AI-100Vet Analyzer" 
+                  className="w-full max-w-lg mx-auto drop-shadow-2xl"
                 />
               </div>
 
