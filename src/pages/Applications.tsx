@@ -57,59 +57,88 @@ const Applications = () => {
       />
 
       {/* Introduction */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-center">
-            {t.applications.description}
-          </p>
+      <section className="py-16 lg:py-20">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
+              {t.applications.subtitle}
+            </span>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              {t.applications.description}
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Applications Grid */}
-      <section className="py-12 pb-24">
-        <div className="container mx-auto px-4">
-          <div className="space-y-8">
+      <section className="py-12 lg:py-16 pb-24 lg:pb-32">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="space-y-20 lg:space-y-28">
             {applications.map((app, index) => (
-              <div key={app.name} className="glow-card overflow-hidden">
-                <div className={`grid lg:grid-cols-2 gap-0 ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-                  {/* Content */}
-                  <div className={`p-8 lg:p-12 ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl ${app.color} mb-6`}>
-                      <app.icon className="w-7 h-7" />
-                    </div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                      {app.name}
-                    </h2>
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
-                      {app.fullDescription}
-                    </p>
-
-                    {/* Features */}
-                    <div className="grid grid-cols-2 gap-3 mb-8">
-                      {app.features.map((feature) => (
-                        <div key={feature} className="flex items-center gap-2">
-                          <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span className="text-sm text-muted-foreground">{feature}</span>
+              <div key={app.name} className="group relative">
+                {/* Decorative background glow */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-primary/5 via-transparent to-accent/5 rounded-3xl blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                
+                <div className="relative glow-card overflow-hidden">
+                  <div className={`grid lg:grid-cols-2 gap-0`}>
+                    {/* Content */}
+                    <div className={`p-10 lg:p-16 flex flex-col justify-center ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                      <div className="mb-6">
+                        <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/80 mb-4">
+                          0{index + 1} / 0{applications.length}
+                        </span>
+                        <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${app.color} mb-6`}>
+                          <app.icon className="w-8 h-8" />
                         </div>
-                      ))}
+                      </div>
+                      
+                      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-6 leading-tight">
+                        {app.name}
+                      </h2>
+                      <p className="text-muted-foreground mb-8 leading-relaxed text-base lg:text-lg">
+                        {app.fullDescription}
+                      </p>
+
+                      {/* Features Grid */}
+                      <div className="grid grid-cols-2 gap-4 mb-10">
+                        {app.features.map((feature) => (
+                          <div 
+                            key={feature} 
+                            className="flex items-start gap-3 p-3 rounded-xl bg-secondary/30 border border-border/30 hover:border-primary/30 hover:bg-secondary/50 transition-all duration-300"
+                          >
+                            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-0.5">
+                              <Check className="w-3.5 h-3.5 text-primary" />
+                            </div>
+                            <span className="text-sm text-muted-foreground leading-tight">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <Button className="btn-gradient group/btn w-fit" size="lg" asChild>
+                        <Link to="/products">
+                          {t.products.learnMore}
+                          <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        </Link>
+                      </Button>
                     </div>
 
-                    <Button className="btn-gradient group" asChild>
-                      <Link to="/products">
-                        {t.products.learnMore}
-                        <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </Button>
-                  </div>
-
-                  {/* Visual */}
-                  <div className={`relative h-64 lg:h-auto bg-gradient-to-br from-secondary/50 to-card flex items-center justify-center ${index % 2 !== 0 ? 'lg:order-1' : ''}`}>
-                    <div className={`w-32 h-32 rounded-3xl ${app.color} flex items-center justify-center`}>
-                      <app.icon className="w-16 h-16" />
+                    {/* Visual */}
+                    <div className={`relative min-h-[350px] lg:min-h-[500px] bg-gradient-to-br from-secondary/80 via-card to-secondary/50 flex items-center justify-center overflow-hidden ${index % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                      {/* Background pattern */}
+                      <div className="absolute inset-0 opacity-40">
+                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.15)_0%,transparent_50%)]" />
+                        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,hsl(var(--accent)/0.1)_0%,transparent_50%)]" />
+                      </div>
+                      
+                      {/* Floating decorative elements */}
+                      <div className="absolute top-12 right-16 w-20 h-20 rounded-full bg-primary/10 animate-float" />
+                      <div className="absolute bottom-20 left-12 w-16 h-16 rounded-full bg-accent/10 animate-float" style={{ animationDelay: '2s' }} />
+                      <div className="absolute top-1/3 left-10 w-10 h-10 rounded-full bg-primary/15 animate-float" style={{ animationDelay: '4s' }} />
+                      
+                      <div className={`relative z-10 w-40 h-40 lg:w-56 lg:h-56 rounded-3xl ${app.color} flex items-center justify-center shadow-2xl`}>
+                        <app.icon className="w-20 h-20 lg:w-28 lg:h-28" />
+                      </div>
                     </div>
-                    {/* Decorative elements */}
-                    <div className="absolute top-1/4 left-1/4 w-20 h-20 rounded-full bg-primary/5 animate-float" />
-                    <div className="absolute bottom-1/4 right-1/4 w-16 h-16 rounded-full bg-accent/5 animate-float" style={{ animationDelay: '2s' }} />
                   </div>
                 </div>
               </div>
@@ -119,17 +148,19 @@ const Applications = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-card/50">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            {t.cta.title} <span className="gradient-text">{t.cta.titleHighlight}</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-            {t.cta.description}
-          </p>
-          <Button className="btn-gradient" size="lg" asChild>
-            <Link to="/contact">{t.cta.button}</Link>
-          </Button>
+      <section className="py-20 lg:py-28 bg-card/50">
+        <div className="container mx-auto px-6 lg:px-8 text-center">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+              {t.cta.title} <span className="gradient-text">{t.cta.titleHighlight}</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
+              {t.cta.description}
+            </p>
+            <Button className="btn-gradient" size="lg" asChild>
+              <Link to="/contact">{t.cta.button}</Link>
+            </Button>
+          </div>
         </div>
       </section>
     </Layout>
