@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Globe, ChevronDown } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, Globe, ChevronDown, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -14,96 +15,101 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMobileMenuOpen(false);
-  };
-
   const navItems = [
-    { label: t.nav.home, id: 'home' },
-    { label: t.nav.about, id: 'about' },
-    { label: t.nav.products, id: 'products' },
-    { label: t.nav.applications, id: 'applications' },
-    { label: t.nav.contact, id: 'contact' },
+    { label: t.nav.home, path: '/' },
+    { label: t.nav.about, path: '/about' },
+    { label: t.nav.products, path: '/products' },
+    { label: t.nav.applications, path: '/applications' },
+    { label: t.nav.news, path: '/news' },
+    { label: t.nav.contact, path: '/contact' },
   ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-card/95 backdrop-blur-md shadow-lg'
-          : 'bg-transparent'
+          ? 'py-3 glass'
+          : 'py-5 bg-transparent'
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between">
           {/* Logo */}
-          <button
-            onClick={() => scrollToSection('home')}
-            className="flex items-center gap-2 text-xl font-bold text-primary hover:opacity-80 transition-opacity"
+          <Link
+            to="/"
+            className="flex items-center gap-3 group"
           >
-            <span className="text-2xl">安侣医学</span>
-            <span className="hidden sm:inline text-foreground/80 font-normal text-sm">AWALIFE</span>
-          </button>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-lg">A</span>
+            </div>
+            <div>
+              <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                安侣医学
+              </span>
+              <span className="hidden sm:block text-xs text-muted-foreground">AWALIFE</span>
+            </div>
+          </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors rounded-lg hover:bg-accent"
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg animated-underline ${
+                  location.pathname === item.path
+                    ? 'text-primary'
+                    : 'text-foreground/70 hover:text-foreground'
+                }`}
               >
                 {item.label}
-              </button>
+              </Link>
             ))}
           </nav>
 
-          {/* Language Selector & CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Right Section */}
+          <div className="hidden lg:flex items-center gap-4">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-2">
+                <Button variant="ghost" size="sm" className="gap-2 text-foreground/70 hover:text-foreground">
                   <Globe className="w-4 h-4" />
                   {languages.find((l) => l.code === language)?.nativeName}
                   <ChevronDown className="w-3 h-3" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="glass">
                 {languages.map((lang) => (
                   <DropdownMenuItem
                     key={lang.code}
                     onClick={() => setLanguage(lang.code as Language)}
-                    className={language === lang.code ? 'bg-accent' : ''}
+                    className={language === lang.code ? 'bg-primary/10 text-primary' : ''}
                   >
                     {lang.nativeName}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button
-              onClick={() => scrollToSection('contact')}
-              size="sm"
-            >
-              {t.hero.ctaSecondary}
-            </Button>
+            <Link to="/contact">
+              <Button className="btn-gradient group">
+                {t.nav.getStarted}
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-foreground"
+            className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -112,41 +118,46 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-card rounded-lg shadow-lg mb-4 animate-slide-up overflow-hidden">
-            <nav className="py-4">
+          <div className="lg:hidden mt-4 py-6 rounded-2xl glass animate-slide-up">
+            <nav className="flex flex-col">
               {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className="block w-full text-left px-6 py-3 text-foreground/80 hover:text-primary hover:bg-accent transition-colors"
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-6 py-3 text-sm font-medium transition-colors ${
+                    location.pathname === item.path
+                      ? 'text-primary bg-primary/5'
+                      : 'text-foreground/70 hover:text-foreground hover:bg-card/50'
+                  }`}
                 >
                   {item.label}
-                </button>
+                </Link>
               ))}
-              <div className="px-6 pt-4 border-t border-border mt-2">
+              <div className="px-6 pt-4 mt-4 border-t border-border">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="w-full gap-2 justify-center">
+                    <Button variant="outline" size="sm" className="w-full gap-2 justify-center mb-4">
                       <Globe className="w-4 h-4" />
                       {languages.find((l) => l.code === language)?.nativeName}
-                      <ChevronDown className="w-3 h-3" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="center" className="w-48">
+                  <DropdownMenuContent align="center" className="w-48 glass">
                     {languages.map((lang) => (
                       <DropdownMenuItem
                         key={lang.code}
-                        onClick={() => {
-                          setLanguage(lang.code as Language);
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className={language === lang.code ? 'bg-accent' : ''}
+                        onClick={() => setLanguage(lang.code as Language)}
                       >
                         {lang.nativeName}
                       </DropdownMenuItem>
                     ))}
                   </DropdownMenuContent>
                 </DropdownMenu>
+                <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button className="btn-gradient w-full">
+                    {t.nav.getStarted}
+                  </Button>
+                </Link>
               </div>
             </nav>
           </div>
