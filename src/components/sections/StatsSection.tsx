@@ -63,7 +63,7 @@ const StatsSection = () => {
 
   return (
     <section id="stats" className="py-20">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {stats.map((stat, i) => (
             <StatItem key={stat.label} value={stat.value} suffix={stat.suffix} label={stat.label} delay={i * 100} />

@@ -8,26 +8,26 @@
 
 @layer base {
   :root {
-    /* Light mode - Clean medical tech palette */
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    /* Light mode - Premium warm medical tech palette */
+    --background: 200 20% 98%;
+    --foreground: 220 40% 13%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 220 40% 13%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 220 40% 13%;
 
     /* Primary: Electric Teal */
     --primary: 166 84% 38%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: Light slate */
-    --secondary: 210 40% 94%;
-    --secondary-foreground: 222 47% 11%;
+    /* Secondary: Warm light with subtle teal tint */
+    --secondary: 180 15% 92%;
+    --secondary-foreground: 220 40% 13%;
 
-    --muted: 210 40% 90%;
-    --muted-foreground: 215 20% 45%;
+    --muted: 200 15% 88%;
+    --muted-foreground: 220 15% 40%;
 
     /* Accent: Bright cyan */
     --accent: 180 100% 40%;
@@ -36,20 +36,20 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 88%;
-    --input: 214 32% 88%;
+    --border: 200 20% 85%;
+    --input: 200 20% 85%;
     --ring: 166 84% 38%;
 
     --radius: 0.75rem;
 
     /* Sidebar */
-    --sidebar-background: 210 40% 96%;
-    --sidebar-foreground: 222 47% 11%;
+    --sidebar-background: 200 20% 96%;
+    --sidebar-foreground: 220 40% 13%;
     --sidebar-primary: 166 84% 38%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 92%;
-    --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 214 32% 88%;
+    --sidebar-accent: 180 15% 92%;
+    --sidebar-accent-foreground: 220 40% 13%;
+    --sidebar-border: 200 20% 88%;
     --sidebar-ring: 166 84% 38%;
 
     /* Charts */
@@ -63,19 +63,19 @@
     --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
     --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
 
-    /* Premium shadows and glows */
-    --shadow-glow: 0 0 60px hsl(166 84% 45% / 0.1);
-    --shadow-glow-strong: 0 0 100px hsl(166 84% 45% / 0.2);
-    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.08);
-    --shadow-card-hover: 0 8px 40px hsl(0 0% 0% / 0.12), 0 0 30px hsl(166 84% 45% / 0.08);
+    /* Premium shadows and glows for light mode */
+    --shadow-glow: 0 0 60px hsl(166 84% 45% / 0.08);
+    --shadow-glow-strong: 0 0 100px hsl(166 84% 45% / 0.15);
+    --shadow-card: 0 4px 24px hsl(220 40% 13% / 0.06), 0 1px 3px hsl(220 40% 13% / 0.04);
+    --shadow-card-hover: 0 12px 48px hsl(220 40% 13% / 0.1), 0 0 30px hsl(166 84% 45% / 0.06);
 
-    /* Gradients */
+    /* Gradients - enhanced for light mode */
     --gradient-primary: linear-gradient(135deg, hsl(166 84% 38%), hsl(180 100% 40%));
-    --gradient-dark: linear-gradient(180deg, hsl(210 40% 98%), hsl(210 40% 96%));
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(210 40% 98%));
-    --gradient-border: linear-gradient(135deg, hsl(166 84% 45% / 0.2), hsl(180 100% 50% / 0.05));
-    --gradient-hero: radial-gradient(ellipse at 50% 0%, hsl(166 84% 45% / 0.05) 0%, transparent 60%);
-    --gradient-orb: radial-gradient(circle, hsl(166 84% 45% / 0.2) 0%, transparent 70%);
+    --gradient-dark: linear-gradient(180deg, hsl(200 20% 98%), hsl(200 20% 95%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(200 20% 98%));
+    --gradient-border: linear-gradient(135deg, hsl(166 84% 45% / 0.15), hsl(180 100% 50% / 0.03));
+    --gradient-hero: radial-gradient(ellipse at 50% 0%, hsl(166 84% 45% / 0.04) 0%, transparent 60%);
+    --gradient-orb: radial-gradient(circle, hsl(166 84% 45% / 0.12) 0%, transparent 70%);
   }
 
   .dark {

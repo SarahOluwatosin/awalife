@@ -24,23 +24,27 @@ const AboutSection = () => {
 
   return (
     <section id="about" ref={sectionRef} className="py-24">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4 ${isVisible ? 'opacity-100 animate-fade-in' : 'opacity-0'}`}>
+          <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             {t.about.title}
           </span>
-          <h2 className={`text-3xl md:text-4xl font-bold text-foreground mb-6 ${isVisible ? 'opacity-100 animate-fade-in delay-100' : 'opacity-0'}`}>
+          <h2 className={`text-3xl md:text-4xl font-bold text-foreground mb-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             {t.about.subtitle}
           </h2>
-          <p className={`text-muted-foreground ${isVisible ? 'opacity-100 animate-fade-in delay-200' : 'opacity-0'}`}>
+          <p className={`text-muted-foreground transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             {t.about.description}
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {values.map((value, i) => (
-            <div key={value.title} className={`glow-card p-6 ${isVisible ? 'opacity-100 animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: `${0.3 + i * 0.1}s` }}>
-              <div className="icon-glow mb-4">
+            <div 
+              key={value.title} 
+              className={`glow-card p-6 transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} 
+              style={{ transitionDelay: `${0.3 + i * 0.1}s` }}
+            >
+              <div className="icon-glow mb-4 group-hover:scale-110 transition-transform duration-500">
                 <value.icon className="w-7 h-7 text-primary" />
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">{value.title}</h3>

@@ -6,6 +6,7 @@ import ProductsSection from '@/components/sections/ProductsSection';
 import ServicesSection from '@/components/sections/ServicesSection';
 import WhyUsSection from '@/components/sections/WhyUsSection';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import CertificationsSection from '@/components/sections/CertificationsSection';
 import CTASection from '@/components/sections/CTASection';
 
 const Index = () => {
@@ -15,6 +16,7 @@ const Index = () => {
       <StatsSection />
       <AboutSection />
       <ProductsSection />
+      <CertificationsSection />
       <ServicesSection />
       <WhyUsSection />
       <TestimonialsSection />
