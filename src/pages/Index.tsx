@@ -1,6 +1,5 @@
 import { LanguageProvider } from '@/contexts/LanguageContext';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Layout from '@/components/layout/Layout';
 import HeroSection from '@/components/sections/HeroSection';
 import StatsSection from '@/components/sections/StatsSection';
 import AboutSection from '@/components/sections/AboutSection';
@@ -11,18 +10,14 @@ import ContactSection from '@/components/sections/ContactSection';
 const Index = () => {
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-background">
-        <Header />
-        <main>
-          <HeroSection />
-          <StatsSection />
-          <AboutSection />
-          <ProductsSection />
-          <ApplicationsSection />
-          <ContactSection />
-        </main>
-        <Footer />
-      </div>
+      <Layout>
+        <HeroSection />
+        <StatsSection />
+        <AboutSection />
+        <ProductsSection />
+        <ApplicationsSection />
+        <ContactSection />
+      </Layout>
     </LanguageProvider>
   );
 };
