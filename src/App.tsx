@@ -18,6 +18,8 @@ import Distributors from "./pages/solutions/Distributors";
 import News from "./pages/News";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import MedTechLanding from "./pages/landing/MedTechLanding";
+import ModernLanding from "./pages/landing/ModernLanding";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +32,8 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/landing/medtech" element={<MedTechLanding />} />
+            <Route path="/landing/modern" element={<ModernLanding />} />
             <Route path="/about" element={<About />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:productId" element={<ProductDetail />} />
