@@ -16,12 +16,12 @@ const ServicesSection = () => {
   }, []);
 
   const services = [
-    { icon: Stethoscope, ...t.services.diagnostics },
-    { icon: Cog, ...t.services.automation },
-    { icon: Activity, ...t.services.monitoring },
-    { icon: Phone, ...t.services.support },
+    { icon: Stethoscope, ...t.services.installation },
     { icon: GraduationCap, ...t.services.training },
-    { icon: Network, ...t.services.integration },
+    { icon: Phone, ...t.services.support },
+    { icon: Cog, ...t.services.maintenance },
+    { icon: Activity, ...t.services.documentation },
+    { icon: Network, ...t.services.workflow },
   ];
 
   return (
