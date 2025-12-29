@@ -25,6 +25,7 @@ import HealthSyncLanding from "./pages/landing/HealthSyncLanding";
 
 const queryClient = new QueryClient();
 
+// App component with providers
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
