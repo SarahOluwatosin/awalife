@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg.jpg';
-import ai100vet from '@/assets/ai-100vet-new.png';
+import ai100vet from '@/assets/ai-100vet-hero.webp';
 
 const HeroSection = () => {
   const { t } = useLanguage();
