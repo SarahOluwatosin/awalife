@@ -44,8 +44,9 @@ const TestimonialsSection = () => {
             {t.testimonials.title}
           </span>
           <h2 className={`text-3xl md:text-4xl font-bold text-foreground transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            {t.testimonials.subtitle} <span className="gradient-text">{t.testimonials.subtitleHighlight}</span>
-            <br />{t.testimonials.subtitleEnd}
+            {t.testimonials.subtitle}{' '}
+            <span className="gradient-text">{t.testimonials.subtitleHighlight}</span>{' '}
+            {t.testimonials.subtitleEnd}
           </h2>
         </div>
 
