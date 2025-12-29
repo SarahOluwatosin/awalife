@@ -82,7 +82,7 @@ const News = () => {
 
       {/* Introduction */}
       <section className="py-16 lg:py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Latest Updates
@@ -112,14 +112,11 @@ const News = () => {
 
       {/* News Grid */}
       <section className="py-12 lg:py-16 pb-24 lg:pb-32">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-            {newsItems.map((item, index) => (
-              <article key={item.id} className="group relative">
-                {/* Decorative glow */}
-                <div className="absolute -inset-2 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className="relative glow-card overflow-hidden h-full flex flex-col">
+            {newsItems.map((item) => (
+              <article key={item.id} className="group">
+                <div className="overflow-hidden rounded-2xl border border-border/30 hover:border-primary/30 transition-colors h-full flex flex-col bg-secondary/20">
                   {/* Image */}
                   <div className="relative h-56 lg:h-64 overflow-hidden">
                     <img
@@ -127,18 +124,17 @@ const News = () => {
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
-                    {/* Overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-transparent to-transparent opacity-60" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
                     
                     <div className="absolute top-5 left-5">
-                      <span className="px-4 py-1.5 bg-primary/90 text-primary-foreground text-xs font-semibold rounded-full shadow-lg shadow-primary/25">
+                      <span className="px-4 py-1.5 bg-primary/90 text-primary-foreground text-xs font-semibold rounded-full">
                         {item.category}
                       </span>
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="p-7 lg:p-8 flex flex-col flex-grow">
+                  <div className="p-6 lg:p-7 flex flex-col flex-grow">
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <span className="flex items-center gap-1.5">
                         <Calendar className="w-4 h-4 text-primary/70" />
@@ -171,8 +167,8 @@ const News = () => {
       </section>
 
       {/* Newsletter */}
-      <section className="py-20 lg:py-28 bg-card/50">
-        <div className="container mx-auto px-6 lg:px-8">
+      <section className="py-20 lg:py-28 bg-secondary/20">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="max-w-2xl mx-auto text-center">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Newsletter
@@ -185,7 +181,7 @@ const News = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-5 py-4 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none text-foreground placeholder:text-muted-foreground/60"
+                className="flex-1 px-5 py-4 rounded-xl bg-background/50 border border-border/50 focus:border-primary focus:outline-none text-foreground placeholder:text-muted-foreground/60"
               />
               <Button className="btn-gradient px-8">Subscribe</Button>
             </div>

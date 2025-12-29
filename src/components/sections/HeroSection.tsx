@@ -23,12 +23,12 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-8 lg:px-24 xl:px-32 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+      <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Text */}
           <div className="text-left">
             {/* Logo */}
-            <img src={awalifeLogo} alt="Awalife" className="h-12 mb-6 opacity-0 animate-fade-in" />
+            <img src={awalifeLogo} alt="Awalife" className="h-10 mb-8 opacity-0 animate-fade-in" />
 
             {/* Headline */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 opacity-0 animate-fade-in delay-100 leading-tight">
@@ -42,7 +42,7 @@ const HeroSection = () => {
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4 mb-10 opacity-0 animate-fade-in delay-300">
+            <div className="flex flex-wrap gap-4 mb-12 opacity-0 animate-fade-in delay-300">
               <Button size="lg" className="btn-gradient group" asChild>
                 <Link to="/contact">
                   {t.hero.cta}
@@ -56,7 +56,7 @@ const HeroSection = () => {
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center gap-8 opacity-0 animate-fade-in delay-400">
+            <div className="flex flex-wrap items-center gap-6 opacity-0 animate-fade-in delay-400">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                   <Award className="w-5 h-5 text-primary" />
@@ -76,18 +76,23 @@ const HeroSection = () => {
                 </div>
               </div>
             </div>
+
+            {/* Disclaimer */}
+            <p className="mt-8 text-muted-foreground text-xs opacity-0 animate-fade-in delay-500">
+              {t.hero.disclaimer}
+            </p>
           </div>
 
           {/* Right Column - Product Image */}
           <div className="relative hidden lg:flex items-center justify-center opacity-0 animate-fade-in delay-200">
             {/* Animated glow effect */}
-            <div className="absolute w-96 h-96 rounded-full bg-primary/15 blur-3xl animate-pulse" />
+            <div className="absolute w-[500px] h-[500px] rounded-full bg-primary/10 blur-3xl animate-pulse" />
             
             <div className="relative">
               <img 
                 src={ai100vet} 
                 alt="AI-100Vet Morphology Analyzer" 
-                className="relative w-full max-w-md drop-shadow-2xl z-10"
+                className="relative w-full max-w-lg drop-shadow-2xl z-10"
               />
 
               {/* Floating Tags */}
@@ -112,11 +117,6 @@ const HeroSection = () => {
       >
         <ChevronDown className="w-8 h-8" />
       </button>
-
-      {/* Disclaimer */}
-      <p className="absolute bottom-20 left-8 lg:left-24 xl:left-32 text-muted-foreground text-xs opacity-0 animate-fade-in delay-500">
-        {t.hero.disclaimer}
-      </p>
     </section>
   );
 };
