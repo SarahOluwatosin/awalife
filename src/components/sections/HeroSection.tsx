@@ -3,9 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg.jpg';
-import ai100vetElite from '@/assets/ai-100vet-elite.png';
-import ai80vet from '@/assets/ai-80vet.png';
-import digitalMicroscope from '@/assets/digital-microscope.png';
+import ai100vet from '@/assets/ai-100vet-new.png';
 
 const HeroSection = () => {
   const { t } = useLanguage();
@@ -19,7 +17,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+      <div className="container mx-auto px-8 lg:px-24 xl:px-32 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text */}
           <div className="text-center lg:text-left">
@@ -59,26 +57,13 @@ const HeroSection = () => {
             </p>
           </div>
 
-          {/* Right Column - Product Images */}
+          {/* Right Column - Product Image */}
           <div className="relative hidden lg:block opacity-0 animate-fade-in delay-300">
             <div className="relative flex items-center justify-center">
-              {/* Main product image - AI-100Vet Elite */}
               <img 
-                src={ai100vetElite} 
-                alt="AI-100Vet Elite Morphology Analyzer" 
-                className="w-full max-w-sm mx-auto drop-shadow-2xl z-10"
-              />
-              {/* Secondary product - AI-80Vet */}
-              <img 
-                src={ai80vet} 
-                alt="AI-80Vet Compact Analyzer" 
-                className="absolute -left-12 bottom-0 w-40 drop-shadow-xl opacity-80"
-              />
-              {/* Tertiary product - Microscope */}
-              <img 
-                src={digitalMicroscope} 
-                alt="Digital Microscope Station" 
-                className="absolute -right-8 -bottom-4 w-32 drop-shadow-xl opacity-90"
+                src={ai100vet} 
+                alt="AI-100Vet Morphology Analyzer" 
+                className="w-full max-w-md mx-auto drop-shadow-2xl"
               />
             </div>
           </div>

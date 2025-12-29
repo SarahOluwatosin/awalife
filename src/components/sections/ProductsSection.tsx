@@ -58,7 +58,7 @@ const ProductsSection = () => {
 
   return (
     <section id="products" ref={sectionRef} className="py-24 bg-card/30">
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto px-8 lg:px-24 xl:px-32">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div>
             <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
