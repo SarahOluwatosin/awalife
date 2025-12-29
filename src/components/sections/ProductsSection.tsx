@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
+import ai100vetEliteImg from '@/assets/ai-100vet-elite.png';
 import ai100vetImg from '@/assets/ai-100vet.png';
-import microscopeImg from '@/assets/microscope-station.png';
+import ai80vetImg from '@/assets/ai-80vet.png';
+import microscopeImg from '@/assets/digital-microscope.png';
 
 const ProductsSection = () => {
   const { t } = useLanguage();
@@ -22,7 +24,7 @@ const ProductsSection = () => {
   const products = [
     { 
       id: 'ai-100vet-elite', 
-      image: ai100vetImg, 
+      image: ai100vetEliteImg, 
       name: 'AI-100Vet Elite', 
       positioning: 'For Reference Labs',
       description: 'High-throughput morphology analyzer for veterinary reference laboratories and large hospitals.',
@@ -38,7 +40,7 @@ const ProductsSection = () => {
     },
     { 
       id: 'ai-80vet', 
-      image: ai100vetImg, 
+      image: ai80vetImg, 
       name: 'AI-80Vet', 
       positioning: 'For Clinics',
       description: 'Compact morphology analyzer designed for smaller clinics and entry-level laboratories.',
