@@ -67,7 +67,7 @@ const FecesAnalysis = () => {
                 Complete Fecal Element Detection
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                The distinctive automated device has the capability to detect every element in fecal samples. The system automates the entire process including sample preparation, image recognition, and data analysis—significantly reducing human error and oversight. In just 9 minutes, it identifies critical indicators such as parasite eggs and microorganisms.
+                The distinctive automated device has the capability to detect every element in fecal samples. The system automates the entire process including sample preparation, image recognition, and data analysis, significantly reducing human error and oversight. In just 9 minutes, it identifies critical indicators such as parasite eggs and microorganisms.
               </p>
               
               <div className="grid grid-cols-2 gap-4 mb-8">

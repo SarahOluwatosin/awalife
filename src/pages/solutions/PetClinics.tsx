@@ -95,7 +95,7 @@ const PetClinics = () => {
                 In-House Diagnostics <span className="gradient-text">Made Simple</span>
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                AWALIFE diagnostic solutions integrate seamlessly into your clinical workflow, providing rapid, accurate results that improve patient outcomes and clinic efficiency. Stop outsourcing—start diagnosing in minutes.
+                AWALIFE diagnostic solutions integrate seamlessly into your clinical workflow, providing rapid, accurate results that improve patient outcomes and clinic efficiency. Stop outsourcing and start diagnosing in minutes.
               </p>
               
               <div className="grid grid-cols-2 gap-4 mb-8">
