@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Quote } from 'lucide-react';
+import { Building2, MapPin } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const TestimonialsSection = () => {
@@ -15,24 +15,24 @@ const TestimonialsSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const testimonials = [
+  const installations = [
     {
-      quote: "The AI-100Vet has transformed our diagnostic workflow. Results are faster and more accurate than ever before.",
-      author: "Dr. Sarah Chen",
-      role: "Chief Veterinarian, PetCare Hospital",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100",
+      type: "Veterinary Reference Laboratory",
+      region: "East Asia",
+      equipment: "AI-100Vet Elite",
+      context: "High-volume diagnostic laboratory supporting regional veterinary clinics",
     },
     {
-      quote: "AWALIFE's support team is exceptional. They provided comprehensive training and are always available for assistance.",
-      author: "Dr. Michael Lee",
-      role: "Director, Animal Diagnostics Lab",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
+      type: "Private Veterinary Hospital",
+      region: "Europe",
+      equipment: "AI-100Vet + Microscope Station",
+      context: "Multi-specialty animal hospital with integrated diagnostic department",
     },
     {
-      quote: "We've seen a 40% reduction in diagnostic time since implementing AWALIFE equipment in our clinic.",
-      author: "Dr. Emily Rodriguez",
-      role: "Veterinary Specialist, VetCare Plus",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100",
+      type: "University Veterinary School",
+      region: "North America",
+      equipment: "Digital Microscope Station",
+      context: "Teaching and research facility for veterinary medicine students",
     },
   ];
 
@@ -50,28 +50,25 @@ const TestimonialsSection = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, i) => (
+          {installations.map((installation, i) => (
             <div
-              key={testimonial.author}
+              key={installation.type}
               className={`glow-card p-6 md:p-8 transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
               style={{ transitionDelay: `${0.2 + i * 0.15}s` }}
             >
-              <div className="icon-glow mb-6">
-                <Quote className="w-5 h-5 text-primary" />
+              <div className="flex items-center gap-2 text-primary mb-4">
+                <Building2 className="w-5 h-5" />
+                <span className="text-sm font-medium">{installation.equipment}</span>
               </div>
-              <blockquote className="text-foreground mb-6 leading-relaxed">
-                "{testimonial.quote}"
-              </blockquote>
-              <div className="flex items-center gap-3">
-                <img
-                  src={testimonial.avatar}
-                  alt={testimonial.author}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-primary/20"
-                />
-                <div>
-                  <p className="font-semibold text-foreground text-sm">{testimonial.author}</p>
-                  <p className="text-xs text-muted-foreground">{testimonial.role}</p>
-                </div>
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                {installation.type}
+              </h3>
+              <p className="text-muted-foreground text-sm mb-4">
+                {installation.context}
+              </p>
+              <div className="flex items-center gap-2 text-muted-foreground text-xs">
+                <MapPin className="w-4 h-4" />
+                <span>{installation.region}</span>
               </div>
             </div>
           ))}

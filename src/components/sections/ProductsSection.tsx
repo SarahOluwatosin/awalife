@@ -23,29 +23,33 @@ const ProductsSection = () => {
     { 
       id: 'ai-100vet-elite', 
       image: ai100vetImg, 
-      name: 'AI-100Vet Elite Morphological Analyzer', 
-      description: 'Premium AI-powered diagnostics for cats & dogs. Analyzes blood, feces, and urine with microfluidic technology.',
+      name: 'AI-100Vet Elite', 
+      positioning: 'For Reference Labs',
+      description: 'High-throughput morphology analyzer for veterinary reference laboratories and large hospitals.',
       featured: true 
     },
     { 
       id: 'ai-100vet', 
       image: ai100vetImg, 
-      name: 'AI-100Vet Morphological Analyzer', 
-      description: 'Multi-species intelligent diagnostics supporting 10+ species including dogs, cats, birds, and reptiles.',
+      name: 'AI-100Vet', 
+      positioning: 'For Hospitals',
+      description: 'Mid-range AI-assisted analyzer for routine veterinary diagnostic workflows.',
       featured: false 
     },
     { 
       id: 'ai-80vet', 
       image: ai100vetImg, 
-      name: 'AI-80Vet Morphological Analyzer', 
-      description: 'Configurable testing for diverse veterinary needs with 7-part WBC differential and complete analysis.',
+      name: 'AI-80Vet', 
+      positioning: 'For Clinics',
+      description: 'Compact morphology analyzer designed for smaller clinics and entry-level laboratories.',
       featured: false 
     },
     { 
       id: 'microscope', 
       image: microscopeImg, 
       name: 'Digital Microscope Station', 
-      description: 'Professional HD imaging workstation with 4K camera, 8 million pixels, and built-in sample library.',
+      positioning: 'For All Settings',
+      description: 'Microscopy workstation supporting image capture, review, and assisted analysis.',
       featured: false 
     },
   ];
@@ -64,7 +68,7 @@ const ProductsSection = () => {
           </div>
           <Button variant="outline" className="border-border/50 hover:bg-card hover:border-primary/50 transition-all duration-300 self-start md:self-auto" asChild>
             <Link to="/products">
-              View All Products
+              {t.products.viewDetails}
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
           </Button>
@@ -80,8 +84,8 @@ const ProductsSection = () => {
             >
               <div className="relative h-48 bg-gradient-to-br from-secondary/50 to-card flex items-center justify-center p-6 overflow-hidden">
                 {product.featured && (
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full z-10 shadow-lg shadow-primary/25">
-                    Flagship
+                  <div className="absolute top-4 left-4 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full z-10">
+                    {t.products.flagship}
                   </div>
                 )}
                 <img
@@ -91,7 +95,8 @@ const ProductsSection = () => {
                 />
               </div>
               <div className="p-5">
-                <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                <div className="text-xs text-primary font-medium mb-1">{product.positioning}</div>
+                <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
                   {product.name}
                 </h3>
                 <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{product.description}</p>

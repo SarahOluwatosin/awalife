@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -9,13 +9,11 @@ const CTASection = () => {
   return (
     <section className="py-24 relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 orb opacity-20" />
-      <div className="absolute bottom-0 right-1/4 w-64 h-64 orb opacity-15" style={{ animationDelay: '3s' }} />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5" />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             {t.cta.title}
             <br />
             <span className="gradient-text">{t.cta.titleHighlight}</span>
@@ -31,8 +29,9 @@ const CTASection = () => {
               </Link>
             </Button>
             <Button variant="outline" size="lg" className="border-border/50 hover:bg-card" asChild>
-              <Link to="/products">
-                Explore Products
+              <Link to="/contact?type=distributor">
+                <Users className="mr-2 w-4 h-4" />
+                {t.cta.distributorButton}
               </Link>
             </Button>
           </div>
