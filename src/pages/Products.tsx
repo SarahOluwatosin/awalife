@@ -31,7 +31,7 @@ const Products = () => {
       image: ai100vetImg,
       name: 'AI-100Vet Morphological Analyzer',
       tagline: 'Multi-Species Intelligent Diagnostics',
-      description: 'Intelligent diagnostic device supporting automatic analysis of four sample types—blood, feces, urine sediment, and pleural fluid—meeting the clinical needs of 10+ species including dogs, cats, rabbits, birds, and reptiles.',
+      description: 'Intelligent diagnostic device supporting automatic analysis of four sample types including blood, feces, urine sediment, and pleural fluid, meeting the clinical needs of 10+ species including dogs, cats, rabbits, birds, and reptiles.',
       features: ['Blood, Feces, Urine, Pleural Fluid', '10+ Species Supported', 'Real-time HD Imaging', 'AI Classification', 'Diagnostic Suggestions', 'Standardized Reports'],
       featured: false,
     },

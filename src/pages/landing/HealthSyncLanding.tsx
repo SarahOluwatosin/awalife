@@ -172,7 +172,7 @@ const HealthSyncLanding = () => {
                   </span>
                 </h1>
                 <p className="text-muted-foreground text-lg mb-8">
-                  Technology alone isn't enough. Intelligent care starts with the right AI assistant — built to support veterinarians, not replace them.
+                  Technology alone isn't enough. Intelligent care starts with the right AI assistant, built to support veterinarians, not replace them.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 py-6 text-base shadow-lg hover:shadow-primary/25 transition-all group">
