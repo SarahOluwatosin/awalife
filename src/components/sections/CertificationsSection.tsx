@@ -17,84 +17,51 @@ const CertificationsSection = () => {
     {
       icon: Shield,
       title: 'CE Marking',
-      description: 'European conformity for medical devices',
-      stat: 'EU',
+      description: 'Conformity for applicable markets',
     },
     {
       icon: Award,
       title: 'ISO 13485',
-      description: 'Quality management systems',
-      stat: '2016',
+      description: 'Medical device quality management system',
     },
     {
       icon: FileCheck,
-      title: 'Patents',
-      description: 'Granted & filed innovations',
-      stat: '50+',
+      title: 'Granted & Filed Patents',
+      description: 'Product technology and innovation',
     },
     {
       icon: Microscope,
-      title: 'FDA Registered',
-      description: 'US establishment listing',
-      stat: 'USA',
+      title: 'FDA Registration',
+      description: 'Establishment and device listing (where applicable)',
     },
   ];
 
   return (
-    <section ref={sectionRef} className="py-24 relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
-      
-      <div className="container mx-auto px-8 lg:px-24 xl:px-32 relative z-10">
-        {/* Bento Grid Layout */}
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Large Feature Card */}
-          <div className={`lg:col-span-2 lg:row-span-2 glow-card p-10 flex flex-col justify-between transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <div>
-              <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">
-                Quality & Compliance
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Built on a Foundation of{' '}
-                <span className="gradient-text">Trust & Innovation</span>
-              </h2>
-              <p className="text-muted-foreground text-lg max-w-xl">
-                Awalife products are developed and manufactured under established quality management systems, 
-                meeting international regulatory standards for veterinary diagnostic equipment.
-              </p>
-            </div>
-            
-            {/* Stats Row */}
-            <div className="grid grid-cols-3 gap-6 mt-10 pt-8 border-t border-border/50">
-              <div>
-                <div className="text-4xl font-bold text-primary mb-1">20+</div>
-                <div className="text-sm text-muted-foreground">Global Markets</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-primary mb-1">500+</div>
-                <div className="text-sm text-muted-foreground">Installations</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-primary mb-1">10+</div>
-                <div className="text-sm text-muted-foreground">Years Experience</div>
-              </div>
-            </div>
-          </div>
+    <section ref={sectionRef} className="py-20 bg-secondary/30">
+      <div className="container mx-auto px-8 lg:px-24 xl:px-32">
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            Quality Management & Regulatory Status
+          </span>
+          <h2 className={`text-3xl md:text-4xl font-bold text-foreground transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            Certifications & Compliance
+          </h2>
+          <p className={`text-muted-foreground mt-4 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            Awalife products are developed and manufactured under established quality management systems. Applicable certifications and regulatory registrations vary by product and market.
+          </p>
+        </div>
 
-          {/* Certification Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {certifications.map((cert, i) => (
             <div
               key={cert.title}
-              className={`group glow-card p-6 transition-all duration-500 hover:-translate-y-1 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              style={{ transitionDelay: `${0.1 + i * 0.08}s` }}
+              className={`group glow-card p-6 text-center transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              style={{ transitionDelay: `${0.2 + i * 0.1}s` }}
             >
-              <div className="flex items-start justify-between mb-4">
-                <div className="icon-glow group-hover:scale-110 transition-transform duration-500">
-                  <cert.icon className="w-6 h-6 text-primary" />
-                </div>
-                <span className="text-2xl font-bold text-primary/80">{cert.stat}</span>
+              <div className="icon-glow mx-auto mb-5 group-hover:scale-110 transition-transform duration-500">
+                <cert.icon className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-1 group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
                 {cert.title}
               </h3>
               <p className="text-sm text-muted-foreground">
