@@ -14,61 +14,44 @@ const CertificationsSection = () => {
   }, []);
 
   const certifications = [
-    {
-      icon: Shield,
-      title: 'CE Marking',
-      description: 'Conformity for applicable markets',
-    },
-    {
-      icon: Award,
-      title: 'ISO 13485',
-      description: 'Medical device quality management system',
-    },
-    {
-      icon: FileCheck,
-      title: 'Granted & Filed Patents',
-      description: 'Product technology and innovation',
-    },
-    {
-      icon: Microscope,
-      title: 'FDA Registration',
-      description: 'Establishment and device listing (where applicable)',
-    },
+    { icon: Shield, title: 'CE Marking', stat: 'EU' },
+    { icon: Award, title: 'ISO 13485', stat: '2016' },
+    { icon: FileCheck, title: 'Patents', stat: '50+' },
+    { icon: Microscope, title: 'FDA Registered', stat: 'USA' },
   ];
 
   return (
-    <section ref={sectionRef} className="py-20 bg-secondary/30">
+    <section ref={sectionRef} className="py-20 border-y border-border/30">
       <div className="container mx-auto px-8 lg:px-24 xl:px-32">
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            Quality Management & Regulatory Status
-          </span>
-          <h2 className={`text-3xl md:text-4xl font-bold text-foreground transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            Certifications & Compliance
-          </h2>
-          <p className={`text-muted-foreground mt-4 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            Awalife products are developed and manufactured under established quality management systems. Applicable certifications and regulatory registrations vary by product and market.
-          </p>
-        </div>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
+          {/* Left Text */}
+          <div className={`lg:max-w-md transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-2">
+              Quality & Compliance
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              Certifications & Regulatory Status
+            </h2>
+          </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {certifications.map((cert, i) => (
-            <div
-              key={cert.title}
-              className={`group glow-card p-6 text-center transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              style={{ transitionDelay: `${0.2 + i * 0.1}s` }}
-            >
-              <div className="icon-glow mx-auto mb-5 group-hover:scale-110 transition-transform duration-500">
-                <cert.icon className="w-7 h-7 text-primary" />
+          {/* Right Certifications */}
+          <div className="flex flex-wrap items-center gap-8 lg:gap-12">
+            {certifications.map((cert, i) => (
+              <div
+                key={cert.title}
+                className={`flex items-center gap-3 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                style={{ transitionDelay: `${0.1 + i * 0.08}s` }}
+              >
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <cert.icon className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <div className="text-lg font-bold text-foreground">{cert.stat}</div>
+                  <div className="text-xs text-muted-foreground">{cert.title}</div>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                {cert.title}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {cert.description}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

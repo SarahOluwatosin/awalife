@@ -23,37 +23,35 @@ const WhyUsSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-24 bg-card/30">
+    <section ref={sectionRef} className="py-24 bg-gradient-to-b from-background to-secondary/20">
       <div className="container mx-auto px-8 lg:px-24 xl:px-32">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
-            <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3">
               {t.whyUs.title}
             </span>
-            <h2 className={`text-3xl md:text-4xl font-bold text-foreground mb-4 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               {t.whyUs.subtitle}
             </h2>
-            <p className={`text-muted-foreground max-w-2xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
               {t.whyUs.description}
             </p>
           </div>
 
-          {/* Reasons Grid */}
-          <div className="grid sm:grid-cols-2 gap-6">
+          {/* Horizontal List */}
+          <div className="grid md:grid-cols-4 gap-8 text-center">
             {reasons.map((reason, i) => (
               <div
                 key={reason.title}
-                className={`glow-card p-6 flex items-start gap-4 transition-all duration-500 hover:-translate-y-1 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-                style={{ transitionDelay: `${0.3 + i * 0.1}s` }}
+                className={`group transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                style={{ transitionDelay: `${0.2 + i * 0.1}s` }}
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 transition-transform duration-300 hover:scale-110">
+                <div className="w-14 h-14 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
                   <reason.icon className="w-6 h-6 text-primary" />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-1">{reason.title}</h4>
-                  <p className="text-sm text-muted-foreground">{reason.desc}</p>
-                </div>
+                <h4 className="font-semibold text-foreground mb-2">{reason.title}</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{reason.desc}</p>
               </div>
             ))}
           </div>
