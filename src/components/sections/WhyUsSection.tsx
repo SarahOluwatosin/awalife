@@ -24,7 +24,7 @@ const WhyUsSection = () => {
 
   return (
     <section ref={sectionRef} className="py-24 bg-card/30">
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto px-8 lg:px-24 xl:px-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div>

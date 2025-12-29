@@ -38,7 +38,7 @@ const CertificationsSection = () => {
 
   return (
     <section ref={sectionRef} className="py-20 bg-secondary/30">
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto px-8 lg:px-24 xl:px-32">
         <div className="text-center max-w-3xl mx-auto mb-14">
           <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             Quality Assured
