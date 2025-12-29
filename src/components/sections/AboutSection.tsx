@@ -25,34 +25,33 @@ const AboutSection = () => {
   return (
     <section id="about" ref={sectionRef} className="py-24">
       <div className="container mx-auto px-8 lg:px-24 xl:px-32">
-        {/* Two Column Layout */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Text */}
-          <div>
-            <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* Left Column */}
+          <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">
               {t.about.title}
             </span>
-            <h2 className={`text-3xl md:text-4xl font-bold text-foreground mb-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
               {t.about.subtitle}
             </h2>
-            <p className={`text-muted-foreground text-lg leading-relaxed transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <p className="text-muted-foreground text-lg leading-relaxed">
               {t.about.description}
             </p>
           </div>
 
-          {/* Right Column - 2x2 Cards Grid */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* Right Column */}
+          <div className="grid grid-cols-2 gap-x-8 gap-y-10">
             {values.map((value, i) => (
               <div 
                 key={value.title} 
-                className={`glow-card p-5 transition-all duration-500 hover:-translate-y-1 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} 
-                style={{ transitionDelay: `${0.3 + i * 0.1}s` }}
+                className={`group transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} 
+                style={{ transitionDelay: `${0.2 + i * 0.1}s` }}
               >
-                <div className="icon-glow mb-3 group-hover:scale-110 transition-transform duration-500">
-                  <value.icon className="w-6 h-6 text-primary" />
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+                  <value.icon className="w-5 h-5 text-primary" />
                 </div>
                 <h3 className="text-base font-semibold text-foreground mb-1">{value.title}</h3>
-                <p className="text-sm text-muted-foreground">{value.desc}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{value.desc}</p>
               </div>
             ))}
           </div>
