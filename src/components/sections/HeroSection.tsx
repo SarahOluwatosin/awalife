@@ -53,9 +53,9 @@ const HeroSection = () => {
               </Button>
             </div>
 
-            {/* Experience badge */}
-            <p className="text-muted-foreground text-sm opacity-0 animate-fade-in delay-400">
-              5+ {t.hero.experience}
+            {/* Disclaimer */}
+            <p className="text-muted-foreground text-xs opacity-0 animate-fade-in delay-400">
+              {t.hero.disclaimer}
             </p>
           </div>
 

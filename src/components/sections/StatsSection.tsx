@@ -55,10 +55,10 @@ const StatItem = ({ value, suffix, label, delay }: StatItemProps) => {
 const StatsSection = () => {
   const { t } = useLanguage();
   const stats = [
-    { value: 5, suffix: '+', label: t.stats.pets },
-    { value: 50, suffix: '+', label: t.stats.patents },
-    { value: 20, suffix: '+', label: t.stats.countries },
-    { value: 500, suffix: '+', label: t.stats.installations },
+    { value: 5, suffix: '+', label: t.stats.sampleTypesLabel },
+    { value: 50, suffix: '+', label: t.stats.patentsLabel },
+    { value: 20, suffix: '+', label: t.stats.marketsLabel },
+    { value: 500, suffix: '+', label: t.stats.installationsLabel },
   ];
 
   return (
