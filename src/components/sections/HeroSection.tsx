@@ -23,9 +23,8 @@ const HeroSection = () => {
           {/* Left Column - Text */}
           <div className="text-center lg:text-left">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6 opacity-0 animate-fade-in">
-              <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-xs">{t.hero.badge}</span>
-              {t.hero.badgeText}
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6 opacity-0 animate-fade-in">
+              {t.hero.badge}
             </div>
 
             {/* Headline */}
