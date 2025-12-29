@@ -21,6 +21,7 @@ import NotFound from "./pages/NotFound";
 import MedTechLanding from "./pages/landing/MedTechLanding";
 import ModernLanding from "./pages/landing/ModernLanding";
 import FizensLanding from "./pages/landing/FizensLanding";
+import HealthSyncLanding from "./pages/landing/HealthSyncLanding";
 
 const queryClient = new QueryClient();
 
@@ -32,10 +33,12 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<HealthSyncLanding />} />
+            <Route path="/home" element={<Index />} />
             <Route path="/landing/medtech" element={<MedTechLanding />} />
             <Route path="/landing/modern" element={<ModernLanding />} />
             <Route path="/landing/fizens" element={<FizensLanding />} />
+            <Route path="/landing/healthsync" element={<HealthSyncLanding />} />
             <Route path="/about" element={<About />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:productId" element={<ProductDetail />} />
