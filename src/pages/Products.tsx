@@ -63,10 +63,10 @@ const Products = () => {
         breadcrumb={[{ label: t.nav.products, path: '/products' }]}
       />
 
-      {/* Products Introduction with Images */}
+      {/* Products Introduction */}
       <section className="py-20 lg:py-28">
-        <div className="container mx-auto px-8 lg:px-16 xl:px-24">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                 {t.products.subtitle}
@@ -81,29 +81,26 @@ const Products = () => {
                 <Button className="btn-gradient" size="lg" asChild>
                   <Link to="/contact">Request Demo</Link>
                 </Button>
-                <Button variant="outline" size="lg" className="border-border/50 hover:bg-card hover:border-primary/30">
+                <Button variant="outline" size="lg" className="border-border/50 hover:bg-secondary hover:border-primary/30">
                   Download Catalog
                 </Button>
               </div>
             </div>
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 rounded-3xl blur-3xl" />
-              <div className="relative grid grid-cols-2 gap-6">
-                <div className="space-y-6">
-                  <div className="glow-card overflow-hidden rounded-2xl">
-                    <img src={ai100vetImg} alt="AI-100Vet Analyzer" className="w-full h-48 object-cover" />
-                  </div>
-                  <div className="glow-card overflow-hidden rounded-2xl">
-                    <img src={reagentsImg} alt="AWALIFE Reagents" className="w-full h-32 object-cover" />
-                  </div>
+            <div className="relative grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <div className="overflow-hidden rounded-2xl bg-secondary/30">
+                  <img src={ai100vetImg} alt="AI-100Vet Analyzer" className="w-full h-48 object-cover" />
                 </div>
-                <div className="space-y-6 pt-8">
-                  <div className="glow-card overflow-hidden rounded-2xl">
-                    <img src={microscopeImg} alt="Microscope Station" className="w-full h-32 object-cover" />
-                  </div>
-                  <div className="glow-card overflow-hidden rounded-2xl">
-                    <img src={ai100vetImg} alt="Product Showcase" className="w-full h-48 object-cover" />
-                  </div>
+                <div className="overflow-hidden rounded-2xl bg-secondary/30">
+                  <img src={reagentsImg} alt="AWALIFE Reagents" className="w-full h-32 object-cover" />
+                </div>
+              </div>
+              <div className="space-y-4 pt-8">
+                <div className="overflow-hidden rounded-2xl bg-secondary/30">
+                  <img src={microscopeImg} alt="Microscope Station" className="w-full h-32 object-cover" />
+                </div>
+                <div className="overflow-hidden rounded-2xl bg-secondary/30">
+                  <img src={ai100vetImg} alt="Product Showcase" className="w-full h-48 object-cover" />
                 </div>
               </div>
             </div>
@@ -113,88 +110,67 @@ const Products = () => {
 
       {/* Products Grid */}
       <section className="py-16 lg:py-24 pb-28 lg:pb-36">
-        <div className="container mx-auto px-8 lg:px-16 xl:px-24">
-          <div className="space-y-24 lg:space-y-32">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+          <div className="space-y-20 lg:space-y-28">
             {products.map((product, index) => (
-              <div
-                key={product.id}
-                className="group relative"
-              >
-                {/* Decorative background glow */}
-                <div className="absolute -inset-8 bg-gradient-to-r from-primary/5 via-transparent to-accent/5 rounded-[2rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                
-                <div className="relative glow-card overflow-hidden rounded-3xl">
-                  <div className={`grid lg:grid-cols-2 gap-0`}>
-                    {/* Image */}
-                    <div className={`relative min-h-[450px] lg:min-h-[550px] bg-gradient-to-br from-secondary/80 via-card to-secondary/50 flex items-center justify-center p-12 lg:p-20 overflow-hidden ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                      {/* Background pattern */}
-                      <div className="absolute inset-0 opacity-30">
-                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.15)_0%,transparent_50%)]" />
-                        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,hsl(var(--accent)/0.1)_0%,transparent_50%)]" />
-                      </div>
-                      
-                      {/* Floating decorative elements */}
-                      <div className="absolute top-12 right-12 w-28 h-28 rounded-full bg-primary/5 animate-float" />
-                      <div className="absolute bottom-20 left-16 w-20 h-20 rounded-full bg-accent/5 animate-float" style={{ animationDelay: '2s' }} />
-                      <div className="absolute top-1/3 left-10 w-14 h-14 rounded-full bg-primary/10 animate-float" style={{ animationDelay: '4s' }} />
-                      
-                      {product.featured && (
-                        <div className="absolute top-8 left-8 z-10">
-                          <div className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-xs font-semibold rounded-full shadow-lg shadow-primary/25">
-                            <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
-                            {t.products.flagship}
-                          </div>
+              <div key={product.id} className="group">
+                <div className={`grid lg:grid-cols-2 gap-12 items-center`}>
+                  {/* Image */}
+                  <div className={`relative min-h-[350px] lg:min-h-[450px] bg-gradient-to-br from-secondary/50 via-secondary/30 to-secondary/50 rounded-2xl flex items-center justify-center p-8 lg:p-12 overflow-hidden ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                    {product.featured && (
+                      <div className="absolute top-6 left-6 z-10">
+                        <div className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-xs font-semibold rounded-full">
+                          <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
+                          {t.products.flagship}
                         </div>
-                      )}
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="relative z-10 max-h-96 w-auto object-contain group-hover:scale-105 transition-transform duration-700 ease-out drop-shadow-2xl"
-                      />
+                      </div>
+                    )}
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="relative z-10 max-h-80 w-auto object-contain group-hover:scale-105 transition-transform duration-700 ease-out drop-shadow-xl"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className={`${index % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                    <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/80 mb-4">
+                      0{index + 1} / 0{products.length}
+                    </span>
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-3">
+                      {product.name}
+                    </h2>
+                    <p className="text-primary/80 font-medium text-lg mb-6">{product.tagline}</p>
+                    
+                    <p className="text-muted-foreground mb-8 leading-relaxed text-base lg:text-lg">
+                      {product.description}
+                    </p>
+
+                    {/* Features Grid */}
+                    <div className="grid grid-cols-2 gap-4 mb-10">
+                      {product.features.map((feature) => (
+                        <div 
+                          key={feature} 
+                          className="flex items-start gap-3 p-3 rounded-xl bg-secondary/30 border border-border/30 hover:border-primary/30 transition-colors"
+                        >
+                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-0.5">
+                            <Check className="w-3.5 h-3.5 text-primary" />
+                          </div>
+                          <span className="text-sm text-muted-foreground leading-snug">{feature}</span>
+                        </div>
+                      ))}
                     </div>
 
-                    {/* Content */}
-                    <div className={`p-12 lg:p-20 flex flex-col justify-center ${index % 2 !== 0 ? 'lg:order-1' : ''}`}>
-                      <div className="mb-8">
-                        <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/80 mb-4">
-                          0{index + 1} / 0{products.length}
-                        </span>
-                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-3">
-                          {product.name}
-                        </h2>
-                        <p className="text-primary/80 font-medium text-lg">{product.tagline}</p>
-                      </div>
-                      
-                      <p className="text-muted-foreground mb-10 leading-relaxed text-base lg:text-lg">
-                        {product.description}
-                      </p>
-
-                      {/* Features Grid */}
-                      <div className="grid grid-cols-2 gap-5 mb-12">
-                        {product.features.map((feature, i) => (
-                          <div 
-                            key={feature} 
-                            className="flex items-start gap-4 p-4 rounded-xl bg-secondary/30 border border-border/30 hover:border-primary/30 hover:bg-secondary/50 transition-all duration-300"
-                          >
-                            <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center mt-0.5">
-                              <Check className="w-4 h-4 text-primary" />
-                            </div>
-                            <span className="text-sm text-muted-foreground leading-snug">{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="flex flex-wrap gap-5">
-                        <Button className="btn-gradient group/btn" size="lg" asChild>
-                          <Link to={`/products/${product.id}`}>
-                            {t.products.viewDetails}
-                            <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                          </Link>
-                        </Button>
-                        <Button variant="outline" size="lg" className="border-border/50 hover:bg-card hover:border-primary/30">
-                          {t.products.brochure}
-                        </Button>
-                      </div>
+                    <div className="flex flex-wrap gap-4">
+                      <Button className="btn-gradient group/btn" size="lg" asChild>
+                        <Link to={`/products/${product.id}`}>
+                          {t.products.viewDetails}
+                          <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        </Link>
+                      </Button>
+                      <Button variant="outline" size="lg" className="border-border/50 hover:bg-secondary hover:border-primary/30">
+                        {t.products.brochure}
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -205,8 +181,8 @@ const Products = () => {
       </section>
 
       {/* Image Gallery Section */}
-      <section className="py-20 lg:py-28 bg-card/50">
-        <div className="container mx-auto px-8 lg:px-16 xl:px-24">
+      <section className="py-20 lg:py-28 bg-secondary/20">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Gallery
@@ -219,22 +195,20 @@ const Products = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-            <div className="col-span-2 row-span-2">
-              <div className="glow-card h-full overflow-hidden rounded-2xl">
-                <img src={ai100vetImg} alt="AI-100Vet Main" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-              </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+            <div className="col-span-2 row-span-2 overflow-hidden rounded-2xl">
+              <img src={ai100vetImg} alt="AI-100Vet Main" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
             </div>
-            <div className="glow-card overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-2xl bg-secondary/30">
               <img src={microscopeImg} alt="Microscope" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
-            <div className="glow-card overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-2xl bg-secondary/30">
               <img src={reagentsImg} alt="Reagents" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
-            <div className="glow-card overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-2xl bg-secondary/30">
               <img src={ai100vetImg} alt="Product Detail" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
-            <div className="glow-card overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-2xl bg-secondary/30">
               <img src={microscopeImg} alt="Lab Equipment" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
           </div>
@@ -243,13 +217,10 @@ const Products = () => {
 
       {/* Stats Section with Visual */}
       <section className="py-20 lg:py-28">
-        <div className="container mx-auto px-8 lg:px-16 xl:px-24">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl" />
-              <div className="relative glow-card overflow-hidden rounded-3xl p-8 lg:p-12">
-                <img src={ai100vetImg} alt="AWALIFE Technology" className="w-full h-auto object-contain" />
-              </div>
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div className="relative rounded-2xl overflow-hidden bg-secondary/30 p-8 lg:p-12">
+              <img src={ai100vetImg} alt="AWALIFE Technology" className="w-full h-auto object-contain" />
             </div>
             <div>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
@@ -258,14 +229,14 @@ const Products = () => {
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-8">
                 Trusted by <span className="gradient-text">Veterinarians Worldwide</span>
               </h2>
-              <div className="grid grid-cols-2 gap-6 lg:gap-8">
+              <div className="grid grid-cols-2 gap-6">
                 {[
                   { value: '10+', label: 'Years Experience' },
                   { value: '50+', label: 'Countries Served' },
                   { value: '5000+', label: 'Clinics Using AWALIFE' },
                   { value: '99%', label: 'Accuracy Rate' },
                 ].map((stat) => (
-                  <div key={stat.label} className="stat-card text-center">
+                  <div key={stat.label} className="text-center p-5 rounded-xl bg-secondary/30 border border-border/30">
                     <div className="text-3xl lg:text-4xl font-bold gradient-text mb-2">{stat.value}</div>
                     <div className="text-sm text-muted-foreground">{stat.label}</div>
                   </div>
@@ -277,8 +248,8 @@ const Products = () => {
       </section>
 
       {/* Why Choose Section */}
-      <section className="py-20 lg:py-28 bg-card/50">
-        <div className="container mx-auto px-8 lg:px-16 xl:px-24">
+      <section className="py-20 lg:py-28 bg-secondary/20">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Why AWALIFE
@@ -288,59 +259,21 @@ const Products = () => {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: Cpu, title: 'AI-Powered', desc: 'Advanced recognition algorithms for accurate cell identification', image: ai100vetImg },
-              { icon: Zap, title: 'Fast Results', desc: 'Complete analysis in under 10 minutes per sample', image: microscopeImg },
-              { icon: Target, title: 'High Accuracy', desc: '99%+ accuracy rate across all sample types', image: reagentsImg },
-              { icon: Shield, title: 'Reliable', desc: 'Consistent standardized results every time', image: ai100vetImg },
-            ].map((item, index) => (
-              <div key={item.title} className="group relative">
-                <div className="absolute -inset-2 bg-gradient-to-br from-primary/10 to-accent/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative glow-card overflow-hidden h-full flex flex-col">
-                  <div className="h-40 overflow-hidden">
-                    <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                  </div>
-                  <div className="p-8 lg:p-10 text-center flex-1 flex flex-col items-center">
-                    <div className="icon-glow mb-6 group-hover:scale-110 transition-transform duration-300">
-                      <item.icon className="w-7 h-7 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-3">{item.title}</h3>
-                    <p className="text-sm lg:text-base text-muted-foreground leading-relaxed">{item.desc}</p>
-                  </div>
+              { icon: Cpu, title: 'AI-Powered', desc: 'Advanced recognition algorithms for accurate cell identification' },
+              { icon: Zap, title: 'Fast Results', desc: 'Complete analysis in under 10 minutes per sample' },
+              { icon: Target, title: 'High Accuracy', desc: '99%+ accuracy rate across all sample types' },
+              { icon: Shield, title: 'Reliable', desc: 'Consistent standardized results every time' },
+            ].map((item) => (
+              <div key={item.title} className="group text-center">
+                <div className="w-14 h-14 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+                  <item.icon className="w-7 h-7 text-primary" />
                 </div>
+                <h3 className="text-xl font-semibold text-foreground mb-3">{item.title}</h3>
+                <p className="text-sm lg:text-base text-muted-foreground leading-relaxed">{item.desc}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-24 lg:py-32">
-        <div className="container mx-auto px-8 lg:px-16 xl:px-24">
-          <div className="relative glow-card overflow-hidden rounded-3xl">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10" />
-            <div className="relative grid lg:grid-cols-2 gap-12 items-center p-12 lg:p-20">
-              <div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                  {t.cta.title} <span className="gradient-text">{t.cta.titleHighlight}</span>
-                </h2>
-                <p className="text-lg text-muted-foreground mb-10">
-                  {t.cta.description}
-                </p>
-                <div className="flex flex-wrap gap-5">
-                  <Button className="btn-gradient" size="lg" asChild>
-                    <Link to="/contact">{t.cta.button}</Link>
-                  </Button>
-                  <Button variant="outline" size="lg" className="border-border/50 hover:bg-card hover:border-primary/30">
-                    View Brochure
-                  </Button>
-                </div>
-              </div>
-              <div className="relative hidden lg:block">
-                <img src={ai100vetImg} alt="AWALIFE Product" className="w-full max-w-md mx-auto" />
-              </div>
-            </div>
           </div>
         </div>
       </section>
