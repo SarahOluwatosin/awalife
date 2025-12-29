@@ -81,17 +81,13 @@ const HeroSection = () => {
           {/* Right Column - Product Image */}
           <div className="relative hidden lg:flex items-center justify-center opacity-0 animate-fade-in delay-200">
             {/* Animated glow effect */}
-            <div className="absolute w-80 h-80 rounded-full bg-primary/20 blur-3xl animate-pulse" />
+            <div className="absolute w-96 h-96 rounded-full bg-primary/15 blur-3xl animate-pulse" />
             
-            {/* Container */}
-            <div className="relative w-[360px] h-[360px] rounded-[40px] bg-gradient-to-br from-card to-secondary/30 border border-border/40 backdrop-blur-sm flex items-center justify-center shadow-xl">
-              {/* Inner glow */}
-              <div className="absolute inset-4 rounded-[32px] bg-gradient-to-br from-primary/5 to-transparent" />
-              
+            <div className="relative">
               <img 
                 src={ai100vet} 
                 alt="AI-100Vet Morphology Analyzer" 
-                className="relative w-64 drop-shadow-xl z-10"
+                className="relative w-full max-w-md drop-shadow-2xl z-10"
               />
 
               {/* Floating Tags */}
