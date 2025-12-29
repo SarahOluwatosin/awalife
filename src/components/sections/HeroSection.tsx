@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronDown, Download } from 'lucide-react';
+import { ArrowRight, ChevronDown, Download, Award, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Link } from 'react-router-dom';
@@ -12,60 +12,73 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
       {/* Background */}
       <div className="absolute inset-0 z-0">
-        <img src={heroBg} alt="Laboratory environment" className="w-full h-full object-cover opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/90 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-br from-secondary/50 via-background to-background" />
       </div>
 
       {/* Content */}
       <div className="container mx-auto px-8 lg:px-24 xl:px-32 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           {/* Left Column - Text */}
-          <div className="text-center lg:text-left">
-            {/* Badge */}
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6 opacity-0 animate-fade-in">
-              {t.hero.badge}
-            </div>
-
+          <div className="text-left">
             {/* Headline */}
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6 opacity-0 animate-fade-in delay-100">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 opacity-0 animate-fade-in leading-tight">
               <span className="text-foreground">{t.hero.tagline}</span>
-              <br />
+              {' '}
               <span className="gradient-text">{t.hero.taglineHighlight}</span>
             </h1>
 
-            <p className="text-lg text-muted-foreground max-w-xl mb-8 opacity-0 animate-fade-in delay-200">
+            <p className="text-lg text-muted-foreground max-w-lg mb-8 opacity-0 animate-fade-in delay-100 leading-relaxed">
               {t.hero.description}
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8 opacity-0 animate-fade-in delay-300">
+            <div className="flex flex-wrap gap-4 mb-10 opacity-0 animate-fade-in delay-200">
               <Button size="lg" className="btn-gradient group" asChild>
                 <Link to="/contact">
                   {t.hero.cta}
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-border/50 hover:bg-card/50">
+              <Button size="lg" variant="outline" className="border-border hover:bg-card">
                 <Download className="mr-2 w-4 h-4" />
                 {t.hero.ctaSecondary}
               </Button>
             </div>
 
-            {/* Disclaimer */}
-            <p className="text-muted-foreground text-xs opacity-0 animate-fade-in delay-400">
-              {t.hero.disclaimer}
-            </p>
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap items-center gap-8 opacity-0 animate-fade-in delay-300">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Award className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-foreground">ISO 13485</div>
+                  <div className="text-xs text-muted-foreground">Certified Quality</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-foreground">500+</div>
+                  <div className="text-xs text-muted-foreground">Active Installations</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Right Column - Product Image */}
-          <div className="relative hidden lg:block opacity-0 animate-fade-in delay-300">
-            <div className="relative flex items-center justify-center">
-              <img 
-                src={ai100vet} 
-                alt="AI-100Vet Morphology Analyzer" 
-                className="w-full max-w-md mx-auto drop-shadow-2xl"
-              />
-            </div>
+          <div className="relative hidden lg:flex items-center justify-center opacity-0 animate-fade-in delay-200">
+            {/* Subtle background shape */}
+            <div className="absolute w-[480px] h-[480px] rounded-[60px] bg-gradient-to-br from-secondary/80 to-secondary/20 rotate-6" />
+            <div className="absolute w-[480px] h-[480px] rounded-[60px] bg-card/50 backdrop-blur-sm border border-border/30" />
+            
+            <img 
+              src={ai100vet} 
+              alt="AI-100Vet Morphology Analyzer" 
+              className="relative w-full max-w-sm drop-shadow-2xl z-10"
+            />
           </div>
         </div>
       </div>
@@ -77,6 +90,11 @@ const HeroSection = () => {
       >
         <ChevronDown className="w-8 h-8" />
       </button>
+
+      {/* Disclaimer */}
+      <p className="absolute bottom-20 left-8 lg:left-24 xl:left-32 text-muted-foreground text-xs opacity-0 animate-fade-in delay-400">
+        {t.hero.disclaimer}
+      </p>
     </section>
   );
 };
