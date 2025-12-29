@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import ai100vetEliteImg from '@/assets/ai-100vet-elite.png';
-import ai100vetImg from '@/assets/ai-100vet.png';
+import ai100vetImg from '@/assets/ai-100vet-hero.webp';
 import ai80vetImg from '@/assets/ai-80vet.png';
 import microscopeImg from '@/assets/digital-microscope.png';
 
