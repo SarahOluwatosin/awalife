@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Linkedin, Twitter, Youtube, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import awalifeLogo from '@/assets/awalife-logo.png';
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -33,14 +34,8 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">A</span>
-              </div>
-              <div>
-                <span className="text-xl font-bold text-foreground">安侣医学</span>
-                <span className="block text-xs text-muted-foreground">AWALIFE</span>
-              </div>
+            <Link to="/" className="flex items-center mb-6">
+              <img src={awalifeLogo} alt="Awalife" className="h-10 w-auto" />
             </Link>
             <p className="text-muted-foreground mb-6 max-w-sm">
               {t.footer.description}
