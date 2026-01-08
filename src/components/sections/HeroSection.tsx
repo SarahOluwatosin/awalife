@@ -1,122 +1,78 @@
-import { ArrowRight, ChevronDown, Download, Award, Users } from 'lucide-react';
+import { ArrowRight, ChevronDown, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Link } from 'react-router-dom';
-import ai100vet from '@/assets/ai-100vet-hero.webp';
-import awalifeLogo from '@/assets/awalife-logo.webp';
+import awalHero from '@/assets/awal-hero.webp';
 
 const HeroSection = () => {
   const { t } = useLanguage();
 
-  const floatingTags = [
-    { label: 'AI-Powered', position: 'top-8 -left-4' },
-    { label: '10+ Species', position: 'top-24 -right-8' },
-    { label: '4 Sample Types', position: 'bottom-32 -left-8' },
-    { label: 'Auto Reports', position: 'bottom-16 -right-4' },
-  ];
-
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* Background */}
+      {/* Background Image with fade */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-secondary/50 via-background to-background" />
+        <img 
+          src={awalHero} 
+          alt="" 
+          className="w-full h-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
       </div>
 
       {/* Content */}
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left Column - Text */}
-          <div className="text-left">
-            {/* Logo */}
-            <img src={awalifeLogo} alt="Awalife" className="h-10 mb-8 opacity-0 animate-fade-in" />
-
-            {/* Headline */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 opacity-0 animate-fade-in delay-100 leading-tight">
-              <span className="text-foreground">{t.hero.tagline}</span>
-              {' '}
-              <span className="gradient-text">{t.hero.taglineHighlight}</span>
-            </h1>
-
-            <p className="text-lg text-muted-foreground max-w-lg mb-8 opacity-0 animate-fade-in delay-200 leading-relaxed">
-              {t.hero.description}
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-4 mb-12 opacity-0 animate-fade-in delay-300">
-              <Button size="lg" className="btn-gradient group" asChild>
-                <Link to="/contact">
-                  {t.hero.cta}
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" className="border-border hover:bg-card">
-                <Download className="mr-2 w-4 h-4" />
-                {t.hero.ctaSecondary}
-              </Button>
-            </div>
-
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center gap-6 opacity-0 animate-fade-in delay-400">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Award className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-foreground">ISO 13485</div>
-                  <div className="text-xs text-muted-foreground">Certified Quality</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Users className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-foreground">500+</div>
-                  <div className="text-xs text-muted-foreground">Active Installations</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Disclaimer */}
-            <p className="mt-8 text-muted-foreground text-xs opacity-0 animate-fade-in delay-500">
-              {t.hero.disclaimer}
-            </p>
+        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+          {/* Feature Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 opacity-0 animate-fade-in">
+            <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-xs font-medium">
+              New Feature
+            </span>
+            <span className="text-sm text-foreground">
+              {t.hero.badge}
+            </span>
+            <ArrowRight className="w-4 h-4 text-primary" />
           </div>
 
-          {/* Right Column - Product Image */}
-          <div className="relative hidden lg:flex items-center justify-center opacity-0 animate-fade-in delay-200">
-            {/* Animated glow effect */}
-            <div className="absolute w-[500px] h-[500px] rounded-full bg-primary/10 blur-3xl animate-pulse" />
-            
-            <div className="relative">
-              <img 
-                src={ai100vet} 
-                alt="AI-100Vet Morphology Analyzer" 
-                className="relative w-full max-w-lg drop-shadow-2xl z-10"
-              />
+          {/* Headline */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-8 opacity-0 animate-fade-in delay-100 leading-tight">
+            <span className="text-foreground">Changing Your Idea of What</span>
+            <br />
+            <span className="text-primary">{t.hero.taglineHighlight}</span>
+            <br />
+            <span className="text-foreground">Can Do.</span>
+          </h1>
 
-              {/* Floating Tags */}
-              {floatingTags.map((tag, i) => (
-                <div
-                  key={tag.label}
-                  className={`absolute ${tag.position} px-3 py-1.5 rounded-full bg-card/90 backdrop-blur-sm border border-border/50 shadow-lg text-xs font-medium text-foreground animate-float z-20`}
-                  style={{ animationDelay: `${i * 0.5}s` }}
-                >
-                  {tag.label}
-                </div>
-              ))}
-            </div>
+          {/* Description */}
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 opacity-0 animate-fade-in delay-200 leading-relaxed">
+            {t.hero.description}
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap justify-center gap-4 mb-16 opacity-0 animate-fade-in delay-300">
+            <Button size="lg" className="btn-gradient group px-8" asChild>
+              <Link to="/products">
+                Discover More
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" className="border-border bg-background/50 hover:bg-card px-8">
+              <Play className="mr-2 w-4 h-4" />
+              Watch Demo
+            </Button>
+          </div>
+
+          {/* Experience indicator */}
+          <div className="opacity-0 animate-fade-in delay-400">
+            <p className="text-sm text-muted-foreground mb-2">5+ Years of Experience</p>
+            <button
+              onClick={() => document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <ChevronDown className="w-6 h-6 animate-bounce" />
+            </button>
           </div>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <button
-        onClick={() => document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' })}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-primary transition-colors animate-float"
-      >
-        <ChevronDown className="w-8 h-8" />
-      </button>
     </section>
   );
 };
