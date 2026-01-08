@@ -11,6 +11,9 @@ import ProductDetail from "./pages/ProductDetail";
 import Applications from "./pages/Applications";
 import BloodAnalysis from "./pages/applications/BloodAnalysis";
 import FecesAnalysis from "./pages/applications/FecesAnalysis";
+import UrineAnalysis from "./pages/applications/UrineAnalysis";
+import PleuralEffusion from "./pages/applications/PleuralEffusion";
+import ExoticAnimals from "./pages/applications/ExoticAnimals";
 import Resources from "./pages/News";
 
 import Contact from "./pages/Contact";
@@ -43,6 +46,9 @@ const App = () => (
             <Route path="/applications" element={<Applications />} />
             <Route path="/applications/blood" element={<BloodAnalysis />} />
             <Route path="/applications/feces" element={<FecesAnalysis />} />
+            <Route path="/applications/urine" element={<UrineAnalysis />} />
+            <Route path="/applications/pleural-effusion" element={<PleuralEffusion />} />
+            <Route path="/applications/exotic" element={<ExoticAnimals />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />

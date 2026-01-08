@@ -1,7 +1,7 @@
 import { ArrowRight, ChevronDown, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import awalHero from '@/assets/awal-hero.webp';
+import heroBg from '@/assets/hero-diagnostic-lab.jpg';
 
 const HeroSection = () => {
   return (
@@ -9,7 +9,7 @@ const HeroSection = () => {
       {/* Full Background Image with overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src={awalHero} 
+          src={heroBg} 
           alt="" 
           className="w-full h-full object-cover"
         />
