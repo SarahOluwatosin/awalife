@@ -1,15 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/contexts/LanguageContext';
 import ai100vetEliteImg from '@/assets/ai-100vet-elite.png';
-import ai100vetImg from '@/assets/ai-100vet-hero.webp';
-import ai80vetImg from '@/assets/ai-80vet.png';
-import microscopeImg from '@/assets/digital-microscope.png';
+import microscopeImg from '@/assets/microscope-station.png';
 
 const ProductsSection = () => {
-  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -25,91 +21,71 @@ const ProductsSection = () => {
     { 
       id: 'ai-100vet-elite', 
       image: ai100vetEliteImg, 
-      name: 'AI-100Vet Elite', 
-      positioning: 'For Reference Labs',
-      description: 'High-throughput morphology analyzer for veterinary reference laboratories and large hospitals.',
-      featured: true 
-    },
-    { 
-      id: 'ai-100vet', 
-      image: ai100vetImg, 
-      name: 'AI-100Vet', 
-      positioning: 'For Hospitals',
-      description: 'Mid-range AI-assisted analyzer for routine veterinary diagnostic workflows.',
-      featured: false 
-    },
-    { 
-      id: 'ai-80vet', 
-      image: ai80vetImg, 
-      name: 'AI-80Vet', 
-      positioning: 'For Clinics',
-      description: 'Compact morphology analyzer designed for smaller clinics and entry-level laboratories.',
-      featured: false 
+      number: '02',
+      name: 'Awalife AI Morphological Analyzer', 
+      description: 'The Awalife AI Morphological Analyzer empowers clinics with smarter diagnostics and more precise analysis—making testing faster, treatments more accurate, and veterinary services more professional.',
+      primaryCta: 'Learn more',
+      secondaryCta: 'Contact us',
     },
     { 
       id: 'microscope', 
       image: microscopeImg, 
-      name: 'Digital Microscope Station', 
-      positioning: 'For All Settings',
-      description: 'Microscopy workstation supporting image capture, review, and assisted analysis.',
-      featured: false 
+      number: '03',
+      name: 'DM-03 Microscope Workstation', 
+      description: 'It combines smarter imaging with effortless operation, designed for veterinary professionals.',
+      primaryCta: 'Find out more',
+      secondaryCta: 'Speak with an advisor',
     },
   ];
 
   return (
-    <section id="products" ref={sectionRef} className="py-24 bg-card/30">
-      <div className="container mx-auto px-8 lg:px-24 xl:px-32">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-          <div>
-            <span className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-              {t.products.subtitle}
-            </span>
-            <h2 className={`text-3xl md:text-4xl font-bold text-foreground transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-              {t.products.title}
-            </h2>
-          </div>
-          <Button variant="outline" className="border-border/50 hover:bg-card hover:border-primary/50 transition-all duration-300 self-start md:self-auto" asChild>
-            <Link to="/products">
-              {t.products.viewDetails}
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Link>
-          </Button>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product, i) => (
-            <Link
-              key={product.id}
-              to={`/products/${product.id}`}
-              className={`glow-card group overflow-hidden transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              style={{ transitionDelay: `${0.15 + i * 0.1}s` }}
-            >
-              <div className="relative h-48 bg-gradient-to-br from-secondary/50 to-card flex items-center justify-center p-6 overflow-hidden">
-                {product.featured && (
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full z-10">
-                    {t.products.flagship}
-                  </div>
-                )}
+    <section id="products" ref={sectionRef} className="py-24">
+      <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+        {products.map((product, i) => (
+          <div 
+            key={product.id}
+            className={`grid lg:grid-cols-2 gap-12 items-center mb-24 last:mb-0 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            style={{ transitionDelay: `${0.1 + i * 0.2}s` }}
+          >
+            {/* Image */}
+            <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+              <div className="relative rounded-2xl bg-gradient-to-br from-secondary/50 to-card overflow-hidden p-8 lg:p-12">
+                <span className="absolute top-6 left-6 text-6xl font-bold text-primary/10">
+                  {product.number}
+                </span>
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="max-h-32 w-auto object-contain group-hover:scale-110 transition-transform duration-700 ease-out"
+                  className="w-full max-w-md mx-auto object-contain relative z-10"
                 />
               </div>
-              <div className="p-5">
-                <div className="text-xs text-primary font-medium mb-1">{product.positioning}</div>
-                <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                  {product.name}
-                </h3>
-                <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{product.description}</p>
-                <span className="inline-flex items-center text-sm text-primary font-medium group-hover:gap-2 transition-all duration-300">
-                  {t.products.learnMore}
-                  <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
+            </div>
+
+            {/* Content */}
+            <div className={`${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                {product.name}
+              </h3>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+                {product.description}
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Button className="btn-gradient group" asChild>
+                  <Link to={`/products/${product.id}`}>
+                    {product.primaryCta}
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+                <Button variant="outline" className="border-border/50 hover:bg-card hover:border-primary/30" asChild>
+                  <Link to="/contact">
+                    <Mail className="mr-2 w-4 h-4" />
+                    {product.secondaryCta}
+                  </Link>
+                </Button>
               </div>
-            </Link>
-          ))}
-        </div>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
