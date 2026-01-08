@@ -11,10 +11,10 @@ export const translations = {
   en: {
     nav: {
       home: 'Home',
-      about: 'About Us',
+      company: 'Company',
       products: 'Products',
       applications: 'Applications',
-      news: 'News',
+      resources: 'Resources',
       contact: 'Contact',
       getStarted: 'Request Quote',
     },
@@ -222,10 +222,10 @@ export const translations = {
   zh: {
     nav: {
       home: '首页',
-      about: '关于我们',
+      company: '公司',
       products: '产品',
       applications: '应用',
-      news: '新闻',
+      resources: '资源',
       contact: '联系我们',
       getStarted: '咨询报价',
     },
@@ -433,10 +433,10 @@ export const translations = {
   de: {
     nav: {
       home: 'Startseite',
-      about: 'Über uns',
+      company: 'Unternehmen',
       products: 'Produkte',
       applications: 'Anwendungen',
-      news: 'Nachrichten',
+      resources: 'Ressourcen',
       contact: 'Kontakt',
       getStarted: 'Angebot anfordern',
     },
@@ -644,10 +644,10 @@ export const translations = {
   es: {
     nav: {
       home: 'Inicio',
-      about: 'Nosotros',
+      company: 'Empresa',
       products: 'Productos',
       applications: 'Aplicaciones',
-      news: 'Noticias',
+      resources: 'Recursos',
       contact: 'Contacto',
       getStarted: 'Solicitar presupuesto',
     },

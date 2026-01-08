@@ -30,7 +30,7 @@ const About = () => {
       <PageHero
         title={t.pageHero.about.title}
         subtitle={t.pageHero.about.subtitle}
-        breadcrumb={[{ label: t.nav.about, path: '/about' }]}
+        breadcrumb={[{ label: t.nav.company, path: '/company' }]}
       />
 
       {/* Description */}

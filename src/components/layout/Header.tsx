@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Globe, ChevronDown, ArrowRight, Droplets, Bug, TestTubes, Beaker, Building2, Handshake } from 'lucide-react';
+import { Menu, X, Globe, ChevronDown, ArrowRight, Droplets, Bug } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -31,13 +31,6 @@ const Header = () => {
   const sampleAnalysisItems = [
     { label: 'Blood Analysis', path: '/applications/blood', icon: Droplets },
     { label: 'Feces Analysis', path: '/applications/feces', icon: Bug },
-    { label: 'Urine Sediment', path: '/applications/urine', icon: TestTubes },
-    { label: 'Body Fluids', path: '/applications/body-fluids', icon: Beaker },
-  ];
-
-  const solutionsItems = [
-    { label: 'For Pet Clinics & Hospitals', path: '/solutions/pet-clinics', icon: Building2 },
-    { label: 'For Distributors & Partners', path: '/solutions/distributors', icon: Handshake },
   ];
 
   return (
@@ -64,8 +57,8 @@ const Header = () => {
             <Link to="/" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
               {t.nav.home}
             </Link>
-            <Link to="/about" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/about' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
-              {t.nav.about}
+            <Link to="/company" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/company' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
+              {t.nav.company}
             </Link>
             <Link to="/products" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname.startsWith('/products') ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
               {t.nav.products}
@@ -89,21 +82,11 @@ const Header = () => {
                     </Link>
                   </DropdownMenuItem>
                 ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs text-muted-foreground">Solutions</DropdownMenuLabel>
-                {solutionsItems.map((item) => (
-                  <DropdownMenuItem key={item.path} asChild>
-                    <Link to={item.path} className="flex items-center gap-3 cursor-pointer">
-                      <item.icon className="w-4 h-4 text-primary" />
-                      {item.label}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link to="/news" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/news' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
-              {t.nav.news}
+            <Link to="/resources" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/resources' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
+              {t.nav.resources}
             </Link>
             <Link to="/contact" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/contact' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
               {t.nav.contact}
@@ -148,7 +131,7 @@ const Header = () => {
           <div className="lg:hidden mt-4 py-6 rounded-2xl glass animate-slide-up">
             <nav className="flex flex-col">
               <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname === '/' ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.home}</Link>
-              <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname === '/about' ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.about}</Link>
+              <Link to="/company" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname === '/company' ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.company}</Link>
               <Link to="/products" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname.startsWith('/products') ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.products}</Link>
               <div className="px-6 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Sample Analysis</div>
               {sampleAnalysisItems.map((item) => (
@@ -156,13 +139,7 @@ const Header = () => {
                   <item.icon className="w-4 h-4" />{item.label}
                 </Link>
               ))}
-              <div className="px-6 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Solutions</div>
-              {solutionsItems.map((item) => (
-                <Link key={item.path} to={item.path} onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium flex items-center gap-3 ${location.pathname === item.path ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>
-                  <item.icon className="w-4 h-4" />{item.label}
-                </Link>
-              ))}
-              <Link to="/news" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname === '/news' ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.news}</Link>
+              <Link to="/resources" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname === '/resources' ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.resources}</Link>
               <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname === '/contact' ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.contact}</Link>
               <div className="px-6 pt-4 mt-4 border-t border-border">
                 <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>

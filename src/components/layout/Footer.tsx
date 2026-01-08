@@ -7,10 +7,10 @@ const Footer = () => {
 
   const footerLinks = {
     company: [
-      { label: t.nav.about, path: '/about' },
+      { label: t.nav.company, path: '/company' },
       { label: t.nav.products, path: '/products' },
       { label: t.nav.applications, path: '/applications' },
-      { label: t.nav.news, path: '/news' },
+      { label: t.nav.resources, path: '/resources' },
     ],
     products: [
       { label: 'AI-100Vet', path: '/products/ai-100vet' },
