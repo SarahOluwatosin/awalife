@@ -18,8 +18,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 40% 13%;
 
-    /* Primary: Electric Teal */
-    --primary: 166 84% 38%;
+    /* Primary: Awalife Teal #1a9580 */
+    --primary: 166 72% 34%;
     --primary-foreground: 0 0% 100%;
 
     /* Secondary: Warm light with subtle teal tint */
@@ -89,9 +89,9 @@
     --popover: 222 47% 8%;
     --popover-foreground: 210 40% 98%;
 
-    /* Primary: Electric Teal */
-    --primary: 166 84% 45%;
-    --primary-foreground: 222 47% 6%;
+    /* Primary: Awalife Teal #1a9580 */
+    --primary: 166 72% 34%;
+    --primary-foreground: 0 0% 100%;
 
     /* Secondary: Deep slate */
     --secondary: 222 30% 18%;

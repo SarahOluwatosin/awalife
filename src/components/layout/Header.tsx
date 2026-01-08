@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Globe, ChevronDown, ArrowRight, Droplets, Bug } from 'lucide-react';
+import { Menu, X, Globe, ChevronDown, ArrowRight, Droplets, Bug, Microscope, FlaskConical, PawPrint, Building2, Newspaper, Cpu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -28,9 +28,22 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const sampleAnalysisItems = [
-    { label: 'Blood Analysis', path: '/applications/blood', icon: Droplets },
-    { label: 'Feces Analysis', path: '/applications/feces', icon: Bug },
+  const productItems = [
+    { label: 'AI Morphological Analyzer', path: '/products/ai-morphological-analyzer', icon: Cpu },
+    { label: 'DM-03 Microscope Workstation', path: '/products/dm-03-microscope', icon: Microscope },
+  ];
+
+  const applicationItems = [
+    { label: 'Blood', path: '/applications/blood', icon: Droplets },
+    { label: 'Urine', path: '/applications/urine', icon: FlaskConical },
+    { label: 'Feces', path: '/applications/feces', icon: Bug },
+    { label: 'Pleural Effusion', path: '/applications/pleural-effusion', icon: Droplets },
+    { label: 'Exotic Animals', path: '/applications/exotic-animals', icon: PawPrint },
+  ];
+
+  const companyItems = [
+    { label: 'About Awalife', path: '/company', icon: Building2 },
+    { label: 'News Center', path: '/resources', icon: Newspaper },
   ];
 
   return (
@@ -57,12 +70,33 @@ const Header = () => {
             <Link to="/" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
               {t.nav.home}
             </Link>
-            <Link to="/company" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/company' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
-              {t.nav.company}
-            </Link>
-            <Link to="/products" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname.startsWith('/products') ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
-              {t.nav.products}
-            </Link>
+            
+            {/* Products Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg flex items-center gap-1 ${location.pathname.startsWith('/products') ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
+                  {t.nav.products}
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-64 glass">
+                {productItems.map((item) => (
+                  <DropdownMenuItem key={item.path} asChild>
+                    <Link to={item.path} className="flex items-center gap-3 cursor-pointer">
+                      <item.icon className="w-4 h-4 text-primary" />
+                      {item.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/products" className="flex items-center gap-3 cursor-pointer text-primary">
+                    View All Products
+                    <ArrowRight className="w-4 h-4 ml-auto" />
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             
             {/* Applications Dropdown */}
             <DropdownMenu>
@@ -72,9 +106,8 @@ const Header = () => {
                   <ChevronDown className="w-3 h-3" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-64 glass">
-                <DropdownMenuLabel className="text-xs text-muted-foreground">Sample Analysis</DropdownMenuLabel>
-                {sampleAnalysisItems.map((item) => (
+              <DropdownMenuContent align="start" className="w-56 glass">
+                {applicationItems.map((item) => (
                   <DropdownMenuItem key={item.path} asChild>
                     <Link to={item.path} className="flex items-center gap-3 cursor-pointer">
                       <item.icon className="w-4 h-4 text-primary" />
@@ -88,6 +121,27 @@ const Header = () => {
             <Link to="/resources" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/resources' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
               {t.nav.resources}
             </Link>
+
+            {/* Company Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg flex items-center gap-1 ${location.pathname === '/company' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
+                  {t.nav.company}
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-48 glass">
+                {companyItems.map((item) => (
+                  <DropdownMenuItem key={item.path} asChild>
+                    <Link to={item.path} className="flex items-center gap-3 cursor-pointer">
+                      <item.icon className="w-4 h-4 text-primary" />
+                      {item.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Link to="/contact" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/contact' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
               {t.nav.contact}
             </Link>
@@ -131,15 +185,30 @@ const Header = () => {
           <div className="lg:hidden mt-4 py-6 rounded-2xl glass animate-slide-up">
             <nav className="flex flex-col">
               <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname === '/' ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.home}</Link>
-              <Link to="/company" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname === '/company' ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.company}</Link>
-              <Link to="/products" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname.startsWith('/products') ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.products}</Link>
-              <div className="px-6 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Sample Analysis</div>
-              {sampleAnalysisItems.map((item) => (
+              
+              <div className="px-6 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Products</div>
+              {productItems.map((item) => (
                 <Link key={item.path} to={item.path} onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium flex items-center gap-3 ${location.pathname === item.path ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>
                   <item.icon className="w-4 h-4" />{item.label}
                 </Link>
               ))}
-              <Link to="/resources" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname === '/resources' ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.resources}</Link>
+              
+              <div className="px-6 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-2">Applications</div>
+              {applicationItems.map((item) => (
+                <Link key={item.path} to={item.path} onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium flex items-center gap-3 ${location.pathname === item.path ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>
+                  <item.icon className="w-4 h-4" />{item.label}
+                </Link>
+              ))}
+              
+              <Link to="/resources" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium mt-2 ${location.pathname === '/resources' ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.resources}</Link>
+              
+              <div className="px-6 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-2">Company</div>
+              {companyItems.map((item) => (
+                <Link key={item.path} to={item.path} onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium flex items-center gap-3 ${location.pathname === item.path ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>
+                  <item.icon className="w-4 h-4" />{item.label}
+                </Link>
+              ))}
+              
               <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className={`px-6 py-3 text-sm font-medium ${location.pathname === '/contact' ? 'text-primary bg-primary/5' : 'text-foreground/70'}`}>{t.nav.contact}</Link>
               <div className="px-6 pt-4 mt-4 border-t border-border">
                 <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
