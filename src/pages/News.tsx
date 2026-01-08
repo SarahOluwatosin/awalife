@@ -77,7 +77,7 @@ const News = () => {
       <PageHero
         title={t.pageHero.news.title}
         subtitle={t.pageHero.news.subtitle}
-        breadcrumb={[{ label: t.nav.news, path: '/news' }]}
+        breadcrumb={[{ label: t.nav.resources, path: '/resources' }]}
       />
 
       {/* Introduction */}

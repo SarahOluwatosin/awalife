@@ -5,17 +5,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
-import About from "./pages/About";
+import Company from "./pages/About";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Applications from "./pages/Applications";
 import BloodAnalysis from "./pages/applications/BloodAnalysis";
 import FecesAnalysis from "./pages/applications/FecesAnalysis";
-import UrineAnalysis from "./pages/applications/UrineAnalysis";
-import BodyFluids from "./pages/applications/BodyFluids";
-import PetClinics from "./pages/solutions/PetClinics";
-import Distributors from "./pages/solutions/Distributors";
-import News from "./pages/News";
+import Resources from "./pages/News";
+
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import MedTechLanding from "./pages/landing/MedTechLanding";
@@ -40,17 +37,13 @@ const App = () => (
             <Route path="/landing/modern" element={<ModernLanding />} />
             <Route path="/landing/fizens" element={<FizensLanding />} />
             <Route path="/landing/healthsync" element={<HealthSyncLanding />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/company" element={<Company />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:productId" element={<ProductDetail />} />
             <Route path="/applications" element={<Applications />} />
             <Route path="/applications/blood" element={<BloodAnalysis />} />
             <Route path="/applications/feces" element={<FecesAnalysis />} />
-            <Route path="/applications/urine" element={<UrineAnalysis />} />
-            <Route path="/applications/body-fluids" element={<BodyFluids />} />
-            <Route path="/solutions/pet-clinics" element={<PetClinics />} />
-            <Route path="/solutions/distributors" element={<Distributors />} />
-            <Route path="/news" element={<News />} />
+            <Route path="/resources" element={<Resources />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
