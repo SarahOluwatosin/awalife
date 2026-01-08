@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { Zap, Target, Lightbulb, Shield } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { Cpu, Layers, Zap, Globe } from 'lucide-react';
 
 const AboutSection = () => {
-  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -15,43 +13,63 @@ const AboutSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const values = [
-    { icon: Zap, title: t.about.value1.title, desc: t.about.value1.desc },
-    { icon: Target, title: t.about.value2.title, desc: t.about.value2.desc },
-    { icon: Lightbulb, title: t.about.value3.title, desc: t.about.value3.desc },
-    { icon: Shield, title: t.about.value4.title, desc: t.about.value4.desc },
+  const features = [
+    { 
+      icon: Cpu, 
+      title: 'AI-Powered Innovation', 
+      desc: 'Integrates cell morphology, biochemistry, microfluidics, optics, and AI technologies.' 
+    },
+    { 
+      icon: Layers, 
+      title: 'Multi-Sample Testing', 
+      desc: 'Analyzes blood, feces, urine, and abdominal fluid samples automatically.' 
+    },
+    { 
+      icon: Zap, 
+      title: 'Fully Automated', 
+      desc: 'Simple sample preparation delivers "sample in, result out" workflow.' 
+    },
+    { 
+      icon: Globe, 
+      title: 'Multi-Species Support', 
+      desc: 'Supports companion animals, small mammals, and exotic pets.' 
+    },
   ];
 
   return (
     <section id="about" ref={sectionRef} className="py-24">
-      <div className="container mx-auto px-8 lg:px-24 xl:px-32">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+      <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Column */}
           <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">
-              {t.about.title}
+              About Awalife
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-              {t.about.subtitle}
+              World's First AI-Powered{' '}
+              <span className="text-primary">Morphological POCT Platform</span>
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              {t.about.description}
+            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+              Awalife becomes the first to enable intelligent morphological analysis of various pet samples—advancing the application and standardization of AI technology in pet diagnostic scenarios.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              The best part of our technology is spending less time with it. Save time and streamline your practice with our in-house analyzers.
             </p>
           </div>
 
-          {/* Right Column */}
-          <div className="grid grid-cols-2 gap-x-8 gap-y-10">
-            {values.map((value, i) => (
+          {/* Right Column - Features Grid */}
+          <div className="grid grid-cols-2 gap-6">
+            {features.map((feature, i) => (
               <div 
-                key={value.title} 
-                className={`group transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} 
+                key={feature.title} 
+                className={`p-6 rounded-2xl bg-secondary/30 border border-border/30 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} 
                 style={{ transitionDelay: `${0.2 + i * 0.1}s` }}
               >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                  <value.icon className="w-5 h-5 text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <feature.icon className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-base font-semibold text-foreground mb-1">{value.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{value.desc}</p>
+                <h3 className="text-base font-semibold text-foreground mb-2">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{feature.desc}</p>
               </div>
             ))}
           </div>

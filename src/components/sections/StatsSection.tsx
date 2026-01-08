@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface StatItemProps {
   value: number;
@@ -43,8 +42,8 @@ const StatItem = ({ value, suffix, label, delay }: StatItemProps) => {
   }, [isVisible, value, delay]);
 
   return (
-    <div ref={ref} className="stat-card text-center">
-      <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
+    <div ref={ref} className="text-center">
+      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
         {count.toLocaleString()}{suffix}
       </div>
       <div className="text-muted-foreground text-sm">{label}</div>
@@ -53,18 +52,17 @@ const StatItem = ({ value, suffix, label, delay }: StatItemProps) => {
 };
 
 const StatsSection = () => {
-  const { t } = useLanguage();
   const stats = [
-    { value: 5, suffix: '+', label: t.stats.sampleTypesLabel },
-    { value: 50, suffix: '+', label: t.stats.patentsLabel },
-    { value: 20, suffix: '+', label: t.stats.marketsLabel },
-    { value: 500, suffix: '+', label: t.stats.installationsLabel },
+    { value: 150, suffix: '+', label: 'Countries and Regions Covered' },
+    { value: 5000, suffix: '+', label: 'Installations' },
+    { value: 114, suffix: '+', label: 'Patented Inventions' },
+    { value: 20000, suffix: '+', label: 'Animal Hospitals Trusted' },
   ];
 
   return (
-    <section id="stats" className="py-20">
-      <div className="container mx-auto px-8 lg:px-24 xl:px-32">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+    <section id="stats" className="py-20 border-y border-border/30">
+      <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {stats.map((stat, i) => (
             <StatItem key={stat.label} value={stat.value} suffix={stat.suffix} label={stat.label} delay={i * 100} />
           ))}
