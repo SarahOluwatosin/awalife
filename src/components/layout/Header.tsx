@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Globe, ChevronDown, ArrowRight, Droplets, Bug, Microscope, MonitorSmartphone, FlaskConical, Stethoscope, Building2, Newspaper } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight, Droplets, Bug, Microscope, MonitorSmartphone, FlaskConical, Stethoscope, Building2, Newspaper } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
-  DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { languages, Language } from '@/lib/i18n';
-import ThemeToggle from '@/components/ThemeToggle';
+import awalifeLogo from '@/assets/awalife-logo.png';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -55,14 +52,8 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">A</span>
-            </div>
-            <div>
-              <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">安侣医学</span>
-              <span className="hidden sm:block text-xs text-muted-foreground">AWALIFE</span>
-            </div>
+          <Link to="/" className="flex items-center group">
+            <img src={awalifeLogo} alt="Awalife" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -138,23 +129,6 @@ const Header = () => {
 
           {/* Right Section */}
           <div className="hidden lg:flex items-center gap-3">
-            <ThemeToggle />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-2 text-foreground/70 hover:text-foreground">
-                  <Globe className="w-4 h-4" />
-                  {languages.find((l) => l.code === language)?.nativeName}
-                  <ChevronDown className="w-3 h-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="glass">
-                {languages.map((lang) => (
-                  <DropdownMenuItem key={lang.code} onClick={() => setLanguage(lang.code as Language)} className={language === lang.code ? 'bg-primary/10 text-primary' : ''}>
-                    {lang.nativeName}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
             <Link to="/contact">
               <Button className="btn-gradient group">
                 {t.nav.getStarted}
