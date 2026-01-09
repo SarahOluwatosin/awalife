@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { ArrowRight, ChevronDown, Microscope, Cpu, Shield, Zap, Award, Globe } from 'lucide-react';
+import { ArrowRight, ChevronDown, Microscope, Cpu, Shield, Award, Globe, Layers, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation, useParallax, useCountUp, useStaggerAnimation } from '@/hooks/use-scroll-animation';
@@ -40,34 +40,36 @@ const MedTechLanding = () => {
   const [heroRef, heroOffset] = useParallax(0.3);
   const [statsRef, isStatsVisible] = useScrollAnimation<HTMLDivElement>({ threshold: 0.3 });
   
-  const clinicsCount = useCountUp(500, 2500, isStatsVisible);
-  const accuracyCount = useCountUp(99, 2000, isStatsVisible);
-  const countriesCount = useCountUp(40, 2000, isStatsVisible);
-  const samplesCount = useCountUp(1000000, 3000, isStatsVisible);
+  const countriesCount = useCountUp(150, 2000, isStatsVisible);
+  const installationsCount = useCountUp(5000, 2000, isStatsVisible);
+  const patentsCount = useCountUp(114, 2000, isStatsVisible);
+  const hospitalsCount = useCountUp(20000, 2200, isStatsVisible);
+
+  const formatCount = (value: number) => value.toLocaleString('en-US');
 
   const features = [
     {
-      icon: Cpu,
-      title: 'AI-Powered Analysis',
-      description: 'Advanced machine learning algorithms deliver precise diagnostics in seconds.',
+      icon: Layers,
+      title: 'Multiple Models Available',
+      description: 'It supports flexible expansion and upgrades, allowing you to select models and configurations based on your needs.',
       color: 'from-primary to-accent'
     },
     {
       icon: Microscope,
-      title: 'Digital Microscopy',
-      description: 'High-resolution imaging combined with automated cell classification.',
+      title: 'Fully Automated Microscopy',
+      description: 'With simple sample preparation, it delivers a fully automated \"sample in, result out\" workflow, ensuring accurate and reliable results.',
       color: 'from-accent to-primary'
     },
     {
-      icon: Shield,
-      title: 'Clinical Grade Accuracy',
-      description: '99.2% accuracy validated across multiple veterinary institutions.',
+      icon: Users,
+      title: 'Multi-Species & Sample Testing',
+      description: 'It supports companion and small mammals, as well as exotic pets, and automatically analyzes blood, feces, urine, and abdominal fluid samples.',
       color: 'from-primary to-accent'
     },
     {
-      icon: Zap,
-      title: 'Rapid Results',
-      description: 'Complete blood analysis in under 60 seconds per sample.',
+      icon: Cpu,
+      title: 'AI-powered Innovation',
+      description: 'Awalife integrates cell morphology, biochemistry, microfluidics, optics, and AI technologies to create the world\'s first AI-powered morphological POCT platform.',
       color: 'from-accent to-primary'
     }
   ];
@@ -103,26 +105,28 @@ const MedTechLanding = () => {
               </span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground leading-[0.9] mb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground leading-[0.95] mb-8">
               <span className="block opacity-0 animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
-                The next era
+                Transform Diagnostic Workflows
               </span>
               <span className="block opacity-0 animate-fade-in" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
-                of <span className="gradient-text">VetTech</span>
-              </span>
-              <span className="block opacity-0 animate-fade-in" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
-                is here.
+                the <span className="gradient-text">Awalife Way</span>
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-xl mb-10 opacity-0 animate-fade-in" style={{ animationDelay: '800ms', animationFillMode: 'forwards' }}>
-              Fueled by innovation at the intersection of artificial intelligence and veterinary medicine.
+            <p className="text-base md:text-lg text-muted-foreground max-w-xl mb-10 opacity-0 animate-fade-in" style={{ animationDelay: '800ms', animationFillMode: 'forwards' }}>
+              Pioneering the "AI Morphological POCT Technology Platform," Awalife become the first to
+              enable intelligent morphological analysis of various pet samples, including blood, urine,
+              feces, and pleural effusion, advancing the application and standardization of AI technology
+              in pet diagnostic
             </p>
 
             <div className="flex flex-wrap gap-4 opacity-0 animate-fade-in" style={{ animationDelay: '1000ms', animationFillMode: 'forwards' }}>
-              <Button size="lg" className="btn-gradient group text-lg px-8 py-6">
-                Discover Our Solutions
-                <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
+              <Button size="lg" className="btn-gradient group text-lg px-8 py-6" asChild>
+                <Link to="/contact">
+                  Contact us
+                  <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </Link>
               </Button>
               <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-2">
                 Watch Demo
@@ -145,10 +149,10 @@ const MedTechLanding = () => {
             className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12"
           >
             {[
-              { value: clinicsCount, suffix: '+', label: 'Veterinary Clinics' },
-              { value: accuracyCount, suffix: '.2%', label: 'Diagnostic Accuracy' },
-              { value: countriesCount, suffix: '+', label: 'Countries Worldwide' },
-              { value: samplesCount, suffix: '+', label: 'Samples Analyzed', format: true }
+              { value: countriesCount, label: 'Countries and Regions Covered' },
+              { value: installationsCount, label: 'Installation' },
+              { value: patentsCount, label: 'Patented Inventions' },
+              { value: hospitalsCount, label: 'Animal Hospitals Trusted' }
             ].map((stat, i) => (
               <div 
                 key={i}
@@ -160,7 +164,7 @@ const MedTechLanding = () => {
                 }}
               >
                 <div className="text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-2">
-                  {stat.format ? (stat.value / 1000000).toFixed(1) + 'M' : stat.value}{stat.suffix}
+                  {formatCount(stat.value)}+
                 </div>
                 <div className="text-muted-foreground text-lg">{stat.label}</div>
               </div>
@@ -176,12 +180,10 @@ const MedTechLanding = () => {
         <div className="container mx-auto px-6 lg:px-12">
           <AnimatedSection className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Delivering care with{' '}
-              <span className="gradient-text">pinpoint precision</span>
+              WHY AWALIFE ?
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Our AI-powered diagnostics platform combines advanced imaging with machine learning 
-              to deliver accurate results faster than ever before.
+              Multiple models, automated microscopy, multi-species testing, and AI-powered innovation in one platform.
             </p>
           </AnimatedSection>
 
@@ -219,22 +221,22 @@ const MedTechLanding = () => {
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="order-2 lg:order-1">
                 <div className="text-primary font-semibold tracking-widest text-sm mb-4">FEATURED PRODUCT</div>
-                <h3 className="text-4xl md:text-5xl font-bold mb-6">AI-100Vet Elite</h3>
+                <h3 className="text-4xl md:text-5xl font-bold mb-6">Awalife AI Morphological Analyzer</h3>
                 <p className="text-xl text-muted-foreground mb-8">
-                  Advanced 5-part differential hematology analyzer with AI-powered cell recognition 
-                  technology. Delivering laboratory-grade results in your clinic.
+                  The Awalife AI Morphological Analyzer empowers clinics with smarter diagnostics and more
+                  precise analysis, making testing faster, treatments more accurate, and veterinary services
+                  more professional.
                 </p>
-                <ul className="space-y-4 mb-8">
-                  {['26 parameters with 5-part WBC differential', 'AI-assisted cell morphology analysis', 'Just 20μL sample volume required', 'Results in under 60 seconds'].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-foreground">
-                      <div className="w-2 h-2 rounded-full bg-primary" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <Button className="btn-gradient group">
-                  Learn More <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
+                <div className="flex flex-wrap gap-4">
+                  <Button className="btn-gradient group" asChild>
+                    <Link to="/products">
+                      Learn more <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                  <Button variant="outline" className="border-2" asChild>
+                    <Link to="/contact">Contact us</Link>
+                  </Button>
+                </div>
               </div>
               <div className="order-1 lg:order-2 relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl blur-3xl" />
@@ -262,14 +264,21 @@ const MedTechLanding = () => {
               </div>
               <div>
                 <div className="text-primary font-semibold tracking-widest text-sm mb-4">IMAGING SOLUTION</div>
-                <h3 className="text-4xl md:text-5xl font-bold mb-6">Digital Microscope Station</h3>
+                <h3 className="text-4xl md:text-5xl font-bold mb-6">DM-03 Microscope Workstaion</h3>
                 <p className="text-xl text-muted-foreground mb-8">
-                  Professional-grade digital microscopy with automated slide scanning and 
-                  AI-powered cell classification for comprehensive sample analysis.
+                  It combines smarter imaging with effortless operation, designed for veterinary
+                  professionals.
                 </p>
-                <Button className="btn-gradient group">
-                  Explore Features <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
+                <div className="flex flex-wrap gap-4">
+                  <Button className="btn-gradient group" asChild>
+                    <Link to="/products">
+                      Learn more <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                  <Button variant="outline" className="border-2" asChild>
+                    <Link to="/contact">Contact us</Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
