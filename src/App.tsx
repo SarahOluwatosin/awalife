@@ -22,6 +22,7 @@ import MedTechLanding from "./pages/landing/MedTechLanding";
 import ModernLanding from "./pages/landing/ModernLanding";
 import FizensLanding from "./pages/landing/FizensLanding";
 import HealthSyncLanding from "./pages/landing/HealthSyncLanding";
+import EmeraldLanding from "./pages/landing/EmeraldLanding";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/landing/modern" element={<ModernLanding />} />
             <Route path="/landing/fizens" element={<FizensLanding />} />
             <Route path="/landing/healthsync" element={<HealthSyncLanding />} />
+            <Route path="/landing/emerald" element={<EmeraldLanding />} />
             <Route path="/company" element={<Company />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:productId" element={<ProductDetail />} />
