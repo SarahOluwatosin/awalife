@@ -16,7 +16,7 @@ import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { motion } from 'framer-motion';
 import DottedMap from 'dotted-map';
 import ai100vetNew from '@/assets/ai-100vet-new.png';
-import emeraldHeroMicroscope from '@/assets/emerald-hero-microscope.gif';
+import emeraldHeroProduct from '@/assets/emerald-hero-product.png';
 import microscopeStation from '@/assets/microscope-station.png';
 import heroBg from '@/assets/hero-diagnostic-lab.jpg';
 import speciesCanineFeline from '@/assets/species-canine-feline.jpg';
@@ -284,8 +284,8 @@ const EmeraldLanding = () => {
               >
                 <div className="relative rounded-[2rem] bg-[#071d15]/80 p-4" style={{ transform: 'translateZ(16px)' }}>
                   <img
-                    src={emeraldHeroMicroscope}
-                    alt="DM-03 microscope in digital diagnostics"
+                    src={emeraldHeroProduct}
+                    alt="Awalife AI-100Vet analyzer devices"
                     className="w-full object-contain drop-shadow-[0_25px_80px_rgba(0,0,0,0.45)]"
                   />
                 </div>
@@ -372,7 +372,7 @@ const EmeraldLanding = () => {
                 loop
                 muted
                 playsInline
-                className="mt-8 w-full rounded-2xl object-cover"
+                className="mt-8 w-full aspect-[16/10] rounded-2xl object-cover"
               />
             </Reveal>
 
@@ -396,7 +396,7 @@ const EmeraldLanding = () => {
                 loop
                 muted
                 playsInline
-                className="mt-8 w-full rounded-2xl object-cover"
+                className="mt-8 w-full aspect-[16/10] rounded-2xl object-cover"
               />
             </Reveal>
           </div>
