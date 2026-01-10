@@ -22,6 +22,8 @@ import heroBg from '@/assets/hero-diagnostic-lab.jpg';
 import speciesCanineFeline from '@/assets/species-canine-feline.jpg';
 import speciesExoticPets from '@/assets/species-exotic-pets.jpg';
 import speciesSmallMammals from '@/assets/species-small-mammals.jpg';
+import aiAnalyzerVideo from '@/assets/ai-analyzer-video.mp4';
+import dm03Video from '@/assets/dm03-video.mp4';
 import Layout from '@/components/layout/Layout';
 
 const Reveal = ({
@@ -112,7 +114,7 @@ const whyAwalife = [
 
 const EmeraldLanding = () => {
   const mapData = useMemo(() => {
-    const map = new DottedMap({ height: 90, grid: 'diagonal' });
+    const map = new DottedMap({ height: 180, grid: 'vertical' });
     const locations = [
       { label: 'Global HQ', lat: 31.2304, lng: 121.4737 },
       { label: 'LATAM', lat: -23.5505, lng: -46.6333 },
@@ -138,14 +140,14 @@ const EmeraldLanding = () => {
     const hqPoint = points.find((point) => point.data?.label === 'Global HQ') ?? points[0];
     const svgMap = map
       .getSVG({
-        shape: 'hexagon',
-        radius: 0.6,
-        color: 'rgba(255, 255, 255, 0.2)',
+        shape: 'circle',
+        radius: 0.45,
+        color: 'rgba(255, 255, 255, 0.25)',
         backgroundColor: 'transparent'
       })
       .replace(
         '<svg ',
-        '<svg width="100%" height="100%" preserveAspectRatio="none" shape-rendering="geometricPrecision" '
+        '<svg width="100%" height="100%" preserveAspectRatio="xMidYMid meet" shape-rendering="crispEdges" '
       );
 
     const lines = points
@@ -364,7 +366,14 @@ const EmeraldLanding = () => {
                   <Link to="/contact">Contact us</Link>
                 </Button>
               </div>
-              <img src={ai100vetNew} alt="AI Morphological Analyzer" className="mt-8 w-full object-contain" />
+              <video
+                src={aiAnalyzerVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="mt-8 w-full rounded-2xl object-cover"
+              />
             </Reveal>
 
             <Reveal className="relative rounded-[2.5rem] border border-emerald-100 bg-[#0d2b21] p-8 text-white transition-transform duration-500 hover:-translate-y-2">
@@ -381,7 +390,14 @@ const EmeraldLanding = () => {
                   <Link to="/contact">Contact us</Link>
                 </Button>
               </div>
-              <img src={microscopeStation} alt="DM-03 Microscope Workstaion" className="mt-8 w-full object-contain" />
+              <video
+                src={dm03Video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="mt-8 w-full rounded-2xl object-cover"
+              />
             </Reveal>
           </div>
         </div>
