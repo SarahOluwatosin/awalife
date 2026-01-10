@@ -19,6 +19,9 @@ import ai100vetNew from '@/assets/ai-100vet-new.png';
 import emeraldHeroMicroscope from '@/assets/emerald-hero-microscope.gif';
 import microscopeStation from '@/assets/microscope-station.png';
 import heroBg from '@/assets/hero-diagnostic-lab.jpg';
+import speciesCanineFeline from '@/assets/species-canine-feline.jpg';
+import speciesExoticPets from '@/assets/species-exotic-pets.jpg';
+import speciesSmallMammals from '@/assets/species-small-mammals.jpg';
 import Layout from '@/components/layout/Layout';
 
 const Reveal = ({
@@ -59,24 +62,24 @@ const heroLines = ['Transform Diagnostic Workflows', 'the Awalife Way'];
 
 const heroTransition = {
   duration: 0.9,
-  ease: [0.16, 1, 0.3, 1]
+  ease: [0.16, 1, 0.3, 1] as [number, number, number, number]
 };
 
 const speciesGallery = [
   {
     title: 'Canine + Feline',
     subtitle: 'Companion diagnostics',
-    image: heroBg
+    image: speciesCanineFeline
   },
   {
     title: 'Exotic Pets',
     subtitle: 'Avian, reptiles, and more',
-    image: ai100vetNew
+    image: speciesExoticPets
   },
   {
     title: 'Small Mammals',
     subtitle: 'Rabbits, rodents, ferrets',
-    image: microscopeStation
+    image: speciesSmallMammals
   }
 ];
 
