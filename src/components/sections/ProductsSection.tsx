@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 import ai100vetEliteImg from '@/assets/ai-100vet-elite.png';
 import microscopeImg from '@/assets/microscope-station.png';
 
@@ -39,8 +40,14 @@ const ProductsSection = () => {
   ];
 
   return (
-    <section id="products" ref={sectionRef} className="py-24">
-      <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+    <section id="products" ref={sectionRef} className="relative py-24 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent animated-gradient" />
+      <div className="absolute -top-24 right-0 h-64 w-64 rounded-full bg-primary/10 blur-3xl animate-pulse-soft pointer-events-none" />
+      <div
+        className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-accent/10 blur-3xl animate-pulse-soft pointer-events-none"
+        style={{ animationDelay: '1.4s' }}
+      />
+      <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
         {products.map((product, i) => (
           <div 
             key={product.id}
@@ -49,15 +56,26 @@ const ProductsSection = () => {
           >
             {/* Image */}
             <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
-              <div className="relative rounded-2xl bg-gradient-to-br from-secondary/50 to-card overflow-hidden p-8 lg:p-12">
+              <div
+                className="relative rounded-2xl bg-gradient-to-br from-secondary/50 to-card overflow-hidden p-8 lg:p-12 shadow-lg"
+                style={{ perspective: '1200px' }}
+              >
                 <span className="absolute top-6 left-6 text-6xl font-bold text-primary/10">
                   {product.number}
                 </span>
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full max-w-md mx-auto object-contain relative z-10"
-                />
+                <motion.div
+                  className="relative"
+                  style={{ transformStyle: 'preserve-3d' }}
+                  whileHover={{ rotateX: 6, rotateY: -8 }}
+                  transition={{ type: 'spring', stiffness: 140, damping: 14 }}
+                >
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full max-w-md mx-auto object-contain relative z-10"
+                    style={{ transform: 'translateZ(50px)' }}
+                  />
+                </motion.div>
               </div>
             </div>
 

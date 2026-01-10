@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 interface StatItemProps {
   value: number;
@@ -42,12 +43,18 @@ const StatItem = ({ value, suffix, label, delay }: StatItemProps) => {
   }, [isVisible, value, delay]);
 
   return (
-    <div ref={ref} className="text-center">
+    <motion.div
+      ref={ref}
+      className="text-center"
+      initial={{ opacity: 0, y: 18 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+      transition={{ duration: 0.6, delay: delay / 1000, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
         {count.toLocaleString()}{suffix}
       </div>
       <div className="text-muted-foreground text-sm">{label}</div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -60,8 +67,10 @@ const StatsSection = () => {
   ];
 
   return (
-    <section id="stats" className="py-20 border-y border-border/30">
-      <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+    <section id="stats" className="relative py-20 border-y border-border/30 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 animated-gradient" />
+      <div className="absolute inset-0 scanlines opacity-15 pointer-events-none" />
+      <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {stats.map((stat, i) => (
             <StatItem key={stat.label} value={stat.value} suffix={stat.suffix} label={stat.label} delay={i * 100} />

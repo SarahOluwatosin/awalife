@@ -282,6 +282,63 @@
   .hero-overlay {
     background: linear-gradient(180deg, hsl(222 47% 6% / 0.9) 0%, hsl(222 47% 6% / 0.7) 50%, hsl(222 47% 6%) 100%);
   }
+
+  /* Subtle tech grid background */
+  .tech-grid {
+    background-image:
+      linear-gradient(90deg, hsl(var(--border) / 0.35) 1px, transparent 1px),
+      linear-gradient(180deg, hsl(var(--border) / 0.35) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .path-dash {
+    stroke-dasharray: 6 10;
+    animation: dash-move 12s linear infinite;
+  }
+
+  /* Animated gradient wash */
+  .animated-gradient {
+    background-size: 200% 200%;
+    animation: gradient-bounce 9s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  }
+
+  .hero-sheen {
+    background-image: radial-gradient(circle at 20% 30%, hsl(var(--primary) / 0.25), transparent 55%),
+      radial-gradient(circle at 80% 70%, hsl(var(--accent) / 0.2), transparent 60%),
+      linear-gradient(120deg, transparent 0%, hsl(var(--primary) / 0.15) 35%, transparent 70%);
+  }
+
+  .gradient-shimmer {
+    background-image: linear-gradient(
+      120deg,
+      transparent 0%,
+      hsl(var(--primary) / 0.18) 40%,
+      hsl(var(--accent) / 0.12) 50%,
+      transparent 70%
+    );
+    background-size: 200% 100%;
+    animation: shimmer-sweep 6s ease-in-out infinite;
+    mix-blend-mode: screen;
+  }
+
+  /* Scanline overlay */
+  .scanlines {
+    background-image: repeating-linear-gradient(
+      180deg,
+      hsl(var(--foreground) / 0.06) 0px,
+      hsl(var(--foreground) / 0.06) 1px,
+      transparent 1px,
+      transparent 6px
+    );
+    mix-blend-mode: soft-light;
+  }
+
+  /* Scanline sweep */
+  .scanline-sweep {
+    background: linear-gradient(180deg, transparent, hsl(var(--primary) / 0.35), transparent);
+    filter: blur(6px);
+    animation: scanline-sweep 7s ease-in-out infinite;
+  }
 }
 
 @layer utilities {
@@ -345,5 +402,63 @@
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient-bounce {
+  0% {
+    background-position: 10% 20%;
+  }
+  25% {
+    background-position: 90% 30%;
+  }
+  50% {
+    background-position: 20% 85%;
+  }
+  75% {
+    background-position: 85% 70%;
+  }
+  100% {
+    background-position: 10% 20%;
+  }
+}
+
+@keyframes scanline-sweep {
+  0% {
+    transform: translateY(-140%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+  }
+  60% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(140%);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    background-position: -120% 0%;
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    background-position: 120% 0%;
+    opacity: 0.2;
+  }
+}
+
+@keyframes dash-move {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -120;
   }
 }

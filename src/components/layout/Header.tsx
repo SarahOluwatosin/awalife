@@ -16,6 +16,17 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
+  const isEmerald = location.pathname === '/landing/emerald';
+  const isDarkHero = isEmerald && !isScrolled;
+
+  const navTextClass = (active: boolean) =>
+    `px-4 py-2 text-sm font-medium transition-colors rounded-lg ${
+      active
+        ? 'text-primary'
+        : isDarkHero
+          ? 'text-white/80 hover:text-white'
+          : 'text-foreground/70 hover:text-foreground'
+    }`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,7 +64,11 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center group">
-            <img src={awalifeLogo} alt="Awalife" className="h-10 w-auto" />
+            <img
+              src={awalifeLogo}
+              alt="Awalife"
+              className={`h-10 w-auto transition-all ${isDarkHero ? 'brightness-200 drop-shadow' : ''}`}
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -61,7 +76,7 @@ const Header = () => {
             {/* Product Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg flex items-center gap-1 ${location.pathname.startsWith('/products') ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
+                <button className={`${navTextClass(location.pathname.startsWith('/products'))} flex items-center gap-1`}>
                   {t.nav.products}
                   <ChevronDown className="w-3 h-3" />
                 </button>
@@ -81,7 +96,7 @@ const Header = () => {
             {/* Application Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg flex items-center gap-1 ${location.pathname.startsWith('/applications') ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
+                <button className={`${navTextClass(location.pathname.startsWith('/applications'))} flex items-center gap-1`}>
                   {t.nav.applications}
                   <ChevronDown className="w-3 h-3" />
                 </button>
@@ -98,14 +113,14 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link to="/resources" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/resources' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
+            <Link to="/resources" className={navTextClass(location.pathname === '/resources')}>
               {t.nav.resources}
             </Link>
 
             {/* Company Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg flex items-center gap-1 ${location.pathname === '/company' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
+                <button className={`${navTextClass(location.pathname === '/company')} flex items-center gap-1`}>
                   {t.nav.company}
                   <ChevronDown className="w-3 h-3" />
                 </button>
@@ -122,7 +137,7 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link to="/contact" className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === '/contact' ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
+            <Link to="/contact" className={navTextClass(location.pathname === '/contact')}>
               {t.nav.contact}
             </Link>
           </nav>
@@ -138,7 +153,12 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="lg:hidden p-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <button
+            className={`lg:hidden p-2 transition-colors ${
+              isDarkHero ? 'text-white hover:text-white' : 'text-foreground hover:text-primary'
+            }`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>

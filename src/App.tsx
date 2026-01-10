@@ -2,7 +2,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence, MotionConfig } from "framer-motion";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
 import Company from "./pages/About";
@@ -23,8 +24,41 @@ import ModernLanding from "./pages/landing/ModernLanding";
 import FizensLanding from "./pages/landing/FizensLanding";
 import HealthSyncLanding from "./pages/landing/HealthSyncLanding";
 import EmeraldLanding from "./pages/landing/EmeraldLanding";
+import PageTransition from "@/components/animations/PageTransition";
 
 const queryClient = new QueryClient();
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <MotionConfig reducedMotion="user">
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+          <Route path="/landing/healthsync" element={<PageTransition><HealthSyncLanding /></PageTransition>} />
+          <Route path="/landing/medtech" element={<PageTransition><MedTechLanding /></PageTransition>} />
+          <Route path="/landing/modern" element={<PageTransition><ModernLanding /></PageTransition>} />
+          <Route path="/landing/fizens" element={<PageTransition><FizensLanding /></PageTransition>} />
+          <Route path="/landing/healthsync" element={<PageTransition><HealthSyncLanding /></PageTransition>} />
+          <Route path="/landing/emerald" element={<PageTransition><EmeraldLanding /></PageTransition>} />
+          <Route path="/company" element={<PageTransition><Company /></PageTransition>} />
+          <Route path="/products" element={<PageTransition><Products /></PageTransition>} />
+          <Route path="/products/:productId" element={<PageTransition><ProductDetail /></PageTransition>} />
+          <Route path="/applications" element={<PageTransition><Applications /></PageTransition>} />
+          <Route path="/applications/blood" element={<PageTransition><BloodAnalysis /></PageTransition>} />
+          <Route path="/applications/feces" element={<PageTransition><FecesAnalysis /></PageTransition>} />
+          <Route path="/applications/urine" element={<PageTransition><UrineAnalysis /></PageTransition>} />
+          <Route path="/applications/pleural-effusion" element={<PageTransition><PleuralEffusion /></PageTransition>} />
+          <Route path="/applications/exotic" element={<PageTransition><ExoticAnimals /></PageTransition>} />
+          <Route path="/resources" element={<PageTransition><Resources /></PageTransition>} />
+          <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+        </Routes>
+      </AnimatePresence>
+    </MotionConfig>
+  );
+};
 
 // App component with providers
 const App = () => (
@@ -34,27 +68,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/landing/healthsync" element={<HealthSyncLanding />} />
-            <Route path="/landing/medtech" element={<MedTechLanding />} />
-            <Route path="/landing/modern" element={<ModernLanding />} />
-            <Route path="/landing/fizens" element={<FizensLanding />} />
-            <Route path="/landing/healthsync" element={<HealthSyncLanding />} />
-            <Route path="/landing/emerald" element={<EmeraldLanding />} />
-            <Route path="/company" element={<Company />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:productId" element={<ProductDetail />} />
-            <Route path="/applications" element={<Applications />} />
-            <Route path="/applications/blood" element={<BloodAnalysis />} />
-            <Route path="/applications/feces" element={<FecesAnalysis />} />
-            <Route path="/applications/urine" element={<UrineAnalysis />} />
-            <Route path="/applications/pleural-effusion" element={<PleuralEffusion />} />
-            <Route path="/applications/exotic" element={<ExoticAnimals />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AnimatedRoutes />
         </BrowserRouter>
       </TooltipProvider>
     </LanguageProvider>

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useMemo } from 'react';
 import {
   ArrowUpRight,
   Cpu,
@@ -12,8 +13,12 @@ import {
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import { motion } from 'framer-motion';
+import DottedMap from 'dotted-map';
 import ai100vetNew from '@/assets/ai-100vet-new.png';
+import emeraldHeroMicroscope from '@/assets/emerald-hero-microscope.gif';
 import microscopeStation from '@/assets/microscope-station.png';
+import heroBg from '@/assets/hero-diagnostic-lab.jpg';
 import Layout from '@/components/layout/Layout';
 
 const Reveal = ({
@@ -50,6 +55,31 @@ const stats = [
   { value: '20,000+', label: 'Animal Hospitals Trusted' }
 ];
 
+const heroLines = ['Transform Diagnostic Workflows', 'the Awalife Way'];
+
+const heroTransition = {
+  duration: 0.9,
+  ease: [0.16, 1, 0.3, 1]
+};
+
+const speciesGallery = [
+  {
+    title: 'Canine + Feline',
+    subtitle: 'Companion diagnostics',
+    image: heroBg
+  },
+  {
+    title: 'Exotic Pets',
+    subtitle: 'Avian, reptiles, and more',
+    image: ai100vetNew
+  },
+  {
+    title: 'Small Mammals',
+    subtitle: 'Rabbits, rodents, ferrets',
+    image: microscopeStation
+  }
+];
+
 const whyAwalife = [
   {
     icon: Layers,
@@ -78,17 +108,78 @@ const whyAwalife = [
 ];
 
 const EmeraldLanding = () => {
+  const mapData = useMemo(() => {
+    const map = new DottedMap({ height: 90, grid: 'diagonal' });
+    const locations = [
+      { label: 'Global HQ', lat: 31.2304, lng: 121.4737 },
+      { label: 'LATAM', lat: -23.5505, lng: -46.6333 },
+      { label: 'EU', lat: 48.8566, lng: 2.3522 },
+      { label: 'UK', lat: 51.5074, lng: -0.1278 },
+      { label: 'Africa', lat: -1.2921, lng: 36.8219 },
+      { label: 'India', lat: 28.6139, lng: 77.209 },
+      { label: 'APAC', lat: 1.3521, lng: 103.8198 }
+    ];
+
+    const points = locations.map((location, index) =>
+      map.addPin({
+        lat: location.lat,
+        lng: location.lng,
+        data: { label: location.label },
+        svgOptions: {
+          radius: index === 0 ? 1.3 : 1.05,
+          color: index === 0 ? 'rgba(134, 239, 172, 0.8)' : 'rgba(134, 239, 172, 0.55)'
+        }
+      })
+    );
+
+    const hqPoint = points.find((point) => point.data?.label === 'Global HQ') ?? points[0];
+    const svgMap = map
+      .getSVG({
+        shape: 'hexagon',
+        radius: 0.6,
+        color: 'rgba(255, 255, 255, 0.2)',
+        backgroundColor: 'transparent'
+      })
+      .replace(
+        '<svg ',
+        '<svg width="100%" height="100%" preserveAspectRatio="none" shape-rendering="geometricPrecision" '
+      );
+
+    const lines = points
+      .filter((point) => point !== hqPoint)
+      .map((point) => {
+        const midpointX = (hqPoint.x + point.x) / 2;
+        const midpointY = (hqPoint.y + point.y) / 2;
+        const arcOffset = Math.min(16, Math.max(6, Math.abs(point.x - hqPoint.x) * 0.12));
+        return `M ${hqPoint.x} ${hqPoint.y} Q ${midpointX} ${midpointY - arcOffset} ${point.x} ${point.y}`;
+      });
+
+    return {
+      svgMap,
+      width: map.image.width,
+      height: map.image.height,
+      lines,
+      points: points.map((point) => ({
+        x: point.x,
+        y: point.y,
+        label: point.data?.label ?? ''
+      }))
+    };
+  }, []);
+
   return (
     <Layout>
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#061a14] text-white">
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 animated-gradient"
           style={{
-            background:
+            backgroundImage:
               'radial-gradient(70% 60% at 80% 20%, rgba(24, 201, 143, 0.35), transparent 60%), radial-gradient(50% 60% at 10% 70%, rgba(86, 235, 174, 0.25), transparent 65%)'
           }}
         />
+        <div className="absolute inset-0 hero-sheen opacity-60" />
+        <div className="absolute inset-0 gradient-shimmer opacity-70" />
         <div
           className="absolute inset-0 opacity-30"
           style={{
@@ -100,18 +191,54 @@ const EmeraldLanding = () => {
         <div className="container mx-auto px-6 sm:px-10 lg:px-20 xl:px-28 2xl:px-32 relative z-10">
           <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 items-center py-24 lg:py-32">
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] shadow-[0_0_30px_rgba(134,239,172,0.18)]">
+              <motion.div
+                initial={{ opacity: 0, y: -16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ ...heroTransition, delay: 0.05 }}
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.3em] shadow-[0_0_30px_rgba(134,239,172,0.18)] sm:px-4 sm:py-2 sm:text-xs"
+              >
                 <Sparkles className="h-4 w-4 text-emerald-200" />
                 AI Morphological POCT Platform
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight">
-                Precision morphology for every pet sample.
+              </motion.div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-6xl font-semibold leading-[1.05] tracking-tight text-balance max-w-[720px]">
+                {heroLines.map((line, lineIndex) => (
+                  <span key={line} className="block overflow-hidden">
+                    <span className="inline-flex flex-wrap gap-x-3">
+                      {line.split(' ').map((word, wordIndex) => (
+                        <motion.span
+                          key={`${line}-${word}`}
+                          className="inline-block"
+                          initial={{ y: -28, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{
+                            ...heroTransition,
+                            delay: 0.18 + lineIndex * 0.12 + wordIndex * 0.06
+                          }}
+                        >
+                          {word}
+                        </motion.span>
+                      ))}
+                    </span>
+                  </span>
+                ))}
               </h1>
-              <p className="text-base md:text-lg text-white/70 max-w-xl">
-                Awalife brings AI-powered morphological analysis to blood, urine, feces, and pleural effusion,
-                standardizing diagnostics with speed, accuracy, and confidence for modern veterinary teams.
-              </p>
-              <div className="flex flex-wrap gap-4">
+              <motion.p
+                className="text-base md:text-lg text-white/70 max-w-2xl"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ ...heroTransition, delay: 0.38 }}
+              >
+                Pioneering the &ldquo;AI Morphological POCT Technology Platform,&rdquo; Awalife become the first to
+                enable intelligent morphological analysis of various pet samples including blood, urine, feces,
+                and pleural effusion, advancing the application and standardization of AI technology in pet
+                diagnostic scenarios.
+              </motion.p>
+              <motion.div
+                className="flex flex-wrap gap-4"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ ...heroTransition, delay: 0.5 }}
+              >
                 <Button
                   size="lg"
                   className="bg-emerald-300 text-[#06251c] hover:bg-emerald-200 rounded-full px-8 py-6 text-base"
@@ -122,34 +249,50 @@ const EmeraldLanding = () => {
                     <ArrowUpRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full border-white/40 text-white px-8 py-6 text-base"
-                  asChild
-                >
-                  <Link to="/products">Explore platform</Link>
-                </Button>
-              </div>
+              </motion.div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6">
-                {stats.map((stat) => (
-                  <div key={stat.label} className="border-l border-white/15 pl-4 transition-all duration-500 hover:-translate-y-1">
+                {stats.map((stat, index) => (
+                  <motion.div
+                    key={stat.label}
+                    className="border-l border-white/15 pl-4 transition-all duration-500 hover:-translate-y-1"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ ...heroTransition, delay: 0.6 + index * 0.08 }}
+                  >
                     <div className="text-xl md:text-2xl font-semibold text-emerald-200">{stat.value}</div>
                     <div className="text-xs text-white/60 leading-snug">{stat.label}</div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
 
-            <div className="relative">
+            <div className="relative" style={{ perspective: '1200px' }}>
               <div className="absolute -top-10 -right-8 h-40 w-40 rounded-full bg-emerald-300/30 blur-3xl" />
               <div className="absolute -bottom-12 left-0 h-40 w-40 rounded-full bg-emerald-200/20 blur-3xl" />
-              <div className="relative rounded-[2.5rem] border border-white/15 bg-white/5 p-6 backdrop-blur transition-transform duration-700 hover:-translate-y-2">
-                <img src={ai100vetNew} alt="Awalife AI Morphological Analyzer" className="w-full object-contain" />
-              </div>
-              <div className="absolute -bottom-10 right-6 rounded-2xl bg-white/10 px-4 py-3 text-xs text-white/80 shadow-lg backdrop-blur animate-float">
+              <motion.div
+                className="relative rounded-[2.5rem] border border-white/15 bg-white/5 p-6 backdrop-blur-xl shadow-[0_35px_120px_rgba(6,38,26,0.5)]"
+                style={{ transformStyle: 'preserve-3d' }}
+                initial={{ opacity: 0, y: 24, rotateX: -6 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{ ...heroTransition, delay: 0.35 }}
+                whileHover={{ rotateY: -8, rotateX: 4, scale: 1.01 }}
+              >
+                <div className="relative rounded-[2rem] bg-[#071d15]/80 p-4" style={{ transform: 'translateZ(16px)' }}>
+                  <img
+                    src={emeraldHeroMicroscope}
+                    alt="DM-03 microscope in digital diagnostics"
+                    className="w-full object-contain drop-shadow-[0_25px_80px_rgba(0,0,0,0.45)]"
+                  />
+                </div>
+              </motion.div>
+              <motion.div
+                className="absolute -bottom-10 right-6 rounded-2xl bg-white/10 px-4 py-3 text-xs text-white/80 shadow-lg backdrop-blur animate-float"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ ...heroTransition, delay: 0.7 }}
+              >
                 99%+ AI recognition accuracy
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -271,6 +414,40 @@ const EmeraldLanding = () => {
         </div>
       </section>
 
+      {/* Species Gallery */}
+      <section className="bg-[#06130f] text-white">
+        <div className="container mx-auto px-6 sm:px-10 lg:px-20 xl:px-28 2xl:px-32 py-16 lg:py-20">
+          <Reveal className="max-w-2xl">
+            <p className="text-xs uppercase tracking-[0.35em] text-white/50 mb-4">Species Coverage</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold">
+              Built for every species, organized by category.
+            </h2>
+            <p className="mt-4 text-base text-white/60">
+              Expand diagnostics beyond traditional companions with AI-powered morphology across diverse pet types.
+            </p>
+          </Reveal>
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {speciesGallery.map((item, index) => (
+              <Reveal key={item.title} delay={index * 120}>
+                <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5">
+                  <img
+                    src={item.image}
+                    alt={`${item.title} diagnostics`}
+                    className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-6">
+                    <div className="text-lg font-semibold">{item.title}</div>
+                    <p className="mt-1 text-sm text-white/70">{item.subtitle}</p>
+                  </div>
+                  <div className="absolute inset-0 scanlines opacity-20 pointer-events-none" />
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Credibility */}
       <section className="bg-white">
         <div className="container mx-auto px-6 sm:px-10 lg:px-20 xl:px-28 2xl:px-32 py-16">
@@ -295,6 +472,95 @@ const EmeraldLanding = () => {
         </div>
       </section>
 
+      {/* Global Reach */}
+      <section className="bg-white">
+        <div className="container mx-auto px-6 sm:px-10 lg:px-20 xl:px-28 2xl:px-32 py-10 lg:py-12">
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-[#071511] text-white">
+            <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-[#0a231a] to-[#16382c]" />
+            <div className="absolute inset-0 hero-sheen opacity-50" />
+            <div className="absolute inset-0 gradient-shimmer opacity-40" />
+            <div className="relative grid lg:grid-cols-[1.05fr_1.15fr] gap-10 items-center px-8 py-10 lg:px-16 lg:py-12">
+              <div>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight">
+                  <span className="block text-white">Grow</span>
+                  <span className="block text-emerald-200">Globally</span>
+                </h2>
+                <p className="mt-6 text-lg text-white/85 max-w-md">
+                  Trusted in 150+ countries and regions, Awalife helps veterinary clinics standardize
+                  diagnostics across LATAM, APAC, Europe, and beyond.
+                </p>
+                <p className="mt-6 text-sm text-white/60 max-w-md">
+                  Enterprise-grade AI morphology insights keep results consistent across species, samples,
+                  and clinic workflows.
+                </p>
+              </div>
+
+              <div className="relative h-[320px] sm:h-[380px] lg:h-[420px]">
+                <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-r from-transparent via-emerald-300/10 to-transparent" />
+                <div
+                  className="absolute inset-0"
+                  style={{ imageRendering: 'crisp-edges' }}
+                  aria-hidden="true"
+                  dangerouslySetInnerHTML={{ __html: mapData.svgMap }}
+                />
+
+                <svg
+                  className="absolute inset-0 h-full w-full"
+                  viewBox={`0 0 ${mapData.width} ${mapData.height}`}
+                  preserveAspectRatio="none"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  {mapData.lines.map((line, index) => (
+                    <path
+                      key={`${line}-${index}`}
+                      d={line}
+                      className="path-dash"
+                      stroke="#b6ff6a"
+                      strokeWidth="1.25"
+                      strokeLinecap="round"
+                    />
+                  ))}
+                </svg>
+
+                {mapData.points.map((point) => {
+                  const left = `${(point.x / mapData.width) * 100}%`;
+                  const top = `${(point.y / mapData.height) * 100}%`;
+                  const isHq = point.label === 'Global HQ';
+                  return (
+                    <div
+                      key={point.label}
+                      className="absolute flex items-center gap-2"
+                      style={{ left, top, transform: 'translate(-50%, -50%)' }}
+                    >
+                      <div className={`relative ${isHq ? 'h-6 w-6' : 'h-3.5 w-3.5'}`}>
+                        <span
+                          className={`absolute inset-0 rounded-full ${
+                            isHq ? 'bg-[#b6ff6a]/40 blur-[10px]' : 'bg-[#b6ff6a]/40 blur-[6px]'
+                          }`}
+                        />
+                        <span className="absolute inset-0 rounded-full border border-[#b6ff6a]/70" />
+                        <span
+                          className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full ${
+                            isHq ? 'h-3 w-3 bg-[#b6ff6a]' : 'h-1.5 w-1.5 bg-[#b6ff6a]'
+                          }`}
+                        />
+                      </div>
+                      <span
+                        className={`uppercase tracking-[0.25em] ${
+                          isHq ? 'text-xs text-white/80' : 'text-[11px] text-white/70'
+                        }`}
+                      >
+                        {point.label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* CTA */}
       <section className="bg-[#061a14] text-white">
         <div className="container mx-auto px-6 sm:px-10 lg:px-20 xl:px-28 2xl:px-32 py-20">
