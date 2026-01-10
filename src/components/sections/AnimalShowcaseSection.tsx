@@ -28,8 +28,8 @@ const AnimalIcon = ({ type, gradientId }: { type: typeof animals[number]['type']
     fill: 'none',
     stroke: `url(#${gradientId})`,
     strokeWidth: 2.6,
-    strokeLinecap: 'round',
-    strokeLinejoin: 'round'
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const
   };
 
   if (type === 'cat') {
