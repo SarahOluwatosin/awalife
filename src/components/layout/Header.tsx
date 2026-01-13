@@ -60,7 +60,7 @@ const Header = () => {
         isScrolled ? 'py-3 glass' : 'py-5 bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-10">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center group">

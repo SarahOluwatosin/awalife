@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import ai100vetEliteImg from '@/assets/ai-100vet-elite.png';
+import emeraldHeroProduct from '@/assets/emerald-hero-product.png';
 import microscopeImg from '@/assets/microscope-station.png';
 
 const ProductsSection = () => {
@@ -21,7 +21,7 @@ const ProductsSection = () => {
   const products = [
     { 
       id: 'ai-100vet-elite', 
-      image: ai100vetEliteImg, 
+      image: emeraldHeroProduct, 
       number: '02',
       name: 'Awalife AI Morphological Analyzer', 
       description: 'The Awalife AI Morphological Analyzer empowers clinics with smarter diagnostics and more precise analysis—making testing faster, treatments more accurate, and veterinary services more professional.',
@@ -34,8 +34,8 @@ const ProductsSection = () => {
       number: '03',
       name: 'DM-03 Microscope Workstation', 
       description: 'It combines smarter imaging with effortless operation, designed for veterinary professionals.',
-      primaryCta: 'Find out more',
-      secondaryCta: 'Speak with an advisor',
+      primaryCta: 'Learn more',
+      secondaryCta: 'Contact us',
     },
   ];
 

@@ -1,8 +1,6 @@
 import Layout from '@/components/layout/Layout';
 import HeroSection from '@/components/sections/HeroSection';
-import AnimalShowcaseSection from '@/components/sections/AnimalShowcaseSection';
 import StatsSection from '@/components/sections/StatsSection';
-import AboutSection from '@/components/sections/AboutSection';
 import ProductsSection from '@/components/sections/ProductsSection';
 import WhyUsSection from '@/components/sections/WhyUsSection';
 import CTASection from '@/components/sections/CTASection';
@@ -47,14 +45,6 @@ const Index = () => {
             viewport={{ once: true, amount: 0.2 }}
             variants={sectionVariants}
           >
-            <AboutSection />
-          </motion.div>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={sectionVariants}
-          >
             <ProductsSection />
           </motion.div>
           <motion.div
@@ -64,14 +54,6 @@ const Index = () => {
             variants={sectionVariants}
           >
             <WhyUsSection />
-          </motion.div>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={sectionVariants}
-          >
-            <AnimalShowcaseSection />
           </motion.div>
           <motion.div
             initial="hidden"

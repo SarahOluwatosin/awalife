@@ -18,19 +18,11 @@ const CTASection = () => {
             <span className="text-primary">Next Level</span>{' '}
             With Awalife
           </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-            Want to learn more about our diagnostic solutions? Adapt, innovate and thrive with more value from every test flowing through your practice.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4 mt-6">
             <Button className="btn-gradient group" size="lg" asChild>
               <Link to="/contact">
                 Contact Us
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="lg" className="border-border/50 hover:bg-card" asChild>
-              <Link to="/products">
-                View Products
               </Link>
             </Button>
           </div>

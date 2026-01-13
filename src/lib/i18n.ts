@@ -16,7 +16,7 @@ export const translations = {
       applications: 'Applications',
       resources: 'Resources',
       contact: 'Contact',
-      getStarted: 'Request Quote',
+      getStarted: 'Contact us',
     },
     hero: {
       badge: 'AI-Assisted Morphology Analysis',
@@ -227,7 +227,7 @@ export const translations = {
       applications: '应用',
       resources: '资源',
       contact: '联系我们',
-      getStarted: '咨询报价',
+      getStarted: '联系我们',
     },
     hero: {
       badge: 'AI辅助形态学分析',
@@ -438,7 +438,7 @@ export const translations = {
       applications: 'Anwendungen',
       resources: 'Ressourcen',
       contact: 'Kontakt',
-      getStarted: 'Angebot anfordern',
+      getStarted: 'Kontaktieren Sie uns',
     },
     hero: {
       badge: 'KI-gestützte Morphologieanalyse',
@@ -649,7 +649,7 @@ export const translations = {
       applications: 'Aplicaciones',
       resources: 'Recursos',
       contact: 'Contacto',
-      getStarted: 'Solicitar presupuesto',
+      getStarted: 'Contáctanos',
     },
     hero: {
       badge: 'Análisis morfológico asistido por IA',

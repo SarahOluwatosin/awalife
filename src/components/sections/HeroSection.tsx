@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronDown, Play } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-diagnostic-lab.jpg';
@@ -28,14 +28,10 @@ const HeroSection = () => {
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           {/* Feature Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 opacity-0 animate-fade-in">
-            <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-xs font-medium">
-              AI-Powered
+          <div className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 opacity-0 animate-fade-in text-center">
+            <span className="text-[11px] sm:text-sm text-foreground/80 tracking-[0.02em] whitespace-nowrap">
+              a pioneer in <span className="text-primary font-semibold">AI-powered</span> morphological analysis for animals
             </span>
-            <span className="text-sm text-foreground">
-              Morphological POCT Platform
-            </span>
-            <ArrowRight className="w-4 h-4 text-primary" />
           </div>
 
           {/* Headline */}
@@ -54,14 +50,10 @@ const HeroSection = () => {
           {/* CTAs */}
           <div className="flex flex-wrap gap-4 mb-10 opacity-0 animate-fade-in delay-300">
             <Button size="lg" className="btn-gradient group px-8" asChild>
-              <Link to="/products">
-                Discover More
+              <Link to="/contact">
+                Contact us
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-            </Button>
-            <Button size="lg" variant="outline" className="border-border bg-background/50 hover:bg-card px-8">
-              <Play className="mr-2 w-4 h-4" />
-              Watch Demo
             </Button>
           </div>
 
