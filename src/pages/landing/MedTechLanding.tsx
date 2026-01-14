@@ -3,9 +3,9 @@ import { ArrowRight, ChevronDown, Microscope, Cpu, Shield, Award, Globe, Layers,
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation, useParallax, useCountUp, useStaggerAnimation } from '@/hooks/use-scroll-animation';
-import heroBg from '@/assets/hero-bg.jpg';
+import heroBg from '@/assets/hero-medtech.png';
 import analyzerProducts from '@/assets/awalife-analyzer-products.png';
-import dm03Microscope from '@/assets/dm03-microscope.png';
+import dm03Microscope from '@/assets/dm03-medtech.png';
 import Layout from '@/components/layout/Layout';
 
 // Animated section wrapper
@@ -194,12 +194,12 @@ const MedTechLanding = () => {
                   </Button>
                 </div>
               </div>
-              <div className="order-1 lg:order-2 relative">
+              <div className="order-1 lg:order-2 relative h-[320px] sm:h-[360px] lg:h-[400px] overflow-hidden rounded-3xl flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl blur-3xl" />
                 <img 
                   src={analyzerProducts} 
                   alt="AI-100Vet Elite" 
-                  className="relative w-full max-w-lg mx-auto hover:scale-105 transition-transform duration-700"
+                  className="relative h-full w-full object-cover hover:scale-105 transition-transform duration-700"
                 />
               </div>
             </div>
