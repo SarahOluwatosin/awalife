@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation, useParallax, useCountUp, useStaggerAnimation } from '@/hooks/use-scroll-animation';
 import heroBg from '@/assets/hero-bg.jpg';
-import ai100vet from '@/assets/ai-100vet.png';
-import microscopeStation from '@/assets/microscope-station.png';
-import reagents from '@/assets/reagents.png';
+import analyzerProducts from '@/assets/awalife-analyzer-products.png';
+import dm03Microscope from '@/assets/dm03-microscope.png';
 import Layout from '@/components/layout/Layout';
 
 // Animated section wrapper
@@ -96,12 +95,12 @@ const MedTechLanding = () => {
         </div>
 
         {/* Hero Content - Left aligned bold block */}
-        <div className="container mx-auto px-6 lg:px-12 relative z-10">
+        <div className="container mx-auto px-6 sm:px-10 lg:px-20 xl:px-24 relative z-10">
           <div className="max-w-3xl">
             {/* Accent Block */}
             <div className="inline-block bg-primary text-primary-foreground px-6 py-4 mb-8 animate-fade-in">
-              <span className="text-sm font-semibold tracking-widest uppercase">
-                The Future of Veterinary Diagnostics
+              <span className="text-sm font-semibold tracking-widest">
+                A PIONEER IN AI-POWERED MORPHOLOGICAL ANALYSIS FOR ANIMALS
               </span>
             </div>
 
@@ -128,9 +127,6 @@ const MedTechLanding = () => {
                   <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-2">
-                Watch Demo
-              </Button>
             </div>
           </div>
         </div>
@@ -143,7 +139,7 @@ const MedTechLanding = () => {
 
       {/* Stats Section - Dark Block */}
       <section className="relative py-24 bg-secondary overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-12">
+        <div className="container mx-auto px-6 sm:px-10 lg:px-20 xl:px-24">
           <div 
             ref={statsRef}
             className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12"
@@ -173,11 +169,83 @@ const MedTechLanding = () => {
         </div>
       </section>
 
+      {/* Product Showcase - Split Sections */}
+      <section className="relative">
+        {/* Product 1 */}
+        <AnimatedSection className="py-24 bg-secondary/50">
+          <div className="container mx-auto px-6 sm:px-10 lg:px-20 xl:px-24">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="order-2 lg:order-1">
+                <div className="text-primary font-semibold tracking-widest text-sm mb-4">FEATURED PRODUCT</div>
+                <h3 className="text-4xl md:text-5xl font-bold mb-6">Awalife AI Morphological Analyzer</h3>
+                <p className="text-xl text-muted-foreground mb-8">
+                  The Awalife AI Morphological Analyzer empowers clinics with smarter diagnostics and more
+                  precise analysis, making testing faster, treatments more accurate, and veterinary services
+                  more professional.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <Button className="btn-gradient group" asChild>
+                    <Link to="/products">
+                      Learn more <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                  <Button variant="outline" className="border-2" asChild>
+                    <Link to="/contact">Contact us</Link>
+                  </Button>
+                </div>
+              </div>
+              <div className="order-1 lg:order-2 relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl blur-3xl" />
+                <img 
+                  src={analyzerProducts} 
+                  alt="AI-100Vet Elite" 
+                  className="relative w-full max-w-lg mx-auto hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+
+        {/* Product 2 */}
+        <AnimatedSection className="py-24">
+          <div className="container mx-auto px-6 sm:px-10 lg:px-20 xl:px-24">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="relative h-[320px] sm:h-[360px] lg:h-[400px] overflow-hidden rounded-3xl flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-bl from-accent/20 to-primary/10 rounded-3xl blur-3xl" />
+                <img 
+                  src={dm03Microscope} 
+                  alt="DM-03 Microscope Workstation" 
+                  className="relative h-full w-full object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              <div>
+                <div className="text-primary font-semibold tracking-widest text-sm mb-4">IMAGING SOLUTION</div>
+                <h3 className="text-4xl md:text-5xl font-bold mb-6">DM-03 Microscope Workstation</h3>
+                <p className="text-xl text-muted-foreground mb-8">
+                  It combines smarter imaging with effortless operation, designed for veterinary
+                  professionals.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <Button className="btn-gradient group" asChild>
+                    <Link to="/products">
+                      Learn more <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                  <Button variant="outline" className="border-2" asChild>
+                    <Link to="/contact">Contact us</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+      </section>
+
       {/* Feature Cards Section */}
       <section className="py-32 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         
-        <div className="container mx-auto px-6 lg:px-12">
+        <div className="container mx-auto px-6 sm:px-10 lg:px-20 xl:px-24">
           <AnimatedSection className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               WHY AWALIFE ?
@@ -213,117 +281,21 @@ const MedTechLanding = () => {
         </div>
       </section>
 
-      {/* Product Showcase - Split Sections */}
-      <section className="relative">
-        {/* Product 1 */}
-        <AnimatedSection className="py-24 bg-secondary/50">
-          <div className="container mx-auto px-6 lg:px-12">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="order-2 lg:order-1">
-                <div className="text-primary font-semibold tracking-widest text-sm mb-4">FEATURED PRODUCT</div>
-                <h3 className="text-4xl md:text-5xl font-bold mb-6">Awalife AI Morphological Analyzer</h3>
-                <p className="text-xl text-muted-foreground mb-8">
-                  The Awalife AI Morphological Analyzer empowers clinics with smarter diagnostics and more
-                  precise analysis, making testing faster, treatments more accurate, and veterinary services
-                  more professional.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <Button className="btn-gradient group" asChild>
-                    <Link to="/products">
-                      Learn more <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </Button>
-                  <Button variant="outline" className="border-2" asChild>
-                    <Link to="/contact">Contact us</Link>
-                  </Button>
-                </div>
-              </div>
-              <div className="order-1 lg:order-2 relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl blur-3xl" />
-                <img 
-                  src={ai100vet} 
-                  alt="AI-100Vet Elite" 
-                  className="relative w-full max-w-lg mx-auto hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
-
-        {/* Product 2 */}
-        <AnimatedSection className="py-24">
-          <div className="container mx-auto px-6 lg:px-12">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-bl from-accent/20 to-primary/10 rounded-3xl blur-3xl" />
-                <img 
-                  src={microscopeStation} 
-                  alt="Digital Microscope Station" 
-                  className="relative w-full max-w-lg mx-auto hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              <div>
-                <div className="text-primary font-semibold tracking-widest text-sm mb-4">IMAGING SOLUTION</div>
-                <h3 className="text-4xl md:text-5xl font-bold mb-6">DM-03 Microscope Workstaion</h3>
-                <p className="text-xl text-muted-foreground mb-8">
-                  It combines smarter imaging with effortless operation, designed for veterinary
-                  professionals.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <Button className="btn-gradient group" asChild>
-                    <Link to="/products">
-                      Learn more <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </Button>
-                  <Button variant="outline" className="border-2" asChild>
-                    <Link to="/contact">Contact us</Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
-      </section>
-
-      {/* Certifications Banner */}
-      <section className="py-16 bg-card border-y border-border/50">
-        <div className="container mx-auto px-6 lg:px-12">
-          <AnimatedSection className="flex flex-wrap items-center justify-center gap-12 lg:gap-20">
-            {[
-              { icon: Award, label: 'ISO 13485 Certified' },
-              { icon: Shield, label: 'CE Marked' },
-              { icon: Globe, label: 'FDA Registered' },
-              { icon: Award, label: 'GMP Compliant' }
-            ].map((cert, i) => (
-              <div key={i} className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
-                <cert.icon className="w-8 h-8" />
-                <span className="font-medium">{cert.label}</span>
-              </div>
-            ))}
-          </AnimatedSection>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-32 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
         
-        <div className="container mx-auto px-6 lg:px-12 relative z-10">
+        <div className="container mx-auto px-6 sm:px-10 lg:px-20 xl:px-24 relative z-10">
           <AnimatedSection className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8">
-              Ready to transform your{' '}
-              <span className="gradient-text">diagnostic capabilities?</span>
+            <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">
+              Get Started
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-10">
+              Elevate Your Diagnostics to the <span className="text-primary">Next Level</span> With Awalife
             </h2>
-            <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Join over 500 veterinary clinics worldwide who trust AWALIFE for their 
-              diagnostic needs. Contact us today for a personalized demonstration.
-            </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button size="lg" className="btn-gradient text-lg px-10 py-6">
-                Schedule Demo
-              </Button>
-              <Button size="lg" variant="outline" className="text-lg px-10 py-6 border-2" asChild>
-                <Link to="/contact">Contact Sales</Link>
+              <Button size="lg" className="btn-gradient text-lg px-10 py-6" asChild>
+                <Link to="/contact">Contact us</Link>
               </Button>
             </div>
           </AnimatedSection>
