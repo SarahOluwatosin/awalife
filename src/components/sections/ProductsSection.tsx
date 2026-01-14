@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import emeraldHeroProduct from '@/assets/emerald-hero-product.png';
-import microscopeImg from '@/assets/microscope-station.png';
+import analyzerImg from '@/assets/awalife-analyzer-products.png';
+import microscopeImg from '@/assets/dm03-microscope.png';
 
 const ProductsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -21,7 +21,7 @@ const ProductsSection = () => {
   const products = [
     { 
       id: 'ai-100vet-elite', 
-      image: emeraldHeroProduct, 
+      image: analyzerImg, 
       number: '02',
       name: 'Awalife AI Morphological Analyzer', 
       description: 'The Awalife AI Morphological Analyzer empowers clinics with smarter diagnostics and more precise analysis—making testing faster, treatments more accurate, and veterinary services more professional.',
@@ -57,14 +57,14 @@ const ProductsSection = () => {
             {/* Image */}
             <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
               <div
-                className="relative rounded-2xl bg-gradient-to-br from-secondary/50 to-card overflow-hidden p-8 lg:p-12 shadow-lg"
+                className="relative rounded-2xl bg-gradient-to-br from-secondary/50 to-card overflow-hidden shadow-lg aspect-[4/3]"
                 style={{ perspective: '1200px' }}
               >
-                <span className="absolute top-6 left-6 text-6xl font-bold text-primary/10">
+                <span className="absolute top-6 left-6 text-6xl font-bold text-primary/10 z-10">
                   {product.number}
                 </span>
                 <motion.div
-                  className="relative"
+                  className="absolute inset-0"
                   style={{ transformStyle: 'preserve-3d' }}
                   whileHover={{ rotateX: 6, rotateY: -8 }}
                   transition={{ type: 'spring', stiffness: 140, damping: 14 }}
@@ -72,8 +72,7 @@ const ProductsSection = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full max-w-md mx-auto object-contain relative z-10"
-                    style={{ transform: 'translateZ(50px)' }}
+                    className="w-full h-full object-cover object-center"
                   />
                 </motion.div>
               </div>
