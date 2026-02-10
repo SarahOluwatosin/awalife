@@ -27,6 +27,12 @@ export const dbSelect = async <T = unknown>(table: string, params?: string): Pro
   return resp.json();
 };
 
+export const dbSelectAuth = async <T = unknown>(table: string, token: string, params?: string): Promise<T[]> => {
+  const resp = await fetch(restUrl(table, `select=*${params ? `&${params}` : ''}`), { headers: authHeaders(token) });
+  if (!resp.ok) throw new Error(`DB select error: ${resp.status}`);
+  return resp.json();
+};
+
 export const dbInsert = async <T = unknown>(table: string, data: Record<string, unknown>, token: string): Promise<T[]> => {
   const resp = await fetch(restUrl(table), {
     method: 'POST',
