@@ -21,15 +21,23 @@ const authHeaders = (token: string) => ({
 const restUrl = (table: string, params?: string) =>
   `${SUPABASE_URL}/rest/v1/${table}${params ? `?${params}` : ''}`;
 
+const sanitizeError = (status: number, _rawError: string): string => {
+  if (status === 401 || status === 403) return 'You do not have permission to perform this action.';
+  if (status === 404) return 'The requested resource was not found.';
+  if (status === 409) return 'This operation conflicts with existing data.';
+  if (status >= 500) return 'A server error occurred. Please try again later.';
+  return 'An error occurred while processing your request.';
+};
+
 export const dbSelect = async <T = unknown>(table: string, params?: string): Promise<T[]> => {
   const resp = await fetch(restUrl(table, `select=*${params ? `&${params}` : ''}`), { headers: headers() });
-  if (!resp.ok) throw new Error(`DB select error: ${resp.status}`);
+  if (!resp.ok) throw new Error(sanitizeError(resp.status, ''));
   return resp.json();
 };
 
 export const dbSelectAuth = async <T = unknown>(table: string, token: string, params?: string): Promise<T[]> => {
   const resp = await fetch(restUrl(table, `select=*${params ? `&${params}` : ''}`), { headers: authHeaders(token) });
-  if (!resp.ok) throw new Error(`DB select error: ${resp.status}`);
+  if (!resp.ok) throw new Error(sanitizeError(resp.status, ''));
   return resp.json();
 };
 
@@ -41,7 +49,7 @@ export const dbInsert = async <T = unknown>(table: string, data: Record<string, 
   });
   if (!resp.ok) {
     const err = await resp.text();
-    throw new Error(`DB insert error: ${resp.status} ${err}`);
+    throw new Error(sanitizeError(resp.status, err));
   }
   return resp.json();
 };
@@ -54,7 +62,7 @@ export const dbUpdate = async (table: string, id: string, data: Record<string, u
   });
   if (!resp.ok) {
     const err = await resp.text();
-    throw new Error(`DB update error: ${resp.status} ${err}`);
+    throw new Error(sanitizeError(resp.status, err));
   }
 };
 
@@ -65,6 +73,6 @@ export const dbDelete = async (table: string, id: string, token: string): Promis
   });
   if (!resp.ok) {
     const err = await resp.text();
-    throw new Error(`DB delete error: ${resp.status} ${err}`);
+    throw new Error(sanitizeError(resp.status, err));
   }
 };

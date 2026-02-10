@@ -4,6 +4,7 @@ import { dbSelect, dbInsert, dbUpdate, dbDelete } from '@/lib/db';
 import { supabase } from '@/integrations/supabase/client';
 import { getDefaultResourcesData } from '@/data/resources';
 import type { ResourcesCMSData, ResourceItem, ResourceFAQItem, NewsItem } from '@/data/resources';
+import { NewsItemSchema, ResourceItemSchema, FaqItemSchema } from '@/lib/validation';
 
 type ResourcesCMSContextType = {
   data: ResourcesCMSData;
@@ -76,19 +77,21 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => { fetchAll(); }, [fetchAll]);
 
   const addNews = async (item: Omit<NewsItem, 'id'>) => {
+    const validated = NewsItemSchema.parse(item);
     const token = await getToken();
     await dbInsert('news_articles', {
-      title: item.title, excerpt: item.excerpt, content: item.content,
-      date: item.date, category: item.category, location: item.location, image_url: item.imageUrl,
+      title: validated.title, excerpt: validated.excerpt, content: validated.content,
+      date: validated.date, category: validated.category, location: validated.location, image_url: validated.imageUrl,
     }, token);
     await fetchAll();
   };
 
   const updateNews = async (item: NewsItem) => {
+    const validated = NewsItemSchema.parse(item);
     const token = await getToken();
     await dbUpdate('news_articles', item.id, {
-      title: item.title, excerpt: item.excerpt, content: item.content,
-      date: item.date, category: item.category, location: item.location, image_url: item.imageUrl,
+      title: validated.title, excerpt: validated.excerpt, content: validated.content,
+      date: validated.date, category: validated.category, location: validated.location, image_url: validated.imageUrl,
     }, token);
     await fetchAll();
   };
@@ -100,21 +103,23 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const addResource = async (item: Omit<ResourceItem, 'id'>) => {
+    const validated = ResourceItemSchema.parse(item);
     const token = await getToken();
     await dbInsert('resources', {
-      title: item.title, summary: item.summary, kind: item.kind,
-      product_id: item.productId, media_type: item.mediaType,
-      media_url: item.mediaUrl, media_name: item.mediaName, media_mime: item.mediaMime,
+      title: validated.title, summary: validated.summary, kind: validated.kind,
+      product_id: validated.productId, media_type: validated.mediaType,
+      media_url: validated.mediaUrl, media_name: validated.mediaName, media_mime: validated.mediaMime,
     }, token);
     await fetchAll();
   };
 
   const updateResource = async (item: ResourceItem) => {
+    const validated = ResourceItemSchema.parse(item);
     const token = await getToken();
     await dbUpdate('resources', item.id, {
-      title: item.title, summary: item.summary, kind: item.kind,
-      product_id: item.productId, media_type: item.mediaType,
-      media_url: item.mediaUrl, media_name: item.mediaName, media_mime: item.mediaMime,
+      title: validated.title, summary: validated.summary, kind: validated.kind,
+      product_id: validated.productId, media_type: validated.mediaType,
+      media_url: validated.mediaUrl, media_name: validated.mediaName, media_mime: validated.mediaMime,
     }, token);
     await fetchAll();
   };
@@ -126,18 +131,20 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const addFaq = async (item: Omit<ResourceFAQItem, 'id'>) => {
+    const validated = FaqItemSchema.parse(item);
     const token = await getToken();
     const maxOrder = data.faq.items.length;
     await dbInsert('faq_items', {
-      question: item.question, answer: item.answer, sort_order: maxOrder,
+      question: validated.question, answer: validated.answer, sort_order: maxOrder,
     }, token);
     await fetchAll();
   };
 
   const updateFaq = async (item: ResourceFAQItem) => {
+    const validated = FaqItemSchema.parse(item);
     const token = await getToken();
     await dbUpdate('faq_items', item.id, {
-      question: item.question, answer: item.answer,
+      question: validated.question, answer: validated.answer,
     }, token);
     await fetchAll();
   };
