@@ -101,6 +101,7 @@ export type NewsItem = {
   id: string;
   title: string;
   excerpt: string;
+  content: string;
   date: string;
   category: NewsCategory;
   location: string;
@@ -161,6 +162,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       id: 'news-1',
       title: 'AWALIFE at KSFM Conference 2024',
       excerpt: 'AWALIFE showcased its latest AI-100Vet analyzer at the KSFM exhibition held in Seoul, South Korea, receiving enthusiastic responses from veterinary professionals.',
+      content: '',
       date: '2024-11-21',
       category: 'Exhibition',
       location: 'Seoul, South Korea',
@@ -170,6 +172,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       id: 'news-2',
       title: 'AWALIFE Participated in the ASASC',
       excerpt: 'AWALIFE announced participation in the Asian Small Animal Specialist Conference, demonstrating innovative diagnostic solutions for veterinary practices.',
+      content: '',
       date: '2024-10-15',
       category: 'Conference',
       location: 'Bangkok, Thailand',
@@ -179,6 +182,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       id: 'news-3',
       title: 'Singapore Vet Show Success',
       excerpt: 'Singapore VetShow 2024 was a tremendous success for AWALIFE, connecting with Asia\'s premier veterinary professionals and showcasing our latest innovations.',
+      content: '',
       date: '2024-10-08',
       category: 'Exhibition',
       location: 'Singapore',
@@ -188,6 +192,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       id: 'news-4',
       title: 'New AI-100Vet Firmware Update',
       excerpt: 'We are pleased to announce a major firmware update for the AI-100Vet analyzer, introducing enhanced blood cell recognition accuracy and faster processing times.',
+      content: '',
       date: '2024-09-20',
       category: 'Product Update',
       location: 'Shenzhen, China',
@@ -197,6 +202,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       id: 'news-5',
       title: 'AWALIFE Expands European Distribution',
       excerpt: 'AWALIFE announces new distribution partnerships across Germany, France, and Spain, bringing AI-powered veterinary diagnostics to more European clinics.',
+      content: '',
       date: '2024-08-15',
       category: 'Business',
       location: 'Europe',
@@ -206,6 +212,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       id: 'news-6',
       title: 'Training Workshop for Distributors',
       excerpt: 'AWALIFE hosted an intensive training workshop for our global distributor partners, covering product features, maintenance, and customer support best practices.',
+      content: '',
       date: '2024-07-10',
       category: 'Training',
       location: 'Shenzhen, China',
