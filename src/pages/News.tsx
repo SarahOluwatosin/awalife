@@ -51,64 +51,65 @@ const News = () => {
     const mediaUrl = item.mediaUrl?.trim();
     const hasMedia = Boolean(mediaUrl);
     const actionLabel = item.mediaType === 'link' ? 'View resource' : 'Download';
+    const ActionIcon = item.mediaType === 'link' ? ArrowRight : Download;
     const badge = getMediaBadge(item);
 
     return (
       <div
         key={item.id}
-        className="group relative rounded-2xl border border-border/30 bg-card hover:border-primary/25 transition-all duration-300 overflow-hidden"
+        className="group relative flex flex-col rounded-2xl bg-card border border-border/20 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300"
       >
-        {/* Top accent bar */}
-        <div className="h-1 bg-gradient-to-r from-primary/40 to-primary/10" />
+        {/* Accent gradient top */}
+        <div className="h-1 rounded-t-2xl bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
 
-        <div className="p-6">
-          {/* Header row */}
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="inline-flex px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-semibold bg-primary/10 text-primary">
-                  {productLabel}
-                </span>
-                <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-bold bg-secondary text-muted-foreground">
-                  {badge}
-                </span>
-              </div>
-              <h3 className="text-base font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">
-                {item.title}
-              </h3>
-            </div>
+        <div className="flex flex-col flex-1 p-6">
+          {/* Badges */}
+          <div className="flex flex-wrap items-center gap-2 mb-4">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] uppercase tracking-wider font-semibold bg-primary/8 text-primary border border-primary/10">
+              {productLabel}
+            </span>
+            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-secondary text-muted-foreground border border-border/30">
+              {badge}
+            </span>
           </div>
+
+          {/* Title */}
+          <h3 className="text-lg font-bold text-foreground leading-snug mb-2 group-hover:text-primary transition-colors">
+            {item.title}
+          </h3>
 
           {/* Summary */}
           {item.summary && (
-            <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">
+            <p className="text-sm text-muted-foreground leading-relaxed mb-6 line-clamp-3 flex-1">
               {item.summary}
             </p>
           )}
 
           {/* Action */}
-          {hasMedia ? (
-            <Button variant="outline" size="sm" className="h-9 px-4 rounded-full border-primary/20 text-primary hover:bg-primary/5 hover:text-primary" asChild>
-              {item.mediaType === 'upload' ? (
-                <a href={mediaUrl} download={item.mediaName || 'resource'}>
-                  <Download className="mr-1.5 h-3.5 w-3.5" />
-                  {actionLabel}
-                </a>
-              ) : isExternalLink(mediaUrl) ? (
-                <a href={mediaUrl} target="_blank" rel="noreferrer">
-                  <ArrowRight className="mr-1.5 h-3.5 w-3.5" />
-                  {actionLabel}
-                </a>
-              ) : (
-                <Link to={mediaUrl}>
-                  <ArrowRight className="mr-1.5 h-3.5 w-3.5" />
-                  {actionLabel}
-                </Link>
-              )}
-            </Button>
-          ) : (
-            <p className="text-xs text-muted-foreground/50 italic">No file or link attached</p>
-          )}
+          <div className="mt-auto pt-2">
+            {hasMedia ? (
+              <Button variant="outline" size="sm" className="h-10 px-5 rounded-full border-border/40 text-primary hover:bg-primary/5 hover:border-primary/30 transition-all" asChild>
+                {item.mediaType === 'upload' ? (
+                  <a href={mediaUrl} download={item.mediaName || 'resource'}>
+                    <ActionIcon className="mr-2 h-4 w-4" />
+                    {actionLabel}
+                  </a>
+                ) : isExternalLink(mediaUrl) ? (
+                  <a href={mediaUrl} target="_blank" rel="noreferrer">
+                    <ActionIcon className="mr-2 h-4 w-4" />
+                    {actionLabel}
+                  </a>
+                ) : (
+                  <Link to={mediaUrl}>
+                    <ActionIcon className="mr-2 h-4 w-4" />
+                    {actionLabel}
+                  </Link>
+                )}
+              </Button>
+            ) : (
+              <p className="text-xs text-muted-foreground/50 italic">No file or link attached</p>
+            )}
+          </div>
         </div>
       </div>
     );
