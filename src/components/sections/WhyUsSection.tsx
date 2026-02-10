@@ -36,7 +36,7 @@ const WhyUsSection = () => {
     image: dm03Medtech,
     alt: 'Support and training for clinics'
   }];
-  return <section ref={sectionRef} className="py-24 bg-secondary/10">
+  return <section ref={sectionRef} className="py-24 bg-primary-foreground">
       <div className="container mx-auto px-6 lg:px-16 xl:px-24">
         <div className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3">
