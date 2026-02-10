@@ -12,7 +12,7 @@ const ResourcesCMSContext = createContext<ResourcesCMSContextType | undefined>(u
 
 const STORAGE_KEY = 'awaaq-resources-cms-v1';
 
-const loadResourcesData = () => {
+const loadResourcesData = (): ResourcesCMSData => {
   if (typeof window === 'undefined') {
     return getDefaultResourcesData();
   }
@@ -22,8 +22,16 @@ const loadResourcesData = () => {
       return getDefaultResourcesData();
     }
     const parsed = JSON.parse(saved) as unknown;
-    return isResourcesCMSData(parsed) ? parsed : getDefaultResourcesData();
-  } catch (error) {
+    if (!isResourcesCMSData(parsed)) {
+      return getDefaultResourcesData();
+    }
+    const defaults = getDefaultResourcesData();
+    // Backward compat: add news array if missing
+    return {
+      ...parsed,
+      news: Array.isArray((parsed as ResourcesCMSData).news) ? (parsed as ResourcesCMSData).news : defaults.news,
+    };
+  } catch {
     return getDefaultResourcesData();
   }
 };
@@ -32,12 +40,10 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
   const [data, setData] = useState<ResourcesCMSData>(() => loadResourcesData());
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
+    if (typeof window === 'undefined') return;
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    } catch (error) {
+    } catch {
       return;
     }
   }, [data]);
