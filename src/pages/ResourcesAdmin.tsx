@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Trash2, Plus, RotateCcw, Pencil, Calendar, MapPin, FileText } from 'lucide-react';
+import { Trash2, Plus, RotateCcw, Pencil, FileText } from 'lucide-react';
 import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
 import {
   RESOURCE_KIND_CONFIG,
@@ -70,7 +70,7 @@ const ResourcesAdmin = () => {
   // Edit dialogs
   const [editingNews, setEditingNews] = useState<NewsItem | null>(null);
   const [editingResource, setEditingResource] = useState<ResourceItem | null>(null);
-
+  const [editingFaq, setEditingFaq] = useState<{ id: string; question: string; answer: string } | null>(null);
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   // ---- Resource helpers ----
@@ -127,14 +127,19 @@ const ResourcesAdmin = () => {
   // ---- FAQ helpers ----
   const addFaqItem = () => {
     setData(c => ({ ...c, faq: { ...c.faq, items: [...c.faq.items, { id: createId('faq'), question: 'New question', answer: 'New answer' }] } }));
-  };
-
-  const updateFaqItem = (id: string, field: 'question' | 'answer', value: string) => {
-    setData(c => ({ ...c, faq: { ...c.faq, items: c.faq.items.map(i => i.id === id ? { ...i, [field]: value } : i) } }));
+    toast({ title: 'FAQ item added' });
   };
 
   const removeFaqItem = (id: string) => {
     setData(c => ({ ...c, faq: { ...c.faq, items: c.faq.items.filter(i => i.id !== id) } }));
+    toast({ title: 'FAQ item removed' });
+  };
+
+  const saveEditingFaq = () => {
+    if (!editingFaq) return;
+    setData(c => ({ ...c, faq: { ...c.faq, items: c.faq.items.map(i => i.id === editingFaq.id ? editingFaq : i) } }));
+    setEditingFaq(null);
+    toast({ title: 'FAQ item updated' });
   };
 
   const selectedKindConfig = RESOURCE_KIND_CONFIG.find(k => k.id === newResource.kind) || RESOURCE_KIND_CONFIG[0];
@@ -163,7 +168,6 @@ const ResourcesAdmin = () => {
             <TabsList className="mb-8 w-full justify-start">
               <TabsTrigger value="news">News ({data.news.length})</TabsTrigger>
               <TabsTrigger value="resources">Resources ({data.resources.length})</TabsTrigger>
-              <TabsTrigger value="hero-cta">Hero & CTA</TabsTrigger>
               <TabsTrigger value="faq">FAQ ({data.faq.items.length})</TabsTrigger>
             </TabsList>
 
@@ -397,99 +401,61 @@ const ResourcesAdmin = () => {
               </Card>
             </TabsContent>
 
-            {/* ===== HERO & CTA TAB ===== */}
-            <TabsContent value="hero-cta" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Resource Center Hero</CardTitle>
-                  <CardDescription>Edit the hero section shown at the top of the Resources page.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Title</Label>
-                    <Input value={data.hero.title} onChange={e => setData(c => ({ ...c, hero: { ...c.hero, title: e.target.value } }))} />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Description</Label>
-                    <Textarea value={data.hero.description} onChange={e => setData(c => ({ ...c, hero: { ...c.hero, description: e.target.value } }))} rows={3} />
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Image URL</Label>
-                      <Input value={data.hero.imageUrl} onChange={e => setData(c => ({ ...c, hero: { ...c.hero, imageUrl: e.target.value } }))} />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Image Alt Text</Label>
-                      <Input value={data.hero.imageAlt} onChange={e => setData(c => ({ ...c, hero: { ...c.hero, imageAlt: e.target.value } }))} />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Call to Action</CardTitle>
-                  <CardDescription>Shared CTA block at the bottom of Resources and News pages.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Title</Label>
-                    <Input value={data.cta.title} onChange={e => setData(c => ({ ...c, cta: { ...c.cta, title: e.target.value } }))} />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Description</Label>
-                    <Textarea value={data.cta.description} onChange={e => setData(c => ({ ...c, cta: { ...c.cta, description: e.target.value } }))} rows={2} />
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Button Label</Label>
-                      <Input value={data.cta.buttonLabel} onChange={e => setData(c => ({ ...c, cta: { ...c.cta, buttonLabel: e.target.value } }))} />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Button URL</Label>
-                      <Input value={data.cta.buttonUrl} onChange={e => setData(c => ({ ...c, cta: { ...c.cta, buttonUrl: e.target.value } }))} placeholder="/contact" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
             {/* ===== FAQ TAB ===== */}
             <TabsContent value="faq" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>FAQ Section</CardTitle>
-                  <CardDescription>Manage frequently asked questions shown on the Resources page.</CardDescription>
+                  <CardTitle>Add FAQ Item</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-2">
-                    <Label>Section Title</Label>
-                    <Input value={data.faq.title} onChange={e => setData(c => ({ ...c, faq: { ...c.faq, title: e.target.value } }))} />
-                  </div>
-                  <div className="space-y-4">
-                    {data.faq.items.map(item => (
-                      <div key={item.id} className="rounded-lg border border-border/40 p-4 space-y-3">
-                        <div className="grid md:grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label>Question</Label>
-                            <Input value={item.question} onChange={e => updateFaqItem(item.id, 'question', e.target.value)} />
-                          </div>
-                          <div className="space-y-2">
-                            <Label>Answer</Label>
-                            <Textarea value={item.answer} onChange={e => updateFaqItem(item.id, 'answer', e.target.value)} rows={2} />
-                          </div>
-                        </div>
-                        <div className="flex justify-end">
-                          <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive" onClick={() => removeFaqItem(item.id)}>
-                            <Trash2 className="mr-1 h-3 w-3" /> Remove
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <Button variant="secondary" onClick={addFaqItem}>
+                <CardContent>
+                  <Button onClick={addFaqItem}>
                     <Plus className="mr-2 h-4 w-4" /> Add FAQ Item
                   </Button>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>All FAQ Items</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {data.faq.items.length ? (
+                    <div className="rounded-lg border border-border/40 overflow-hidden">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Question</TableHead>
+                            <TableHead className="w-[40%]">Answer</TableHead>
+                            <TableHead className="w-24 text-right">Actions</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {data.faq.items.map(item => (
+                            <TableRow key={item.id}>
+                              <TableCell className="font-medium">
+                                <div className="max-w-sm truncate">{item.question}</div>
+                              </TableCell>
+                              <TableCell className="text-sm text-muted-foreground">
+                                <div className="max-w-sm truncate">{item.answer}</div>
+                              </TableCell>
+                              <TableCell className="text-right">
+                                <div className="flex items-center justify-end gap-1">
+                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setEditingFaq({ ...item })}>
+                                    <Pencil className="h-3.5 w-3.5" />
+                                  </Button>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive" onClick={() => removeFaqItem(item.id)}>
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                  </Button>
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  ) : (
+                    <p className="text-muted-foreground text-center py-8">No FAQ items yet.</p>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>
@@ -588,6 +554,31 @@ const ResourcesAdmin = () => {
           <DialogFooter>
             <Button variant="outline" onClick={() => setEditingResource(null)}>Cancel</Button>
             <Button onClick={saveEditingResource}>Save Changes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* ===== EDIT FAQ DIALOG ===== */}
+      <Dialog open={!!editingFaq} onOpenChange={open => { if (!open) setEditingFaq(null); }}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Edit FAQ Item</DialogTitle>
+          </DialogHeader>
+          {editingFaq && (
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Question</Label>
+                <Input value={editingFaq.question} onChange={e => setEditingFaq(c => c ? { ...c, question: e.target.value } : c)} />
+              </div>
+              <div className="space-y-2">
+                <Label>Answer</Label>
+                <Textarea value={editingFaq.answer} onChange={e => setEditingFaq(c => c ? { ...c, answer: e.target.value } : c)} rows={4} />
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditingFaq(null)}>Cancel</Button>
+            <Button onClick={saveEditingFaq}>Save Changes</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
