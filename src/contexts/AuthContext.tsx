@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { dbSelectAuth } from '@/lib/db';
 
 type AuthContextType = {
   user: User | null;
@@ -20,14 +21,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const checkAdmin = async (userId: string) => {
-    const { data } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', userId)
-      .eq('role', 'admin')
-      .maybeSingle();
-    setIsAdmin(!!data);
+  const checkAdmin = async (userId: string, accessToken: string) => {
+    try {
+      const rows = await dbSelectAuth<{ role: string }>('user_roles', accessToken, `user_id=eq.${userId}&role=eq.admin`);
+      setIsAdmin(rows.length > 0);
+    } catch (err) {
+      console.error('[Auth] checkAdmin error:', err);
+      setIsAdmin(false);
+    }
   };
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSession(session);
         setUser(session?.user ?? null);
         if (session?.user) {
-          await checkAdmin(session.user.id);
+          await checkAdmin(session.user.id, session.access_token);
         } else {
           setIsAdmin(false);
         }
@@ -48,7 +49,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
-        checkAdmin(session.user.id);
+        checkAdmin(session.user.id, session.access_token);
       }
       setLoading(false);
     });
