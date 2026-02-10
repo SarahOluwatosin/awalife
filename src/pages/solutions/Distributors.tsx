@@ -100,7 +100,7 @@ const Distributors = () => {
 
       {/* Hero Section */}
       <section className="py-16 lg:py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="lg:order-2">
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
@@ -152,7 +152,7 @@ const Distributors = () => {
 
       {/* Partner Benefits */}
       <section className="py-16 lg:py-20 bg-card/50">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Partner Value Proposition
@@ -180,7 +180,7 @@ const Distributors = () => {
 
       {/* Support Offerings */}
       <section className="py-16 lg:py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Product Support
@@ -204,7 +204,7 @@ const Distributors = () => {
 
       {/* Requirements */}
       <section className="py-16 lg:py-20 bg-card/50">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="max-w-4xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -244,7 +244,7 @@ const Distributors = () => {
 
       {/* Partner Inquiry Form */}
       <section id="partner-form" className="py-16 lg:py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">

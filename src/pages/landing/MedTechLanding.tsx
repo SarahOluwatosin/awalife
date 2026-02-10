@@ -3,7 +3,7 @@ import { ArrowRight, ChevronDown, Microscope, Cpu, Shield, Award, Globe, Layers,
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation, useParallax, useCountUp, useStaggerAnimation } from '@/hooks/use-scroll-animation';
-import heroBg from '@/assets/hero-medtech.png';
+import heroVideo from '@/assets/hero-medtech-video.mp4';
 import analyzerProducts from '@/assets/awalife-analyzer-products.png';
 import dm03Microscope from '@/assets/dm03-medtech.png';
 import Layout from '@/components/layout/Layout';
@@ -85,11 +85,16 @@ const MedTechLanding = () => {
           className="absolute inset-0 z-0"
           style={{ transform: `translateY(${heroOffset}px)` }}
         >
-          <img 
-            src={heroBg} 
-            alt="Medical Technology" 
+          <video
             className="w-full h-full object-cover scale-110"
-          />
+            autoPlay
+            loop
+            muted
+            playsInline
+            aria-hidden="true"
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         </div>

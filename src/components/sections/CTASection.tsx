@@ -4,24 +4,19 @@ import { Button } from '@/components/ui/button';
 
 const CTASection = () => {
   return (
-    <section className="py-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10" />
-
-      <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
+    <section className="py-20 lg:py-28 bg-card/50">
+      <div className="container mx-auto px-6 lg:px-16 xl:px-24">
         <div className="max-w-3xl mx-auto text-center">
-          <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">
-            Get Started
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Elevate Your Diagnostics to the{' '}
-            <span className="text-primary">Next Level</span>{' '}
-            With Awalife
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+            Interested in Our Products?
           </h2>
-          <div className="flex flex-wrap justify-center gap-4 mt-6">
+          <p className="text-[18px] text-muted-foreground mb-10">
+            Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild>
               <Link to="/contact">
-                Contact Us
+                Contact us
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>

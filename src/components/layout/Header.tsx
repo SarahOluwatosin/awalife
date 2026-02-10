@@ -50,8 +50,8 @@ const Header = () => {
   ];
 
   const companyItems = [
-    { label: 'About Awalife', path: '/company', icon: Building2 },
-    { label: 'News Center', path: '/resources', icon: Newspaper },
+    { label: 'About Awalife', path: '/company/about', icon: Building2 },
+    { label: 'News Center', path: '/company/news', icon: Newspaper },
   ];
 
   return (
@@ -120,7 +120,7 @@ const Header = () => {
             {/* Company Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className={`${navTextClass(location.pathname === '/company')} flex items-center gap-1`}>
+                <button className={`${navTextClass(location.pathname.startsWith('/company'))} flex items-center gap-1`}>
                   {t.nav.company}
                   <ChevronDown className="w-3 h-3" />
                 </button>

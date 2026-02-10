@@ -1,8 +1,9 @@
 import Layout from '@/components/layout/Layout';
 import HeroSection from '@/components/sections/HeroSection';
-import StatsSection from '@/components/sections/StatsSection';
 import ProductsSection from '@/components/sections/ProductsSection';
 import WhyUsSection from '@/components/sections/WhyUsSection';
+import CertificationsSection from '@/components/sections/CertificationsSection';
+import GlobalPartnersSection from '@/components/sections/GlobalPartnersSection';
 import CTASection from '@/components/sections/CTASection';
 import { motion, MotionConfig } from 'framer-motion';
 
@@ -37,7 +38,7 @@ const Index = () => {
             viewport={{ once: true, amount: 0.2 }}
             variants={sectionVariants}
           >
-            <StatsSection />
+            <WhyUsSection />
           </motion.div>
           <motion.div
             initial="hidden"
@@ -53,7 +54,15 @@ const Index = () => {
             viewport={{ once: true, amount: 0.2 }}
             variants={sectionVariants}
           >
-            <WhyUsSection />
+            <CertificationsSection />
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={sectionVariants}
+          >
+            <GlobalPartnersSection />
           </motion.div>
           <motion.div
             initial="hidden"

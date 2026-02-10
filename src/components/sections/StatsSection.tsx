@@ -6,9 +6,10 @@ interface StatItemProps {
   suffix: string;
   label: string;
   delay: number;
+  decimals?: number;
 }
 
-const StatItem = ({ value, suffix, label, delay }: StatItemProps) => {
+const StatItem = ({ value, suffix, label, delay, decimals = 0 }: StatItemProps) => {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -34,7 +35,7 @@ const StatItem = ({ value, suffix, label, delay }: StatItemProps) => {
           setCount(value);
           clearInterval(counter);
         } else {
-          setCount(Math.floor(current));
+          setCount(current);
         }
       }, duration / steps);
       return () => clearInterval(counter);
@@ -51,7 +52,7 @@ const StatItem = ({ value, suffix, label, delay }: StatItemProps) => {
       transition={{ duration: 0.6, delay: delay / 1000, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
-        {count.toLocaleString()}{suffix}
+        {count.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}{suffix}
       </div>
       <div className="text-muted-foreground text-sm">{label}</div>
     </motion.div>
@@ -60,10 +61,9 @@ const StatItem = ({ value, suffix, label, delay }: StatItemProps) => {
 
 const StatsSection = () => {
   const stats = [
-    { value: 150, suffix: '+', label: 'Countries and Regions Covered' },
-    { value: 5000, suffix: '+', label: 'Installations' },
-    { value: 114, suffix: '+', label: 'Patented Inventions' },
-    { value: 20000, suffix: '+', label: 'Animal Hospitals Trusted' },
+    { value: 15, suffix: 'M+', label: 'Images analyzed for AI training' },
+    { value: 2.4, suffix: 'M+', label: 'Diagnostic reports generated', decimals: 1 },
+    { value: 8000, suffix: '+', label: 'Veterinary hospitals served' },
   ];
 
   return (
@@ -71,9 +71,16 @@ const StatsSection = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 animated-gradient" />
       <div className="absolute inset-0 scanlines opacity-15 pointer-events-none" />
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12">
           {stats.map((stat, i) => (
-            <StatItem key={stat.label} value={stat.value} suffix={stat.suffix} label={stat.label} delay={i * 100} />
+            <StatItem
+              key={stat.label}
+              value={stat.value}
+              suffix={stat.suffix}
+              label={stat.label}
+              delay={i * 100}
+              decimals={stat.decimals}
+            />
           ))}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Shield, Award, FileCheck, Microscope } from 'lucide-react';
+import { ShieldCheck, BadgeCheck, Award } from 'lucide-react';
 
 const CertificationsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,43 +14,34 @@ const CertificationsSection = () => {
   }, []);
 
   const certifications = [
-    { icon: Shield, title: 'CE Marking', stat: 'EU' },
-    { icon: Award, title: 'ISO 13485', stat: '2016' },
-    { icon: FileCheck, title: 'Patents', stat: '50+' },
-    { icon: Microscope, title: 'FDA Registered', stat: 'USA' },
+    { label: 'CE Certification', icon: ShieldCheck },
+    { label: 'ISO9001', icon: BadgeCheck },
+    { label: 'ISO13485', icon: Award },
   ];
 
   return (
-    <section ref={sectionRef} className="py-20 border-y border-border/30">
-      <div className="container mx-auto px-8 lg:px-24 xl:px-32">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
-          {/* Left Text */}
-          <div className={`lg:max-w-md transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-2">
-              Quality & Compliance
-            </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-              Certifications & Regulatory Status
-            </h2>
-          </div>
-
-          {/* Right Certifications */}
-          <div className="flex flex-wrap items-center gap-8 lg:gap-12">
-            {certifications.map((cert, i) => (
-              <div
-                key={cert.title}
-                className={`flex items-center gap-3 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                style={{ transitionDelay: `${0.1 + i * 0.08}s` }}
-              >
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <cert.icon className="w-5 h-5 text-primary" />
+    <section ref={sectionRef} className="py-12">
+      <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+        <div className={`rounded-3xl border border-primary/20 bg-primary/5 px-8 py-10 lg:px-12 lg:py-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] items-center">
+            <div>
+              <span className="text-xs font-semibold tracking-[0.35em] uppercase text-primary/70">
+                Regulatory Credibility
+              </span>
+              <h2 className="text-3xl md:text-4xl font-semibold text-foreground mt-4">
+                Certified for global veterinary diagnostics.
+              </h2>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {certifications.map((cert) => (
+                <div key={cert.label} className="flex items-center gap-3 text-muted-foreground text-sm font-medium">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <cert.icon className="h-4 w-4" />
+                  </span>
+                  {cert.label}
                 </div>
-                <div>
-                  <div className="text-lg font-bold text-foreground">{cert.stat}</div>
-                  <div className="text-xs text-muted-foreground">{cert.title}</div>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

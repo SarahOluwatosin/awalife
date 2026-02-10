@@ -17,17 +17,49 @@ interface ComparisonFeature {
   }[];
 }
 
-const ProductComparison = () => {
+interface ProductComparisonProps {
+  variant?: 'full' | 'ai-analyzer';
+}
+
+const ProductComparison = ({ variant = 'full' }: ProductComparisonProps) => {
   const { t } = useLanguage();
+  const containerClass = 'container mx-auto px-6 lg:px-16 xl:px-24';
   
-  const products: ComparisonProduct[] = [
-    { id: 'ai-100vet-elite', name: 'AI-100Vet Elite', shortName: 'Elite', flagship: true },
-    { id: 'ai-100vet', name: 'AI-100Vet', shortName: 'AI-100' },
-    { id: 'ai-80vet', name: 'AI-80Vet', shortName: 'AI-80' },
-    { id: 'microscope', name: 'Digital Microscope', shortName: 'Microscope' },
-  ];
+  const products: ComparisonProduct[] = variant === 'ai-analyzer'
+    ? [
+      { id: 'ai-100vet-elite', name: 'AI-100Vet Elite', shortName: 'AI-100Vet Elite', flagship: true },
+      { id: 'ai-100vet', name: 'AI-100Vet', shortName: 'AI-100Vet' },
+      { id: 'ai-80vet', name: 'AI-80Vet', shortName: 'AI-80Vet' },
+    ]
+    : [
+      { id: 'ai-100vet-elite', name: 'AI-100Vet Elite', shortName: 'Elite', flagship: true },
+      { id: 'ai-100vet', name: 'AI-100Vet', shortName: 'AI-100' },
+      { id: 'ai-80vet', name: 'AI-80Vet', shortName: 'AI-80' },
+      { id: 'microscope', name: 'Digital Microscope', shortName: 'Microscope' },
+    ];
   
-  const comparisonData: ComparisonFeature[] = [
+  const comparisonData: ComparisonFeature[] = variant === 'ai-analyzer'
+    ? [
+      {
+        category: 'Sample Types',
+        features: [
+          { name: 'Blood', values: { 'ai-100vet-elite': true, 'ai-100vet': true, 'ai-80vet': true } },
+          { name: 'Feces', values: { 'ai-100vet-elite': true, 'ai-100vet': true, 'ai-80vet': true } },
+          { name: 'Urine', values: { 'ai-100vet-elite': true, 'ai-100vet': true, 'ai-80vet': true } },
+          { name: 'Fluid', values: { 'ai-100vet-elite': true, 'ai-100vet': true, 'ai-80vet': false } },
+        ],
+      },
+      {
+        category: 'Species Support',
+        features: [
+          { name: 'Companion & Small Mammals', values: { 'ai-100vet-elite': true, 'ai-100vet': true, 'ai-80vet': true } },
+          { name: 'Avian', values: { 'ai-100vet-elite': false, 'ai-100vet': true, 'ai-80vet': false } },
+          { name: 'Reptile', values: { 'ai-100vet-elite': false, 'ai-100vet': true, 'ai-80vet': false } },
+          { name: 'Livestock & Large Animals', values: { 'ai-100vet-elite': false, 'ai-100vet': true, 'ai-80vet': false } },
+        ],
+      },
+    ]
+    : [
     {
       category: 'Sample Types',
       features: [
@@ -117,7 +149,7 @@ const ProductComparison = () => {
         },
       ],
     },
-  ];
+    ];
   
   const renderValue = (value: boolean | string) => {
     if (value === true) {
@@ -143,7 +175,7 @@ const ProductComparison = () => {
 
   return (
     <section className="py-16 lg:py-20">
-      <div className="container mx-auto px-6 lg:px-8">
+      <div className={containerClass}>
         <div className="text-center max-w-3xl mx-auto mb-14">
           <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
             Compare Products
@@ -152,7 +184,9 @@ const ProductComparison = () => {
             Find the Right Solution
           </h2>
           <p className="text-muted-foreground">
-            Compare features across our product lineup to find the perfect fit for your practice
+            {variant === 'ai-analyzer'
+              ? 'Compare models across sample types and species support to match your clinic’s needs.'
+              : 'Compare features across our product lineup to find the perfect fit for your practice'}
           </p>
         </div>
         
@@ -176,14 +210,7 @@ const ProductComparison = () => {
                       )}
                     >
                       <div className="flex flex-col items-center gap-2">
-                        {product.flagship && (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary-foreground animate-pulse" />
-                            Flagship
-                          </span>
-                        )}
                         <span className="font-semibold text-foreground">{product.shortName}</span>
-                        <span className="text-xs text-muted-foreground hidden lg:block">{product.name}</span>
                       </div>
                     </th>
                   ))}

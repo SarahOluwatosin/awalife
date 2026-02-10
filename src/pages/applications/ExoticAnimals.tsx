@@ -1,221 +1,240 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Bird, Check, ArrowRight, Microscope, Heart, Stethoscope, Shield } from 'lucide-react';
+import { ArrowRight, Check, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
 import ai100vetImg from '@/assets/ai-100vet.png';
+import heroDiagnosticLab from '@/assets/hero-diagnostic-lab.jpg';
 
 const ExoticAnimals = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const clinicalScenarios = [
-    {
-      title: 'Avian Blood Analysis',
-      description: 'Specialized analysis for birds including heterophil/lymphocyte ratios and nucleated red blood cells unique to avian species.',
-      icon: Bird,
-    },
-    {
-      title: 'Reptile Diagnostics',
-      description: 'Comprehensive blood cell analysis adapted for reptilian physiology, including ectotherm-specific parameters.',
-      icon: Shield,
-    },
-    {
-      title: 'Small Mammal Care',
-      description: 'Tailored analysis for rabbits, ferrets, guinea pigs, and other small mammals with species-specific reference ranges.',
-      icon: Heart,
-    },
-    {
-      title: 'Zoo Animal Health',
-      description: 'Support for diverse species in zoological settings, enabling health monitoring across a wide range of exotic animals.',
-      icon: Stethoscope,
-    },
-  ];
-
-  const supportedSpecies = {
-    avian: ['Parrots', 'Raptors', 'Waterfowl', 'Songbirds', 'Poultry'],
-    reptiles: ['Snakes', 'Lizards', 'Turtles', 'Tortoises', 'Crocodilians'],
-    smallMammals: ['Rabbits', 'Ferrets', 'Guinea pigs', 'Hamsters', 'Hedgehogs'],
-    other: ['Amphibians', 'Fish', 'Primates', 'Wildlife'],
+  const bodyTextClass = 'text-[18px]';
+  const renderSupportValue = (value: string) => {
+    if (value === '+') {
+      return (
+        <div className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/20 mx-auto">
+          <Check className="w-4 h-4 text-primary" />
+        </div>
+      );
+    }
+    if (value === '/') {
+      return (
+        <div className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-muted/50 mx-auto">
+          <Minus className="w-4 h-4 text-muted-foreground/50" />
+        </div>
+      );
+    }
+    return value;
   };
 
   return (
     <Layout>
       <PageHero
-        title="Exotic Animal Analysis"
-        subtitle="Specialized diagnostics for non-traditional veterinary patients"
+        title="Exotics, Small Mammals & Large Animals"
+        subtitle="Supporting more species with review-ready morphology"
         breadcrumb={[
           { label: 'Applications', path: '/applications' },
-          { label: 'Exotic Animals', path: '/applications/exotic' },
+          { label: 'Exotic Animals', path: '/applications/exotic-animals' },
         ]}
       />
 
       {/* Overview */}
       <section className="py-16 lg:py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
-              <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-6">
-                Multi-Species Support
-              </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Beyond Dogs & Cats
+                Exotics, Small Mammals & Large Animals
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                AWALIFE analyzers are equipped with specialized algorithms for exotic animal diagnostics. Our AI models recognize the unique cell morphology of birds, reptiles, small mammals, and other non-traditional species, providing accurate results with species-specific reference ranges.
+              <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>
+                Awalife extends morphology-first, AI-assisted analysis beyond dogs and cats—supporting a wider range of
+                species with review-ready reports that combine images and quantitative results. Capabilities may vary by
+                species and sample type.
               </p>
-              
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                {[
-                  { label: 'Species Covered', value: '50+' },
-                  { label: 'Reference Ranges', value: 'Species-specific' },
-                  { label: 'Cell Recognition', value: 'AI-optimized' },
-                  { label: 'Sample Size', value: 'Minimal' },
-                ].map((stat) => (
-                  <div key={stat.label} className="p-4 rounded-xl bg-secondary/30 border border-border/30">
-                    <div className="text-xl font-bold text-amber-400">{stat.value}</div>
-                    <div className="text-sm text-muted-foreground">{stat.label}</div>
-                  </div>
-                ))}
+              <div className="flex flex-wrap gap-4">
+                <Button className="btn-gradient" size="lg" asChild>
+                  <Link to="/contact">
+                    Contact us
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" size="lg" asChild>
+                  <Link to="/contact">Download the sample report</Link>
+                </Button>
               </div>
-
-              <Button className="btn-gradient" size="lg" asChild>
-                <Link to="/products/ai-100vet">
-                  View AI-100Vet
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
             </div>
 
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/10 to-primary/10 rounded-3xl blur-3xl opacity-50" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 to-primary/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={ai100vetImg} alt="AI-100Vet Analyzer" className="w-full max-h-80 object-contain" />
+                <img src={ai100vetImg} alt="Exotic species analyzer" className="w-full max-h-80 object-contain" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Supported Species */}
+      {/* Species Support */}
       <section className="py-16 lg:py-20 bg-card/50">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
-              Species Support
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Comprehensive Coverage</h2>
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              Supporting Species from Small Mammals to Large Animals
+            </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="glow-card p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                <Bird className="w-5 h-5 text-amber-400" />
-                Avian
-              </h3>
-              <ul className="space-y-2">
-                {supportedSpecies.avian.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Check className="w-4 h-4 text-amber-400" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="glow-card p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                <Shield className="w-5 h-5 text-amber-400" />
-                Reptiles
-              </h3>
-              <ul className="space-y-2">
-                {supportedSpecies.reptiles.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Check className="w-4 h-4 text-amber-400" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="glow-card p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                <Heart className="w-5 h-5 text-amber-400" />
-                Small Mammals
-              </h3>
-              <ul className="space-y-2">
-                {supportedSpecies.smallMammals.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Check className="w-4 h-4 text-amber-400" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="glow-card p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                <Stethoscope className="w-5 h-5 text-amber-400" />
-                Other
-              </h3>
-              <ul className="space-y-2">
-                {supportedSpecies.other.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Check className="w-4 h-4 text-amber-400" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+          <div className="glow-card overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm md:text-base">
+                <thead className="bg-secondary/20 border-b border-border/40">
+                  <tr>
+                    <th className="p-5 lg:p-6 text-left">
+                      <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Features</span>
+                    </th>
+                    <th className="p-5 lg:p-6 text-center font-semibold text-foreground">Companion &amp; Small Mammals</th>
+                    <th className="p-5 lg:p-6 text-center font-semibold text-foreground">Avian</th>
+                    <th className="p-5 lg:p-6 text-center font-semibold text-foreground">Reptile</th>
+                    <th className="p-5 lg:p-6 text-center font-semibold text-foreground">Livestock &amp; Large Animals</th>
+                  </tr>
+                </thead>
+                <tbody className="text-muted-foreground">
+                  <tr className="bg-secondary/30">
+                    <td
+                      colSpan={5}
+                      className="px-5 lg:px-6 py-3 text-sm font-semibold text-foreground uppercase tracking-wider"
+                    >
+                      Species Support
+                    </td>
+                  </tr>
+                  <tr className="border-b border-border/30 hover:bg-secondary/20 transition-colors">
+                    <td className="p-5 lg:p-6 text-sm text-muted-foreground sticky left-0 bg-card z-10">
+                      Supported species
+                    </td>
+                    <td className="p-5 lg:p-6 text-center">
+                      Dogs, Cats, Rabbits, Guinea Pigs, Ferrets, Chinchillas, Rats, Mice, Hamsters
+                    </td>
+                    <td className="p-5 lg:p-6 text-center">Parrots, Pigeons</td>
+                    <td className="p-5 lg:p-6 text-center">Turtles, Snakes, Lizards</td>
+                    <td className="p-5 lg:p-6 text-center">Horses, Alpacas, Camels, Pigs, Cattle, Sheep</td>
+                  </tr>
+                  <tr className="bg-secondary/30">
+                    <td
+                      colSpan={5}
+                      className="px-5 lg:px-6 py-3 text-sm font-semibold text-foreground uppercase tracking-wider"
+                    >
+                      Sample Types
+                    </td>
+                  </tr>
+                  {[
+                    { label: 'Blood', values: ['+', '+', '+', '+'] },
+                    { label: 'Feces', values: ['Dog, Cat', '/', '/', '/'] },
+                    { label: 'Urine', values: ['Dog, Cat', '/', '/', '/'] },
+                    { label: 'Fluid', values: ['Dog, Cat', '/', '/', '/'] },
+                  ].map((row) => (
+                    <tr
+                      key={row.label}
+                      className="border-b border-border/30 hover:bg-secondary/20 transition-colors"
+                    >
+                    <td className="p-5 lg:p-6 text-sm text-muted-foreground sticky left-0 bg-card z-10">
+                      {row.label}
+                    </td>
+                    {row.values.map((value, valueIndex) => (
+                      <td key={`${row.label}-${valueIndex}`} className="p-5 lg:p-6 text-center">
+                        {renderSupportValue(value)}
+                      </td>
+                    ))}
+                  </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Clinical Scenarios */}
+      {/* Low Volume Samples */}
       <section className="py-16 lg:py-20">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
-              Clinical Applications
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Specialized Diagnostics</h2>
-          </div>
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+                Only 10 μL Blood samples Required for CBC Testing
+              </h2>
+              <p className={`${bodyTextClass} text-muted-foreground mb-6`}>
+                Especially for exotic pets, critically ill, anemic, and recovering cats and dogs.
+              </p>
+              <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
+                <li>A safer diagnostic experience for animals.</li>
+                <li>A more efficient diagnostic workflow.</li>
+              </ul>
+            </div>
 
-          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-            {clinicalScenarios.map((scenario, index) => (
-              <div key={scenario.title} className="group relative">
-                <div className="absolute -inset-1 bg-gradient-to-br from-amber-500/10 to-primary/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative glow-card p-8 h-full">
-                  <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/60 mb-4">0{index + 1}</span>
-                  <div className="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-6">
-                    <scenario.icon className="w-7 h-7 text-amber-400" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground mb-3">{scenario.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{scenario.description}</p>
-                </div>
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 to-primary/10 rounded-3xl blur-3xl opacity-50" />
+              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center">
+                <img src={heroDiagnosticLab} alt="Low volume sample" className="w-full max-h-72 object-contain" />
               </div>
-            ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-16 lg:py-20">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="w-full">
+              {[
+                {
+                  question: 'Which species are supported?',
+                  answer: 'Companion animals, small mammals, avian species, reptiles, and livestock/large animals.',
+                },
+                {
+                  question: 'What sample types can be analyzed?',
+                  answer: 'Blood for all listed species, with feces/urine/fluid available for dogs and cats.',
+                },
+                {
+                  question: 'How much blood is required?',
+                  answer: 'Only 10 μL is required for CBC testing.',
+                },
+                {
+                  question: 'Can reports be reviewed and shared?',
+                  answer: 'Yes. Reports include images, counts, and structured findings for review and sharing.',
+                },
+              ].map((faq) => (
+                <AccordionItem key={faq.question} value={faq.question}>
+                  <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                  <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       </section>
 
       {/* CTA */}
       <section className="py-20 lg:py-28 bg-card/50">
-        <div className="container mx-auto px-6 lg:px-8 text-center">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            Expand Your <span className="gradient-text">Exotic Practice</span>
+            Interested in Our Products?
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
-            Deliver comprehensive diagnostics for all your exotic patients with AI-powered analysis.
+          <p className={`${bodyTextClass} text-muted-foreground max-w-2xl mx-auto mb-10`}>
+            Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button className="btn-gradient" size="lg" asChild>
-              <Link to="/contact">Request a Demo</Link>
-            </Button>
-            <Button variant="outline" size="lg" asChild>
-              <Link to="/products">View All Products</Link>
+            <Button className="btn-gradient group" size="lg" asChild>
+              <Link to="/contact">
+                Contact us
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </div>
         </div>

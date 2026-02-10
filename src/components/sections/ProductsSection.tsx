@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import analyzerImg from '@/assets/awalife-analyzer-products.png';
@@ -20,22 +20,20 @@ const ProductsSection = () => {
 
   const products = [
     { 
-      id: 'ai-100vet-elite', 
+      id: 'ai-100vet-elite',
       image: analyzerImg, 
-      number: '02',
-      name: 'Awalife AI Morphological Analyzer', 
-      description: 'The Awalife AI Morphological Analyzer empowers clinics with smarter diagnostics and more precise analysis—making testing faster, treatments more accurate, and veterinary services more professional.',
-      primaryCta: 'Learn more',
-      secondaryCta: 'Contact us',
+      number: '01',
+      name: 'Awalife AI Series Morphology Analyzer',
+      description: 'Awalife AI Series Morphology Analyzer is an AI-powered veterinary system that automatically analyzes blood, urine, feces, and body fluids in one workflow. It combines multi-focus imaging, rapid liquid-based staining, AI-assisted morphology recognition, and report generation with true-to-life images and quantitative results—supported by an expandable parameter set for deeper clinical insight.',
+      primaryCta: 'Explore product',
     },
     { 
-      id: 'microscope', 
+      id: 'microscope',
       image: microscopeImg, 
-      number: '03',
-      name: 'DM-03 Microscope Workstation', 
-      description: 'It combines smarter imaging with effortless operation, designed for veterinary professionals.',
-      primaryCta: 'Learn more',
-      secondaryCta: 'Contact us',
+      number: '02',
+      name: 'DM-03 Microscope Workstation',
+      description: 'An integrated imaging and reporting workflow built for veterinary practice. The Awalife Microscope Workstation brings imaging, measurement, cell counting, and documentation into a streamlined workflow with built-in tools to annotate, add scales, and generate reports in one click.',
+      primaryCta: 'Explore product',
     },
   ];
 
@@ -48,6 +46,14 @@ const ProductsSection = () => {
         style={{ animationDelay: '1.4s' }}
       />
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
+        <div className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3">
+            Featured Products
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            Diagnostic tools built for real-world veterinary workflows
+          </h2>
+        </div>
         {products.map((product, i) => (
           <div 
             key={product.id}
@@ -91,12 +97,6 @@ const ProductsSection = () => {
                   <Link to={`/products/${product.id}`}>
                     {product.primaryCta}
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
-                <Button variant="outline" className="border-border/50 hover:bg-card hover:border-primary/30" asChild>
-                  <Link to="/contact">
-                    <Mail className="mr-2 w-4 h-4" />
-                    {product.secondaryCta}
                   </Link>
                 </Button>
               </div>

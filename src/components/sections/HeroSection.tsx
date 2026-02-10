@@ -1,71 +1,125 @@
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-diagnostic-lab.jpg';
 
-const HeroSection = () => {
+interface MetricItemProps {
+  value: number;
+  suffix: string;
+  label: string;
+  decimals?: number;
+  delay?: number;
+}
+
+const MetricItem = ({ value, suffix, label, decimals = 0, delay = 0 }: MetricItemProps) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setIsVisible(true);
+    }, { threshold: 0.4 });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    const duration = 1800;
+    const steps = 60;
+    const increment = value / steps;
+    let current = 0;
+    const timer = setTimeout(() => {
+      const counter = setInterval(() => {
+        current += increment;
+        if (current >= value) {
+          setCount(value);
+          clearInterval(counter);
+        } else {
+          setCount(current);
+        }
+      }, duration / steps);
+      return () => clearInterval(counter);
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [isVisible, value, delay]);
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* Full Background Image with overlay */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src={heroBg} 
-          alt="" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background" />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
-        <div className="absolute inset-0 tech-grid opacity-20" />
+    <div ref={ref}>
+      <div className="text-xl md:text-2xl font-semibold text-foreground">
+        {count.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}{suffix}
       </div>
-      <div className="absolute -top-24 right-10 h-64 w-64 rounded-full bg-primary/15 blur-3xl animate-pulse-soft pointer-events-none" />
+      <p className="text-[11px] md:text-xs text-muted-foreground mt-2">{label}</p>
+    </div>
+  );
+};
+
+const HeroSection = () => {
+  const metrics = [
+    { value: 15, suffix: 'M+', label: 'Images Used for AI Model Training' },
+    { value: 2.4, suffix: 'M+', label: 'Reports Generated', decimals: 1 },
+    { value: 8000, suffix: '+', label: 'Installations Worldwide' },
+  ];
+
+  return (
+    <section className="relative overflow-hidden pt-28 pb-16">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/10" />
+      <div className="absolute -top-16 right-16 h-56 w-56 rounded-full bg-primary/10 blur-3xl animate-pulse-soft pointer-events-none" />
       <div
-        className="absolute bottom-10 left-10 h-72 w-72 rounded-full bg-accent/10 blur-3xl animate-pulse-soft pointer-events-none"
+        className="absolute bottom-10 left-10 h-64 w-64 rounded-full bg-accent/10 blur-3xl animate-pulse-soft pointer-events-none"
         style={{ animationDelay: '1.3s' }}
       />
 
-      {/* Content */}
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          {/* Feature Badge */}
-          <div className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 opacity-0 animate-fade-in text-center">
-            <span className="text-[11px] sm:text-sm text-foreground/80 tracking-[0.02em] whitespace-nowrap">
-              a pioneer in <span className="text-primary font-semibold">AI-powered</span> morphological analysis for animals
-            </span>
+        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
+          <div className="max-w-xl">
+            <div className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 opacity-0 animate-fade-in">
+              <span className="text-[11px] sm:text-sm text-foreground/80 tracking-[0.02em] whitespace-nowrap">
+                Pioneering AI-Powered Morpology Diagnostics
+              </span>
+            </div>
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 opacity-0 animate-fade-in delay-100 leading-tight">
+              <span className="text-foreground">Morphology isn't </span>
+              <br />
+              <span className="text-foreground">a feature for us, </span>
+              <span className="gradient-text">it's the foundation</span>
+            </h1>
+
+            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 opacity-0 animate-fade-in delay-200 leading-relaxed">
+              We turn cellular morphology into visible, quantifiable, and review-ready evidence, helping veterinarians diagnose with greater depth and confidence.
+            </p>
+
+            <div className="flex flex-wrap gap-4 opacity-0 animate-fade-in delay-300">
+              <Button size="lg" className="btn-gradient group px-8" asChild>
+                <Link to="/contact">
+                  Contact us
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" className="border-border/50 hover:border-primary/40 px-8" asChild>
+                <Link to="/products">Explore products</Link>
+              </Button>
+            </div>
+
+            <div className="mt-10 grid gap-8 sm:grid-cols-3">
+              {metrics.map((metric, index) => (
+                <MetricItem key={metric.label} {...metric} delay={index * 120} />
+              ))}
+            </div>
           </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 opacity-0 animate-fade-in delay-100 leading-tight">
-            <span className="text-foreground">Transform Diagnostic </span>
-            <br />
-            <span className="text-foreground">Workflows </span>
-            <span className="gradient-text">the Awalife Way</span>
-          </h1>
-
-          {/* Description */}
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 opacity-0 animate-fade-in delay-200 leading-relaxed">
-            Pioneering the "AI Morphological POCT Technology Platform," Awalife enables intelligent morphological analysis of various pet samples—including blood, urine, feces, and pleural effusion.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap gap-4 mb-10 opacity-0 animate-fade-in delay-300">
-            <Button size="lg" className="btn-gradient group px-8" asChild>
-              <Link to="/contact">
-                Contact us
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-          </div>
-
-          {/* Scroll indicator */}
-          <div className="mt-8 opacity-0 animate-fade-in delay-500">
-            <button
-              onClick={() => document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' })}
-              className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
-            >
-              <span className="text-sm">Explore</span>
-              <ChevronDown className="w-5 h-5 animate-bounce" />
-            </button>
+          <div className="relative">
+            <div className="rounded-2xl overflow-hidden border border-border/40 shadow-xl bg-card">
+              <img
+                src={heroBg}
+                alt="Veterinary diagnostic workflow"
+                className="w-full h-full object-cover aspect-[5/4]"
+              />
+            </div>
+            <div className="absolute -bottom-6 -left-6 w-28 h-28 rounded-2xl bg-primary/10 border border-primary/20 hidden md:block" />
           </div>
         </div>
       </div>

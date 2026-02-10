@@ -72,7 +72,7 @@ const ModernLanding = () => {
         <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-primary/10 blur-3xl" />
         <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-accent/10 blur-3xl" />
 
-        <div className="container mx-auto px-6 lg:px-12">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
             {/* Left Content */}
             <div ref={heroRef} className="relative z-10">
@@ -233,7 +233,7 @@ const ModernLanding = () => {
 
       {/* Awalife AI Morphological Analyzer */}
       <section className="py-20 lg:py-28">
-        <div className="container mx-auto px-6 lg:px-12">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
@@ -265,7 +265,7 @@ const ModernLanding = () => {
 
       {/* DM-03 Microscope Workstaion */}
       <section className="py-20 lg:py-28 bg-secondary/30">
-        <div className="container mx-auto px-6 lg:px-12">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
             <div className="relative order-2 lg:order-1">
               <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-primary/10 via-transparent to-accent/10 blur-3xl" />
@@ -296,7 +296,7 @@ const ModernLanding = () => {
 
       {/* WHY AWALIFE */}
       <section className="py-20 lg:py-28">
-        <div className="container mx-auto px-6 lg:px-12">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center mb-12">
             <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">WHY AWALIFE ?</p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Built for modern veterinary diagnostics</h2>
@@ -342,7 +342,7 @@ const ModernLanding = () => {
 
       {/* Regulatory Credibility */}
       <section className="py-16 lg:py-20 bg-secondary/30">
-        <div className="container mx-auto px-6 lg:px-12">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center mb-10">
             <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">Regulatory Credibility</p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Certified and trusted globally</h2>
@@ -371,7 +371,7 @@ const ModernLanding = () => {
 
       {/* Pricing CTA - Rounded Box */}
       <section className="py-24 lg:py-32">
-        <div className="container mx-auto px-6 lg:px-12">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="relative rounded-[3rem] bg-gradient-to-br from-primary/20 via-card to-accent/10 border border-border/50 p-12 lg:p-20 overflow-hidden">
             {/* Decorative elements */}
             <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-primary/20 blur-3xl" />

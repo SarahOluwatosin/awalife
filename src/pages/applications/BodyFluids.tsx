@@ -65,7 +65,7 @@ const BodyFluids = () => {
 
       {/* Overview */}
       <section className="py-16 lg:py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="lg:order-2">
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-6">
@@ -109,7 +109,7 @@ const BodyFluids = () => {
 
       {/* Analysis Types */}
       <section className="py-16 lg:py-20 bg-card/50">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Sample Types
@@ -144,7 +144,7 @@ const BodyFluids = () => {
 
       {/* Clinical Scenarios */}
       <section className="py-16 lg:py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Clinical Applications
@@ -172,7 +172,7 @@ const BodyFluids = () => {
 
       {/* CTA */}
       <section className="py-20 lg:py-28 bg-card/50">
-        <div className="container mx-auto px-6 lg:px-8 text-center">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
             Handle <span className="gradient-text">Complex Cases</span> with Confidence
           </h2>
