@@ -186,7 +186,7 @@ const News = () => {
       })}
 
       {/* FAQ */}
-      <section className="py-16 lg:py-20">
+      <section className="py-20 lg:py-28">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3">

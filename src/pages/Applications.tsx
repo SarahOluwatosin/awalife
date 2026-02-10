@@ -19,7 +19,7 @@ const Applications = () => {
       name: t.applications.blood.name,
       description: t.applications.blood.description,
       fullDescription: t.applications.blood.fullDescription,
-      color: 'bg-red-500/10 text-red-400',
+      color: 'bg-primary/10 text-primary',
       features: ['Complete Blood Count (CBC)', 'White Blood Cell Differential', 'Red Blood Cell Morphology', 'Platelet Analysis'],
     },
     {
@@ -27,7 +27,7 @@ const Applications = () => {
       name: t.applications.feces.name,
       description: t.applications.feces.description,
       fullDescription: t.applications.feces.fullDescription,
-      color: 'bg-amber-500/10 text-amber-400',
+      color: 'bg-primary/10 text-primary',
       features: ['Parasite Detection', 'Bacterial Analysis', 'Crystal Identification', 'Cellular Components'],
     },
     {
@@ -35,7 +35,7 @@ const Applications = () => {
       name: t.applications.urine.name,
       description: t.applications.urine.description,
       fullDescription: t.applications.urine.fullDescription,
-      color: 'bg-blue-500/10 text-blue-400',
+      color: 'bg-primary/10 text-primary',
       features: ['Sediment Analysis', 'Cell Identification', 'Cast Detection', 'Microorganism Screening'],
     },
     {
@@ -43,7 +43,7 @@ const Applications = () => {
       name: t.applications.skin.name,
       description: t.applications.skin.description,
       fullDescription: t.applications.skin.fullDescription,
-      color: 'bg-purple-500/10 text-purple-400',
+      color: 'bg-primary/10 text-primary',
       features: ['Mite Detection', 'Fungal Analysis', 'Bacterial Cultures', 'Cell Abnormalities'],
     },
   ];
@@ -57,7 +57,7 @@ const Applications = () => {
       />
 
       {/* Introduction */}
-      <section className="py-16 lg:py-20">
+      <section className="py-20 lg:py-28">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="max-w-4xl mx-auto text-center">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
@@ -71,7 +71,7 @@ const Applications = () => {
       </section>
 
       {/* Applications Grid */}
-      <section className="py-12 lg:py-16 pb-24 lg:pb-32">
+      <section className="py-20 lg:py-28 pb-28 lg:pb-36">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="space-y-16 lg:space-y-24">
             {applications.map((app, index) => (
@@ -130,7 +130,7 @@ const Applications = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-20 lg:py-28 bg-secondary/20">
+      <section className="py-20 lg:py-28 bg-card/50">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">

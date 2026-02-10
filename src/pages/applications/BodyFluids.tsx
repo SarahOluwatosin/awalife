@@ -68,7 +68,7 @@ const BodyFluids = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="lg:order-2">
-              <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-6">
+              <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                 Advanced Analysis
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
@@ -81,8 +81,8 @@ const BodyFluids = () => {
               <div className="space-y-4 mb-8">
                 {['Pleural fluid cytology', 'Ascitic fluid analysis', 'Skin scraping examination', 'AI-powered cell counting'].map((feature) => (
                   <div key={feature} className="flex items-center gap-3 p-3 rounded-xl bg-secondary/30 border border-border/30">
-                    <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center">
-                      <Check className="w-3.5 h-3.5 text-purple-400" />
+                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
+                      <Check className="w-3.5 h-3.5 text-primary" />
                     </div>
                     <span className="text-muted-foreground">{feature}</span>
                   </div>
@@ -98,7 +98,7 @@ const BodyFluids = () => {
             </div>
 
             <div className="relative lg:order-1">
-              <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/10 to-primary/10 rounded-3xl blur-3xl opacity-50" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
                 <img src={ai100vetImg} alt="AI-100Vet Analyzer" className="w-full max-h-80 object-contain" />
               </div>
@@ -120,17 +120,17 @@ const BodyFluids = () => {
           <div className="grid md:grid-cols-2 gap-8">
             {analysisTypes.map((type) => (
               <div key={type.title} className="group relative">
-                <div className={`absolute -inset-2 bg-gradient-to-br from-${type.color}-500/10 to-primary/5 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                <div className={`absolute -inset-2 bg-gradient-to-br from-primary/10 to-accent/5 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                 <div className="relative glow-card p-8 lg:p-10 h-full">
-                  <div className={`w-16 h-16 rounded-2xl bg-${type.color}-500/10 flex items-center justify-center mb-6`}>
-                    <Beaker className={`w-8 h-8 text-${type.color}-400`} />
+                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
+                    <Beaker className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-2xl font-semibold text-foreground mb-4">{type.title}</h3>
                   <p className="text-muted-foreground leading-relaxed mb-6">{type.description}</p>
                   <div className="grid grid-cols-2 gap-3">
                     {type.features.map((feature) => (
                       <div key={feature} className="flex items-center gap-2">
-                        <Check className={`w-4 h-4 text-${type.color}-400`} />
+                        <Check className="w-4 h-4 text-primary" />
                         <span className="text-sm text-muted-foreground">{feature}</span>
                       </div>
                     ))}
@@ -155,11 +155,11 @@ const BodyFluids = () => {
           <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
             {clinicalScenarios.map((scenario, index) => (
               <div key={scenario.title} className="group relative">
-                <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/10 to-primary/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative glow-card p-8 h-full">
                   <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/60 mb-4">0{index + 1}</span>
-                  <div className="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-6">
-                    <scenario.icon className="w-7 h-7 text-purple-400" />
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
+                    <scenario.icon className="w-7 h-7 text-primary" />
                   </div>
                   <h3 className="text-xl font-semibold text-foreground mb-3">{scenario.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{scenario.description}</p>

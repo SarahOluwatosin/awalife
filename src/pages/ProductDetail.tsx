@@ -183,8 +183,8 @@ const ProductDetail = () => {
   const product = productData[productId || ''] || productData['ai-100vet-elite'];
   const isAIAnalyzer = productId === 'ai-analyzer';
   const isMicroscope = productId === 'dm-03' || productId === 'microscope';
-  const longParagraphClass = (isAIAnalyzer || isMicroscope) ? 'text-[18px]' : 'text-lg';
-  const detailParagraphClass = (isAIAnalyzer || isMicroscope) ? 'text-[18px]' : 'text-sm';
+  const longParagraphClass = 'text-lg';
+  const detailParagraphClass = 'text-base';
 
   const otherProducts = Object.entries(productData)
     .filter(([key]) => key !== productId)

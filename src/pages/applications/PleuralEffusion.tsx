@@ -16,7 +16,7 @@ const PleuralEffusion = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const bodyTextClass = 'text-[18px]';
+  const bodyTextClass = 'text-lg';
 
   const imageGrid = [
     speciesCanineFeline,
@@ -61,7 +61,7 @@ const PleuralEffusion = () => {
             </div>
 
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/10 to-primary/10 rounded-3xl blur-3xl opacity-50" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
                 <img src={ai100vetImg} alt="AI-100Vet Analyzer" className="w-full max-h-80 object-contain" />
               </div>

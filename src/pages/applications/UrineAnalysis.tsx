@@ -16,8 +16,8 @@ const UrineAnalysis = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const bodyTextClass = 'text-[18px]';
-  const cardTextClass = 'text-[16px]';
+  const bodyTextClass = 'text-lg';
+  const cardTextClass = 'text-base';
 
   const sedimentCategories = [
     {
@@ -106,7 +106,7 @@ const UrineAnalysis = () => {
             </div>
 
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 to-primary/10 rounded-3xl blur-3xl opacity-50" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
                 <img src={ai100vetImg} alt="Urine sediment workflow" className="w-full max-h-80 object-contain" />
               </div>
@@ -157,7 +157,7 @@ const UrineAnalysis = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 to-primary/10 rounded-3xl blur-3xl opacity-50" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center">
                 <img src={ai100vetImg} alt="Urine SOP Video" className="w-full max-h-80 object-contain" />
                 <p className="text-xs text-muted-foreground mt-4">Urine SOP Video-02</p>

@@ -13,7 +13,7 @@ const ExoticAnimals = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const bodyTextClass = 'text-[18px]';
+  const bodyTextClass = 'text-lg';
   const renderSupportValue = (value: string) => {
     if (value === '+') {
       return (
@@ -70,7 +70,7 @@ const ExoticAnimals = () => {
             </div>
 
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 to-primary/10 rounded-3xl blur-3xl opacity-50" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
                 <img src={ai100vetImg} alt="Exotic species analyzer" className="w-full max-h-80 object-contain" />
               </div>
@@ -175,7 +175,7 @@ const ExoticAnimals = () => {
             </div>
 
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 to-primary/10 rounded-3xl blur-3xl opacity-50" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center">
                 <img src={heroDiagnosticLab} alt="Low volume sample" className="w-full max-h-72 object-contain" />
               </div>

@@ -181,7 +181,7 @@ const Products = () => {
       </section>
 
       {/* Image Gallery Section */}
-      <section className="py-20 lg:py-28 bg-secondary/20">
+      <section className="py-20 lg:py-28 bg-card/50">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
@@ -248,7 +248,7 @@ const Products = () => {
       </section>
 
       {/* Why Choose Section */}
-      <section className="py-20 lg:py-28 bg-secondary/20">
+      <section className="py-20 lg:py-28 bg-card/50">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">

@@ -11,7 +11,7 @@ const About = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const bodyTextClass = 'text-[18px]';
+  const bodyTextClass = 'text-lg';
 
   const metrics = [
     { value: '15M+', label: 'Images Used for AI Model Training' },
@@ -82,7 +82,7 @@ const About = () => {
       />
 
       {/* Overview */}
-      <section className="py-16 lg:py-20">
+      <section className="py-20 lg:py-28">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <div>
@@ -120,7 +120,7 @@ const About = () => {
       </section>
 
       {/* Timeline */}
-      <section className="py-16 lg:py-20 bg-card/50">
+      <section className="py-20 lg:py-28 bg-card/50">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Key Moments That Shaped Awalife</h2>
@@ -151,7 +151,7 @@ const About = () => {
       </section>
 
       {/* Mission & Values */}
-      <section className="py-16 lg:py-20">
+      <section className="py-20 lg:py-28">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Mission and Core Values</h2>
@@ -184,7 +184,7 @@ const About = () => {
       </section>
 
       {/* Global Partners */}
-      <section className="py-16 lg:py-20">
+      <section className="py-20 lg:py-28">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
