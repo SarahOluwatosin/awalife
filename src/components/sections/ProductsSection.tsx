@@ -79,6 +79,10 @@ const ProductsSection = () => {
                     src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover object-center"
+                    loading="lazy"
+                    decoding="async"
+                    width={640}
+                    height={480}
                   />
                 </motion.div>
               </div>

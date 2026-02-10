@@ -204,7 +204,7 @@ const ProductDetail = () => {
 
   return (
     <Layout>
-      <PageHero />
+      <PageHero title={product.name} subtitle={product.tagline || ''} />
 
       {/* Product Hero */}
       <section className="py-16 lg:py-20">
