@@ -64,7 +64,7 @@ const ResourcesAdmin = () => {
 
   // News form
   const [newNews, setNewNews] = useState<Omit<NewsItem, 'id'>>({
-    title: '', excerpt: '', date: new Date().toISOString().slice(0, 10), category: 'Exhibition', location: '', imageUrl: '',
+    title: '', excerpt: '', content: '', date: new Date().toISOString().slice(0, 10), category: 'Exhibition', location: '', imageUrl: '',
   });
 
   // Edit dialogs
@@ -118,7 +118,7 @@ const ResourcesAdmin = () => {
     if (!newNews.title.trim()) return;
     const item: NewsItem = { id: createId('news'), ...newNews, title: newNews.title.trim(), excerpt: newNews.excerpt.trim() };
     setData(c => ({ ...c, news: [item, ...c.news] }));
-    setNewNews({ title: '', excerpt: '', date: new Date().toISOString().slice(0, 10), category: 'Exhibition', location: '', imageUrl: '' });
+    setNewNews({ title: '', excerpt: '', content: '', date: new Date().toISOString().slice(0, 10), category: 'Exhibition', location: '', imageUrl: '' });
     toast({ title: 'News item added' });
   };
 
@@ -198,7 +198,11 @@ const ResourcesAdmin = () => {
                       </div>
                       <div className="space-y-2">
                         <Label>Excerpt</Label>
-                        <Textarea value={newNews.excerpt} onChange={e => setNewNews(c => ({ ...c, excerpt: e.target.value }))} rows={3} placeholder="Brief description of the news item..." />
+                        <Textarea value={newNews.excerpt} onChange={e => setNewNews(c => ({ ...c, excerpt: e.target.value }))} rows={2} placeholder="Brief description of the news item..." />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Full Article Content</Label>
+                        <Textarea value={newNews.content} onChange={e => setNewNews(c => ({ ...c, content: e.target.value }))} rows={8} placeholder="Write the full article content here..." />
                       </div>
                       <div className="grid grid-cols-3 gap-4">
                         <div className="space-y-2">
@@ -528,7 +532,11 @@ const ResourcesAdmin = () => {
                 </div>
                 <div className="space-y-2">
                   <Label>Excerpt</Label>
-                  <Textarea value={editingNews.excerpt} onChange={e => setEditingNews(c => c ? { ...c, excerpt: e.target.value } : c)} rows={3} />
+                  <Textarea value={editingNews.excerpt} onChange={e => setEditingNews(c => c ? { ...c, excerpt: e.target.value } : c)} rows={2} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Full Article Content</Label>
+                  <Textarea value={editingNews.content || ''} onChange={e => setEditingNews(c => c ? { ...c, content: e.target.value } : c)} rows={8} placeholder="Write the full article content here..." />
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="space-y-2">

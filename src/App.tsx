@@ -9,6 +9,7 @@ import { ResourcesCMSProvider } from "@/contexts/ResourcesCMSContext";
 import Index from "./pages/Index";
 import Company from "./pages/About";
 import CompanyNews from "./pages/CompanyNews";
+import NewsDetail from "./pages/NewsDetail";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Applications from "./pages/Applications";
@@ -48,6 +49,7 @@ const AnimatedRoutes = () => {
           <Route path="/company" element={<Navigate to="/company/about" replace />} />
           <Route path="/company/about" element={<PageTransition><Company /></PageTransition>} />
           <Route path="/company/news" element={<PageTransition><CompanyNews /></PageTransition>} />
+          <Route path="/company/news/:newsId" element={<PageTransition><NewsDetail /></PageTransition>} />
           <Route path="/products" element={<PageTransition><Products /></PageTransition>} />
           <Route path="/products/:productId" element={<PageTransition><ProductDetail /></PageTransition>} />
           <Route path="/applications" element={<PageTransition><Applications /></PageTransition>} />

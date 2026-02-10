@@ -115,9 +115,11 @@ const CompanyNews = () => {
                       <p className="text-muted-foreground mb-6 line-clamp-3 flex-grow leading-relaxed">
                         {item.excerpt}
                       </p>
-                      <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary group/btn w-fit">
-                        Read More
-                        <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary group/btn w-fit" asChild>
+                        <Link to={`/company/news/${item.id}`}>
+                          Read More
+                          <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        </Link>
                       </Button>
                     </div>
                   </div>
