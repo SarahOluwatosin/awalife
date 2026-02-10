@@ -560,7 +560,32 @@ const ResourcesAdmin = () => {
               </div>
               <div className="space-y-2"><Label>Title</Label><Input value={editingResource.title} onChange={e => setEditingResource(c => c ? { ...c, title: e.target.value } : c)} /></div>
               <div className="space-y-2"><Label>Summary</Label><Textarea value={editingResource.summary} onChange={e => setEditingResource(c => c ? { ...c, summary: e.target.value } : c)} rows={2} /></div>
-              <div className="space-y-2"><Label>Media URL</Label><Input value={editingResource.mediaUrl} onChange={e => setEditingResource(c => c ? { ...c, mediaUrl: e.target.value } : c)} /></div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Resource source</Label>
+                  <Select value={editingResource.mediaType} onValueChange={v => setEditingResource(c => c ? { ...c, mediaType: v as ResourceMediaType, mediaUrl: '', mediaName: '', mediaMime: '' } : c)}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="upload">Upload file</SelectItem>
+                      <SelectItem value="link">External link</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  {editingResource.mediaType === 'link' ? (
+                    <>
+                      <Label>Resource link</Label>
+                      <Input value={editingResource.mediaUrl} onChange={e => setEditingResource(c => c ? { ...c, mediaUrl: e.target.value } : c)} placeholder="https://" />
+                    </>
+                  ) : (
+                    <>
+                      <Label>Upload file</Label>
+                      <Input type="file" onChange={async e => { const f = e.target.files?.[0]; if (f) { const dataUrl = await readFileAsDataUrl(f); setEditingResource(c => c ? { ...c, mediaType: 'upload', mediaUrl: dataUrl, mediaName: f.name, mediaMime: f.type } : c); } }} />
+                      {editingResource.mediaName && <p className="text-xs text-muted-foreground">Current: {editingResource.mediaName}</p>}
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
           )}
           <DialogFooter>
