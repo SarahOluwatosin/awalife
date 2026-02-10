@@ -112,11 +112,15 @@ const HeroSection = () => {
           </div>
 
           <div className="relative">
-            <div className="rounded-2xl overflow-hidden border border-border/40 shadow-xl bg-card">
+            <div className="rounded-2xl overflow-hidden border border-border/40 shadow-xl bg-secondary/30">
               <img
                 src={heroBg}
                 alt="Veterinary diagnostic workflow"
                 className="w-full h-full object-cover aspect-[5/4]"
+                fetchPriority="high"
+                decoding="async"
+                width={800}
+                height={640}
               />
             </div>
             <div className="absolute -bottom-6 -left-6 w-28 h-28 rounded-2xl bg-primary/10 border border-primary/20 hidden md:block" />
