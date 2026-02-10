@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
+import { dbSelect, dbInsert, dbUpdate, dbDelete } from '@/lib/db';
 import { supabase } from '@/integrations/supabase/client';
 import { getDefaultResourcesData } from '@/data/resources';
 import type { ResourcesCMSData, ResourceItem, ResourceFAQItem, NewsItem } from '@/data/resources';
@@ -8,21 +9,23 @@ type ResourcesCMSContextType = {
   data: ResourcesCMSData;
   loading: boolean;
   refetch: () => Promise<void>;
-  // News CRUD
   addNews: (item: Omit<NewsItem, 'id'>) => Promise<void>;
   updateNews: (item: NewsItem) => Promise<void>;
   deleteNews: (id: string) => Promise<void>;
-  // Resources CRUD
   addResource: (item: Omit<ResourceItem, 'id'>) => Promise<void>;
   updateResource: (item: ResourceItem) => Promise<void>;
   deleteResource: (id: string) => Promise<void>;
-  // FAQ CRUD
   addFaq: (item: Omit<ResourceFAQItem, 'id'>) => Promise<void>;
   updateFaq: (item: ResourceFAQItem) => Promise<void>;
   deleteFaq: (id: string) => Promise<void>;
 };
 
 const ResourcesCMSContext = createContext<ResourcesCMSContextType | undefined>(undefined);
+
+const getToken = async () => {
+  const { data } = await supabase.auth.getSession();
+  return data.session?.access_token ?? '';
+};
 
 export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
   const [data, setData] = useState<ResourcesCMSData>({
@@ -35,116 +38,113 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const fetchAll = useCallback(async () => {
-    const [newsRes, resourcesRes, faqRes] = await Promise.all([
-      supabase.from('news_articles').select('*').order('date', { ascending: false }),
-      supabase.from('resources').select('*').order('created_at', { ascending: false }),
-      supabase.from('faq_items').select('*').order('sort_order', { ascending: true }),
-    ]);
+    try {
+      const [newsRaw, resourcesRaw, faqRaw] = await Promise.all([
+        dbSelect('news_articles', 'order=date.desc'),
+        dbSelect('resources', 'order=created_at.desc'),
+        dbSelect('faq_items', 'order=sort_order.asc'),
+      ]);
 
-    const news: NewsItem[] = (newsRes.data ?? []).map(r => ({
-      id: r.id,
-      title: r.title,
-      excerpt: r.excerpt,
-      content: r.content,
-      date: r.date,
-      category: r.category as NewsItem['category'],
-      location: r.location,
-      imageUrl: r.image_url,
-    }));
+      const news: NewsItem[] = (newsRaw as any[]).map(r => ({
+        id: r.id, title: r.title, excerpt: r.excerpt, content: r.content,
+        date: r.date, category: r.category, location: r.location, imageUrl: r.image_url,
+      }));
 
-    const resources: ResourceItem[] = (resourcesRes.data ?? []).map(r => ({
-      id: r.id,
-      title: r.title,
-      summary: r.summary,
-      kind: r.kind as ResourceItem['kind'],
-      productId: r.product_id as ResourceItem['productId'],
-      mediaType: r.media_type as ResourceItem['mediaType'],
-      mediaUrl: r.media_url,
-      mediaName: r.media_name,
-      mediaMime: r.media_mime,
-    }));
+      const resources: ResourceItem[] = (resourcesRaw as any[]).map(r => ({
+        id: r.id, title: r.title, summary: r.summary,
+        kind: r.kind, productId: r.product_id, mediaType: r.media_type,
+        mediaUrl: r.media_url, mediaName: r.media_name, mediaMime: r.media_mime,
+      }));
 
-    const faqItems: ResourceFAQItem[] = (faqRes.data ?? []).map(r => ({
-      id: r.id,
-      question: r.question,
-      answer: r.answer,
-    }));
+      const faqItems: ResourceFAQItem[] = (faqRaw as any[]).map(r => ({
+        id: r.id, question: r.question, answer: r.answer,
+      }));
 
-    setData(prev => ({
-      ...prev,
-      news,
-      resources,
-      faq: { ...prev.faq, items: faqItems },
-    }));
-    setLoading(false);
+      setData(prev => ({
+        ...prev,
+        news,
+        resources,
+        faq: { ...prev.faq, items: faqItems },
+      }));
+    } catch (err) {
+      console.error('[CMS] Fetch error:', err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => { fetchAll(); }, [fetchAll]);
 
-  // News CRUD
   const addNews = async (item: Omit<NewsItem, 'id'>) => {
-    await supabase.from('news_articles').insert({
+    const token = await getToken();
+    await dbInsert('news_articles', {
       title: item.title, excerpt: item.excerpt, content: item.content,
       date: item.date, category: item.category, location: item.location, image_url: item.imageUrl,
-    });
+    }, token);
     await fetchAll();
   };
 
   const updateNews = async (item: NewsItem) => {
-    await supabase.from('news_articles').update({
+    const token = await getToken();
+    await dbUpdate('news_articles', item.id, {
       title: item.title, excerpt: item.excerpt, content: item.content,
       date: item.date, category: item.category, location: item.location, image_url: item.imageUrl,
-    }).eq('id', item.id);
+    }, token);
     await fetchAll();
   };
 
   const deleteNews = async (id: string) => {
-    await supabase.from('news_articles').delete().eq('id', id);
+    const token = await getToken();
+    await dbDelete('news_articles', id, token);
     await fetchAll();
   };
 
-  // Resources CRUD
   const addResource = async (item: Omit<ResourceItem, 'id'>) => {
-    await supabase.from('resources').insert({
+    const token = await getToken();
+    await dbInsert('resources', {
       title: item.title, summary: item.summary, kind: item.kind,
       product_id: item.productId, media_type: item.mediaType,
       media_url: item.mediaUrl, media_name: item.mediaName, media_mime: item.mediaMime,
-    });
+    }, token);
     await fetchAll();
   };
 
   const updateResource = async (item: ResourceItem) => {
-    await supabase.from('resources').update({
+    const token = await getToken();
+    await dbUpdate('resources', item.id, {
       title: item.title, summary: item.summary, kind: item.kind,
       product_id: item.productId, media_type: item.mediaType,
       media_url: item.mediaUrl, media_name: item.mediaName, media_mime: item.mediaMime,
-    }).eq('id', item.id);
+    }, token);
     await fetchAll();
   };
 
   const deleteResource = async (id: string) => {
-    await supabase.from('resources').delete().eq('id', id);
+    const token = await getToken();
+    await dbDelete('resources', id, token);
     await fetchAll();
   };
 
-  // FAQ CRUD
   const addFaq = async (item: Omit<ResourceFAQItem, 'id'>) => {
+    const token = await getToken();
     const maxOrder = data.faq.items.length;
-    await supabase.from('faq_items').insert({
+    await dbInsert('faq_items', {
       question: item.question, answer: item.answer, sort_order: maxOrder,
-    });
+    }, token);
     await fetchAll();
   };
 
   const updateFaq = async (item: ResourceFAQItem) => {
-    await supabase.from('faq_items').update({
+    const token = await getToken();
+    await dbUpdate('faq_items', item.id, {
       question: item.question, answer: item.answer,
-    }).eq('id', item.id);
+    }, token);
     await fetchAll();
   };
 
   const deleteFaq = async (id: string) => {
-    await supabase.from('faq_items').delete().eq('id', id);
+    const token = await getToken();
+    await dbDelete('faq_items', id, token);
     await fetchAll();
   };
 
