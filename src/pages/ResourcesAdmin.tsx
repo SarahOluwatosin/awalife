@@ -27,6 +27,8 @@ import type {
   NewsCategory,
 } from '@/data/resources';
 import { toast } from '@/hooks/use-toast';
+import { uploadToStorage } from '@/lib/storage';
+import { validateImageFile, validateResourceFile } from '@/lib/validation';
 
 type ResourceFormState = {
   title: string;
@@ -44,14 +46,6 @@ const defaultProduct = (RESOURCE_PRODUCT_OPTIONS[0]?.id || 'all') as ResourcePro
 
 const kindLabelMap = RESOURCE_KIND_CONFIG.reduce<Record<string, string>>((a, k) => { a[k.id] = k.label; return a; }, {});
 const productLabelMap = RESOURCE_PRODUCT_OPTIONS.reduce<Record<string, string>>((a, p) => { a[p.id] = p.label; return a; }, {});
-
-const readFileAsDataUrl = (file: File) =>
-  new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = () => reject(new Error('Failed to read file'));
-    reader.readAsDataURL(file);
-  });
 
 const ResourcesAdmin = () => {
   const { user, isAdmin, loading: authLoading, signOut } = useAuth();
@@ -86,8 +80,14 @@ const ResourcesAdmin = () => {
 
   // ---- Resource helpers ----
   const handleNewResourceFile = async (file: File) => {
-    const dataUrl = await readFileAsDataUrl(file);
-    setNewResource(c => ({ ...c, mediaType: 'upload', mediaUrl: dataUrl, mediaName: file.name, mediaMime: file.type }));
+    const error = validateResourceFile(file);
+    if (error) { toast({ title: error, variant: 'destructive' }); return; }
+    try {
+      const url = await uploadToStorage('media', 'resources', file);
+      setNewResource(c => ({ ...c, mediaType: 'upload', mediaUrl: url, mediaName: file.name, mediaMime: file.type }));
+    } catch {
+      toast({ title: 'Failed to upload file', variant: 'destructive' });
+    }
   };
 
   const handleRemoveResource = async (id: string) => {
@@ -121,11 +121,17 @@ const ResourcesAdmin = () => {
 
   // ---- News image upload ----
   const handleNewsImageUpload = async (file: File, target: 'new' | 'edit') => {
-    const dataUrl = await readFileAsDataUrl(file);
-    if (target === 'new') {
-      setNewNews(c => ({ ...c, imageUrl: dataUrl }));
-    } else {
-      setEditingNews(c => c ? { ...c, imageUrl: dataUrl } : c);
+    const error = validateImageFile(file);
+    if (error) { toast({ title: error, variant: 'destructive' }); return; }
+    try {
+      const url = await uploadToStorage('media', 'news', file);
+      if (target === 'new') {
+        setNewNews(c => ({ ...c, imageUrl: url }));
+      } else {
+        setEditingNews(c => c ? { ...c, imageUrl: url } : c);
+      }
+    } catch {
+      toast({ title: 'Failed to upload image', variant: 'destructive' });
     }
   };
 
@@ -580,7 +586,7 @@ const ResourcesAdmin = () => {
                   ) : (
                     <>
                       <Label>Upload file</Label>
-                      <Input type="file" onChange={async e => { const f = e.target.files?.[0]; if (f) { const dataUrl = await readFileAsDataUrl(f); setEditingResource(c => c ? { ...c, mediaType: 'upload', mediaUrl: dataUrl, mediaName: f.name, mediaMime: f.type } : c); } }} />
+                      <Input type="file" onChange={async e => { const f = e.target.files?.[0]; if (f) { const valErr = validateResourceFile(f); if (valErr) { toast({ title: valErr, variant: 'destructive' }); return; } try { const url = await uploadToStorage('media', 'resources', f); setEditingResource(c => c ? { ...c, mediaType: 'upload', mediaUrl: url, mediaName: f.name, mediaMime: f.type } : c); } catch { toast({ title: 'Failed to upload file', variant: 'destructive' }); } } }} />
                       {editingResource.mediaName && <p className="text-xs text-muted-foreground">Current: {editingResource.mediaName}</p>}
                     </>
                   )}
