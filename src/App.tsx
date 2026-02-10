@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-route
 import { AnimatePresence, MotionConfig } from "framer-motion";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ResourcesCMSProvider } from "@/contexts/ResourcesCMSContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import Company from "./pages/About";
 import CompanyNews from "./pages/CompanyNews";
@@ -20,6 +21,7 @@ import PleuralEffusion from "./pages/applications/PleuralEffusion";
 import ExoticAnimals from "./pages/applications/ExoticAnimals";
 import Resources from "./pages/News";
 import ResourcesAdmin from "./pages/ResourcesAdmin";
+import AdminLogin from "./pages/AdminLogin";
 
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
@@ -40,7 +42,6 @@ const AnimatedRoutes = () => {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-          <Route path="/landing/healthsync" element={<PageTransition><HealthSyncLanding /></PageTransition>} />
           <Route path="/landing/medtech" element={<PageTransition><MedTechLanding /></PageTransition>} />
           <Route path="/landing/modern" element={<PageTransition><ModernLanding /></PageTransition>} />
           <Route path="/landing/fizens" element={<PageTransition><FizensLanding /></PageTransition>} />
@@ -59,6 +60,7 @@ const AnimatedRoutes = () => {
           <Route path="/applications/pleural-effusion" element={<PageTransition><PleuralEffusion /></PageTransition>} />
           <Route path="/applications/exotic-animals" element={<PageTransition><ExoticAnimals /></PageTransition>} />
           <Route path="/resources" element={<PageTransition><Resources /></PageTransition>} />
+          <Route path="/admin/login" element={<PageTransition><AdminLogin /></PageTransition>} />
           <Route path="/admin/resources" element={<PageTransition><ResourcesAdmin /></PageTransition>} />
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
@@ -68,19 +70,20 @@ const AnimatedRoutes = () => {
   );
 };
 
-// App component with providers
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
-      <ResourcesCMSProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <AnimatedRoutes />
-          </BrowserRouter>
-        </TooltipProvider>
-      </ResourcesCMSProvider>
+      <AuthProvider>
+        <ResourcesCMSProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <AnimatedRoutes />
+            </BrowserRouter>
+          </TooltipProvider>
+        </ResourcesCMSProvider>
+      </AuthProvider>
     </LanguageProvider>
   </QueryClientProvider>
 );
