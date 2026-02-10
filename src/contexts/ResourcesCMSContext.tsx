@@ -25,8 +25,13 @@ type ResourcesCMSContextType = {
 const ResourcesCMSContext = createContext<ResourcesCMSContextType | undefined>(undefined);
 
 export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
-  const defaults = getDefaultResourcesData();
-  const [data, setData] = useState<ResourcesCMSData>(defaults);
+  const [data, setData] = useState<ResourcesCMSData>({
+    hero: getDefaultResourcesData().hero,
+    resources: [],
+    faq: { title: 'Frequently Asked Questions', items: [] },
+    cta: getDefaultResourcesData().cta,
+    news: [],
+  });
   const [loading, setLoading] = useState(true);
 
   const fetchAll = useCallback(async () => {
