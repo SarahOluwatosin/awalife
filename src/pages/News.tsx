@@ -50,45 +50,65 @@ const News = () => {
     const productLabel = productLabelMap[item.productId] || 'Product';
     const mediaUrl = item.mediaUrl?.trim();
     const hasMedia = Boolean(mediaUrl);
-    const actionLabel = item.mediaType === 'link' ? 'View' : 'Download';
+    const actionLabel = item.mediaType === 'link' ? 'View resource' : 'Download';
+    const badge = getMediaBadge(item);
+
     return (
       <div
         key={item.id}
-        className="group p-5 rounded-xl border border-border/30 bg-secondary/10 hover:border-primary/20 hover:bg-secondary/20 transition-all duration-300 flex items-start justify-between gap-4"
+        className="group relative rounded-2xl border border-border/30 bg-card hover:border-primary/25 transition-all duration-300 overflow-hidden"
       >
-        <div className="flex-1 min-w-0">
-          <span className="inline-block text-[11px] uppercase tracking-wider text-primary/70 font-semibold mb-2">
-            {productLabel}
-          </span>
-          <h3 className="text-sm font-semibold text-foreground mb-1 leading-snug">{item.title}</h3>
+        {/* Top accent bar */}
+        <div className="h-1 bg-gradient-to-r from-primary/40 to-primary/10" />
+
+        <div className="p-6">
+          {/* Header row */}
+          <div className="flex items-start justify-between gap-3 mb-3">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="inline-flex px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-semibold bg-primary/10 text-primary">
+                  {productLabel}
+                </span>
+                <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-bold bg-secondary text-muted-foreground">
+                  {badge}
+                </span>
+              </div>
+              <h3 className="text-base font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">
+                {item.title}
+              </h3>
+            </div>
+          </div>
+
+          {/* Summary */}
           {item.summary && (
-            <p className="text-xs text-muted-foreground mt-1.5 line-clamp-2">{item.summary}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">
+              {item.summary}
+            </p>
           )}
+
+          {/* Action */}
           {hasMedia ? (
-            <Button variant="ghost" size="sm" className="h-7 px-0 mt-3 text-primary hover:text-primary" asChild>
+            <Button variant="outline" size="sm" className="h-9 px-4 rounded-full border-primary/20 text-primary hover:bg-primary/5 hover:text-primary" asChild>
               {item.mediaType === 'upload' ? (
                 <a href={mediaUrl} download={item.mediaName || 'resource'}>
+                  <Download className="mr-1.5 h-3.5 w-3.5" />
                   {actionLabel}
-                  <Download className="ml-1.5 h-3 w-3" />
                 </a>
               ) : isExternalLink(mediaUrl) ? (
                 <a href={mediaUrl} target="_blank" rel="noreferrer">
+                  <ArrowRight className="mr-1.5 h-3.5 w-3.5" />
                   {actionLabel}
-                  <ArrowRight className="ml-1.5 h-3 w-3" />
                 </a>
               ) : (
                 <Link to={mediaUrl}>
+                  <ArrowRight className="mr-1.5 h-3.5 w-3.5" />
                   {actionLabel}
-                  <ArrowRight className="ml-1.5 h-3 w-3" />
                 </Link>
               )}
             </Button>
           ) : (
-            <p className="text-xs text-muted-foreground/60 mt-3">No file or link attached.</p>
+            <p className="text-xs text-muted-foreground/50 italic">No file or link attached</p>
           )}
-        </div>
-        <div className="w-12 h-12 rounded-lg bg-primary/5 border border-primary/10 flex items-center justify-center shrink-0">
-          <span className="text-[10px] font-bold text-primary/60">{getMediaBadge(item)}</span>
         </div>
       </div>
     );
