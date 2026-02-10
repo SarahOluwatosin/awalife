@@ -87,11 +87,32 @@ export type ResourceHero = {
   imageAlt: string;
 };
 
+export const NEWS_CATEGORIES = [
+  'Exhibition',
+  'Conference',
+  'Product Update',
+  'Business',
+  'Training',
+] as const;
+
+export type NewsCategory = (typeof NEWS_CATEGORIES)[number];
+
+export type NewsItem = {
+  id: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  category: NewsCategory;
+  location: string;
+  imageUrl: string;
+};
+
 export type ResourcesCMSData = {
   hero: ResourceHero;
   resources: ResourceItem[];
   faq: ResourceFAQ;
   cta: ResourceCTA;
+  news: NewsItem[];
 };
 
 export const getDefaultResourcesData = (): ResourcesCMSData => ({
@@ -104,27 +125,27 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
   },
   resources: [],
   faq: {
-    title: 'Frequent Asked Question',
+    title: 'Frequently Asked Questions',
     items: [
       {
         id: 'faq-1',
-        question: 'Norrasst quam pedibus tua pericula nolens',
-        answer: 'Download the related resource or contact our team for more details.',
+        question: 'What sample types does the Awalife platform support?',
+        answer: 'The platform supports blood, urine, feces, and body fluid samples for comprehensive morphology analysis.',
       },
       {
         id: 'faq-2',
-        question: 'Pericula harenens neutra turbinis errant adomto misa',
-        answer: 'Download the related resource or contact our team for more details.',
+        question: 'Which animal species are compatible?',
+        answer: 'It supports companion animals, small mammals, large animals, avian species, reptiles, and exotic pets.',
       },
       {
         id: 'faq-3',
-        question: 'Lorem ipsum dolor',
-        answer: 'Download the related resource or contact our team for more details.',
+        question: 'How does the AI assist in diagnostics?',
+        answer: 'AI-assisted morphology recognition automatically classifies and counts cells, generating review-ready reports with quantitative results.',
       },
       {
         id: 'faq-4',
-        question: 'Memorantur tacti quod crudelis domos',
-        answer: 'Download the related resource or contact our team for more details.',
+        question: 'Is training and support available?',
+        answer: 'Yes, Awalife provides online support, clinical expert network access, and dedicated 1-on-1 support for distributors and partners.',
       },
     ],
   },
@@ -135,6 +156,62 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
     buttonLabel: 'Contact us',
     buttonUrl: '/contact',
   },
+  news: [
+    {
+      id: 'news-1',
+      title: 'AWALIFE at KSFM Conference 2024',
+      excerpt: 'AWALIFE showcased its latest AI-100Vet analyzer at the KSFM exhibition held in Seoul, South Korea, receiving enthusiastic responses from veterinary professionals.',
+      date: '2024-11-21',
+      category: 'Exhibition',
+      location: 'Seoul, South Korea',
+      imageUrl: '',
+    },
+    {
+      id: 'news-2',
+      title: 'AWALIFE Participated in the ASASC',
+      excerpt: 'AWALIFE announced participation in the Asian Small Animal Specialist Conference, demonstrating innovative diagnostic solutions for veterinary practices.',
+      date: '2024-10-15',
+      category: 'Conference',
+      location: 'Bangkok, Thailand',
+      imageUrl: '',
+    },
+    {
+      id: 'news-3',
+      title: 'Singapore Vet Show Success',
+      excerpt: 'Singapore VetShow 2024 was a tremendous success for AWALIFE, connecting with Asia\'s premier veterinary professionals and showcasing our latest innovations.',
+      date: '2024-10-08',
+      category: 'Exhibition',
+      location: 'Singapore',
+      imageUrl: '',
+    },
+    {
+      id: 'news-4',
+      title: 'New AI-100Vet Firmware Update',
+      excerpt: 'We are pleased to announce a major firmware update for the AI-100Vet analyzer, introducing enhanced blood cell recognition accuracy and faster processing times.',
+      date: '2024-09-20',
+      category: 'Product Update',
+      location: 'Shenzhen, China',
+      imageUrl: '',
+    },
+    {
+      id: 'news-5',
+      title: 'AWALIFE Expands European Distribution',
+      excerpt: 'AWALIFE announces new distribution partnerships across Germany, France, and Spain, bringing AI-powered veterinary diagnostics to more European clinics.',
+      date: '2024-08-15',
+      category: 'Business',
+      location: 'Europe',
+      imageUrl: '',
+    },
+    {
+      id: 'news-6',
+      title: 'Training Workshop for Distributors',
+      excerpt: 'AWALIFE hosted an intensive training workshop for our global distributor partners, covering product features, maintenance, and customer support best practices.',
+      date: '2024-07-10',
+      category: 'Training',
+      location: 'Shenzhen, China',
+      imageUrl: '',
+    },
+  ],
 });
 
 const isString = (value: unknown) => typeof value === 'string';
@@ -193,5 +270,12 @@ export const isResourcesCMSData = (value: unknown): value is ResourcesCMSData =>
   if (!data.cta || !isString(data.cta.title) || !isString(data.cta.description)) {
     return false;
   }
-  return isString(data.cta.buttonLabel) && isString(data.cta.buttonUrl);
+  if (!isString(data.cta.buttonLabel) || !isString(data.cta.buttonUrl)) {
+    return false;
+  }
+  // News is optional for backward compat - default to empty array
+  if (data.news !== undefined && !Array.isArray(data.news)) {
+    return false;
+  }
+  return true;
 };
