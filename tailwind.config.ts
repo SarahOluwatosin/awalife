@@ -109,8 +109,8 @@ export default {
           '100%': { opacity: '1', transform: 'translateY(0)' }
         },
         'glow-pulse': {
-          '0%, 100%': { boxShadow: '0 0 20px hsl(166 84% 45% / 0.3)' },
-          '50%': { boxShadow: '0 0 40px hsl(166 84% 45% / 0.5)' }
+          '0%, 100%': { boxShadow: '0 0 20px hsl(150 70% 40% / 0.3)' },
+          '50%': { boxShadow: '0 0 40px hsl(130 67% 47% / 0.5)' }
         },
         'border-rotate': {
           '0%': { backgroundPosition: '0% 50%' },
@@ -150,7 +150,7 @@ export default {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'hero-gradient': 'radial-gradient(ellipse at 50% 0%, hsl(166 84% 45% / 0.08) 0%, transparent 60%)'
+        'hero-gradient': 'radial-gradient(ellipse at 50% 0%, hsl(168 70% 40% / 0.08) 0%, transparent 60%)'
       }
     }
   },

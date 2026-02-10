@@ -28,8 +28,8 @@
     --muted: 200 15% 88%;
     --muted-foreground: 220 15% 40%;
 
-    /* Accent: Bright cyan */
-    --accent: 180 100% 40%;
+    /* Accent: Vibrant green */
+    --accent: 130 67% 47%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -63,18 +63,18 @@
     --font-display: 'Jost', ui-sans-serif, system-ui, sans-serif;
 
     /* Premium shadows and glows for light mode */
-    --shadow-glow: 0 0 60px hsl(168 70% 40% / 0.08);
-    --shadow-glow-strong: 0 0 100px hsl(168 70% 40% / 0.15);
+    --shadow-glow: 0 0 60px hsl(168 70% 40% / 0.1);
+    --shadow-glow-strong: 0 0 100px hsl(130 67% 47% / 0.18);
     --shadow-card: 0 4px 24px hsl(220 40% 13% / 0.06), 0 1px 3px hsl(220 40% 13% / 0.04);
-    --shadow-card-hover: 0 12px 48px hsl(220 40% 13% / 0.1), 0 0 30px hsl(168 70% 40% / 0.06);
+    --shadow-card-hover: 0 12px 48px hsl(220 40% 13% / 0.1), 0 0 30px hsl(130 67% 47% / 0.08);
 
-    /* Gradients - enhanced for light mode */
-    --gradient-primary: linear-gradient(135deg, hsl(168 70% 34%), hsl(180 100% 40%));
+    /* Gradients - teal to green */
+    --gradient-primary: linear-gradient(135deg, hsl(168 70% 34%), hsl(130 67% 47%));
     --gradient-dark: linear-gradient(180deg, hsl(200 20% 98%), hsl(200 20% 95%));
     --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(200 20% 98%));
-    --gradient-border: linear-gradient(135deg, hsl(168 70% 40% / 0.15), hsl(180 100% 50% / 0.03));
-    --gradient-hero: radial-gradient(ellipse at 50% 0%, hsl(168 70% 40% / 0.04) 0%, transparent 60%);
-    --gradient-orb: radial-gradient(circle, hsl(168 70% 40% / 0.12) 0%, transparent 70%);
+    --gradient-border: linear-gradient(135deg, hsl(168 70% 40% / 0.15), hsl(130 67% 47% / 0.08));
+    --gradient-hero: radial-gradient(ellipse at 50% 0%, hsl(168 70% 40% / 0.06) 0%, transparent 60%);
+    --gradient-orb: radial-gradient(circle, hsl(130 67% 47% / 0.12) 0%, transparent 70%);
   }
 
   .dark {
@@ -99,8 +99,8 @@
     --muted: 222 30% 25%;
     --muted-foreground: 215 20% 65%;
 
-    /* Accent: Bright cyan glow */
-    --accent: 180 100% 50%;
+    /* Accent: Vibrant green glow */
+    --accent: 130 67% 50%;
     --accent-foreground: 222 47% 6%;
 
     --destructive: 0 84% 60%;
@@ -129,17 +129,17 @@
 
     /* Premium shadows and glows */
     --shadow-glow: 0 0 60px hsl(168 70% 40% / 0.15);
-    --shadow-glow-strong: 0 0 100px hsl(168 70% 40% / 0.3);
+    --shadow-glow-strong: 0 0 100px hsl(130 67% 50% / 0.3);
     --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.4);
-    --shadow-card-hover: 0 8px 40px hsl(0 0% 0% / 0.5), 0 0 30px hsl(168 70% 40% / 0.1);
+    --shadow-card-hover: 0 8px 40px hsl(0 0% 0% / 0.5), 0 0 30px hsl(130 67% 50% / 0.12);
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(168 70% 40%), hsl(180 100% 50%));
+    /* Gradients - teal to green */
+    --gradient-primary: linear-gradient(135deg, hsl(168 70% 40%), hsl(130 67% 50%));
     --gradient-dark: linear-gradient(180deg, hsl(222 47% 6%), hsl(222 47% 3%));
     --gradient-card: linear-gradient(135deg, hsl(222 47% 12%), hsl(222 47% 8%));
-    --gradient-border: linear-gradient(135deg, hsl(168 70% 40% / 0.3), hsl(180 100% 50% / 0.1));
+    --gradient-border: linear-gradient(135deg, hsl(168 70% 40% / 0.3), hsl(130 67% 50% / 0.15));
     --gradient-hero: radial-gradient(ellipse at 50% 0%, hsl(168 70% 40% / 0.08) 0%, transparent 60%);
-    --gradient-orb: radial-gradient(circle, hsl(168 70% 40% / 0.4) 0%, transparent 70%);
+    --gradient-orb: radial-gradient(circle, hsl(130 67% 50% / 0.4) 0%, transparent 70%);
   }
 }
 
@@ -203,7 +203,7 @@
 
   .btn-gradient:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 40px hsl(166 84% 45% / 0.4);
+    box-shadow: 0 10px 40px hsl(150 70% 40% / 0.4);
   }
 
   /* Glass morphism */
