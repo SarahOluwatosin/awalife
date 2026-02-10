@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Trash2, Plus, RotateCcw, Pencil, FileText } from 'lucide-react';
+import { Trash2, Plus, RotateCcw, Pencil, FileText, Upload, X, Image as ImageIcon } from 'lucide-react';
 import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
 import {
   RESOURCE_KIND_CONFIG,
@@ -64,7 +64,7 @@ const ResourcesAdmin = () => {
 
   // News form
   const [newNews, setNewNews] = useState<Omit<NewsItem, 'id'>>({
-    title: '', excerpt: '', date: '', category: 'Exhibition', location: '', imageUrl: '',
+    title: '', excerpt: '', date: new Date().toISOString().slice(0, 10), category: 'Exhibition', location: '', imageUrl: '',
   });
 
   // Edit dialogs
@@ -103,12 +103,22 @@ const ResourcesAdmin = () => {
     toast({ title: 'Resource updated' });
   };
 
+  // ---- News image upload helpers ----
+  const handleNewsImageUpload = async (file: File, target: 'new' | 'edit') => {
+    const dataUrl = await readFileAsDataUrl(file);
+    if (target === 'new') {
+      setNewNews(c => ({ ...c, imageUrl: dataUrl }));
+    } else {
+      setEditingNews(c => c ? { ...c, imageUrl: dataUrl } : c);
+    }
+  };
+
   // ---- News helpers ----
   const addNewsItem = () => {
     if (!newNews.title.trim()) return;
     const item: NewsItem = { id: createId('news'), ...newNews, title: newNews.title.trim(), excerpt: newNews.excerpt.trim() };
     setData(c => ({ ...c, news: [item, ...c.news] }));
-    setNewNews({ title: '', excerpt: '', date: '', category: 'Exhibition', location: '', imageUrl: '' });
+    setNewNews({ title: '', excerpt: '', date: new Date().toISOString().slice(0, 10), category: 'Exhibition', location: '', imageUrl: '' });
     toast({ title: 'News item added' });
   };
 
@@ -176,44 +186,74 @@ const ResourcesAdmin = () => {
               <Card>
                 <CardHeader>
                   <CardTitle>Add News Item</CardTitle>
+                  <CardDescription>Create a new news entry with image, details, and category.</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Title *</Label>
-                      <Input value={newNews.title} onChange={e => setNewNews(c => ({ ...c, title: e.target.value }))} />
+                <CardContent>
+                  <div className="grid md:grid-cols-[1fr_280px] gap-6">
+                    {/* Left: form fields */}
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label>Title *</Label>
+                        <Input value={newNews.title} onChange={e => setNewNews(c => ({ ...c, title: e.target.value }))} placeholder="e.g. AWALIFE at KSFM Conference 2025" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Excerpt</Label>
+                        <Textarea value={newNews.excerpt} onChange={e => setNewNews(c => ({ ...c, excerpt: e.target.value }))} rows={3} placeholder="Brief description of the news item..." />
+                      </div>
+                      <div className="grid grid-cols-3 gap-4">
+                        <div className="space-y-2">
+                          <Label>Category</Label>
+                          <Select value={newNews.category} onValueChange={v => setNewNews(c => ({ ...c, category: v as NewsCategory }))}>
+                            <SelectTrigger><SelectValue /></SelectTrigger>
+                            <SelectContent>
+                              {NEWS_CATEGORIES.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Date</Label>
+                          <Input type="date" value={newNews.date} onChange={e => setNewNews(c => ({ ...c, date: e.target.value }))} />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Location</Label>
+                          <Input value={newNews.location} onChange={e => setNewNews(c => ({ ...c, location: e.target.value }))} placeholder="e.g. Seoul, South Korea" />
+                        </div>
+                      </div>
+                      <Button onClick={addNewsItem} disabled={!newNews.title.trim()} className="mt-2">
+                        <Plus className="mr-2 h-4 w-4" /> Add News Item
+                      </Button>
                     </div>
+
+                    {/* Right: image upload */}
                     <div className="space-y-2">
-                      <Label>Category</Label>
-                      <Select value={newNews.category} onValueChange={v => setNewNews(c => ({ ...c, category: v as NewsCategory }))}>
-                        <SelectTrigger><SelectValue /></SelectTrigger>
-                        <SelectContent>
-                          {NEWS_CATEGORIES.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
-                        </SelectContent>
-                      </Select>
+                      <Label>Cover Image</Label>
+                      {newNews.imageUrl ? (
+                        <div className="relative rounded-lg overflow-hidden border border-border aspect-[4/3]">
+                          <img src={newNews.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                          <Button
+                            variant="destructive"
+                            size="icon"
+                            className="absolute top-2 right-2 h-7 w-7"
+                            onClick={() => setNewNews(c => ({ ...c, imageUrl: '' }))}
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <label className="flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border aspect-[4/3] cursor-pointer hover:border-primary/50 hover:bg-accent/50 transition-colors">
+                          <Upload className="h-8 w-8 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground font-medium">Click to upload</span>
+                          <span className="text-xs text-muted-foreground">JPG, PNG, WebP</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={e => { const f = e.target.files?.[0]; if (f) void handleNewsImageUpload(f, 'new'); }}
+                          />
+                        </label>
+                      )}
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label>Excerpt</Label>
-                    <Textarea value={newNews.excerpt} onChange={e => setNewNews(c => ({ ...c, excerpt: e.target.value }))} rows={2} />
-                  </div>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="space-y-2">
-                      <Label>Date</Label>
-                      <Input type="date" value={newNews.date} onChange={e => setNewNews(c => ({ ...c, date: e.target.value }))} />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Location</Label>
-                      <Input value={newNews.location} onChange={e => setNewNews(c => ({ ...c, location: e.target.value }))} />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Image URL</Label>
-                      <Input value={newNews.imageUrl} onChange={e => setNewNews(c => ({ ...c, imageUrl: e.target.value }))} placeholder="https://" />
-                    </div>
-                  </div>
-                  <Button onClick={addNewsItem} disabled={!newNews.title.trim()}>
-                    <Plus className="mr-2 h-4 w-4" /> Add News Item
-                  </Button>
                 </CardContent>
               </Card>
 
@@ -227,6 +267,7 @@ const ResourcesAdmin = () => {
                       <Table>
                         <TableHeader>
                           <TableRow>
+                            <TableHead className="w-14"></TableHead>
                             <TableHead>Title</TableHead>
                             <TableHead className="w-28">Category</TableHead>
                             <TableHead className="w-28">Date</TableHead>
@@ -237,6 +278,15 @@ const ResourcesAdmin = () => {
                         <TableBody>
                           {data.news.map(item => (
                             <TableRow key={item.id}>
+                              <TableCell className="p-2">
+                                {item.imageUrl ? (
+                                  <img src={item.imageUrl} alt="" className="h-10 w-14 rounded object-cover" />
+                                ) : (
+                                  <div className="h-10 w-14 rounded bg-muted flex items-center justify-center">
+                                    <ImageIcon className="h-4 w-4 text-muted-foreground" />
+                                  </div>
+                                )}
+                              </TableCell>
                               <TableCell className="font-medium">
                                 <div className="max-w-xs truncate">{item.title}</div>
                                 {item.excerpt && <div className="text-xs text-muted-foreground truncate max-w-xs mt-0.5">{item.excerpt}</div>}
@@ -465,44 +515,68 @@ const ResourcesAdmin = () => {
 
       {/* ===== EDIT NEWS DIALOG ===== */}
       <Dialog open={!!editingNews} onOpenChange={open => { if (!open) setEditingNews(null); }}>
-        <DialogContent className="max-w-xl">
+        <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Edit News Item</DialogTitle>
           </DialogHeader>
           {editingNews && (
-            <div className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-[1fr_200px] gap-6">
+              <div className="space-y-4">
                 <div className="space-y-2">
                   <Label>Title</Label>
                   <Input value={editingNews.title} onChange={e => setEditingNews(c => c ? { ...c, title: e.target.value } : c)} />
                 </div>
                 <div className="space-y-2">
-                  <Label>Category</Label>
-                  <Select value={editingNews.category} onValueChange={v => setEditingNews(c => c ? { ...c, category: v as NewsCategory } : c)}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {NEWS_CATEGORIES.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
+                  <Label>Excerpt</Label>
+                  <Textarea value={editingNews.excerpt} onChange={e => setEditingNews(c => c ? { ...c, excerpt: e.target.value } : c)} rows={3} />
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label>Category</Label>
+                    <Select value={editingNews.category} onValueChange={v => setEditingNews(c => c ? { ...c, category: v as NewsCategory } : c)}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        {NEWS_CATEGORIES.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Date</Label>
+                    <Input type="date" value={editingNews.date} onChange={e => setEditingNews(c => c ? { ...c, date: e.target.value } : c)} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Location</Label>
+                    <Input value={editingNews.location} onChange={e => setEditingNews(c => c ? { ...c, location: e.target.value } : c)} />
+                  </div>
                 </div>
               </div>
+              {/* Image upload in edit dialog */}
               <div className="space-y-2">
-                <Label>Excerpt</Label>
-                <Textarea value={editingNews.excerpt} onChange={e => setEditingNews(c => c ? { ...c, excerpt: e.target.value } : c)} rows={3} />
-              </div>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label>Date</Label>
-                  <Input type="date" value={editingNews.date} onChange={e => setEditingNews(c => c ? { ...c, date: e.target.value } : c)} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Location</Label>
-                  <Input value={editingNews.location} onChange={e => setEditingNews(c => c ? { ...c, location: e.target.value } : c)} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Image URL</Label>
-                  <Input value={editingNews.imageUrl} onChange={e => setEditingNews(c => c ? { ...c, imageUrl: e.target.value } : c)} placeholder="https://" />
-                </div>
+                <Label>Cover Image</Label>
+                {editingNews.imageUrl ? (
+                  <div className="relative rounded-lg overflow-hidden border border-border aspect-[4/3]">
+                    <img src={editingNews.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-2 right-2 h-7 w-7"
+                      onClick={() => setEditingNews(c => c ? { ...c, imageUrl: '' } : c)}
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
+                ) : (
+                  <label className="flex flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed border-border aspect-[4/3] cursor-pointer hover:border-primary/50 hover:bg-accent/50 transition-colors">
+                    <ImageIcon className="h-6 w-6 text-muted-foreground" />
+                    <span className="text-xs text-muted-foreground font-medium">Upload image</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={e => { const f = e.target.files?.[0]; if (f) void handleNewsImageUpload(f, 'edit'); }}
+                    />
+                  </label>
+                )}
               </div>
             </div>
           )}
