@@ -66,7 +66,7 @@ const CompanyNews = () => {
       </section>
 
       {/* News Grid */}
-      <section className="py-12 lg:py-16 pb-24 lg:pb-32">
+      <section className="py-20 lg:py-28 pb-28 lg:pb-36">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           {filtered.length ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
