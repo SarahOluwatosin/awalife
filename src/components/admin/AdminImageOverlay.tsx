@@ -60,7 +60,13 @@ const AdminImageOverlay = () => {
 
   const handleMouseOver = useCallback((e: MouseEvent) => {
     if (dialogOpen) return;
-    const el = (e.target as HTMLElement).closest?.('img') as HTMLImageElement | null;
+    const target = e.target as HTMLElement;
+    // Try the element itself or ancestors first
+    let el = target.closest?.('img') as HTMLImageElement | null;
+    // If not found, check if we're hovering over a container that has an img child
+    if (!el) {
+      el = target.querySelector?.('img') as HTMLImageElement | null;
+    }
     if (!el || !el.src || !extractStoragePath(el.src)) return;
     const rect = el.getBoundingClientRect();
     if (rect.width < 30 || rect.height < 30) return;
