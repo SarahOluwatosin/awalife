@@ -11,7 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Progress } from '@/components/ui/progress';
-import { Trash2, Plus, Pencil, FileText, Upload, X, Image as ImageIcon, LogOut, RefreshCw } from 'lucide-react';
+import { Trash2, Plus, Pencil, FileText, Upload, X, Image as ImageIcon, LogOut, RefreshCw, Video } from 'lucide-react';
+import SiteVideosManager from '@/components/admin/SiteVideosManager';
 import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -505,6 +506,7 @@ const ResourcesAdmin = () => {
               <TabsTrigger value="resources">Resources ({data.resources.length})</TabsTrigger>
               <TabsTrigger value="faq">FAQ ({data.faq.items.length})</TabsTrigger>
               <TabsTrigger value="images">Site Images</TabsTrigger>
+              <TabsTrigger value="videos">Videos</TabsTrigger>
             </TabsList>
 
             {/* ===== NEWS TAB ===== */}
@@ -785,6 +787,11 @@ const ResourcesAdmin = () => {
             {/* ===== SITE IMAGES TAB ===== */}
             <TabsContent value="images" className="space-y-6">
               <SiteImagesManager />
+            </TabsContent>
+
+            {/* ===== SITE VIDEOS TAB ===== */}
+            <TabsContent value="videos" className="space-y-6">
+              <SiteVideosManager />
             </TabsContent>
           </Tabs>
           )}
