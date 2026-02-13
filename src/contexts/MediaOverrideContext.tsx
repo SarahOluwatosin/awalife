@@ -103,6 +103,18 @@ export const MediaOverrideProvider = ({ children }: { children: ReactNode }) => 
 
   // Apply DOM overrides when overrides change or after navigation
   useEffect(() => {
+    // Clear applied tracking whenever overrides change so new ones take effect
+    appliedRef.current.clear();
+
+    // Also remove stale video wrappers whose override was removed
+    document.querySelectorAll<HTMLElement>('[data-media-override]').forEach(wrapper => {
+      const path = wrapper.getAttribute('data-media-override');
+      if (path && !overrides.has(path)) {
+        // Override was removed — we can't easily restore the img, but at least clean up
+        wrapper.remove();
+      }
+    });
+
     if (overrides.size === 0) return;
 
     const applyOverrides = () => {
@@ -113,11 +125,11 @@ export const MediaOverrideProvider = ({ children }: { children: ReactNode }) => 
         if (!override) return;
         // Don't apply twice
         if (img.parentElement?.getAttribute('data-media-override') === path) return;
-        if (appliedRef.current.has(img.src)) return;
+        if (appliedRef.current.has(path)) return;
 
         const videoEl = createVideoElement(override, img);
         img.parentElement?.replaceChild(videoEl, img);
-        appliedRef.current.add(img.src);
+        appliedRef.current.add(path);
       });
     };
 

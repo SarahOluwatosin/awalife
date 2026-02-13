@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Trash2, Plus, Pencil, Upload, X, Video, Link, Play } from 'lucide-react';
+import { Trash2, Plus, Pencil, Upload, X, Video, Link, Play, HardDrive } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { uploadToStorage } from '@/lib/storage';
 import { validateVideoFile, validateVideoUrl } from '@/lib/validation';
@@ -41,8 +41,11 @@ const getEmbedUrl = (url: string): string | null => {
   return null;
 };
 
+type StorageVideo = { name: string; url: string; folder: string };
+
 const SiteVideosManager = () => {
   const [videos, setVideos] = useState<SiteVideo[]>([]);
+  const [storageVideos, setStorageVideos] = useState<StorageVideo[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -65,6 +68,25 @@ const SiteVideosManager = () => {
     try {
       const rows = await dbSelect<SiteVideo>('site_videos', 'order=category.asc,label.asc');
       setVideos(rows);
+      // Also scan storage for unmanaged video files
+      const videoExtensions = ['mp4', 'webm', 'ogg', 'mov'];
+      const folders = ['videos', 'assets'];
+      const allVids: StorageVideo[] = [];
+      for (const folder of folders) {
+        const { data: storageFiles } = await supabase.storage.from('media').list(folder);
+        if (storageFiles) {
+          storageFiles
+            .filter(f => videoExtensions.some(ext => f.name.toLowerCase().endsWith(`.${ext}`)))
+            .forEach(f => {
+              // Skip if already managed in DB
+              const url = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/media/${folder}/${f.name}`;
+              if (!rows.some(r => r.video_url === url)) {
+                allVids.push({ name: f.name, url, folder });
+              }
+            });
+        }
+      }
+      setStorageVideos(allVids);
     } catch (err) {
       console.error('[SiteVideos] fetch error', err);
     } finally {
@@ -195,10 +217,68 @@ const SiteVideosManager = () => {
         </CardHeader>
       </Card>
 
-      {videos.length === 0 ? (
+      {/* Unmanaged storage videos */}
+      {storageVideos.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2"><HardDrive className="h-4 w-4" /> Unmanaged Storage Videos</CardTitle>
+            <CardDescription>These video files exist in storage but aren't tracked in the database yet.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {storageVideos.map(vid => (
+                <div key={vid.url} className="space-y-2">
+                  <div className="relative aspect-video rounded-lg border border-dashed border-border overflow-hidden bg-muted">
+                    <video src={vid.url} className="w-full h-full object-cover" muted preload="metadata" />
+                    <span className="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-background/80 text-foreground">
+                      <HardDrive className="h-2.5 w-2.5" /> {vid.folder}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs font-medium text-foreground truncate flex-1">{vid.name}</span>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="text-xs h-7"
+                      disabled={saving}
+                      onClick={async () => {
+                        setSaving(true);
+                        try {
+                          const safeKey = vid.name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                          const label = vid.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                          const token = await getToken();
+                          await dbInsert('site_videos', {
+                            key: safeKey,
+                            label,
+                            category: 'Uncategorized',
+                            video_type: 'upload',
+                            video_url: vid.url,
+                            file_name: vid.name,
+                            thumbnail_url: '',
+                          }, token);
+                          await fetchVideos();
+                          toast({ title: `"${label}" added to library` });
+                        } catch {
+                          toast({ title: 'Failed to add video', variant: 'destructive' });
+                        } finally {
+                          setSaving(false);
+                        }
+                      }}
+                    >
+                      <Plus className="h-3 w-3 mr-1" /> Add to Library
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {videos.length === 0 && storageVideos.length === 0 ? (
         <Card>
           <CardContent className="py-8">
-            <p className="text-muted-foreground text-center">No videos added yet. Click "Add Video" to get started.</p>
+            <p className="text-muted-foreground text-center">No videos found. Click "Add Video" to get started.</p>
           </CardContent>
         </Card>
       ) : categories.map(category => (
