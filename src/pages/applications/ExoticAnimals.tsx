@@ -5,8 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
-import ai100vetImg from '@/assets/ai-100vet.png';
-import heroDiagnosticLab from '@/assets/hero-diagnostic-lab.jpg';
+import { images } from '@/lib/images';
 
 const ExoticAnimals = () => {
   useEffect(() => {
@@ -72,7 +71,7 @@ const ExoticAnimals = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={ai100vetImg} alt="Exotic species analyzer" className="w-full max-h-80 object-contain" />
+                <img src={images.ai100vet} alt="Exotic species analyzer" className="w-full max-h-80 object-contain" />
               </div>
             </div>
           </div>
@@ -177,7 +176,7 @@ const ExoticAnimals = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center">
-                <img src={heroDiagnosticLab} alt="Low volume sample" className="w-full max-h-72 object-contain" />
+                <img src={images.heroDiagnosticLab} alt="Low volume sample" className="w-full max-h-72 object-contain" />
               </div>
             </div>
           </div>

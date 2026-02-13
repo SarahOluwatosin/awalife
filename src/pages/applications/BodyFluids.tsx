@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
 import { useLanguage } from '@/contexts/LanguageContext';
-import ai100vetImg from '@/assets/ai-100vet.png';
+import { images } from '@/lib/images';
 
 const BodyFluids = () => {
   const { t } = useLanguage();
@@ -100,7 +100,7 @@ const BodyFluids = () => {
             <div className="relative lg:order-1">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={ai100vetImg} alt="AI-100Vet Analyzer" className="w-full max-h-80 object-contain" />
+                <img src={images.ai100vet} alt="AI-100Vet Analyzer" className="w-full max-h-80 object-contain" />
               </div>
             </div>
           </div>

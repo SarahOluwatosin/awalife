@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import heroBg from '@/assets/hero-diagnostic-lab.jpg';
+import { images } from '@/lib/images';
 
 interface MetricItemProps {
   value: number;
@@ -114,7 +114,7 @@ const HeroSection = () => {
           <div className="relative">
             <div className="rounded-2xl overflow-hidden border border-border/40 shadow-xl bg-secondary/30">
               <img
-                src={heroBg}
+                src={images.heroDiagnosticLab}
                 alt="Veterinary diagnostic workflow"
                 className="w-full h-full object-cover aspect-[5/4]"
                 fetchPriority="high"

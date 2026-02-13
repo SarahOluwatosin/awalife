@@ -5,9 +5,7 @@ import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
 import { useLanguage } from '@/contexts/LanguageContext';
-import ai100vetImg from '@/assets/ai-100vet.png';
-import microscopeImg from '@/assets/microscope-station.png';
-import reagentsImg from '@/assets/reagents.png';
+import { images } from '@/lib/images';
 
 const Products = () => {
   const { t } = useLanguage();
@@ -19,7 +17,7 @@ const Products = () => {
   const products = [
     {
       id: 'ai-100vet-elite',
-      image: ai100vetImg,
+      image: images.ai100vet,
       name: 'AI-100Vet Elite Morphological Analyzer',
       tagline: 'Premium AI-Powered Diagnostics',
       description: 'AI-powered diagnostic device for cats and dogs, capable of automatically analyzing three sample types: blood, feces, and urine. Features microfluidic automated smearing and AI-powered recognition.',
@@ -28,7 +26,7 @@ const Products = () => {
     },
     {
       id: 'ai-100vet',
-      image: ai100vetImg,
+      image: images.ai100vet,
       name: 'AI-100Vet Morphological Analyzer',
       tagline: 'Multi-Species Intelligent Diagnostics',
       description: 'Intelligent diagnostic device supporting automatic analysis of four sample types including blood, feces, urine sediment, and pleural fluid, meeting the clinical needs of 10+ species including dogs, cats, rabbits, birds, and reptiles.',
@@ -37,7 +35,7 @@ const Products = () => {
     },
     {
       id: 'ai-80vet',
-      image: ai100vetImg,
+      image: images.ai100vet,
       name: 'AI-80Vet Morphological Analyzer',
       tagline: 'Configurable Sample Testing',
       description: 'Intelligent diagnostic device with configurable sample testing functions to meet diverse veterinary needs. Offers comprehensive blood, feces, and urine analysis with advanced AI recognition.',
@@ -46,7 +44,7 @@ const Products = () => {
     },
     {
       id: 'microscope',
-      image: microscopeImg,
+      image: images.microscopeStation,
       name: 'Digital Microscope Station',
       tagline: 'Professional HD Imaging Workstation',
       description: 'AWALIFE microscope workstation with built-in positive sample library, 4K professional camera with 8 million pixels, 20% larger field of view, and infinite optical system for microscopic examination.',
@@ -89,18 +87,18 @@ const Products = () => {
             <div className="relative grid grid-cols-2 gap-4">
               <div className="space-y-4">
                 <div className="overflow-hidden rounded-2xl bg-secondary/30">
-                  <img src={ai100vetImg} alt="AI-100Vet Analyzer" className="w-full h-48 object-cover" />
+                  <img src={images.ai100vet} alt="AI-100Vet Analyzer" className="w-full h-48 object-cover" />
                 </div>
                 <div className="overflow-hidden rounded-2xl bg-secondary/30">
-                  <img src={reagentsImg} alt="AWALIFE Reagents" className="w-full h-32 object-cover" />
+                  <img src={images.reagents} alt="AWALIFE Reagents" className="w-full h-32 object-cover" />
                 </div>
               </div>
               <div className="space-y-4 pt-8">
                 <div className="overflow-hidden rounded-2xl bg-secondary/30">
-                  <img src={microscopeImg} alt="Microscope Station" className="w-full h-32 object-cover" />
+                  <img src={images.microscopeStation} alt="Microscope Station" className="w-full h-32 object-cover" />
                 </div>
                 <div className="overflow-hidden rounded-2xl bg-secondary/30">
-                  <img src={ai100vetImg} alt="Product Showcase" className="w-full h-48 object-cover" />
+                  <img src={images.ai100vet} alt="Product Showcase" className="w-full h-48 object-cover" />
                 </div>
               </div>
             </div>
@@ -115,7 +113,6 @@ const Products = () => {
             {products.map((product, index) => (
               <div key={product.id} className="group">
                 <div className={`grid lg:grid-cols-2 gap-12 items-center`}>
-                  {/* Image */}
                   <div className={`relative min-h-[350px] lg:min-h-[450px] bg-gradient-to-br from-secondary/50 via-secondary/30 to-secondary/50 rounded-2xl flex items-center justify-center p-8 lg:p-12 overflow-hidden ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
                     {product.featured && (
                       <div className="absolute top-6 left-6 z-10">
@@ -131,8 +128,6 @@ const Products = () => {
                       className="relative z-10 max-h-80 w-auto object-contain group-hover:scale-105 transition-transform duration-700 ease-out drop-shadow-xl"
                     />
                   </div>
-
-                  {/* Content */}
                   <div className={`${index % 2 !== 0 ? 'lg:order-1' : ''}`}>
                     <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/80 mb-4">
                       0{index + 1} / 0{products.length}
@@ -141,12 +136,9 @@ const Products = () => {
                       {product.name}
                     </h2>
                     <p className="text-primary/80 font-medium text-lg mb-6">{product.tagline}</p>
-                    
                     <p className="text-muted-foreground mb-8 leading-relaxed text-base lg:text-lg">
                       {product.description}
                     </p>
-
-                    {/* Features Grid */}
                     <div className="grid grid-cols-2 gap-4 mb-10">
                       {product.features.map((feature) => (
                         <div 
@@ -160,7 +152,6 @@ const Products = () => {
                         </div>
                       ))}
                     </div>
-
                     <div className="flex flex-wrap gap-4">
                       <Button className="btn-gradient group/btn" size="lg" asChild>
                         <Link to={`/products/${product.id}`}>
@@ -197,19 +188,19 @@ const Products = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
             <div className="col-span-2 row-span-2 overflow-hidden rounded-2xl">
-              <img src={ai100vetImg} alt="AI-100Vet Main" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+              <img src={images.ai100vet} alt="AI-100Vet Main" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="overflow-hidden rounded-2xl bg-secondary/30">
-              <img src={microscopeImg} alt="Microscope" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+              <img src={images.microscopeStation} alt="Microscope" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="overflow-hidden rounded-2xl bg-secondary/30">
-              <img src={reagentsImg} alt="Reagents" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+              <img src={images.reagents} alt="Reagents" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="overflow-hidden rounded-2xl bg-secondary/30">
-              <img src={ai100vetImg} alt="Product Detail" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+              <img src={images.ai100vet} alt="Product Detail" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="overflow-hidden rounded-2xl bg-secondary/30">
-              <img src={microscopeImg} alt="Lab Equipment" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+              <img src={images.microscopeStation} alt="Lab Equipment" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
           </div>
         </div>
@@ -220,7 +211,7 @@ const Products = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="relative rounded-2xl overflow-hidden bg-secondary/30 p-8 lg:p-12">
-              <img src={ai100vetImg} alt="AWALIFE Technology" className="w-full h-auto object-contain" />
+              <img src={images.ai100vet} alt="AWALIFE Technology" className="w-full h-auto object-contain" />
             </div>
             <div>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">

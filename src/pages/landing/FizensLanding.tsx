@@ -2,9 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Check, Star, ChevronDown, Menu, X, Apple, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import ai100vet from '@/assets/ai-100vet.png';
-import reagents from '@/assets/reagents.png';
-import microscopeStation from '@/assets/microscope-station.png';
+import { images } from '@/lib/images';
 
 // Custom hook for scroll animations
 const useInView = (threshold = 0.1) => {
@@ -91,7 +89,7 @@ const FizensLanding = () => {
       title: 'Save your time and reduce diagnostic delays',
       description: 'Automate analysis tasks with AI-powered recognition, freeing up your time for patient care.',
       bullets: ['Results in under 3 minutes', 'Automated cell counting and classification'],
-      image: ai100vet,
+      image: images.ai100vet,
     },
     {
       icon: '📈',
@@ -99,7 +97,7 @@ const FizensLanding = () => {
       title: 'Take control of your diagnostic quality',
       description: 'AI provides valuable insights into cell morphology, helping identify abnormalities with precision.',
       bullets: ['99.5% accuracy rate', 'AI-assisted diagnosis'],
-      image: reagents,
+      image: images.reagents,
     },
     {
       icon: '🔒',
@@ -107,7 +105,7 @@ const FizensLanding = () => {
       title: 'Experience the ultimate in data protection',
       description: 'Protect patient information with enterprise-grade security and HIPAA compliance.',
       bullets: ['Encrypted data storage', 'Secure cloud backup'],
-      image: microscopeStation,
+      image: images.microscopeStation,
     },
   ];
 
@@ -339,7 +337,7 @@ const FizensLanding = () => {
               {/* Main product image */}
               <div className="relative">
                 <img 
-                  src={ai100vet} 
+                  src={images.ai100vet}
                   alt="AWALIFE AI-100Vet Analyzer" 
                   className="w-full max-w-md mx-auto drop-shadow-2xl relative z-10"
                 />
@@ -401,7 +399,7 @@ const FizensLanding = () => {
         <div className="max-w-6xl mx-auto">
           <div className="bg-gradient-to-r from-[#2563EB] to-[#3b82f6] rounded-[2rem] overflow-hidden">
             <img 
-              src={ai100vet} 
+              src={images.ai100vet}
               alt="AWALIFE Dashboard" 
               className="w-full max-w-4xl mx-auto p-8"
             />
@@ -447,7 +445,7 @@ const FizensLanding = () => {
             >
               <div className="relative">
                 <img 
-                  src={ai100vet} 
+                  src={images.ai100vet}
                   alt="AWALIFE Analyzer" 
                   className="w-full max-w-sm mx-auto"
                 />
@@ -505,7 +503,7 @@ const FizensLanding = () => {
             >
               <div className="grid md:grid-cols-2 gap-6 items-center">
                 <div>
-                  <img src={ai100vet} alt="Blood Analysis" className="w-full max-w-xs mx-auto" />
+                  <img src={images.ai100vet} alt="Blood Analysis" className="w-full max-w-xs mx-auto" />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold mb-3">Complete Blood Count</h3>
@@ -521,7 +519,7 @@ const FizensLanding = () => {
               }`}
             >
               <div className="aspect-square bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/5 rounded-2xl mb-4 flex items-center justify-center">
-                <img src={reagents} alt="Reagents" className="w-24 h-24 object-contain" />
+                <img src={images.reagents} alt="Reagents" className="w-24 h-24 object-contain" />
               </div>
               <h3 className="text-xl font-bold mb-2">Smart Reagent System</h3>
               <p className="text-gray-500 text-sm">Closed reagent system with automatic lot tracking.</p>
@@ -536,7 +534,7 @@ const FizensLanding = () => {
               }`}
             >
               <div className="aspect-video bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/5 rounded-2xl mb-4 flex items-center justify-center overflow-hidden">
-                <img src={microscopeStation} alt="Analytics" className="w-full h-full object-cover" />
+                <img src={images.microscopeStation} alt="Analytics" className="w-full h-full object-cover" />
               </div>
               <h3 className="text-xl font-bold mb-2">Diagnostic Analytics</h3>
               <p className="text-gray-500 text-sm">Generate comprehensive reports and visualizations for accurate diagnosis.</p>
@@ -686,8 +684,8 @@ const FizensLanding = () => {
             <div className="relative order-2 lg:order-1">
               {/* Product images stack */}
               <div className="flex justify-center items-end gap-4">
-                <img src={ai100vet} alt="AWALIFE Analyzer" className="w-40 lg:w-48 drop-shadow-xl" />
-                <img src={reagents} alt="Reagents" className="w-32 lg:w-40 drop-shadow-xl -mb-4" />
+                <img src={images.ai100vet} alt="AWALIFE Analyzer" className="w-40 lg:w-48 drop-shadow-xl" />
+                <img src={images.reagents} alt="Reagents" className="w-32 lg:w-40 drop-shadow-xl -mb-4" />
               </div>
             </div>
 
@@ -880,7 +878,7 @@ const FizensLanding = () => {
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="aspect-[4/3] bg-gradient-to-br from-[#2563EB]/10 to-[#2563EB]/20 rounded-2xl mb-4 group-hover:scale-105 transition-transform overflow-hidden">
-                  <img src={ai100vet} alt={post.title} className="w-full h-full object-cover opacity-50" />
+                  <img src={images.ai100vet} alt={post.title} className="w-full h-full object-cover opacity-50" />
                 </div>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-xs text-[#2563EB] font-medium">{post.category}</span>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import heroMedtech from '@/assets/hero-medtech.png';
+import { images } from '@/lib/images';
 
 const GlobalPartnersSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -30,7 +30,7 @@ const GlobalPartnersSection = () => {
         <div className={`mt-12 transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-secondary/30">
             <img
-              src={heroMedtech}
+              src={images.heroMedtech}
               alt="Global veterinary partners"
               className="w-full h-full object-cover aspect-[16/7] transition-opacity duration-500"
               loading="lazy"

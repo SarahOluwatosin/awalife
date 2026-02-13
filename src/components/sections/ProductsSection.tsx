@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import analyzerImg from '@/assets/awalife-analyzer-products.png';
-import microscopeImg from '@/assets/dm03-microscope.png';
+import { images } from '@/lib/images';
 
 const ProductsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -21,7 +20,7 @@ const ProductsSection = () => {
   const products = [
     { 
       id: 'ai-100vet-elite',
-      image: analyzerImg, 
+      image: images.awalifeAnalyzerProducts, 
       number: '01',
       name: 'Awalife AI Series Morphology Analyzer',
       description: 'Awalife AI Series Morphology Analyzer is an AI-powered veterinary system that automatically analyzes blood, urine, feces, and body fluids in one workflow. It combines multi-focus imaging, rapid liquid-based staining, AI-assisted morphology recognition, and report generation with true-to-life images and quantitative results—supported by an expandable parameter set for deeper clinical insight.',
@@ -29,7 +28,7 @@ const ProductsSection = () => {
     },
     { 
       id: 'microscope',
-      image: microscopeImg, 
+      image: images.dm03Microscope, 
       number: '02',
       name: 'DM-03 Microscope Workstation',
       description: 'An integrated imaging and reporting workflow built for veterinary practice. The Awalife Microscope Workstation brings imaging, measurement, cell counting, and documentation into a streamlined workflow with built-in tools to annotate, add scales, and generate reports in one click.',
@@ -60,7 +59,6 @@ const ProductsSection = () => {
             className={`grid lg:grid-cols-2 gap-12 items-center mb-24 last:mb-0 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             style={{ transitionDelay: `${0.1 + i * 0.2}s` }}
           >
-            {/* Image */}
             <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
               <div
                 className="relative rounded-2xl bg-gradient-to-br from-secondary/50 to-card overflow-hidden shadow-lg aspect-[4/3]"
@@ -87,8 +85,6 @@ const ProductsSection = () => {
                 </motion.div>
               </div>
             </div>
-
-            {/* Content */}
             <div className={`${i % 2 === 1 ? 'lg:order-1' : ''}`}>
               <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
                 {product.name}
