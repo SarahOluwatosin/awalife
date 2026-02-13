@@ -174,10 +174,16 @@ const AdminImageOverlay = () => {
   };
 
   const refreshAllMatching = (path: string, newUrl: string) => {
+    // Force unique cache-buster on each image to prevent stale CDN responses
+    const bustUrl = newUrl.includes('?') ? newUrl : `${newUrl}?t=${Date.now()}`;
     // Update matching images
     document.querySelectorAll<HTMLImageElement>('img').forEach(img => {
       const imgPath = extractStoragePath(img.src);
-      if (imgPath === path) img.src = newUrl;
+      if (imgPath === path) {
+        img.src = bustUrl;
+        // Force reload by temporarily clearing src
+        img.removeAttribute('srcset');
+      }
     });
     // Remove any video override wrappers for this path (they'll be replaced by the restored image on refresh)
     document.querySelectorAll<HTMLElement>(`[data-media-override="${path}"]`).forEach(wrapper => {
@@ -252,7 +258,6 @@ const AdminImageOverlay = () => {
     } catch (err: any) {
       toast({ title: 'Upload failed', description: err.message, variant: 'destructive' });
     } finally {
-      setUploading(true);
       if (fileInputRef.current) fileInputRef.current.value = '';
       setUploading(false);
     }
