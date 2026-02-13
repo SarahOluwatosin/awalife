@@ -60,6 +60,8 @@ const AdminImageOverlay = () => {
   // Existing videos from DB
   type SiteVideo = { id: string; key: string; label: string; category: string; video_url: string; video_type: string; thumbnail_url: string };
   const [siteVideos, setSiteVideos] = useState<SiteVideo[]>([]);
+  type StorageVideo = { name: string; url: string };
+  const [storageVideos, setStorageVideos] = useState<StorageVideo[]>([]);
   const [loadingVideos, setLoadingVideos] = useState(false);
 
   const handleMouseOver = useCallback((e: MouseEvent) => {
@@ -122,8 +124,21 @@ const AdminImageOverlay = () => {
 
   const fetchSiteVideos = async () => {
     setLoadingVideos(true);
+    // Fetch from site_videos table
     const { data } = await supabase.from('site_videos').select('*').order('category');
     setSiteVideos((data as any[]) || []);
+    // Also scan storage bucket for video files
+    const { data: storageFiles } = await supabase.storage.from('media').list('videos');
+    if (storageFiles) {
+      const videoExtensions = ['mp4', 'webm', 'ogg', 'mov'];
+      const vids = storageFiles
+        .filter(f => videoExtensions.some(ext => f.name.toLowerCase().endsWith(`.${ext}`)))
+        .map(f => ({
+          name: f.name,
+          url: `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/media/videos/${f.name}`,
+        }));
+      setStorageVideos(vids);
+    }
     setLoadingVideos(false);
   };
 
@@ -394,46 +409,95 @@ const AdminImageOverlay = () => {
                   <Label className="text-xs font-semibold text-muted-foreground">Existing Videos</Label>
                   {loadingVideos ? (
                     <div className="flex justify-center py-4"><Loader2 className="animate-spin h-5 w-5 text-muted-foreground" /></div>
-                  ) : siteVideos.length === 0 ? (
-                    <p className="text-xs text-muted-foreground text-center py-3">No videos in database yet</p>
+                  ) : siteVideos.length === 0 && storageVideos.length === 0 ? (
+                    <p className="text-xs text-muted-foreground text-center py-3">No videos found</p>
                   ) : (
-                    <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto">
-                      {siteVideos.map(vid => (
-                        <button
-                          key={vid.id}
-                          disabled={uploading}
-                          onClick={async () => {
-                            if (!activePath) return;
-                            setUploading(true);
-                            try {
-                              const mediaType = vid.video_type === 'embed' ? 'video_embed' : 'video_upload';
-                              await supabase.from('site_media_overrides').upsert({
-                                storage_path: activePath,
-                                media_type: mediaType,
-                                media_url: vid.video_url,
-                                thumbnail_url: vid.thumbnail_url || '',
-                              }, { onConflict: 'storage_path' });
-                              await refreshOverrides();
-                              toast({ title: `Replaced with "${vid.label}". Refresh to see changes.` });
-                              setDialogOpen(false);
-                              setTarget(null);
-                            } catch (err: any) {
-                              toast({ title: 'Failed', description: err.message, variant: 'destructive' });
-                            } finally {
-                              setUploading(false);
-                            }
-                          }}
-                          className="group relative rounded-md border p-2 hover:border-primary transition-colors disabled:opacity-40 bg-background text-left"
-                        >
-                          <div className="flex items-center gap-2">
-                            <Play className="h-4 w-4 shrink-0 text-primary" />
-                            <div className="min-w-0">
-                              <span className="block text-xs font-medium truncate">{vid.label}</span>
-                              <span className="block text-[10px] text-muted-foreground truncate">{vid.category} · {vid.video_type}</span>
-                            </div>
+                    <div className="space-y-3">
+                      {siteVideos.length > 0 && (
+                        <div>
+                          <p className="text-[10px] text-muted-foreground mb-1 uppercase tracking-wide">From Database</p>
+                          <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto">
+                            {siteVideos.map(vid => (
+                              <button
+                                key={vid.id}
+                                disabled={uploading}
+                                onClick={async () => {
+                                  if (!activePath) return;
+                                  setUploading(true);
+                                  try {
+                                    const mediaType = vid.video_type === 'embed' ? 'video_embed' : 'video_upload';
+                                    await supabase.from('site_media_overrides').upsert({
+                                      storage_path: activePath,
+                                      media_type: mediaType,
+                                      media_url: vid.video_url,
+                                      thumbnail_url: vid.thumbnail_url || '',
+                                    }, { onConflict: 'storage_path' });
+                                    await refreshOverrides();
+                                    toast({ title: `Replaced with "${vid.label}". Refresh to see changes.` });
+                                    setDialogOpen(false);
+                                    setTarget(null);
+                                  } catch (err: any) {
+                                    toast({ title: 'Failed', description: err.message, variant: 'destructive' });
+                                  } finally {
+                                    setUploading(false);
+                                  }
+                                }}
+                                className="group relative rounded-md border p-2 hover:border-primary transition-colors disabled:opacity-40 bg-background text-left"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <Play className="h-4 w-4 shrink-0 text-primary" />
+                                  <div className="min-w-0">
+                                    <span className="block text-xs font-medium truncate">{vid.label}</span>
+                                    <span className="block text-[10px] text-muted-foreground truncate">{vid.category} · {vid.video_type}</span>
+                                  </div>
+                                </div>
+                              </button>
+                            ))}
                           </div>
-                        </button>
-                      ))}
+                        </div>
+                      )}
+                      {storageVideos.length > 0 && (
+                        <div>
+                          <p className="text-[10px] text-muted-foreground mb-1 uppercase tracking-wide">From Storage</p>
+                          <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto">
+                            {storageVideos.map(vid => (
+                              <button
+                                key={vid.name}
+                                disabled={uploading}
+                                onClick={async () => {
+                                  if (!activePath) return;
+                                  setUploading(true);
+                                  try {
+                                    await supabase.from('site_media_overrides').upsert({
+                                      storage_path: activePath,
+                                      media_type: 'video_upload',
+                                      media_url: vid.url,
+                                      thumbnail_url: '',
+                                    }, { onConflict: 'storage_path' });
+                                    await refreshOverrides();
+                                    toast({ title: `Replaced with "${vid.name}". Refresh to see changes.` });
+                                    setDialogOpen(false);
+                                    setTarget(null);
+                                  } catch (err: any) {
+                                    toast({ title: 'Failed', description: err.message, variant: 'destructive' });
+                                  } finally {
+                                    setUploading(false);
+                                  }
+                                }}
+                                className="group relative rounded-md border p-2 hover:border-primary transition-colors disabled:opacity-40 bg-background text-left"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <Video className="h-4 w-4 shrink-0 text-primary" />
+                                  <div className="min-w-0">
+                                    <span className="block text-xs font-medium truncate">{vid.name}</span>
+                                    <span className="block text-[10px] text-muted-foreground truncate">Storage upload</span>
+                                  </div>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

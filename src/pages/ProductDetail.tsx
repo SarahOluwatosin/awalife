@@ -158,7 +158,7 @@ const ProductDetail = () => {
       flagship: false,
     },
     'dm-03': {
-      images: [images.dm03Microscope, images.digitalMicroscope, images.microscopeStation],
+      images: [images.dm03Microscope, images.digitalMicroscope, images.microscopeStation, images.dm03Medtech, images.emeraldHeroProduct],
       name: 'DM-03 Microscope Workstation',
       tagline: 'Smarter imaging and effortless operation',
       description: 'Awalife Microscope Workstation is more than a standard veterinary microscope—it brings imaging, measurement, cell counting, and documentation into one streamlined workflow. With built-in software to add scale bars, annotate findings, and generate a report in one click, it helps clinics capture consistent results with less manual effort. An embedded teaching image library also makes onboarding faster and day-to-day training easier.',
