@@ -41,7 +41,7 @@ const ProductDetail = () => {
       flagship: true,
     },
     'ai-100vet-elite': {
-      images: [images.ai100vet, images.ai100vet, images.ai100vet],
+      images: [images.ai100vetElite, images.ai100vetNew, images.ai100vet],
       name: 'AI-100Vet Elite Morphological Analyzer',
       tagline: 'Premium AI-Powered Diagnostics for Cats & Dogs',
       description: 'AI-100Vet Elite Morphological Analyzer is an AI-powered diagnostic device for cats and dogs, capable of automatically analyzing three sample types: blood, feces, and urine. Featuring microfluidic automated smearing, rapid liquid-based staining, and AI-powered recognition with auto-generated diagnostic reports.',
@@ -70,7 +70,7 @@ const ProductDetail = () => {
       flagship: true,
     },
     'ai-100vet': {
-      images: [images.ai100vet, images.ai100vet],
+      images: [images.ai100vet, images.ai100vetNew],
       name: 'AI-100Vet Morphological Analyzer',
       tagline: 'Multi-Species Intelligent Diagnostics',
       description: 'AI-100Vet Morphological Analyzer is an intelligent diagnostic device tailored for veterinary applications. It supports automatic analysis of four sample types including blood, feces, urine sediment, and pleural fluid, meeting the diverse clinical needs of more than 10 species including dogs, cats, rabbits, turtles, birds, parrots, snakes, and lizards.',
@@ -100,7 +100,7 @@ const ProductDetail = () => {
       flagship: false,
     },
     'ai-80vet': {
-      images: [images.ai100vet, images.ai100vet],
+      images: [images.ai80vet, images.ai100vetNew],
       name: 'AI-80Vet Morphological Analyzer',
       tagline: 'Configurable Testing for Diverse Needs',
       description: 'AI-80Vet Morphological Analyzer is an intelligent diagnostic device tailored for veterinary applications, which offers configurable sample testing functions to meet diverse veterinary needs. Supports comprehensive blood, feces, and urine analysis with advanced AI recognition.',

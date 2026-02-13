@@ -17,7 +17,7 @@ const Products = () => {
   const products = [
     {
       id: 'ai-100vet-elite',
-      image: images.ai100vet,
+      image: images.ai100vetElite,
       name: 'AI-100Vet Elite Morphological Analyzer',
       tagline: 'Premium AI-Powered Diagnostics',
       description: 'AI-powered diagnostic device for cats and dogs, capable of automatically analyzing three sample types: blood, feces, and urine. Features microfluidic automated smearing and AI-powered recognition.',
@@ -35,7 +35,7 @@ const Products = () => {
     },
     {
       id: 'ai-80vet',
-      image: images.ai100vet,
+      image: images.ai80vet,
       name: 'AI-80Vet Morphological Analyzer',
       tagline: 'Configurable Sample Testing',
       description: 'Intelligent diagnostic device with configurable sample testing functions to meet diverse veterinary needs. Offers comprehensive blood, feces, and urine analysis with advanced AI recognition.',
