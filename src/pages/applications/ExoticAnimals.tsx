@@ -193,20 +193,20 @@ const ExoticAnimals = () => {
             <Accordion type="single" collapsible className="w-full">
               {[
                 {
-                  question: 'Which species are supported?',
-                  answer: 'Companion animals, small mammals, avian species, reptiles, and livestock/large animals.',
+                  question: 'Which species are supported for blood analysis?',
+                  answer: 'Companion animals: Dog, Cat\nSmall mammals: Rabbit, Chinchilla, Hamster, Rat, Mouse, Ferret, Guinea Pig\nLarge animals: Alpaca, Camel, Horse, Pig, Cattle, Sheep\nAvian: Pigeon, Parrot\nReptiles: Turtle, Snake, Lizard',
                 },
                 {
-                  question: 'What sample types can be analyzed?',
-                  answer: 'Blood for all listed species, with feces/urine/fluid available for dogs and cats.',
+                  question: 'Which species are supported for feces analysis?',
+                  answer: 'Companion animals: Dog, Cat',
                 },
                 {
-                  question: 'How much blood is required?',
-                  answer: 'Only 10 μL is required for CBC testing.',
+                  question: 'Which species are supported for urine analysis?',
+                  answer: 'Companion animals: Dog, Cat',
                 },
                 {
-                  question: 'Can reports be reviewed and shared?',
-                  answer: 'Yes. Reports include images, counts, and structured findings for review and sharing.',
+                  question: 'Which species are supported for fluid analysis?',
+                  answer: 'Companion animals: Dog, Cat',
                 },
               ].map((faq) => (
                 <AccordionItem key={faq.question} value={faq.question}>
