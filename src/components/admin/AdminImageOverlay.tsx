@@ -3,16 +3,21 @@ import { createPortal } from 'react-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { uploadAndReplace } from '@/lib/storage';
 import { toast } from '@/hooks/use-toast';
-import { Camera, Loader2 } from 'lucide-react';
+import { Camera, Loader2, Upload, ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { supabase } from '@/integrations/supabase/client';
 
 const STORAGE_PATH_MARKER = '/storage/v1/object/public/media/assets/';
+const STORAGE_BASE = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/media/assets`;
+
+type SiteImage = { id: string; key: string; label: string; category: string; file_name: string };
 
 function extractStoragePath(src: string): string | null {
   const idx = src.indexOf(STORAGE_PATH_MARKER);
   if (idx === -1) return null;
   let path = src.substring(idx + STORAGE_PATH_MARKER.length);
-  // Strip query params
   const qIdx = path.indexOf('?');
   if (qIdx !== -1) path = path.substring(0, qIdx);
   return path;
@@ -21,27 +26,31 @@ function extractStoragePath(src: string): string | null {
 const AdminImageOverlay = () => {
   const { isAdmin } = useAuth();
   const [target, setTarget] = useState<{ el: HTMLImageElement; rect: DOMRect } | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [siteImages, setSiteImages] = useState<SiteImage[]>([]);
+  const [loadingImages, setLoadingImages] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const activeElRef = useRef<HTMLImageElement | null>(null);
+  const activePath = activeElRef.current ? extractStoragePath(activeElRef.current.src) : null;
 
   const handleMouseOver = useCallback((e: MouseEvent) => {
+    if (dialogOpen) return;
     const el = (e.target as HTMLElement).closest?.('img') as HTMLImageElement | null;
-    if (!el || !el.src || !extractStoragePath(el.src)) {
-      return;
-    }
+    if (!el || !el.src || !extractStoragePath(el.src)) return;
     const rect = el.getBoundingClientRect();
     if (rect.width < 30 || rect.height < 30) return;
     activeElRef.current = el;
     setTarget({ el, rect });
-  }, []);
+  }, [dialogOpen]);
 
   const handleMouseOutWindow = useCallback((e: MouseEvent) => {
+    if (dialogOpen) return;
     const related = e.relatedTarget as Node | null;
     if (!related || !document.body.contains(related)) {
       setTarget(null);
     }
-  }, []);
+  }, [dialogOpen]);
 
   useEffect(() => {
     if (!isAdmin) return;
@@ -55,7 +64,7 @@ const AdminImageOverlay = () => {
 
   // Update rect on scroll/resize
   useEffect(() => {
-    if (!target) return;
+    if (!target || dialogOpen) return;
     const update = () => {
       if (activeElRef.current && document.body.contains(activeElRef.current)) {
         setTarget(prev => prev ? { ...prev, rect: activeElRef.current!.getBoundingClientRect() } : null);
@@ -69,30 +78,37 @@ const AdminImageOverlay = () => {
       window.removeEventListener('scroll', update, true);
       window.removeEventListener('resize', update);
     };
-  }, [target]);
+  }, [target, dialogOpen]);
 
-  const handleClick = () => {
-    fileInputRef.current?.click();
+  const fetchSiteImages = async () => {
+    setLoadingImages(true);
+    const { data } = await supabase.from('site_images').select('*').order('category');
+    setSiteImages((data as SiteImage[]) || []);
+    setLoadingImages(false);
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const openDialog = () => {
+    setDialogOpen(true);
+    fetchSiteImages();
+  };
+
+  const refreshAllMatching = (path: string, newUrl: string) => {
+    document.querySelectorAll<HTMLImageElement>('img').forEach(img => {
+      const imgPath = extractStoragePath(img.src);
+      if (imgPath === path) img.src = newUrl;
+    });
+  };
+
+  const handleLocalUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !activeElRef.current) return;
-
-    const path = extractStoragePath(activeElRef.current.src);
-    if (!path) return;
-
+    if (!file || !activePath) return;
     setUploading(true);
     try {
-      const newUrl = await uploadAndReplace('media', `assets/${path}`, file);
-      // Update all matching images on the page
-      document.querySelectorAll<HTMLImageElement>('img').forEach(img => {
-        const imgPath = extractStoragePath(img.src);
-        if (imgPath === path) {
-          img.src = newUrl;
-        }
-      });
+      const newUrl = await uploadAndReplace('media', `assets/${activePath}`, file);
+      refreshAllMatching(activePath, newUrl);
       toast({ title: 'Image replaced successfully' });
+      setDialogOpen(false);
+      setTarget(null);
     } catch (err: any) {
       toast({ title: 'Upload failed', description: err.message, variant: 'destructive' });
     } finally {
@@ -101,34 +117,118 @@ const AdminImageOverlay = () => {
     }
   };
 
-  if (!isAdmin || !target) return null;
+  const handlePickExisting = async (img: SiteImage) => {
+    if (!activePath || activePath === img.file_name) return;
+    setUploading(true);
+    try {
+      // Download the selected image from storage then re-upload it to the target path
+      const sourceUrl = `${STORAGE_BASE}/${img.file_name}`;
+      const res = await fetch(sourceUrl);
+      if (!res.ok) throw new Error('Failed to fetch source image');
+      const blob = await res.blob();
+      const file = new File([blob], img.file_name, { type: blob.type });
+      const newUrl = await uploadAndReplace('media', `assets/${activePath}`, file);
+      refreshAllMatching(activePath, newUrl);
+      toast({ title: `Replaced with "${img.label}"` });
+      setDialogOpen(false);
+      setTarget(null);
+    } catch (err: any) {
+      toast({ title: 'Replace failed', description: err.message, variant: 'destructive' });
+    } finally {
+      setUploading(false);
+    }
+  };
 
-  return createPortal(
+  if (!isAdmin) return null;
+
+  const grouped = siteImages.reduce<Record<string, SiteImage[]>>((acc, img) => {
+    (acc[img.category] ||= []).push(img);
+    return acc;
+  }, {});
+
+  return (
     <>
-      <Button
-        size="icon"
-        variant="secondary"
-        className="fixed z-[9999] shadow-lg"
-        style={{
-          top: target.rect.top + 8,
-          left: target.rect.right - 44,
-          pointerEvents: 'auto',
-        }}
-        onClick={handleClick}
-        disabled={uploading}
-        onMouseOver={e => e.stopPropagation()}
-      >
-        {uploading ? <Loader2 className="animate-spin" /> : <Camera />}
-      </Button>
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={handleFileChange}
-      />
-    </>,
-    document.body
+      {target && !dialogOpen && createPortal(
+        <Button
+          size="icon"
+          variant="secondary"
+          className="fixed z-[9999] shadow-lg"
+          style={{ top: target.rect.top + 8, left: target.rect.right - 44, pointerEvents: 'auto' }}
+          onClick={openDialog}
+          onMouseOver={e => e.stopPropagation()}
+        >
+          <Camera />
+        </Button>,
+        document.body
+      )}
+
+      <Dialog open={dialogOpen} onOpenChange={open => { setDialogOpen(open); if (!open) setTarget(null); }}>
+        <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Replace Image</DialogTitle>
+            <DialogDescription>Choose from existing site images or upload a new file.</DialogDescription>
+          </DialogHeader>
+
+          {activePath && (
+            <div className="mb-3 rounded-md border p-2 bg-muted/50">
+              <p className="text-xs text-muted-foreground mb-1">Current image</p>
+              <img src={`${STORAGE_BASE}/${activePath}?t=${Date.now()}`} alt="Current" className="max-h-32 mx-auto rounded object-contain" />
+              <p className="text-xs text-muted-foreground text-center mt-1 break-all">{activePath}</p>
+            </div>
+          )}
+
+          <Tabs defaultValue="existing">
+            <TabsList className="w-full">
+              <TabsTrigger value="existing" className="flex-1 gap-1"><ImageIcon className="h-3 w-3" /> Site Images</TabsTrigger>
+              <TabsTrigger value="upload" className="flex-1 gap-1"><Upload className="h-3 w-3" /> Upload New</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="existing" className="mt-3 space-y-4">
+              {loadingImages ? (
+                <div className="flex justify-center py-8"><Loader2 className="animate-spin h-6 w-6 text-muted-foreground" /></div>
+              ) : Object.entries(grouped).map(([cat, imgs]) => (
+                <div key={cat}>
+                  <h4 className="text-xs font-semibold text-muted-foreground mb-2">{cat}</h4>
+                  <div className="grid grid-cols-3 gap-2">
+                    {imgs.map(img => (
+                      <button
+                        key={img.id}
+                        onClick={() => handlePickExisting(img)}
+                        disabled={uploading || img.file_name === activePath}
+                        className="group relative rounded-md border p-1 hover:border-primary transition-colors disabled:opacity-40 bg-background"
+                      >
+                        <img
+                          src={`${STORAGE_BASE}/${img.file_name}?t=preview`}
+                          alt={img.label}
+                          className="h-16 w-full object-contain rounded"
+                          loading="lazy"
+                        />
+                        <span className="block text-[10px] text-muted-foreground truncate mt-1">{img.label}</span>
+                        {img.file_name === activePath && (
+                          <span className="absolute inset-0 flex items-center justify-center bg-background/70 rounded-md text-[10px] font-medium">Current</span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </TabsContent>
+
+            <TabsContent value="upload" className="mt-3">
+              <div className="flex flex-col items-center gap-3 py-6">
+                <Button onClick={() => fileInputRef.current?.click()} disabled={uploading} variant="outline" className="gap-2">
+                  {uploading ? <Loader2 className="animate-spin" /> : <Upload className="h-4 w-4" />}
+                  {uploading ? 'Uploading…' : 'Choose File'}
+                </Button>
+                <p className="text-xs text-muted-foreground">Select an image file to replace the current one</p>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </DialogContent>
+      </Dialog>
+
+      <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleLocalUpload} />
+    </>
   );
 };
 
