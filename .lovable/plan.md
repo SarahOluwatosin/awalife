@@ -1,107 +1,59 @@
 
 
-# Replace All Website Images with High-Resolution Versions
+# Add Site Images Management to Admin Panel
 
 ## Overview
+Add a new "Site Images" tab to the existing admin dashboard (`/admin/resources`) that lets admins view, upload, and replace the website's static images (hero backgrounds, product photos, logos, etc.) without needing developer access.
 
-The website currently uses **24 image assets** in `src/assets/` referenced across **23+ components**. The best approach is to upload high-res images to cloud storage (the `media` bucket already exists) and serve them with proper optimization, rather than bundling large files into the app build.
+## How It Works
 
-## Why Cloud Storage Over Local Assets
-
-Bundling heavy high-res images into `src/assets/` causes:
-- **Bloated build size** -- Vite bundles all imported assets, increasing initial load time significantly
-- **No CDN caching** -- local assets are re-downloaded on every deploy
-- **No responsive serving** -- every device downloads the same oversized file
-
-Using the existing `media` storage bucket gives you CDN delivery, caching, and the ability to swap images without redeploying.
+The 21 images in `src/lib/images.ts` each map to a fixed file path in cloud storage (e.g., `assets/hero-diagnostic-lab.jpg`). Replacing an image means uploading a new file to the same path -- all pages automatically show the new version.
 
 ## Implementation Steps
 
-### Step 1: Upload High-Res Images to Cloud Storage
+### Step 1: Create an Image Assets Configuration
 
-Create a helper page or use the admin panel to upload all replacement images to the `media` bucket under an `assets/` folder. Each file would get a public URL like:
+Add an `IMAGE_ASSET_CONFIG` array to `src/lib/images.ts` that describes each image with a human-readable label, its storage key, and a category for grouping in the admin UI.
+
 ```
-https://<project>.supabase.co/storage/v1/object/public/media/assets/hero-diagnostic-lab.jpg
-```
-
-### Step 2: Create a Centralized Image Map
-
-Create `src/lib/images.ts` -- a single file mapping all asset keys to their storage URLs. This makes future swaps trivial (change one URL, not 23 files).
-
-```typescript
-const STORAGE_BASE = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/media/assets`;
-
-export const images = {
-  heroLab: `${STORAGE_BASE}/hero-diagnostic-lab.jpg`,
-  ai100vet: `${STORAGE_BASE}/ai-100vet.png`,
-  ai100vetElite: `${STORAGE_BASE}/ai-100vet-elite.png`,
-  dm03Microscope: `${STORAGE_BASE}/dm03-microscope.png`,
-  // ... all 24 images
-} as const;
+{ key: "heroDiagnosticLab", label: "Hero - Diagnostic Lab", category: "Hero & Backgrounds", fileName: "hero-diagnostic-lab.jpg" }
 ```
 
-### Step 3: Update All Component Imports
+### Step 2: Add "Site Images" Tab to ResourcesAdmin
 
-Replace local asset imports with the centralized map across all 23 files:
+Add a fourth tab alongside News, Resources, and FAQ:
 
-```typescript
-// Before
-import heroBg from '@/assets/hero-diagnostic-lab.jpg';
+- **Grid layout** showing all images organized by category (Hero, Analyzers, Microscopes, Species, Products)
+- Each card shows:
+  - Current image thumbnail
+  - Image label/name
+  - "Replace" button that opens a file picker
+  - Upload progress indicator
+- On file select, upload to `media/assets/{fileName}` with `upsert: true` (overwrite existing)
+- After upload, append a cache-busting query param (`?t=timestamp`) to force the browser to reload the new version
 
-// After
-import { images } from '@/lib/images';
-// then use images.heroLab
-```
+### Step 3: Update Storage Upload Helper
 
-**Files to update:**
-- `src/components/sections/HeroSection.tsx`
-- `src/components/sections/WhyUsSection.tsx`
-- `src/components/sections/ProductsSection.tsx`
-- `src/components/sections/GlobalPartnersSection.tsx`
-- `src/components/layout/Header.tsx` (logo)
-- `src/pages/ProductDetail.tsx`
-- `src/pages/landing/EmeraldLanding.tsx`
-- `src/pages/landing/ModernLanding.tsx`
-- `src/pages/landing/MedTechLanding.tsx`
-- `src/pages/landing/FizensLanding.tsx`
-- `src/pages/landing/HealthSyncLanding.tsx`
-- `src/pages/solutions/PetClinics.tsx`
-- `src/pages/solutions/Distributors.tsx`
-- `src/pages/applications/BloodAnalysis.tsx`
-- `src/pages/applications/UrineAnalysis.tsx`
-- `src/pages/applications/FecesAnalysis.tsx`
-- `src/pages/applications/BodyFluids.tsx`
-- `src/pages/applications/PleuralEffusion.tsx`
-- `src/pages/applications/ExoticAnimals.tsx`
-- And remaining files referencing assets
+Modify `src/lib/storage.ts` to add an `uploadAndReplace` function that uses `upsert: true` to overwrite existing files at the same path, instead of generating unique filenames.
 
-### Step 4: Add Performance Safeguards
+### Step 4: Add Cache Busting
 
-Since images will be high-res, add loading optimizations:
+After a replacement upload, update a local state timestamp so the admin preview immediately shows the new image. Public visitors will see the update on next page load (CDN cache typically refreshes within minutes).
 
-- **Hero/above-fold images**: Keep `fetchPriority="high"` and `loading="eager"`
-- **All other images**: Use `loading="lazy"` and `decoding="async"` (most already do)
-- **Explicit dimensions**: Keep `width`/`height` attributes to prevent layout shift
+## Files Changed
 
-### Step 5: Clean Up Old Assets
+| File | Change |
+|---|---|
+| `src/lib/images.ts` | Add `IMAGE_ASSET_CONFIG` array with labels, categories, file names |
+| `src/lib/storage.ts` | Add `uploadAndReplace()` function with upsert support |
+| `src/pages/ResourcesAdmin.tsx` | Add "Site Images" tab with grid of image cards and replace functionality |
 
-After verifying everything works, remove the old files from `src/assets/` (keeping only the favicon and logo if needed for offline/fallback).
+## User Experience
 
-## What You Need To Do
-
-You will need to **provide the high-resolution replacement images**. You can:
-1. Upload them directly through chat (recommended for a few at a time)
-2. Or provide URLs to the source images
-
-Once images are provided, they will be uploaded to the `media` storage bucket and the code will be updated to reference them.
-
-## Technical Summary
-
-| Aspect | Current | After |
-|---|---|---|
-| Storage | Bundled in `src/assets/` | Cloud storage CDN |
-| Image swap | Edit code, redeploy | Change URL in one file |
-| Build size | Heavy | Minimal |
-| Caching | Per-deploy | Long-lived CDN cache |
-| Files changed | -- | ~20 components + 1 new `images.ts` |
+1. Admin logs in and navigates to the admin dashboard
+2. Clicks the "Site Images" tab
+3. Sees all website images organized by category in a grid
+4. Clicks "Replace" on any image, selects a new file
+5. File uploads and overwrites the old one -- preview updates immediately
+6. All public pages automatically show the new image
 
