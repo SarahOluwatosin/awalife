@@ -203,23 +203,23 @@ const BloodAnalysis = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
           </div>
           <div className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="w-full">
+             <Accordion type="single" collapsible className="w-full">
               {[
                 {
-                  question: 'What sample volume is required?',
-                  answer: 'Only 10μL of blood is required for a full morphology analysis.',
+                  question: 'Which species are supported for blood analysis?',
+                  answer: 'Companion animals: Dog, Cat. Small mammals: Rabbit, Chinchilla, Hamster, Rat, Mouse, Ferret, Guinea Pig. Large animals: Alpaca, Camel, Horse, Pig, Cattle, Sheep. Avian: Pigeon, Parrot. Reptiles: Turtle, Snake, Lizard.',
                 },
                 {
-                  question: 'How long does a typical analysis take?',
-                  answer: 'Most samples are completed in under 8 minutes from loading to report.',
+                  question: 'What advanced parameters are available compared to a traditional 5-part differential?',
+                  answer: '9-part WBC differential, including band neutrophils, segmented neutrophils, hypersegmented neutrophils, large lymphocytes, and atypical leukocytes. Estimated platelet count and large platelet count (may interfere with CBC analyzers). 7-part RBC differential, including reticulocytes, nucleated RBCs, spherocytes, ghost RBCs, Heinz bodies, acanthocytes, and agglutinated RBCs.',
                 },
                 {
-                  question: 'What kinds of cells are identified?',
-                  answer: 'RBC morphology, 7-part WBC differential, platelets, and other formed elements.',
+                  question: 'How do I choose the sample volume for anemic animals?',
+                  answer: 'The default volume is 10 µL. If anemia is obvious (e.g., pale mucous membranes) or the sample looks diluted, select 40 µL.',
                 },
                 {
-                  question: 'Can results be reviewed and shared?',
-                  answer: 'Yes. Reports include images, counts, and references for review and sharing.',
+                  question: 'Can blood parasites be detected?',
+                  answer: 'Coming soon: Heartworm (Dirofilaria immitis) and Hepatozoon.',
                 },
               ].map((faq) => (
                 <AccordionItem key={faq.question} value={faq.question}>
