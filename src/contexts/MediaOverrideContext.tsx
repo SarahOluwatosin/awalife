@@ -122,6 +122,11 @@ export const MediaOverrideProvider = ({ children }: { children: ReactNode }) => 
 
     const applyOverrides = () => {
       document.querySelectorAll<HTMLImageElement>('img').forEach(img => {
+        // Skip images inside gallery components that handle overrides natively
+        if (img.closest('[data-media-gallery-video]') || img.parentElement?.querySelector('[data-media-gallery-video]')) return;
+        // Skip images in product gallery (they handle overrides in React)
+        if (img.closest('.group')?.querySelector('[data-media-gallery-video]')) return;
+        
         const path = extractStoragePath(img.src);
         if (!path) return;
         const override = overrides.get(path);

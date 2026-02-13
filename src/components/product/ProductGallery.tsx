@@ -2,6 +2,18 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useMediaOverrides } from '@/contexts/MediaOverrideContext';
+
+const STORAGE_PATH_MARKER = '/storage/v1/object/public/media/';
+
+function extractStoragePath(src: string): string | null {
+  const idx = src.indexOf(STORAGE_PATH_MARKER);
+  if (idx === -1) return null;
+  let path = src.substring(idx + STORAGE_PATH_MARKER.length);
+  const qIdx = path.indexOf('?');
+  if (qIdx !== -1) path = path.substring(0, qIdx);
+  return path;
+}
 
 interface ProductGalleryProps {
   images: string[];
@@ -11,6 +23,7 @@ interface ProductGalleryProps {
 const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
+  const { overrides } = useMediaOverrides();
 
   const handlePrevious = () => {
     setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -18,6 +31,59 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  const getOverride = (src: string) => {
+    const path = extractStoragePath(src);
+    if (!path) return null;
+    return overrides.get(path) || null;
+  };
+
+  const renderMedia = (src: string, alt: string, className: string, onClick?: () => void) => {
+    const override = getOverride(src);
+    if (override && override.media_type === 'video_upload') {
+      return (
+        <video
+          src={override.media_url}
+          className={className}
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={override.thumbnail_url || undefined}
+          onClick={onClick}
+          data-media-gallery-video
+        />
+      );
+    }
+    if (override && override.media_type === 'video_embed') {
+      const ytMatch = override.media_url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+      const vimeoMatch = override.media_url.match(/vimeo\.com\/(\d+)/);
+      const embedUrl = ytMatch
+        ? `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&mute=1&loop=1`
+        : vimeoMatch
+          ? `https://player.vimeo.com/video/${vimeoMatch[1]}?autoplay=1&muted=1&loop=1`
+          : null;
+      if (embedUrl) {
+        return (
+          <iframe
+            src={embedUrl}
+            className={className}
+            style={{ border: 'none' }}
+            allowFullScreen
+            allow="autoplay; encrypted-media"
+          />
+        );
+      }
+    }
+    return (
+      <img
+        src={src}
+        alt={alt}
+        className={className}
+        onClick={onClick}
+      />
+    );
   };
 
   return (
@@ -46,11 +112,11 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
             <ChevronLeft className="w-8 h-8" />
           </Button>
           
-          <img
-            src={images[activeIndex]}
-            alt={`${productName} - View ${activeIndex + 1}`}
-            className="max-w-full max-h-[85vh] object-contain"
-          />
+          {renderMedia(
+            images[activeIndex],
+            `${productName} - View ${activeIndex + 1}`,
+            "max-w-full max-h-[85vh] object-contain"
+          )}
           
           <Button
             variant="ghost"
@@ -88,12 +154,12 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
           <div className="absolute bottom-12 left-8 w-20 h-20 rounded-full bg-accent/5 animate-float" style={{ animationDelay: '2s' }} />
           
           <div className="relative aspect-square flex items-center justify-center">
-            <img
-              src={images[activeIndex]}
-              alt={`${productName} - View ${activeIndex + 1}`}
-              className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-700 drop-shadow-2xl cursor-zoom-in"
-              onClick={() => setIsZoomed(true)}
-            />
+            {renderMedia(
+              images[activeIndex],
+              `${productName} - View ${activeIndex + 1}`,
+              "max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-700 drop-shadow-2xl cursor-zoom-in",
+              () => setIsZoomed(true)
+            )}
           </div>
           
           {/* Zoom button */}
@@ -132,24 +198,37 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
         {/* Thumbnails */}
         {images.length > 1 && (
           <div className="flex gap-3 mt-4 justify-center">
-            {images.map((img, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveIndex(idx)}
-                className={cn(
-                  "relative w-16 h-16 lg:w-20 lg:h-20 rounded-xl overflow-hidden border-2 transition-all duration-300",
-                  idx === activeIndex 
-                    ? "border-primary ring-2 ring-primary/30" 
-                    : "border-border/50 hover:border-primary/50"
-                )}
-              >
-                <img
-                  src={img}
-                  alt={`${productName} thumbnail ${idx + 1}`}
-                  className="w-full h-full object-contain bg-card p-2"
-                />
-              </button>
-            ))}
+            {images.map((img, idx) => {
+              const override = getOverride(img);
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setActiveIndex(idx)}
+                  className={cn(
+                    "relative w-16 h-16 lg:w-20 lg:h-20 rounded-xl overflow-hidden border-2 transition-all duration-300",
+                    idx === activeIndex 
+                      ? "border-primary ring-2 ring-primary/30" 
+                      : "border-border/50 hover:border-primary/50"
+                  )}
+                >
+                  {override && override.media_type === 'video_upload' ? (
+                    <video
+                      src={override.media_url}
+                      className="w-full h-full object-cover"
+                      muted
+                      playsInline
+                      poster={override.thumbnail_url || undefined}
+                    />
+                  ) : (
+                    <img
+                      src={img}
+                      alt={`${productName} thumbnail ${idx + 1}`}
+                      className="w-full h-full object-contain bg-card p-2"
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
