@@ -28,7 +28,9 @@ export const FaqItemSchema = z.object({
 
 export const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
 export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+export const MAX_VIDEO_SIZE = 20 * 1024 * 1024; // 20MB
 export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+export const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/ogg'];
 export const ALLOWED_FILE_TYPES = [
   ...ALLOWED_IMAGE_TYPES,
   'application/pdf',
@@ -42,6 +44,28 @@ export const validateImageFile = (file: File): string | null => {
   }
   if (file.size > MAX_IMAGE_SIZE) {
     return `Image too large. Maximum size is ${MAX_IMAGE_SIZE / (1024 * 1024)}MB.`;
+  }
+  return null;
+};
+
+export const validateVideoFile = (file: File): string | null => {
+  if (!ALLOWED_VIDEO_TYPES.includes(file.type)) {
+    return 'Invalid video type. Allowed: MP4, WebM, OGG.';
+  }
+  if (file.size > MAX_VIDEO_SIZE) {
+    return `Video too large. Maximum size is ${MAX_VIDEO_SIZE / (1024 * 1024)}MB.`;
+  }
+  return null;
+};
+
+export const validateVideoUrl = (url: string): string | null => {
+  if (!url.trim()) return 'URL is required.';
+  const trimmed = url.trim();
+  const isYoutube = /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\//i.test(trimmed);
+  const isVimeo = /^https?:\/\/(www\.)?vimeo\.com\//i.test(trimmed);
+  const isGenericVideo = /^https?:\/\/.+/i.test(trimmed);
+  if (!isYoutube && !isVimeo && !isGenericVideo) {
+    return 'Please enter a valid video URL (YouTube, Vimeo, or direct link).';
   }
   return null;
 };

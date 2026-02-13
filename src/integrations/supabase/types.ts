@@ -152,6 +152,45 @@ export type Database = {
         }
         Relationships: []
       }
+      site_videos: {
+        Row: {
+          category: string
+          created_at: string
+          file_name: string
+          id: string
+          key: string
+          label: string
+          thumbnail_url: string
+          updated_at: string
+          video_type: string
+          video_url: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          file_name?: string
+          id?: string
+          key: string
+          label: string
+          thumbnail_url?: string
+          updated_at?: string
+          video_type?: string
+          video_url?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          file_name?: string
+          id?: string
+          key?: string
+          label?: string
+          thumbnail_url?: string
+          updated_at?: string
+          video_type?: string
+          video_url?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
