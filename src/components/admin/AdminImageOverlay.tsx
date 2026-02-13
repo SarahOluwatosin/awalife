@@ -57,6 +57,10 @@ const AdminImageOverlay = () => {
 
   // Video embed state
   const [videoEmbedUrl, setVideoEmbedUrl] = useState('');
+  // Existing videos from DB
+  type SiteVideo = { id: string; key: string; label: string; category: string; video_url: string; video_type: string; thumbnail_url: string };
+  const [siteVideos, setSiteVideos] = useState<SiteVideo[]>([]);
+  const [loadingVideos, setLoadingVideos] = useState(false);
 
   const handleMouseOver = useCallback((e: MouseEvent) => {
     if (dialogOpen) return;
@@ -116,10 +120,18 @@ const AdminImageOverlay = () => {
     setLoadingImages(false);
   };
 
+  const fetchSiteVideos = async () => {
+    setLoadingVideos(true);
+    const { data } = await supabase.from('site_videos').select('*').order('category');
+    setSiteVideos((data as any[]) || []);
+    setLoadingVideos(false);
+  };
+
   const openDialog = () => {
     setDialogOpen(true);
     setVideoEmbedUrl('');
     fetchSiteImages();
+    fetchSiteVideos();
   };
 
   const refreshAllMatching = (path: string, newUrl: string) => {
@@ -377,6 +389,60 @@ const AdminImageOverlay = () => {
 
             {!isLogo && (
               <TabsContent value="video" className="mt-3 space-y-4">
+                {/* Pick from existing videos */}
+                <div className="space-y-2">
+                  <Label className="text-xs font-semibold text-muted-foreground">Existing Videos</Label>
+                  {loadingVideos ? (
+                    <div className="flex justify-center py-4"><Loader2 className="animate-spin h-5 w-5 text-muted-foreground" /></div>
+                  ) : siteVideos.length === 0 ? (
+                    <p className="text-xs text-muted-foreground text-center py-3">No videos in database yet</p>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto">
+                      {siteVideos.map(vid => (
+                        <button
+                          key={vid.id}
+                          disabled={uploading}
+                          onClick={async () => {
+                            if (!activePath) return;
+                            setUploading(true);
+                            try {
+                              const mediaType = vid.video_type === 'embed' ? 'video_embed' : 'video_upload';
+                              await supabase.from('site_media_overrides').upsert({
+                                storage_path: activePath,
+                                media_type: mediaType,
+                                media_url: vid.video_url,
+                                thumbnail_url: vid.thumbnail_url || '',
+                              }, { onConflict: 'storage_path' });
+                              await refreshOverrides();
+                              toast({ title: `Replaced with "${vid.label}". Refresh to see changes.` });
+                              setDialogOpen(false);
+                              setTarget(null);
+                            } catch (err: any) {
+                              toast({ title: 'Failed', description: err.message, variant: 'destructive' });
+                            } finally {
+                              setUploading(false);
+                            }
+                          }}
+                          className="group relative rounded-md border p-2 hover:border-primary transition-colors disabled:opacity-40 bg-background text-left"
+                        >
+                          <div className="flex items-center gap-2">
+                            <Play className="h-4 w-4 shrink-0 text-primary" />
+                            <div className="min-w-0">
+                              <span className="block text-xs font-medium truncate">{vid.label}</span>
+                              <span className="block text-[10px] text-muted-foreground truncate">{vid.category} · {vid.video_type}</span>
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-border" /></div>
+                  <div className="relative flex justify-center text-xs"><span className="bg-background px-2 text-muted-foreground">or embed a URL</span></div>
+                </div>
+
                 {/* Video Embed */}
                 <div className="space-y-3">
                   <div className="space-y-2">
