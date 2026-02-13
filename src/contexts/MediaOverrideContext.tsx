@@ -122,10 +122,10 @@ export const MediaOverrideProvider = ({ children }: { children: ReactNode }) => 
 
     const applyOverrides = () => {
       document.querySelectorAll<HTMLImageElement>('img').forEach(img => {
-        // Skip images inside gallery components that handle overrides natively
-        if (img.closest('[data-media-gallery-video]') || img.parentElement?.querySelector('[data-media-gallery-video]')) return;
-        // Skip images in product gallery (they handle overrides in React)
-        if (img.closest('.group')?.querySelector('[data-media-gallery-video]')) return;
+        // Skip images inside components that handle overrides natively (e.g. ProductGallery)
+        if (img.closest('[data-media-managed]')) return;
+        // Skip images already replaced by a video override wrapper
+        if (img.closest('[data-media-override]')) return;
         
         const path = extractStoragePath(img.src);
         if (!path) return;
@@ -144,14 +144,17 @@ export const MediaOverrideProvider = ({ children }: { children: ReactNode }) => 
     // Apply after a short delay to let React render
     const timer = setTimeout(applyOverrides, 300);
     
-    // Also observe DOM changes for dynamically loaded images
+    // Debounced observer to avoid excessive scanning
+    let debounceTimer: ReturnType<typeof setTimeout> | null = null;
     const observer = new MutationObserver(() => {
-      setTimeout(applyOverrides, 100);
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(applyOverrides, 300);
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       clearTimeout(timer);
+      if (debounceTimer) clearTimeout(debounceTimer);
       observer.disconnect();
     };
   }, [overrides]);

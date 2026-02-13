@@ -145,7 +145,7 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
       )}
 
       {/* Gallery */}
-      <div className="group relative">
+      <div className="group relative" data-media-managed>
         <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 rounded-3xl blur-3xl opacity-50" />
         
         {/* Main Image */}
