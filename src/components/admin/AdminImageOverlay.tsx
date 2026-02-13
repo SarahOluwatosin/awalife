@@ -13,7 +13,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 
-const STORAGE_PATH_MARKER = '/storage/v1/object/public/media/assets/';
+const STORAGE_PATH_MARKER = '/storage/v1/object/public/media/';
+const STORAGE_MEDIA_BASE = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/media`;
 const STORAGE_BASE = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/media/assets`;
 
 type SiteImage = { id: string; key: string; label: string; category: string; file_name: string };
@@ -122,13 +123,17 @@ const AdminImageOverlay = () => {
     });
   };
 
-  const syncSiteImageRecord = async (fileName: string) => {
-    const { data: existing } = await supabase.from('site_images').select('id').eq('file_name', fileName).maybeSingle();
+  const syncSiteImageRecord = async (storagePath: string) => {
+    // Try matching by full path first, then just the basename
+    const baseName = storagePath.includes('/') ? storagePath.split('/').pop()! : storagePath;
+    const { data: existing } = await supabase.from('site_images').select('id')
+      .or(`file_name.eq.${storagePath},file_name.eq.${baseName}`)
+      .maybeSingle();
     if (existing) {
       await supabase.from('site_images').update({ updated_at: new Date().toISOString() }).eq('id', existing.id);
     } else {
-      const label = fileName.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-      await supabase.from('site_images').insert({ key: fileName.replace(/\.[^.]+$/, '').replace(/[-_ ]/g, ''), label, file_name: fileName, category: 'Uncategorized' });
+      const label = baseName.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      await supabase.from('site_images').insert({ key: baseName.replace(/\.[^.]+$/, '').replace(/[-_ ]/g, ''), label, file_name: storagePath, category: 'Uncategorized' });
     }
   };
 
@@ -156,7 +161,7 @@ const AdminImageOverlay = () => {
     try {
       // Remove any video override when replacing with image
       await supabase.from('site_media_overrides').delete().eq('storage_path', activePath);
-      const newUrl = await uploadAndReplace('media', `assets/${activePath}`, file);
+      const newUrl = await uploadAndReplace('media', activePath, file);
       refreshAllMatching(activePath, newUrl);
       await syncSiteImageRecord(activePath);
       await refreshOverrides();
@@ -172,7 +177,7 @@ const AdminImageOverlay = () => {
   };
 
   const handlePickExisting = async (img: SiteImage) => {
-    if (!activePath || activePath === img.file_name) return;
+    if (!activePath || activePath === img.file_name || activePath === `assets/${img.file_name}`) return;
     setUploading(true);
     try {
       await supabase.from('site_media_overrides').delete().eq('storage_path', activePath);
@@ -181,7 +186,7 @@ const AdminImageOverlay = () => {
       if (!res.ok) throw new Error('Failed to fetch source image');
       const blob = await res.blob();
       const file = new File([blob], img.file_name, { type: blob.type });
-      const newUrl = await uploadAndReplace('media', `assets/${activePath}`, file);
+      const newUrl = await uploadAndReplace('media', activePath, file);
       refreshAllMatching(activePath, newUrl);
       await syncSiteImageRecord(activePath);
       await refreshOverrides();
@@ -307,7 +312,7 @@ const AdminImageOverlay = () => {
                 </div>
               ) : (
                 <>
-                  <img src={`${STORAGE_BASE}/${activePath}?t=${Date.now()}`} alt="Current" className="max-h-32 mx-auto rounded object-contain" />
+                  <img src={`${STORAGE_MEDIA_BASE}/${activePath}?t=${Date.now()}`} alt="Current" className="max-h-32 mx-auto rounded object-contain" />
                   <p className="text-xs text-muted-foreground text-center mt-1 break-all">{activePath}</p>
                 </>
               )}
@@ -334,7 +339,7 @@ const AdminImageOverlay = () => {
                       <button
                         key={img.id}
                         onClick={() => handlePickExisting(img)}
-                        disabled={uploading || img.file_name === activePath}
+                        disabled={uploading || img.file_name === activePath || `assets/${img.file_name}` === activePath}
                         className="group relative rounded-md border p-1 hover:border-primary transition-colors disabled:opacity-40 bg-background"
                       >
                         <img
@@ -344,7 +349,7 @@ const AdminImageOverlay = () => {
                           loading="lazy"
                         />
                         <span className="block text-[10px] text-muted-foreground truncate mt-1">{img.label}</span>
-                        {img.file_name === activePath && (
+                        {(img.file_name === activePath || `assets/${img.file_name}` === activePath) && (
                           <span className="absolute inset-0 flex items-center justify-center bg-background/70 rounded-md text-[10px] font-medium">Current</span>
                         )}
                       </button>
