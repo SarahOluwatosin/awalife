@@ -63,8 +63,11 @@ function createVideoElement(override: MediaOverride, originalImg: HTMLImageEleme
     const video = document.createElement('video');
     video.src = override.media_url;
     video.className = 'w-full h-full object-cover';
-    video.controls = true;
+    video.controls = false;
     video.muted = true;
+    video.autoplay = true;
+    video.loop = true;
+    video.playsInline = true;
     video.preload = 'metadata';
     if (override.thumbnail_url) video.poster = override.thumbnail_url;
     wrapper.appendChild(video);

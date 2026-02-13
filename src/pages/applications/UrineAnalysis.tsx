@@ -205,20 +205,20 @@ const UrineAnalysis = () => {
             <Accordion type="single" collapsible className="w-full">
               {[
                 {
-                  question: 'How long does a typical urine sediment analysis take?',
-                  answer: 'Most samples are processed and reported in under 10 minutes depending on sample conditions.',
+                  question: 'Which species are supported for urine analysis?',
+                  answer: 'Validated for dogs and cats.',
                 },
                 {
-                  question: 'Is centrifugation always required?',
-                  answer: 'No. Centrifugation is optional for routine samples and recommended for very dilute specimens.',
+                  question: 'What parameters can urine analysis detect?',
+                  answer: '23 parameters, including:\n\nCrystal: Struvite, Calcium oxalate monohydrate, Calcium oxalate dihydrate, Calcium phosphate, Uric acid, Cystine, Bilirubin, Ammonium urate\n\nCast: Hyaline cast, Cellular cast, Granular cast, Waxy cast\n\nCell: RBC, WBC, Sperm, Renal tubular epithelial cell, Transitional epithelial cell, Squamous epithelial cell\n\nMicroorganism: Cocci, Rods, Yeast\n\nOthers: Lipid droplets, Mucus',
                 },
                 {
-                  question: 'Can reports be reviewed and shared easily?',
-                  answer: 'Yes. Reports include images, counts, and annotations for review and sharing.',
+                  question: 'Is the workflow easy to use?',
+                  answer: 'Yes. Most samples do not require centrifugation. For very clear samples, centrifugation may be considered using the turbidity reference card as guidance.',
                 },
                 {
-                  question: 'What sample types are supported?',
-                  answer: 'Urine formed elements including crystals, casts, cells, pathogens, and other structures.',
+                  question: 'What are the limitations for certain urine samples?',
+                  answer: 'Severe hematuria may obscure other components and reduce AI accuracy. Dilution may help, but accuracy is not guaranteed. Microscopic examination is recommended.',
                 },
               ].map((faq) => (
                 <AccordionItem key={faq.question} value={faq.question}>

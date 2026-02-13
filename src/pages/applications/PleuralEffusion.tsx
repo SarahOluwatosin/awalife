@@ -107,20 +107,16 @@ const PleuralEffusion = () => {
             <Accordion type="single" collapsible className="w-full">
               {[
                 {
-                  question: 'What sample types are supported?',
-                  answer: 'Pleural and abdominal effusions with morphology-based TNCC enumeration.',
+                  question: 'Which species are supported for fluid analysis?',
+                  answer: 'Validated for dogs and cats.',
                 },
                 {
-                  question: 'How is TNCC calculated?',
-                  answer: 'The system counts nucleated cells based on true-to-life microscopy images rather than approximations.',
+                  question: 'What parameters can fluid analysis detect?',
+                  answer: '19 parameters, including:\n\nNucleated cells: Inflammatory cells, granulocytes, lymphocytes, macrophages, neutrophils, degenerative neutrophils, phagocytic cells, mesothelial cells, and unclassified nucleated cells\n\nRBC-related: RBC, PCV\n\nMicroorganisms: Cocci, rods',
                 },
                 {
-                  question: 'Can reports be reviewed and shared?',
-                  answer: 'Yes. Reports include images, structured findings, and annotations for review and sharing.',
-                },
-                {
-                  question: 'How long does analysis take?',
-                  answer: 'Most samples are processed and reported in under 10 minutes depending on sample conditions.',
+                  question: 'What are the limitations for certain effusion samples?',
+                  answer: 'Neoplastic effusions: AI may flag suspicious cells but cannot confirm tumor cells—manual review is required.\n\nSpecial effusions (e.g., biliary ascites or urinary ascites): Interpretation should be combined with biochemical testing.',
                 },
               ].map((faq) => (
                 <AccordionItem key={faq.question} value={faq.question}>
