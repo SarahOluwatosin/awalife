@@ -16,48 +16,48 @@ const BloodAnalysis = () => {
   const cardTextClass = 'text-base';
 
   const bloodCategories = [
-    {
-      title: 'WBC: up to 9-part Differential',
-      description: 'More granular white blood cell differentiation to support deeper review beyond basic differentials.',
-      items: [
-        'Band Neutrophils (NST#)',
-        'Segmented Neutrophils (NSG#)',
-        'Hypersegmented Neutrophils (NSH#)',
-        'Small Lymphocytes (SLYM# %)',
-        'Large Lymphocytes (LLYM# %)',
-        'Atypical WBC (AWBC#)',
-      ],
-    },
-    {
-      title: 'RBC: up to 7-part Differential',
-      description: 'Richer red blood cell morphology categories for more informative interpretation and documentation.',
-      items: [
-        'Reticulocytes (RET# RET%)',
-        'Nucleated RBC (NRBC# NRBC/WBC)',
-        'Ghost Cells (ETG# ETG%)',
-        'Spherocytes (SPH# SPH%)',
-        'Acanthocytes (AC#)',
-        'RBC Clump (AGG#)',
-        'Heinz Bodies (HEB# HEB%)',
-      ],
-    },
-    {
-      title: 'Platelet clump recognition & enumeration',
-      description: 'Recognizes platelet clumps and converts clumped platelets into single-platelet equivalents for platelet enumeration.',
-      items: [
-        'Total Platelets Count (PLT)',
-        'Platelets Count (PLT#)',
-        'Platelets Clump Count (APLT#)',
-      ],
-    },
-  ];
+  {
+    title: 'WBC: up to 9-part Differential',
+    description: 'More granular white blood cell differentiation to support deeper review beyond basic differentials.',
+    items: [
+    'Band Neutrophils (NST#)',
+    'Segmented Neutrophils (NSG#)',
+    'Hypersegmented Neutrophils (NSH#)',
+    'Small Lymphocytes (SLYM# %)',
+    'Large Lymphocytes (LLYM# %)',
+    'Atypical WBC (AWBC#)']
+
+  },
+  {
+    title: 'RBC: up to 7-part Differential',
+    description: 'Richer red blood cell morphology categories for more informative interpretation and documentation.',
+    items: [
+    'Reticulocytes (RET# RET%)',
+    'Nucleated RBC (NRBC# NRBC/WBC)',
+    'Ghost Cells (ETG# ETG%)',
+    'Spherocytes (SPH# SPH%)',
+    'Acanthocytes (AC#)',
+    'RBC Clump (AGG#)',
+    'Heinz Bodies (HEB# HEB%)']
+
+  },
+  {
+    title: 'Platelet clump recognition & enumeration',
+    description: 'Recognizes platelet clumps and converts clumped platelets into single-platelet equivalents for platelet enumeration.',
+    items: [
+    'Total Platelets Count (PLT)',
+    'Platelets Count (PLT#)',
+    'Platelets Clump Count (APLT#)']
+
+  }];
+
 
   const imageGrid = [
-    images.speciesCanineFeline,
-    images.speciesSmallMammals,
-    images.speciesExoticPets,
-    images.heroDiagnosticLab,
-  ];
+  images.speciesCanineFeline,
+  images.speciesSmallMammals,
+  images.speciesExoticPets,
+  images.heroDiagnosticLab];
+
 
   return (
     <Layout>
@@ -65,10 +65,10 @@ const BloodAnalysis = () => {
         title="Blood Analysis"
         subtitle="The most extensive Complete Blood Count (CBC) in veterinary medicine"
         breadcrumb={[
-          { label: 'Applications', path: '/applications' },
-          { label: 'Blood Analysis', path: '/applications/blood' },
-        ]}
-      />
+        { label: 'Applications', path: '/applications' },
+        { label: 'Blood Analysis', path: '/applications/blood' }]
+        } />
+
 
       {/* Overview */}
       <section className="py-16 lg:py-20">
@@ -96,7 +96,7 @@ const BloodAnalysis = () => {
 
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
+              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card py-0 px-0">
                 <img src={images.ai100vet} alt="Blood smear workflow" className="w-full max-h-80 object-contain" />
               </div>
             </div>
@@ -122,22 +122,22 @@ const BloodAnalysis = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {bloodCategories.map((category) => (
-              <div key={category.title} className="glow-card p-6 text-left h-full">
+            {bloodCategories.map((category) =>
+            <div key={category.title} className="glow-card p-6 text-left h-full">
                 <h3 className="text-lg font-semibold text-foreground mb-3">{category.title}</h3>
                 <p className={`${cardTextClass} text-muted-foreground mb-4`}>{category.description}</p>
                 <ul className={`space-y-2 ${cardTextClass} text-muted-foreground`}>
-                  {category.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
+                  {category.items.map((item) =>
+                <li key={item} className="flex items-start gap-2">
                       <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-primary">
                         <Check className="h-3 w-3" />
                       </span>
                       <span>{item}</span>
                     </li>
-                  ))}
+                )}
                 </ul>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -187,11 +187,11 @@ const BloodAnalysis = () => {
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {imageGrid.map((img, idx) => (
-              <div key={idx} className="glow-card p-4">
+            {imageGrid.map((img, idx) =>
+            <div key={idx} className="glow-card p-4">
                 <img src={img} alt={`Blood sample ${idx + 1}`} className="w-full h-28 object-cover rounded-lg" />
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -205,28 +205,28 @@ const BloodAnalysis = () => {
           <div className="max-w-3xl mx-auto">
              <Accordion type="single" collapsible className="w-full">
               {[
-                {
-                  question: 'Which species are supported for blood analysis?',
-                  answer: 'Companion animals: Dog, Cat. Small mammals: Rabbit, Chinchilla, Hamster, Rat, Mouse, Ferret, Guinea Pig. Large animals: Alpaca, Camel, Horse, Pig, Cattle, Sheep. Avian: Pigeon, Parrot. Reptiles: Turtle, Snake, Lizard.',
-                },
-                {
-                  question: 'What advanced parameters are available compared to a traditional 5-part differential?',
-                  answer: '9-part WBC differential, including band neutrophils, segmented neutrophils, hypersegmented neutrophils, large lymphocytes, and atypical leukocytes. Estimated platelet count and large platelet count (may interfere with CBC analyzers). 7-part RBC differential, including reticulocytes, nucleated RBCs, spherocytes, ghost RBCs, Heinz bodies, acanthocytes, and agglutinated RBCs.',
-                },
-                {
-                  question: 'How do I choose the sample volume for anemic animals?',
-                  answer: 'The default volume is 10 µL. If anemia is obvious (e.g., pale mucous membranes) or the sample looks diluted, select 40 µL.',
-                },
-                {
-                  question: 'Can blood parasites be detected?',
-                  answer: 'Coming soon: Heartworm (Dirofilaria immitis) and Hepatozoon.',
-                },
-              ].map((faq) => (
-                <AccordionItem key={faq.question} value={faq.question}>
+              {
+                question: 'Which species are supported for blood analysis?',
+                answer: 'Companion animals: Dog, Cat. Small mammals: Rabbit, Chinchilla, Hamster, Rat, Mouse, Ferret, Guinea Pig. Large animals: Alpaca, Camel, Horse, Pig, Cattle, Sheep. Avian: Pigeon, Parrot. Reptiles: Turtle, Snake, Lizard.'
+              },
+              {
+                question: 'What advanced parameters are available compared to a traditional 5-part differential?',
+                answer: '9-part WBC differential, including band neutrophils, segmented neutrophils, hypersegmented neutrophils, large lymphocytes, and atypical leukocytes. Estimated platelet count and large platelet count (may interfere with CBC analyzers). 7-part RBC differential, including reticulocytes, nucleated RBCs, spherocytes, ghost RBCs, Heinz bodies, acanthocytes, and agglutinated RBCs.'
+              },
+              {
+                question: 'How do I choose the sample volume for anemic animals?',
+                answer: 'The default volume is 10 µL. If anemia is obvious (e.g., pale mucous membranes) or the sample looks diluted, select 40 µL.'
+              },
+              {
+                question: 'Can blood parasites be detected?',
+                answer: 'Coming soon: Heartworm (Dirofilaria immitis) and Hepatozoon.'
+              }].
+              map((faq) =>
+              <AccordionItem key={faq.question} value={faq.question}>
                   <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
                     <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
                   </AccordionItem>
-                ))}
+              )}
             </Accordion>
           </div>
         </div>
@@ -251,8 +251,8 @@ const BloodAnalysis = () => {
           </div>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>);
+
 };
 
 export default BloodAnalysis;
