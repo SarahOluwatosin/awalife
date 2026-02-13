@@ -1,59 +1,54 @@
 
 
-# Add Site Images Management to Admin Panel
+# Inline Image Replacement for Admins
 
 ## Overview
-Add a new "Site Images" tab to the existing admin dashboard (`/admin/resources`) that lets admins view, upload, and replace the website's static images (hero backgrounds, product photos, logos, etc.) without needing developer access.
+When an admin is signed in and browsing the public site, images will show an edit overlay on hover. Clicking it opens a dialog to upload a replacement file directly -- no need to visit the admin panel.
 
 ## How It Works
 
-The 21 images in `src/lib/images.ts` each map to a fixed file path in cloud storage (e.g., `assets/hero-diagnostic-lab.jpg`). Replacing an image means uploading a new file to the same path -- all pages automatically show the new version.
+1. A global `AdminImageOverlay` component is added to the `Layout`. It listens for mouse hover on any `<img>` element whose `src` points to the cloud storage base URL.
+2. On hover, a small "Replace" button appears over the image corner.
+3. Clicking it opens a dialog with a file picker. The admin selects a new file, which overwrites the existing storage path using `uploadAndReplace`.
+4. The image on the page refreshes immediately with a cache-busting timestamp.
+
+This approach avoids modifying every component that uses images -- it works globally by detecting storage-hosted images in the DOM.
 
 ## Implementation Steps
 
-### Step 1: Create an Image Assets Configuration
+### 1. Create `AdminImageOverlay` component
+**New file: `src/components/admin/AdminImageOverlay.tsx`**
 
-Add an `IMAGE_ASSET_CONFIG` array to `src/lib/images.ts` that describes each image with a human-readable label, its storage key, and a category for grouping in the admin UI.
-
-```
-{ key: "heroDiagnosticLab", label: "Hero - Diagnostic Lab", category: "Hero & Backgrounds", fileName: "hero-diagnostic-lab.jpg" }
-```
-
-### Step 2: Add "Site Images" Tab to ResourcesAdmin
-
-Add a fourth tab alongside News, Resources, and FAQ:
-
-- **Grid layout** showing all images organized by category (Hero, Analyzers, Microscopes, Species, Products)
-- Each card shows:
-  - Current image thumbnail
-  - Image label/name
-  - "Replace" button that opens a file picker
+- Uses `useAuth()` to check if user is admin; renders nothing if not
+- Attaches a global `mouseover` event listener on the document
+- When hovering an `<img>` with a `src` matching the storage base URL (`/storage/v1/object/public/media/assets/`), shows a floating "Replace" button positioned over the image
+- Extracts the file path from the image `src` to know which storage file to replace
+- On click, opens a small dialog/popover with:
+  - File upload input (accept `image/*`)
   - Upload progress indicator
-- On file select, upload to `media/assets/{fileName}` with `upsert: true` (overwrite existing)
-- After upload, append a cache-busting query param (`?t=timestamp`) to force the browser to reload the new version
+  - Confirmation toast on success
+- After upload, updates the `<img>` element's `src` with a cache-busting param so it refreshes instantly
 
-### Step 3: Update Storage Upload Helper
+### 2. Add to Layout
+**Edit: `src/components/layout/Layout.tsx`**
 
-Modify `src/lib/storage.ts` to add an `uploadAndReplace` function that uses `upsert: true` to overwrite existing files at the same path, instead of generating unique filenames.
+- Import and render `<AdminImageOverlay />` inside the Layout so it's active on every page
 
-### Step 4: Add Cache Busting
+### 3. Reuse existing `uploadAndReplace` from `src/lib/storage.ts`
+No changes needed -- the existing function already handles `upsert: true` and cache-busting URLs.
 
-After a replacement upload, update a local state timestamp so the admin preview immediately shows the new image. Public visitors will see the update on next page load (CDN cache typically refreshes within minutes).
+## Technical Details
+
+- The overlay uses `document.addEventListener('mouseover', ...)` with event delegation to avoid per-image bindings
+- The floating button is rendered via a React portal positioned using `getBoundingClientRect()` of the hovered image
+- Only images whose `src` contains the storage base path get the overlay -- other images (external URLs, SVGs, etc.) are ignored
+- The component cleans up its event listener on unmount
+- Uses `position: fixed` for the overlay button so it works regardless of scroll position
 
 ## Files Changed
 
 | File | Change |
 |---|---|
-| `src/lib/images.ts` | Add `IMAGE_ASSET_CONFIG` array with labels, categories, file names |
-| `src/lib/storage.ts` | Add `uploadAndReplace()` function with upsert support |
-| `src/pages/ResourcesAdmin.tsx` | Add "Site Images" tab with grid of image cards and replace functionality |
-
-## User Experience
-
-1. Admin logs in and navigates to the admin dashboard
-2. Clicks the "Site Images" tab
-3. Sees all website images organized by category in a grid
-4. Clicks "Replace" on any image, selects a new file
-5. File uploads and overwrites the old one -- preview updates immediately
-6. All public pages automatically show the new image
+| `src/components/admin/AdminImageOverlay.tsx` | New -- global hover overlay for admin image replacement |
+| `src/components/layout/Layout.tsx` | Add `<AdminImageOverlay />` |
 
