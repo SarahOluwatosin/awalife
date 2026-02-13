@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { Navigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -30,7 +30,8 @@ import type {
 import { toast } from '@/hooks/use-toast';
 import { uploadToStorage, uploadAndReplace } from '@/lib/storage';
 import { validateImageFile, validateResourceFile } from '@/lib/validation';
-import { IMAGE_ASSET_CONFIG } from '@/lib/images';
+import { dbSelect, dbInsert, dbUpdate, dbDelete } from '@/lib/db';
+import { supabase } from '@/integrations/supabase/client';
 
 type ResourceFormState = {
   title: string;
@@ -51,27 +52,67 @@ const productLabelMap = RESOURCE_PRODUCT_OPTIONS.reduce<Record<string, string>>(
 
 // ---- Site Images Manager ----
 const STORAGE_BASE_URL = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/media/assets`;
+const PAGE_CATEGORIES = ['Home', 'Products', 'Applications', 'About', 'Contact', 'Logo', 'Uncategorized'];
+
+type SiteImage = {
+  id: string;
+  key: string;
+  label: string;
+  category: string;
+  file_name: string;
+};
+
+const getToken = async () => {
+  const { data } = await supabase.auth.getSession();
+  return data.session?.access_token ?? '';
+};
 
 const SiteImagesManager = () => {
+  const [images, setImages] = useState<SiteImage[]>([]);
+  const [loading, setLoading] = useState(true);
   const [cacheBuster, setCacheBuster] = useState<Record<string, number>>({});
   const [uploading, setUploading] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
   const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  const addFileRef = useRef<HTMLInputElement | null>(null);
 
-  const categories = [...new Set(IMAGE_ASSET_CONFIG.map(c => c.category))];
+  // Add new image state
+  const [addOpen, setAddOpen] = useState(false);
+  const [newLabel, setNewLabel] = useState('');
+  const [newCategory, setNewCategory] = useState('Home');
+  const [newFile, setNewFile] = useState<File | null>(null);
+
+  // Edit state
+  const [editing, setEditing] = useState<SiteImage | null>(null);
+  const [editLabel, setEditLabel] = useState('');
+  const [editCategory, setEditCategory] = useState('');
+
+  const fetchImages = useCallback(async () => {
+    try {
+      const rows = await dbSelect<SiteImage>('site_images', 'order=category.asc,label.asc');
+      setImages(rows);
+    } catch (err) {
+      console.error('[SiteImages] fetch error', err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => { fetchImages(); }, [fetchImages]);
 
   const getImageUrl = (fileName: string, key: string) => {
     const bust = cacheBuster[key];
     return `${STORAGE_BASE_URL}/${fileName}${bust ? `?t=${bust}` : ''}`;
   };
 
-  const handleReplace = async (asset: typeof IMAGE_ASSET_CONFIG[0], file: File) => {
+  const handleReplace = async (img: SiteImage, file: File) => {
     const error = validateImageFile(file);
     if (error) { toast({ title: error, variant: 'destructive' }); return; }
-    setUploading(asset.key);
+    setUploading(img.key);
     try {
-      await uploadAndReplace('media', `assets/${asset.fileName}`, file);
-      setCacheBuster(prev => ({ ...prev, [asset.key]: Date.now() }));
-      toast({ title: `${asset.label} replaced successfully` });
+      await uploadAndReplace('media', `assets/${img.file_name}`, file);
+      setCacheBuster(prev => ({ ...prev, [img.key]: Date.now() }));
+      toast({ title: `${img.label} replaced successfully` });
     } catch {
       toast({ title: 'Failed to replace image', variant: 'destructive' });
     } finally {
@@ -79,49 +120,135 @@ const SiteImagesManager = () => {
     }
   };
 
+  const handleAddImage = async () => {
+    if (!newLabel.trim() || !newFile) return;
+    const error = validateImageFile(newFile);
+    if (error) { toast({ title: error, variant: 'destructive' }); return; }
+    setSaving(true);
+    try {
+      const fileExt = newFile.name.split('.').pop() || 'png';
+      const safeKey = newLabel.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '');
+      const fileName = `${safeKey}.${fileExt}`;
+      await uploadAndReplace('media', `assets/${fileName}`, newFile);
+      const token = await getToken();
+      await dbInsert('site_images', { key: safeKey, label: newLabel.trim(), category: newCategory, file_name: fileName }, token);
+      setAddOpen(false);
+      setNewLabel('');
+      setNewCategory('Home');
+      setNewFile(null);
+      await fetchImages();
+      setCacheBuster(prev => ({ ...prev, [safeKey]: Date.now() }));
+      toast({ title: 'Image added successfully' });
+    } catch {
+      toast({ title: 'Failed to add image', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editing || !editLabel.trim()) return;
+    setSaving(true);
+    try {
+      const token = await getToken();
+      await dbUpdate('site_images', editing.id, { label: editLabel.trim(), category: editCategory }, token);
+      setEditing(null);
+      await fetchImages();
+      toast({ title: 'Image updated' });
+    } catch {
+      toast({ title: 'Failed to update image', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDelete = async (img: SiteImage) => {
+    setSaving(true);
+    try {
+      const token = await getToken();
+      await dbDelete('site_images', img.id, token);
+      await fetchImages();
+      toast({ title: `${img.label} removed` });
+    } catch {
+      toast({ title: 'Failed to delete image', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const openEdit = (img: SiteImage) => {
+    setEditing(img);
+    setEditLabel(img.label);
+    setEditCategory(img.category);
+  };
+
+  if (loading) return <p className="text-center text-muted-foreground py-8">Loading images...</p>;
+
+  const categories = [...new Set(images.map(i => i.category))].sort((a, b) => {
+    const order = PAGE_CATEGORIES;
+    return (order.indexOf(a) === -1 ? 99 : order.indexOf(a)) - (order.indexOf(b) === -1 ? 99 : order.indexOf(b));
+  });
+
   return (
     <>
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>Site Images</CardTitle>
+            <CardDescription>Manage all website images. Add new images or replace existing ones.</CardDescription>
+          </div>
+          <Button size="sm" onClick={() => setAddOpen(true)}>
+            <Plus className="mr-2 h-4 w-4" /> Add Image
+          </Button>
+        </CardHeader>
+      </Card>
+
       {categories.map(category => (
         <Card key={category}>
           <CardHeader>
             <CardTitle className="text-lg">{category}</CardTitle>
-            <CardDescription>Click "Replace" to upload a new version of any image.</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {IMAGE_ASSET_CONFIG.filter(a => a.category === category).map(asset => (
-                <div key={asset.key} className="space-y-2">
+              {images.filter(a => a.category === category).map(img => (
+                <div key={img.id} className="space-y-2">
                   <div className="relative aspect-[4/3] rounded-lg border border-border overflow-hidden bg-muted">
                     <img
-                      src={getImageUrl(asset.fileName, asset.key)}
-                      alt={asset.label}
+                      src={getImageUrl(img.file_name, img.key)}
+                      alt={img.label}
                       className="w-full h-full object-contain"
                       onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
                     />
-                    {uploading === asset.key && (
+                    {uploading === img.key && (
                       <div className="absolute inset-0 bg-background/80 flex flex-col items-center justify-center gap-2">
                         <RefreshCw className="h-5 w-5 animate-spin text-primary" />
                         <span className="text-xs text-muted-foreground">Uploading...</span>
                       </div>
                     )}
                   </div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-medium text-foreground truncate">{asset.label}</span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs font-medium text-foreground truncate flex-1">{img.label}</span>
+                    <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={() => openEdit(img)}>
+                      <Pencil className="h-3 w-3" />
+                    </Button>
                     <Button
                       variant="outline"
                       size="sm"
                       className="shrink-0 h-7 text-xs"
                       disabled={uploading !== null}
-                      onClick={() => fileInputRefs.current[asset.key]?.click()}
+                      onClick={() => fileInputRefs.current[img.key]?.click()}
                     >
                       Replace
                     </Button>
+                    <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0 text-destructive hover:text-destructive" disabled={saving} onClick={() => handleDelete(img)}>
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
                     <input
-                      ref={el => { fileInputRefs.current[asset.key] = el; }}
+                      ref={el => { fileInputRefs.current[img.key] = el; }}
                       type="file"
                       accept="image/*"
                       className="hidden"
-                      onChange={e => { const f = e.target.files?.[0]; if (f) void handleReplace(asset, f); e.target.value = ''; }}
+                      onChange={e => { const f = e.target.files?.[0]; if (f) void handleReplace(img, f); e.target.value = ''; }}
                     />
                   </div>
                 </div>
@@ -130,6 +257,81 @@ const SiteImagesManager = () => {
           </CardContent>
         </Card>
       ))}
+
+      {/* Add Image Dialog */}
+      <Dialog open={addOpen} onOpenChange={setAddOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader><DialogTitle>Add New Image</DialogTitle></DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Label *</Label>
+              <Input value={newLabel} onChange={e => setNewLabel(e.target.value)} placeholder="e.g. Clinic Banner" />
+            </div>
+            <div className="space-y-2">
+              <Label>Page Category</Label>
+              <Select value={newCategory} onValueChange={setNewCategory}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {PAGE_CATEGORIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Image File *</Label>
+              {newFile ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground truncate flex-1">{newFile.name}</span>
+                  <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setNewFile(null)}><X className="h-3.5 w-3.5" /></Button>
+                </div>
+              ) : (
+                <label className="flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border py-6 cursor-pointer hover:border-primary/50 hover:bg-accent/50 transition-colors">
+                  <Upload className="h-6 w-6 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">Click to select image</span>
+                  <span className="text-xs text-muted-foreground">JPG, PNG, WebP, GIF (max 5MB)</span>
+                  <input type="file" accept="image/*" className="hidden" onChange={e => { const f = e.target.files?.[0]; if (f) setNewFile(f); }} />
+                </label>
+              )}
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setAddOpen(false)}>Cancel</Button>
+            <Button onClick={handleAddImage} disabled={saving || !newLabel.trim() || !newFile}>
+              {saving ? 'Uploading...' : 'Add Image'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Image Dialog */}
+      <Dialog open={!!editing} onOpenChange={open => { if (!open) setEditing(null); }}>
+        <DialogContent className="max-w-md">
+          <DialogHeader><DialogTitle>Edit Image</DialogTitle></DialogHeader>
+          {editing && (
+            <div className="space-y-4">
+              <div className="aspect-[4/3] rounded-lg border border-border overflow-hidden bg-muted">
+                <img src={getImageUrl(editing.file_name, editing.key)} alt={editing.label} className="w-full h-full object-contain" />
+              </div>
+              <div className="space-y-2">
+                <Label>Label</Label>
+                <Input value={editLabel} onChange={e => setEditLabel(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label>Page Category</Label>
+                <Select value={editCategory} onValueChange={setEditCategory}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {PAGE_CATEGORIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditing(null)}>Cancel</Button>
+            <Button onClick={handleSaveEdit} disabled={saving || !editLabel.trim()}>Save Changes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
