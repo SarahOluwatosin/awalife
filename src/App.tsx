@@ -25,11 +25,6 @@ import AdminLogin from "./pages/AdminLogin";
 
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import MedTechLanding from "./pages/landing/MedTechLanding";
-import ModernLanding from "./pages/landing/ModernLanding";
-import FizensLanding from "./pages/landing/FizensLanding";
-import HealthSyncLanding from "./pages/landing/HealthSyncLanding";
-import EmeraldLanding from "./pages/landing/EmeraldLanding";
 import PageTransition from "@/components/animations/PageTransition";
 
 const queryClient = new QueryClient();
@@ -42,11 +37,6 @@ const AnimatedRoutes = () => {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-          <Route path="/landing/medtech" element={<PageTransition><MedTechLanding /></PageTransition>} />
-          <Route path="/landing/modern" element={<PageTransition><ModernLanding /></PageTransition>} />
-          <Route path="/landing/fizens" element={<PageTransition><FizensLanding /></PageTransition>} />
-          <Route path="/landing/healthsync" element={<PageTransition><HealthSyncLanding /></PageTransition>} />
-          <Route path="/landing/emerald" element={<PageTransition><EmeraldLanding /></PageTransition>} />
           <Route path="/company" element={<Navigate to="/company/about" replace />} />
           <Route path="/company/about" element={<PageTransition><Company /></PageTransition>} />
           <Route path="/company/news" element={<PageTransition><CompanyNews /></PageTransition>} />
