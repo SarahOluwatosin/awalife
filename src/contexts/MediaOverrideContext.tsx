@@ -6,7 +6,7 @@ const STORAGE_PATH_MARKER = '/storage/v1/object/public/media/';
 
 type MediaOverride = {
   storage_path: string;
-  media_type: 'video_upload' | 'video_embed';
+  media_type: 'image' | 'video_upload' | 'video_embed';
   media_url: string;
   thumbnail_url: string;
 };
@@ -83,8 +83,7 @@ export const MediaOverrideProvider = ({ children }: { children: ReactNode }) => 
   const fetchOverrides = useCallback(async () => {
     const { data } = await supabase
       .from('site_media_overrides')
-      .select('*')
-      .neq('media_type', 'image');
+      .select('*');
     
     if (data) {
       const map = new Map<string, MediaOverride>();
@@ -131,7 +130,17 @@ export const MediaOverrideProvider = ({ children }: { children: ReactNode }) => 
         if (!path) return;
         const override = overrides.get(path);
         if (!override) return;
-        // Don't apply twice
+
+        // For image overrides, just swap the src (non-destructive)
+        if (override.media_type === 'image') {
+          const overrideUrl = override.media_url;
+          // Avoid re-applying if already set
+          if (img.src === overrideUrl || img.src.startsWith(overrideUrl + '?')) return;
+          img.src = overrideUrl;
+          return;
+        }
+
+        // Don't apply video replacement twice
         if (img.parentElement?.getAttribute('data-media-override') === path) return;
         if (appliedRef.current.has(path)) return;
 
