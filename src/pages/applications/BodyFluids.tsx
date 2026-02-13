@@ -89,12 +89,17 @@ const BodyFluids = () => {
                 ))}
               </div>
 
-              <Button className="btn-gradient" size="lg" asChild>
-                <Link to="/products/ai-100vet">
-                  View AI-100Vet
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
+              <div className="flex flex-wrap gap-4">
+                <Button className="btn-gradient" size="lg" asChild>
+                  <Link to="/products/ai-100vet">
+                    View AI-100Vet
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" size="lg" asChild>
+                  <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013242151-23x4mi.pdf" target="_blank" rel="noopener noreferrer" download>Download the sample report</a>
+                </Button>
+              </div>
             </div>
 
             <div className="relative lg:order-1">

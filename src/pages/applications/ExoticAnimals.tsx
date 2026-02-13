@@ -63,7 +63,7 @@ const ExoticAnimals = () => {
                   </Link>
                 </Button>
                 <Button variant="outline" size="lg" asChild>
-                  <Link to="/contact">Download the sample report</Link>
+                  <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013290352-bha0kp.pdf" target="_blank" rel="noopener noreferrer" download>Download the sample report</a>
                 </Button>
               </div>
             </div>
