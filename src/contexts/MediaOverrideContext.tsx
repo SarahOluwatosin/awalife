@@ -150,19 +150,18 @@ export const MediaOverrideProvider = ({ children }: { children: ReactNode }) => 
       });
     };
 
-    // Apply after a short delay to let React render
-    const timer = setTimeout(applyOverrides, 300);
+    // Apply immediately for fast image swaps, then observe for new elements
+    applyOverrides();
     
-    // Debounced observer to avoid excessive scanning
+    // Debounced observer to catch dynamically added images
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
     const observer = new MutationObserver(() => {
       if (debounceTimer) clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(applyOverrides, 300);
+      debounceTimer = setTimeout(applyOverrides, 200);
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      clearTimeout(timer);
       if (debounceTimer) clearTimeout(debounceTimer);
       observer.disconnect();
     };
