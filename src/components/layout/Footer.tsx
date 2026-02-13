@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Linkedin, Twitter, Youtube, Github } from 'lucide-react';
-import awalifeLogo from '@/assets/awalife-logo.png';
+import { images } from '@/lib/images';
 
 const Footer = () => {
   const footerLinks = {
@@ -26,7 +26,7 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <Link to="/" className="flex items-center mb-6">
-              <img src={awalifeLogo} alt="Awalife" className="h-10 w-auto" />
+              <img src={images.awalifeLogo} alt="Awalife" className="h-10 w-auto" />
             </Link>
             <p className="text-muted-foreground mb-6 max-w-sm">
               Awalife is a dedicated innovator in AI-powered visible morphology, building veterinary diagnostics solutions that turn what clinicians see into review-ready reports with images and counts.
