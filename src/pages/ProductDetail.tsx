@@ -706,20 +706,24 @@ const ProductDetail = () => {
               <Accordion type="single" collapsible className="w-full">
                 {[
                   {
-                    question: 'Which microscope models are compatible with the image hub?',
-                    answer: 'It supports common Leica and Olympus microscopes. Compatibility varies by model.',
+                    question: 'What is the DM-03 Microscope Workstation?',
+                    answer: 'DM-03 Microscope Workstation is a microscope workstation equipped with a 4K camera and an intelligent system for one-click capture, reporting, annotation, counting, and measurement.',
                   },
                   {
-                    question: 'Can I generate reports directly from the workstation?',
-                    answer: 'Yes. The software supports one-click report generation with images and annotations.',
+                    question: 'What are the key benefits of the DM-03 Microscope Workstation?',
+                    answer: 'Faster documentation, automated reports, a built-in reference library (542+ canine/feline images), SOP support, and improved communication, training, and collaboration.',
                   },
                   {
-                    question: 'Is training provided?',
-                    answer: 'Yes. The built-in teaching library and onboarding support help teams get started quickly.',
+                    question: 'Can I buy only the camera module?',
+                    answer: 'Yes. If you have an infinity optical microscope, the camera module can be customized and supplied separately.',
                   },
                   {
-                    question: 'What types of samples can be documented?',
-                    answer: 'It covers a broad range including urine, fecal, ear canal, blood, skin, tissue, serous cavity, and effusion.',
+                    question: 'What tools are included?',
+                    answer: 'Cell counting, multi-shape annotation, real-time measurement with a digital scale, customizable templates, and multi-account management.',
+                  },
+                  {
+                    question: 'Can I upload my own SOPs or reference images?',
+                    answer: 'Yes. DM-03 Microscope Workstation supports personalized uploads of reference images, videos, and SOPs.',
                   },
                 ].map((faq) => (
                   <AccordionItem key={faq.question} value={faq.question}>
