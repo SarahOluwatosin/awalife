@@ -13,6 +13,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Progress } from '@/components/ui/progress';
 import { Trash2, Plus, Pencil, FileText, Upload, X, Image as ImageIcon, LogOut, RefreshCw, Video } from 'lucide-react';
 import SiteVideosManager from '@/components/admin/SiteVideosManager';
+import CarouselImagesManager from '@/components/admin/CarouselImagesManager';
 import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -507,6 +508,7 @@ const ResourcesAdmin = () => {
               <TabsTrigger value="faq">FAQ ({data.faq.items.length})</TabsTrigger>
               <TabsTrigger value="images">Site Images</TabsTrigger>
               <TabsTrigger value="videos">Videos</TabsTrigger>
+              <TabsTrigger value="carousel">Carousel</TabsTrigger>
             </TabsList>
 
             {/* ===== NEWS TAB ===== */}
@@ -792,6 +794,11 @@ const ResourcesAdmin = () => {
             {/* ===== SITE VIDEOS TAB ===== */}
             <TabsContent value="videos" className="space-y-6">
               <SiteVideosManager />
+            </TabsContent>
+
+            {/* ===== CAROUSEL IMAGES TAB ===== */}
+            <TabsContent value="carousel" className="space-y-6">
+              <CarouselImagesManager />
             </TabsContent>
           </Tabs>
           )}

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
+import ApplicationImageCarousel from '@/components/sections/ApplicationImageCarousel';
 import { images } from '@/lib/images';
 
 const PleuralEffusion = () => {
@@ -14,11 +15,11 @@ const PleuralEffusion = () => {
 
   const bodyTextClass = 'text-lg';
 
-  const imageGrid = [
-    images.speciesCanineFeline,
-    images.speciesSmallMammals,
-    images.speciesExoticPets,
-    images.heroDiagnosticLab,
+  const fallbackImages = [
+    { url: images.speciesCanineFeline, label: 'Canine & Feline' },
+    { url: images.speciesSmallMammals, label: 'Small Mammals' },
+    { url: images.speciesExoticPets, label: 'Exotic Pets' },
+    { url: images.heroDiagnosticLab, label: 'Diagnostic Lab' },
   ];
 
   return (
@@ -87,13 +88,7 @@ const PleuralEffusion = () => {
               Review your report and verify the images with confidence - and tap into Awalife's clinical specialists whenever needed.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {imageGrid.map((img, idx) => (
-              <div key={idx} className="glow-card p-4">
-                <img src={img} alt={`Pleural sample ${idx + 1}`} className="w-full h-28 object-cover rounded-lg" />
-              </div>
-            ))}
-          </div>
+          <ApplicationImageCarousel pageKey="pleural-effusion" fallbackImages={fallbackImages} />
         </div>
       </section>
 

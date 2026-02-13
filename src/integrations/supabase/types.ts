@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      application_carousel_images: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string
+          label: string
+          page_key: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url: string
+          label?: string
+          page_key: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string
+          label?: string
+          page_key?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       faq_items: {
         Row: {
           answer: string
