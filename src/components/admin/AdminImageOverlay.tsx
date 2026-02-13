@@ -99,6 +99,18 @@ const AdminImageOverlay = () => {
     });
   };
 
+  const syncSiteImageRecord = async (fileName: string) => {
+    // Update the updated_at timestamp for existing records
+    const { data: existing } = await supabase.from('site_images').select('id').eq('file_name', fileName).maybeSingle();
+    if (existing) {
+      await supabase.from('site_images').update({ updated_at: new Date().toISOString() }).eq('id', existing.id);
+    } else {
+      // Create a new site_images record for newly uploaded files
+      const label = fileName.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      await supabase.from('site_images').insert({ key: fileName.replace(/\.[^.]+$/, '').replace(/[-_ ]/g, ''), label, file_name: fileName, category: 'Uncategorized' });
+    }
+  };
+
   const handleLocalUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !activePath) return;
@@ -106,6 +118,7 @@ const AdminImageOverlay = () => {
     try {
       const newUrl = await uploadAndReplace('media', `assets/${activePath}`, file);
       refreshAllMatching(activePath, newUrl);
+      await syncSiteImageRecord(activePath);
       toast({ title: 'Image replaced successfully' });
       setDialogOpen(false);
       setTarget(null);
@@ -129,6 +142,7 @@ const AdminImageOverlay = () => {
       const file = new File([blob], img.file_name, { type: blob.type });
       const newUrl = await uploadAndReplace('media', `assets/${activePath}`, file);
       refreshAllMatching(activePath, newUrl);
+      await syncSiteImageRecord(activePath);
       toast({ title: `Replaced with "${img.label}"` });
       setDialogOpen(false);
       setTarget(null);
