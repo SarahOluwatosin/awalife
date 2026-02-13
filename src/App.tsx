@@ -7,6 +7,7 @@ import { AnimatePresence, MotionConfig } from "framer-motion";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ResourcesCMSProvider } from "@/contexts/ResourcesCMSContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { MediaOverrideProvider } from "@/contexts/MediaOverrideContext";
 import Index from "./pages/Index";
 import Company from "./pages/About";
 import CompanyNews from "./pages/CompanyNews";
@@ -64,15 +65,17 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
       <AuthProvider>
-        <ResourcesCMSProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <AnimatedRoutes />
-            </BrowserRouter>
-          </TooltipProvider>
-        </ResourcesCMSProvider>
+        <MediaOverrideProvider>
+          <ResourcesCMSProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <AnimatedRoutes />
+              </BrowserRouter>
+            </TooltipProvider>
+          </ResourcesCMSProvider>
+        </MediaOverrideProvider>
       </AuthProvider>
     </LanguageProvider>
   </QueryClientProvider>
