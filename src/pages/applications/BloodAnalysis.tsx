@@ -116,7 +116,7 @@ const BloodAnalysis = () => {
             </p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
-                <Link to="/contact">Download the sample report</Link>
+                <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013016271-paiyw3.pdf" target="_blank" rel="noopener noreferrer" download>Download the sample report</a>
               </Button>
             </div>
           </div>
