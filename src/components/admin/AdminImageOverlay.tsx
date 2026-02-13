@@ -127,18 +127,24 @@ const AdminImageOverlay = () => {
     // Fetch from site_videos table
     const { data } = await supabase.from('site_videos').select('*').order('category');
     setSiteVideos((data as any[]) || []);
-    // Also scan storage bucket for video files
-    const { data: storageFiles } = await supabase.storage.from('media').list('videos');
-    if (storageFiles) {
-      const videoExtensions = ['mp4', 'webm', 'ogg', 'mov'];
-      const vids = storageFiles
-        .filter(f => videoExtensions.some(ext => f.name.toLowerCase().endsWith(`.${ext}`)))
-        .map(f => ({
-          name: f.name,
-          url: `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/media/videos/${f.name}`,
-        }));
-      setStorageVideos(vids);
+    // Scan multiple storage folders for video files
+    const videoExtensions = ['mp4', 'webm', 'ogg', 'mov'];
+    const folders = ['videos', 'assets'];
+    const allVids: StorageVideo[] = [];
+    for (const folder of folders) {
+      const { data: storageFiles } = await supabase.storage.from('media').list(folder);
+      if (storageFiles) {
+        storageFiles
+          .filter(f => videoExtensions.some(ext => f.name.toLowerCase().endsWith(`.${ext}`)))
+          .forEach(f => {
+            allVids.push({
+              name: f.name,
+              url: `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/media/${folder}/${f.name}`,
+            });
+          });
+      }
     }
+    setStorageVideos(allVids);
     setLoadingVideos(false);
   };
 
