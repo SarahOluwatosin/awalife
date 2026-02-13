@@ -15,13 +15,7 @@ import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { motion } from 'framer-motion';
 import DottedMap from 'dotted-map';
-import ai100vetNew from '@/assets/ai-100vet-new.png';
-import emeraldHeroProduct from '@/assets/emerald-hero-product.png';
-import microscopeStation from '@/assets/microscope-station.png';
-import heroBg from '@/assets/hero-diagnostic-lab.jpg';
-import speciesCanineFeline from '@/assets/species-canine-feline.jpg';
-import speciesExoticPets from '@/assets/species-exotic-pets.jpg';
-import speciesSmallMammals from '@/assets/species-small-mammals.jpg';
+import { images } from '@/lib/images';
 import aiAnalyzerVideo from '@/assets/ai-analyzer-video.mp4';
 import dm03Video from '@/assets/dm03-video.mp4';
 import Layout from '@/components/layout/Layout';
@@ -71,17 +65,17 @@ const speciesGallery = [
   {
     title: 'Canine + Feline',
     subtitle: 'Companion diagnostics',
-    image: speciesCanineFeline
+    image: images.speciesCanineFeline
   },
   {
     title: 'Exotic Pets',
     subtitle: 'Avian, reptiles, and more',
-    image: speciesExoticPets
+    image: images.speciesExoticPets
   },
   {
     title: 'Small Mammals',
     subtitle: 'Rabbits, rodents, ferrets',
-    image: speciesSmallMammals
+    image: images.speciesSmallMammals
   }
 ];
 
@@ -284,7 +278,7 @@ const EmeraldLanding = () => {
               >
                 <div className="relative rounded-[2rem] bg-[#071d15]/80 p-4" style={{ transform: 'translateZ(16px)' }}>
                   <img
-                    src={emeraldHeroProduct}
+                    src={images.emeraldHeroProduct}
                     alt="Awalife AI-100Vet analyzer devices"
                     className="w-full object-contain drop-shadow-[0_25px_80px_rgba(0,0,0,0.45)]"
                   />

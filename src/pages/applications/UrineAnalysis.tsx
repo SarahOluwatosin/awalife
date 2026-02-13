@@ -5,11 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
-import ai100vetImg from '@/assets/ai-100vet.png';
-import speciesCanineFeline from '@/assets/species-canine-feline.jpg';
-import speciesSmallMammals from '@/assets/species-small-mammals.jpg';
-import speciesExoticPets from '@/assets/species-exotic-pets.jpg';
-import heroDiagnosticLab from '@/assets/hero-diagnostic-lab.jpg';
+import { images } from '@/lib/images';
 
 const UrineAnalysis = () => {
   useEffect(() => {
@@ -64,10 +60,10 @@ const UrineAnalysis = () => {
   ];
 
   const imageGrid = [
-    speciesCanineFeline,
-    speciesSmallMammals,
-    speciesExoticPets,
-    heroDiagnosticLab,
+    images.speciesCanineFeline,
+    images.speciesSmallMammals,
+    images.speciesExoticPets,
+    images.heroDiagnosticLab,
   ];
 
   return (
@@ -108,7 +104,7 @@ const UrineAnalysis = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={ai100vetImg} alt="Urine sediment workflow" className="w-full max-h-80 object-contain" />
+                <img src={images.ai100vet} alt="Urine sediment workflow" className="w-full max-h-80 object-contain" />
               </div>
             </div>
           </div>
@@ -159,7 +155,7 @@ const UrineAnalysis = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center">
-                <img src={ai100vetImg} alt="Urine SOP Video" className="w-full max-h-80 object-contain" />
+                <img src={images.ai100vet} alt="Urine SOP Video" className="w-full max-h-80 object-contain" />
                 <p className="text-xs text-muted-foreground mt-4">Urine SOP Video-02</p>
               </div>
             </div>

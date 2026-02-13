@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
-import heroDiagnosticLab from '@/assets/hero-diagnostic-lab.jpg';
+import { images } from '@/lib/images';
 
 const About = () => {
   useEffect(() => {
@@ -112,7 +112,7 @@ const About = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={heroDiagnosticLab} alt="Awalife overview" className="w-full max-h-80 object-contain" />
+                <img src={images.heroDiagnosticLab} alt="Awalife overview" className="w-full max-h-80 object-contain" />
               </div>
             </div>
           </div>
@@ -199,7 +199,7 @@ const About = () => {
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
             <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-              <img src={heroDiagnosticLab} alt="Global partners" className="w-full max-h-96 object-contain" />
+              <img src={images.heroDiagnosticLab} alt="Global partners" className="w-full max-h-96 object-contain" />
             </div>
           </div>
         </div>

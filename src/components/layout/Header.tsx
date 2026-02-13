@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useLanguage } from '@/contexts/LanguageContext';
-import awalifeLogo from '@/assets/awalife-logo.png';
+import { images } from '@/lib/images';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -65,7 +65,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <img
-              src={awalifeLogo}
+              src={images.awalifeLogo}
               alt="Awalife"
               className={`h-10 w-auto transition-all ${isDarkHero ? 'brightness-200 drop-shadow' : ''}`}
             />

@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation, useParallax, useCountUp, useStaggerAnimation } from '@/hooks/use-scroll-animation';
 import heroVideo from '@/assets/hero-medtech-video.mp4';
-import analyzerProducts from '@/assets/awalife-analyzer-products.png';
-import dm03Microscope from '@/assets/dm03-medtech.png';
+import { images } from '@/lib/images';
 import Layout from '@/components/layout/Layout';
 
 // Animated section wrapper
@@ -202,7 +201,7 @@ const MedTechLanding = () => {
               <div className="order-1 lg:order-2 relative h-[320px] sm:h-[360px] lg:h-[400px] overflow-hidden rounded-3xl flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl blur-3xl" />
                 <img 
-                  src={analyzerProducts} 
+                  src={images.awalifeAnalyzerProducts} 
                   alt="AI-100Vet Elite" 
                   className="relative h-full w-full object-cover hover:scale-105 transition-transform duration-700"
                 />
@@ -218,7 +217,7 @@ const MedTechLanding = () => {
               <div className="relative h-[320px] sm:h-[360px] lg:h-[400px] overflow-hidden rounded-3xl flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-bl from-accent/20 to-primary/10 rounded-3xl blur-3xl" />
                 <img 
-                  src={dm03Microscope} 
+                  src={images.dm03Medtech} 
                   alt="DM-03 Microscope Workstation" 
                   className="relative h-full w-full object-cover hover:scale-105 transition-transform duration-700"
                 />

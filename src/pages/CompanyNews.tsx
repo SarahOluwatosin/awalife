@@ -4,7 +4,7 @@ import { ArrowRight, Calendar, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
-import heroDiagnosticLab from '@/assets/hero-diagnostic-lab.jpg';
+import { images } from '@/lib/images';
 
 const CompanyNews = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -42,7 +42,7 @@ const CompanyNews = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/8 to-accent/8 rounded-3xl blur-3xl opacity-50" />
               <div className="relative rounded-2xl overflow-hidden border border-border/30 bg-secondary/20 shadow-lg">
-                <img src={heroDiagnosticLab} alt="News cover" className="w-full aspect-[4/3] object-cover" loading="eager" decoding="async" />
+                <img src={images.heroDiagnosticLab} alt="News cover" className="w-full aspect-[4/3] object-cover" loading="eager" decoding="async" />
               </div>
             </div>
           </div>

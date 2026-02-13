@@ -1,8 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import speciesCanineFeline from '@/assets/species-canine-feline.jpg';
-import digitalMicroscope from '@/assets/digital-microscope.png';
-import analyzerHero from '@/assets/awalife-analyzer-hero.jpg';
-import dm03Medtech from '@/assets/dm03-medtech.png';
+import { images } from '@/lib/images';
 const WhyUsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -18,22 +15,22 @@ const WhyUsSection = () => {
   const features = [{
     title: 'One platform that expands from multi-species analysis to multi-parameter evidence',
     desc: 'It supports companion animals and small mammals, as well as large animals and a broad variety of exotic pets, making it suitable for a wide range of veterinary scenarios. In addition, it is capable of automatically analyzing blood, feces, urine, and pleural effusion samples, helping deliver efficient, accurate, and reliable results for daily clinical use.',
-    image: speciesCanineFeline,
+    image: images.speciesCanineFeline,
     alt: 'Veterinary species coverage'
   }, {
     title: 'True-to-life morphology you can trust, capturing diagnostic details with clarity',
     desc: 'With 40x optics, a 6.5 MP imaging system, and a wide field of view, Awalife preserves fine cellular detail while 1,000+ fields of view help ensure representative coverage. Liquid-based staining supports cell integrity for confident review and reporting.',
-    image: digitalMicroscope,
+    image: images.digitalMicroscope,
     alt: 'Microscopy imaging for morphology'
   }, {
     title: 'Morphology-first AI validated by real-world usage and rapid iteration',
     desc: 'It is validated through real-world usage and rapid iteration, with over 15 million images used for AI training and more than 2.4 million diagnostic reports generated. Backed by 100+ innovations and patent updates, it continues to improve in performance and reliability with global field feedback.',
-    image: analyzerHero,
+    image: images.awalifeAnalyzerHero,
     alt: 'Awalife analyzer in clinical workflow'
   }, {
     title: 'Support that scales: from day-to-day help to expert clinical guidance',
     desc: 'Awalife offers responsive online support to keep workflows running smoothly, plus access to a clinical expert network for interpretive assistance. For distributors and partners, we provide a dedicated 1-on-1 support channel to streamline onboarding, technical escalation, and ongoing enablement.',
-    image: dm03Medtech,
+    image: images.dm03Medtech,
     alt: 'Support and training for clinics'
   }];
   return <section ref={sectionRef} className="py-24 bg-primary-foreground">

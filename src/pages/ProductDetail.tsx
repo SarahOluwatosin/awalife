@@ -9,13 +9,7 @@ import PageHero from '@/components/shared/PageHero';
 import ProductGallery from '@/components/product/ProductGallery';
 import ProductComparison from '@/components/product/ProductComparison';
 import { useLanguage } from '@/contexts/LanguageContext';
-import ai100vetImg from '@/assets/ai-100vet.png';
-import ai100vetEliteImg from '@/assets/ai-100vet-elite.png';
-import ai80vetImg from '@/assets/ai-80vet.png';
-import dm03MicroscopeImg from '@/assets/dm03-microscope.png';
-import dm03MedtechImg from '@/assets/dm03-medtech.png';
-import digitalMicroscopeImg from '@/assets/digital-microscope.png';
-import microscopeStationImg from '@/assets/microscope-station.png';
+import { images } from '@/lib/images';
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -27,7 +21,7 @@ const ProductDetail = () => {
 
   const productData: Record<string, any> = {
     'ai-analyzer': {
-      images: [ai100vetEliteImg, ai100vetImg, ai80vetImg],
+      images: [images.ai100vetElite, images.ai100vet, images.ai80vet],
       name: 'AI Series Morphology Analyzer',
       tagline: 'AI-powered morphology analyzer for veterinary diagnostics',
       description: 'Awalife AI Series Morphology Analyzer is an AI-powered veterinary platform for four sample types: blood, urine, feces, and body fluids. It combines multi-focus imaging, rapid liquid-based staining, AI-assisted morphology recognition and counting, and report generation with review-ready images and quantitative results. The system also supports an expandable parameter set for deeper clinical insight.',
@@ -47,7 +41,7 @@ const ProductDetail = () => {
       flagship: true,
     },
     'ai-100vet-elite': {
-      images: [ai100vetImg, ai100vetImg, ai100vetImg],
+      images: [images.ai100vet, images.ai100vet, images.ai100vet],
       name: 'AI-100Vet Elite Morphological Analyzer',
       tagline: 'Premium AI-Powered Diagnostics for Cats & Dogs',
       description: 'AI-100Vet Elite Morphological Analyzer is an AI-powered diagnostic device for cats and dogs, capable of automatically analyzing three sample types: blood, feces, and urine. Featuring microfluidic automated smearing, rapid liquid-based staining, and AI-powered recognition with auto-generated diagnostic reports.',
@@ -76,7 +70,7 @@ const ProductDetail = () => {
       flagship: true,
     },
     'ai-100vet': {
-      images: [ai100vetImg, ai100vetImg],
+      images: [images.ai100vet, images.ai100vet],
       name: 'AI-100Vet Morphological Analyzer',
       tagline: 'Multi-Species Intelligent Diagnostics',
       description: 'AI-100Vet Morphological Analyzer is an intelligent diagnostic device tailored for veterinary applications. It supports automatic analysis of four sample types including blood, feces, urine sediment, and pleural fluid, meeting the diverse clinical needs of more than 10 species including dogs, cats, rabbits, turtles, birds, parrots, snakes, and lizards.',
@@ -106,7 +100,7 @@ const ProductDetail = () => {
       flagship: false,
     },
     'ai-80vet': {
-      images: [ai100vetImg, ai100vetImg],
+      images: [images.ai100vet, images.ai100vet],
       name: 'AI-80Vet Morphological Analyzer',
       tagline: 'Configurable Testing for Diverse Needs',
       description: 'AI-80Vet Morphological Analyzer is an intelligent diagnostic device tailored for veterinary applications, which offers configurable sample testing functions to meet diverse veterinary needs. Supports comprehensive blood, feces, and urine analysis with advanced AI recognition.',
@@ -135,7 +129,7 @@ const ProductDetail = () => {
       flagship: false,
     },
     'microscope': {
-      images: [dm03MicroscopeImg, digitalMicroscopeImg, microscopeStationImg],
+      images: [images.dm03Microscope, images.digitalMicroscope, images.microscopeStation],
       name: 'DM-03 Microscope Workstation',
       tagline: 'Smarter imaging and effortless operation',
       description: 'Awalife Microscope Workstation is more than a standard veterinary microscope—it brings imaging, measurement, cell counting, and documentation into one streamlined workflow. With built-in software to add scale bars, annotate findings, and generate a report in one click, it helps clinics capture consistent results with less manual effort. An embedded teaching image library also makes onboarding faster and day-to-day training easier.',
@@ -164,7 +158,7 @@ const ProductDetail = () => {
       flagship: false,
     },
     'dm-03': {
-      images: [dm03MicroscopeImg, digitalMicroscopeImg, microscopeStationImg],
+      images: [images.dm03Microscope, images.digitalMicroscope, images.microscopeStation],
       name: 'DM-03 Microscope Workstation',
       tagline: 'Smarter imaging and effortless operation',
       description: 'Awalife Microscope Workstation is more than a standard veterinary microscope—it brings imaging, measurement, cell counting, and documentation into one streamlined workflow. With built-in software to add scale bars, annotate findings, and generate a report in one click, it helps clinics capture consistent results with less manual effort. An embedded teaching image library also makes onboarding faster and day-to-day training easier.',
@@ -400,7 +394,7 @@ const ProductDetail = () => {
             <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-start">
               <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card p-6 flex items-center justify-center">
                 <img
-                  src={dm03MicroscopeImg}
+                  src={images.dm03Microscope}
                   alt="DM-03 Microscope hardware"
                   className="w-full max-w-[420px] object-contain"
                 />
@@ -453,7 +447,7 @@ const ProductDetail = () => {
               </div>
               <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card p-6 flex items-center justify-center">
                 <img
-                  src={digitalMicroscopeImg}
+                  src={images.digitalMicroscope}
                   alt="Microscope workstation software"
                   className="w-full max-w-[420px] object-contain"
                 />
@@ -470,7 +464,7 @@ const ProductDetail = () => {
             <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-start">
               <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card p-6 flex items-center justify-center">
                 <img
-                  src={dm03MedtechImg}
+                  src={images.dm03Medtech}
                   alt="Microscope image hub module"
                   className="w-full max-w-[420px] object-contain"
                 />

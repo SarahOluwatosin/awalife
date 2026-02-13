@@ -1,4 +1,4 @@
-import heroDiagnosticLab from '@/assets/hero-diagnostic-lab.jpg';
+import { images } from '@/lib/images';
 
 export const RESOURCE_KIND_CONFIG = [
   {
@@ -121,7 +121,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
     title: 'Welcome to Resource Center',
     description:
       'Explore case studies, videos, white papers, and sample reports designed to help you evaluate and standardize morphology workflows - across blood, urine, feces, and fluids.',
-    imageUrl: heroDiagnosticLab,
+    imageUrl: images.heroDiagnosticLab,
     imageAlt: 'Resource center',
   },
   resources: [],

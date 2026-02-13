@@ -18,9 +18,7 @@ import {
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation, useCountUp } from '@/hooks/use-scroll-animation';
-import ai100vetNew from '@/assets/ai-100vet-new.png';
-import awalHero from '@/assets/awal-hero.webp';
-import microscopeStation from '@/assets/microscope-station.png';
+import { images } from '@/lib/images';
 import Layout from '@/components/layout/Layout';
 
 // Marquee component for continuous scrolling
@@ -172,7 +170,7 @@ const ModernLanding = () => {
                 }}
               >
                 <img
-                  src={awalHero}
+                  src={images.awalHero}
                   alt="AWALIFE AI-100Vet Analyzer"
                   className="w-full max-w-lg mx-auto drop-shadow-2xl"
                 />
@@ -256,7 +254,7 @@ const ModernLanding = () => {
             <div className="relative">
               <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-primary/15 via-transparent to-accent/10 blur-3xl" />
               <div className="relative rounded-[2.5rem] border border-border/60 bg-card/80 p-8 shadow-lg">
-                <img src={ai100vetNew} alt="Awalife AI Morphological Analyzer" className="w-full object-contain" />
+                <img src={images.ai100vetNew} alt="Awalife AI Morphological Analyzer" className="w-full object-contain" />
               </div>
             </div>
           </div>
@@ -270,7 +268,7 @@ const ModernLanding = () => {
             <div className="relative order-2 lg:order-1">
               <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-primary/10 via-transparent to-accent/10 blur-3xl" />
               <div className="relative rounded-[2.5rem] border border-border/60 bg-card/80 p-8 shadow-lg">
-                <img src={microscopeStation} alt="DM-03 Microscope Workstaion" className="w-full object-contain" />
+                <img src={images.microscopeStation} alt="DM-03 Microscope Workstaion" className="w-full object-contain" />
               </div>
             </div>
             <div className="order-1 lg:order-2">

@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom';
 import { Play, ChevronDown, Check, ArrowRight, Microscope, Activity, Zap, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import ai100vet from '@/assets/ai-100vet.png';
-import microscopeStation from '@/assets/microscope-station.png';
-import reagents from '@/assets/reagents.png';
-import heroBg from '@/assets/hero-bg.jpg';
+import { images } from '@/lib/images';
 
 // Custom hook for counting animation
 const useCounter = (end: number, duration: number = 2000, startOnView: boolean = true) => {
@@ -152,7 +149,7 @@ const HealthSyncLanding = () => {
             <div className="lg:col-span-2 bg-card rounded-3xl p-8 lg:p-12 relative overflow-hidden min-h-[520px] shadow-lg border border-border/50 group hover:shadow-xl transition-shadow">
               {/* Background image */}
               <div className="absolute inset-0 z-0">
-                <img src={heroBg} alt="" className="w-full h-full object-cover opacity-10" />
+                <img src={images.heroBg} alt="" className="w-full h-full object-cover opacity-10" />
                 <div className="absolute inset-0 bg-gradient-to-r from-card via-card/95 to-card/80" />
               </div>
 
@@ -189,7 +186,7 @@ const HealthSyncLanding = () => {
               {/* Floating product image */}
               <div className="absolute bottom-8 right-8 w-48 h-48 lg:w-64 lg:h-64 animate-float hidden lg:block">
                 <img 
-                  src={ai100vet} 
+                  src={images.ai100vet} 
                   alt="AI-100Vet" 
                   className="w-full h-full object-contain drop-shadow-2xl"
                 />
@@ -202,7 +199,7 @@ const HealthSyncLanding = () => {
               <div className="bg-card rounded-3xl p-6 flex-1 flex items-center justify-center shadow-lg border border-border/50 hover:shadow-xl transition-all group overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <img 
-                  src={microscopeStation} 
+                  src={images.microscopeStation} 
                   alt="Digital Microscope Station" 
                   className="w-full h-auto max-h-[180px] object-contain relative z-10 group-hover:scale-105 transition-transform duration-500"
                 />
@@ -575,7 +572,7 @@ const HealthSyncLanding = () => {
             <div className="bg-card rounded-3xl p-8 shadow-lg border border-border/50 hover:shadow-xl hover:border-primary/30 transition-all group">
               <div className="aspect-square bg-secondary rounded-2xl mb-6 flex items-center justify-center overflow-hidden">
                 <img 
-                  src={ai100vet} 
+                  src={images.ai100vet} 
                   alt="AI-100Vet Elite" 
                   className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
                 />
@@ -595,7 +592,7 @@ const HealthSyncLanding = () => {
             <div className="bg-card rounded-3xl p-8 shadow-lg border border-border/50 hover:shadow-xl hover:border-primary/30 transition-all group">
               <div className="aspect-square bg-secondary rounded-2xl mb-6 flex items-center justify-center overflow-hidden">
                 <img 
-                  src={microscopeStation} 
+                  src={images.microscopeStation} 
                   alt="Digital Microscope Station" 
                   className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
                 />
@@ -615,7 +612,7 @@ const HealthSyncLanding = () => {
             <div className="bg-card rounded-3xl p-8 shadow-lg border border-border/50 hover:shadow-xl hover:border-primary/30 transition-all group">
               <div className="aspect-square bg-secondary rounded-2xl mb-6 flex items-center justify-center overflow-hidden">
                 <img 
-                  src={reagents} 
+                  src={images.reagents} 
                   alt="Reagents & Consumables" 
                   className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
                 />
