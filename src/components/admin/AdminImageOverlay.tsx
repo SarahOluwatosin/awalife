@@ -163,16 +163,26 @@ const AdminImageOverlay = () => {
   };
 
   const syncSiteImageRecord = async (storagePath: string) => {
-    // Try matching by full path first, then just the basename
+    // Normalize to basename only (consistent with existing records)
     const baseName = storagePath.includes('/') ? storagePath.split('/').pop()! : storagePath;
+    // Search by basename only — all existing records use basename format
     const { data: existing } = await supabase.from('site_images').select('id')
-      .or(`file_name.eq.${storagePath},file_name.eq.${baseName}`)
+      .eq('file_name', baseName)
       .maybeSingle();
     if (existing) {
       await supabase.from('site_images').update({ updated_at: new Date().toISOString() }).eq('id', existing.id);
     } else {
-      const label = baseName.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-      await supabase.from('site_images').insert({ key: baseName.replace(/\.[^.]+$/, '').replace(/[-_ ]/g, ''), label, file_name: storagePath, category: 'Uncategorized' });
+      // Also check full path to avoid creating duplicates
+      const { data: fullPathMatch } = await supabase.from('site_images').select('id')
+        .eq('file_name', storagePath)
+        .maybeSingle();
+      if (fullPathMatch) {
+        // Fix the record to use basename format and update timestamp
+        await supabase.from('site_images').update({ file_name: baseName, updated_at: new Date().toISOString() }).eq('id', fullPathMatch.id);
+      } else {
+        const label = baseName.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        await supabase.from('site_images').insert({ key: baseName.replace(/\.[^.]+$/, '').replace(/[-_ ]/g, ''), label, file_name: baseName, category: 'Uncategorized' });
+      }
     }
   };
 
@@ -220,7 +230,8 @@ const AdminImageOverlay = () => {
     setUploading(true);
     try {
       await supabase.from('site_media_overrides').delete().eq('storage_path', activePath);
-      const sourceUrl = `${STORAGE_BASE}/${img.file_name}`;
+      // Use cache-busting to ensure we fetch the actual current file, not a stale cached version
+      const sourceUrl = `${STORAGE_BASE}/${img.file_name}?t=${Date.now()}`;
       const res = await fetch(sourceUrl);
       if (!res.ok) throw new Error('Failed to fetch source image');
       const blob = await res.blob();
@@ -382,7 +393,7 @@ const AdminImageOverlay = () => {
                         className="group relative rounded-md border p-1 hover:border-primary transition-colors disabled:opacity-40 bg-background"
                       >
                         <img
-                          src={`${STORAGE_BASE}/${img.file_name}?t=preview`}
+                          src={`${STORAGE_BASE}/${img.file_name}?t=${Date.now()}`}
                           alt={img.label}
                           className="h-16 w-full object-contain rounded"
                           loading="lazy"
