@@ -250,6 +250,10 @@ const AdminImageOverlay = () => {
     if (!file || !activePath) return;
     setUploading(true);
     try {
+      // Optimistically show uploaded image immediately via object URL
+      const previewUrl = URL.createObjectURL(file);
+      refreshAllMatching(activePath, previewUrl);
+
       // Upload to a unique path instead of overwriting the original file
       const newUrl = await uploadToStorage('media', 'assets/overrides', file);
       // Create an image override entry so original file is preserved
@@ -262,7 +266,7 @@ const AdminImageOverlay = () => {
 
       await syncSiteImageRecord(activePath);
       await refreshOverrides();
-      // Update all matching images on the current page immediately
+      // Update with final URL
       refreshAllMatching(activePath, newUrl);
       toast({ title: 'Image replaced successfully' });
       setDialogOpen(false);
@@ -282,6 +286,9 @@ const AdminImageOverlay = () => {
     try {
       // Create an image override pointing to the selected library image
       const imageUrl = `${STORAGE_BASE}/${img.file_name}`;
+      // Show immediately
+      refreshAllMatching(activePath, imageUrl);
+
       await supabase.from('site_media_overrides').upsert({
         storage_path: activePath,
         media_type: 'image',
@@ -291,7 +298,6 @@ const AdminImageOverlay = () => {
 
       await syncSiteImageRecord(activePath);
       await refreshOverrides();
-      refreshAllMatching(activePath, imageUrl);
       toast({ title: `Replaced with "${img.label}"` });
       setDialogOpen(false);
       setTarget(null);
