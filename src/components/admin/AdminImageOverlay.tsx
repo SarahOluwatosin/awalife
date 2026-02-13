@@ -215,19 +215,29 @@ const AdminImageOverlay = () => {
     }
   };
 
-  // Remove any video override, restoring the original image
+  // Remove any override, restoring the original asset
   const handleRevertToImage = async () => {
     if (!activePath) return;
+    const wasVideo = currentOverride && currentOverride.media_type !== 'image';
     setUploading(true);
     try {
       await supabase.from('site_media_overrides').delete().eq('storage_path', activePath);
       await refreshOverrides();
-      toast({ title: 'Reverted to original image. Page will reload.' });
-      setDialogOpen(false);
-      setTarget(null);
-      activePathRef.current = null;
-      // Reload to restore the original <img> element that was replaced by the video wrapper
-      setTimeout(() => window.location.reload(), 500);
+      if (wasVideo) {
+        toast({ title: 'Reverted to original. Page will reload.' });
+        setDialogOpen(false);
+        setTarget(null);
+        activePathRef.current = null;
+        setTimeout(() => window.location.reload(), 500);
+      } else {
+        // For image overrides, restore original src without reload
+        const originalUrl = `${STORAGE_MEDIA_BASE}/${activePath}?t=${Date.now()}`;
+        refreshAllMatching(activePath, originalUrl);
+        toast({ title: 'Reverted to original image' });
+        setDialogOpen(false);
+        setTarget(null);
+        activePathRef.current = null;
+      }
     } catch (err: any) {
       toast({ title: 'Failed to revert', description: err.message, variant: 'destructive' });
     } finally {
@@ -238,23 +248,26 @@ const AdminImageOverlay = () => {
   const handleLocalUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !activePath) return;
-    const wasVideoOverride = !!currentOverride;
     setUploading(true);
     try {
-      // Remove any video override when replacing with image
-      await supabase.from('site_media_overrides').delete().eq('storage_path', activePath);
-      const newUrl = await uploadAndReplace('media', activePath, file);
-      refreshAllMatching(activePath, newUrl);
+      // Upload to a unique path instead of overwriting the original file
+      const newUrl = await uploadToStorage('media', 'assets/overrides', file);
+      // Create an image override entry so original file is preserved
+      await supabase.from('site_media_overrides').upsert({
+        storage_path: activePath,
+        media_type: 'image',
+        media_url: newUrl,
+        thumbnail_url: '',
+      }, { onConflict: 'storage_path' });
+
       await syncSiteImageRecord(activePath);
       await refreshOverrides();
+      // Update all matching images on the current page immediately
+      refreshAllMatching(activePath, newUrl);
       toast({ title: 'Image replaced successfully' });
       setDialogOpen(false);
       setTarget(null);
       activePathRef.current = null;
-      // If replacing a video override with an image, reload to restore the <img> element
-      if (wasVideoOverride) {
-        setTimeout(() => window.location.reload(), 500);
-      }
     } catch (err: any) {
       toast({ title: 'Upload failed', description: err.message, variant: 'destructive' });
     } finally {
@@ -265,27 +278,24 @@ const AdminImageOverlay = () => {
 
   const handlePickExisting = async (img: SiteImage) => {
     if (!activePath || activePath === img.file_name || activePath === `assets/${img.file_name}`) return;
-    const wasVideoOverride = !!currentOverride;
     setUploading(true);
     try {
-      await supabase.from('site_media_overrides').delete().eq('storage_path', activePath);
-      // Use cache-busting to ensure we fetch the actual current file, not a stale cached version
-      const sourceUrl = `${STORAGE_BASE}/${img.file_name}?t=${Date.now()}`;
-      const res = await fetch(sourceUrl);
-      if (!res.ok) throw new Error('Failed to fetch source image');
-      const blob = await res.blob();
-      const file = new File([blob], img.file_name, { type: blob.type });
-      const newUrl = await uploadAndReplace('media', activePath, file);
-      refreshAllMatching(activePath, newUrl);
+      // Create an image override pointing to the selected library image
+      const imageUrl = `${STORAGE_BASE}/${img.file_name}`;
+      await supabase.from('site_media_overrides').upsert({
+        storage_path: activePath,
+        media_type: 'image',
+        media_url: imageUrl,
+        thumbnail_url: '',
+      }, { onConflict: 'storage_path' });
+
       await syncSiteImageRecord(activePath);
       await refreshOverrides();
+      refreshAllMatching(activePath, imageUrl);
       toast({ title: `Replaced with "${img.label}"` });
       setDialogOpen(false);
       setTarget(null);
       activePathRef.current = null;
-      if (wasVideoOverride) {
-        setTimeout(() => window.location.reload(), 500);
-      }
     } catch (err: any) {
       toast({ title: 'Replace failed', description: err.message, variant: 'destructive' });
     } finally {
@@ -385,11 +395,13 @@ const AdminImageOverlay = () => {
           {activePath && (
             <div className="mb-3 rounded-md border p-2 bg-muted/50">
               <p className="text-xs text-muted-foreground mb-1">
-                Current {currentOverride ? (currentOverride.media_type === 'video_embed' ? 'video embed' : 'uploaded video') : 'image'}
+                Current {currentOverride ? (currentOverride.media_type === 'video_embed' ? 'video embed' : currentOverride.media_type === 'video_upload' ? 'uploaded video' : 'image (overridden)') : 'image'}
               </p>
               {currentOverride ? (
                 <div className="flex flex-col items-center gap-2">
-                  {currentOverride.media_type === 'video_embed' && getEmbedPreviewUrl(currentOverride.media_url) ? (
+                  {currentOverride.media_type === 'image' ? (
+                    <img src={`${currentOverride.media_url}?t=${Date.now()}`} alt="Current override" className="max-h-32 mx-auto rounded object-contain" />
+                  ) : currentOverride.media_type === 'video_embed' && getEmbedPreviewUrl(currentOverride.media_url) ? (
                     <div className="w-full aspect-video rounded overflow-hidden">
                       <iframe src={getEmbedPreviewUrl(currentOverride.media_url)!} className="w-full h-full" title="Current video" />
                     </div>
@@ -400,7 +412,7 @@ const AdminImageOverlay = () => {
                     </div>
                   )}
                   <Button size="sm" variant="outline" className="gap-1 text-xs" onClick={handleRevertToImage} disabled={uploading}>
-                    <Undo2 className="h-3 w-3" /> Revert to Image
+                    <Undo2 className="h-3 w-3" /> Revert to Original
                   </Button>
                 </div>
               ) : (

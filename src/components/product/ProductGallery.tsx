@@ -41,6 +41,16 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
 
   const renderMedia = (src: string, alt: string, className: string, onClick?: () => void) => {
     const override = getOverride(src);
+    if (override && override.media_type === 'image') {
+      return (
+        <img
+          src={override.media_url}
+          alt={alt}
+          className={className}
+          onClick={onClick}
+        />
+      );
+    }
     if (override && override.media_type === 'video_upload') {
       return (
         <video
@@ -221,7 +231,7 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
                     />
                   ) : (
                     <img
-                      src={img}
+                      src={override && override.media_type === 'image' ? override.media_url : img}
                       alt={`${productName} thumbnail ${idx + 1}`}
                       className="w-full h-full object-contain bg-card p-2"
                     />
