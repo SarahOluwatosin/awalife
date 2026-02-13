@@ -40,8 +40,8 @@ const CarouselImagesManager = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
-  const [newLabel, setNewLabel] = useState('');
-  const [newFile, setNewFile] = useState<File | null>(null);
+  const [newFiles, setNewFiles] = useState<File[]>([]);
+  const [newLabels, setNewLabels] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
 
   const fetchImages = useCallback(async () => {
@@ -61,29 +61,50 @@ const CarouselImagesManager = () => {
 
   useEffect(() => { fetchImages(); }, [fetchImages]);
 
-  const handleAddImage = async () => {
-    if (!newFile) return;
-    const error = validateImageFile(newFile);
-    if (error) { toast({ title: error, variant: 'destructive' }); return; }
+  const fileNameToLabel = (name: string) => {
+    return name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  };
+
+  const handleFilesSelected = (files: FileList) => {
+    const arr = Array.from(files);
+    setNewFiles(prev => [...prev, ...arr]);
+    setNewLabels(prev => [...prev, ...arr.map(f => fileNameToLabel(f.name))]);
+  };
+
+  const removeNewFile = (idx: number) => {
+    setNewFiles(prev => prev.filter((_, i) => i !== idx));
+    setNewLabels(prev => prev.filter((_, i) => i !== idx));
+  };
+
+  const handleAddImages = async () => {
+    if (newFiles.length === 0) return;
+    for (const f of newFiles) {
+      const error = validateImageFile(f);
+      if (error) { toast({ title: `${f.name}: ${error}`, variant: 'destructive' }); return; }
+    }
 
     setUploading(true);
     try {
-      const url = await uploadToStorage('media', 'carousel', newFile);
       const token = await getToken();
-      const nextOrder = images.length > 0 ? Math.max(...images.map(i => i.sort_order)) + 1 : 0;
-      await dbInsert('application_carousel_images', {
-        page_key: selectedPage,
-        image_url: url,
-        label: newLabel.trim(),
-        sort_order: nextOrder,
-      }, token);
+      let nextOrder = images.length > 0 ? Math.max(...images.map(i => i.sort_order)) + 1 : 0;
+
+      for (let i = 0; i < newFiles.length; i++) {
+        const url = await uploadToStorage('media', 'carousel', newFiles[i]);
+        await dbInsert('application_carousel_images', {
+          page_key: selectedPage,
+          image_url: url,
+          label: newLabels[i]?.trim() || '',
+          sort_order: nextOrder++,
+        }, token);
+      }
+
       setAddOpen(false);
-      setNewLabel('');
-      setNewFile(null);
+      setNewFiles([]);
+      setNewLabels([]);
       await fetchImages();
-      toast({ title: 'Image added to carousel' });
+      toast({ title: `${newFiles.length} image(s) added to carousel` });
     } catch {
-      toast({ title: 'Failed to add image', variant: 'destructive' });
+      toast({ title: 'Failed to add images', variant: 'destructive' });
     } finally {
       setUploading(false);
     }
@@ -191,39 +212,50 @@ const CarouselImagesManager = () => {
       </Card>
 
       {/* Add Dialog */}
-      <Dialog open={addOpen} onOpenChange={setAddOpen}>
-        <DialogContent className="max-w-md">
+      <Dialog open={addOpen} onOpenChange={o => { if (!o) { setNewFiles([]); setNewLabels([]); } setAddOpen(o); }}>
+        <DialogContent className="max-w-lg max-h-[80vh] flex flex-col">
           <DialogHeader>
-            <DialogTitle>Add Carousel Image — {pageLabel}</DialogTitle>
+            <DialogTitle>Add Carousel Images — {pageLabel}</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
+          <div className="space-y-4 overflow-y-auto flex-1">
             <div className="space-y-2">
-              <Label>Label</Label>
-              <Input value={newLabel} onChange={e => setNewLabel(e.target.value)} placeholder="e.g. Band Neutrophil" />
+              <Label>Image Files *</Label>
+              <label className="flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border py-6 cursor-pointer hover:border-primary/50 hover:bg-accent/50 transition-colors">
+                <Upload className="h-6 w-6 text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">Click to select images (multiple)</span>
+                <span className="text-xs text-muted-foreground">JPG, PNG, WebP (max 5MB each)</span>
+                <input type="file" accept="image/*" multiple className="hidden" onChange={e => { if (e.target.files) handleFilesSelected(e.target.files); e.target.value = ''; }} />
+              </label>
             </div>
-            <div className="space-y-2">
-              <Label>Image File *</Label>
-              {newFile ? (
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground truncate flex-1">{newFile.name}</span>
-                  <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setNewFile(null)}>
-                    <X className="h-3.5 w-3.5" />
-                  </Button>
-                </div>
-              ) : (
-                <label className="flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border py-6 cursor-pointer hover:border-primary/50 hover:bg-accent/50 transition-colors">
-                  <Upload className="h-6 w-6 text-muted-foreground" />
-                  <span className="text-sm text-muted-foreground">Click to select image</span>
-                  <span className="text-xs text-muted-foreground">JPG, PNG, WebP (max 5MB)</span>
-                  <input type="file" accept="image/*" className="hidden" onChange={e => { const f = e.target.files?.[0]; if (f) setNewFile(f); }} />
-                </label>
-              )}
-            </div>
+
+            {newFiles.length > 0 && (
+              <div className="space-y-3">
+                <Label>{newFiles.length} file(s) selected</Label>
+                {newFiles.map((f, idx) => (
+                  <div key={idx} className="flex items-center gap-2 p-2 rounded-lg border border-border bg-secondary/20">
+                    <img
+                      src={URL.createObjectURL(f)}
+                      alt={f.name}
+                      className="w-10 h-10 rounded object-cover shrink-0"
+                    />
+                    <Input
+                      value={newLabels[idx] || ''}
+                      onChange={e => setNewLabels(prev => prev.map((l, i) => i === idx ? e.target.value : l))}
+                      placeholder="Label"
+                      className="h-8 text-xs flex-1"
+                    />
+                    <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={() => removeNewFile(idx)}>
+                      <X className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setAddOpen(false)}>Cancel</Button>
-            <Button onClick={handleAddImage} disabled={uploading || !newFile}>
-              {uploading ? 'Uploading...' : 'Add Image'}
+            <Button onClick={handleAddImages} disabled={uploading || newFiles.length === 0}>
+              {uploading ? 'Uploading...' : `Add ${newFiles.length} Image${newFiles.length !== 1 ? 's' : ''}`}
             </Button>
           </DialogFooter>
         </DialogContent>
