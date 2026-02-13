@@ -43,15 +43,16 @@ function getEmbedPreviewUrl(url: string): string | null {
 const AdminImageOverlay = () => {
   const { isAdmin } = useAuth();
   const { overrides, refresh: refreshOverrides } = useMediaOverrides();
-  const [target, setTarget] = useState<{ el: HTMLImageElement; rect: DOMRect } | null>(null);
+  const [target, setTarget] = useState<{ el: HTMLElement; rect: DOMRect } | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [siteImages, setSiteImages] = useState<SiteImage[]>([]);
   const [loadingImages, setLoadingImages] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoFileInputRef = useRef<HTMLInputElement>(null);
-  const activeElRef = useRef<HTMLImageElement | null>(null);
-  const activePath = activeElRef.current ? extractStoragePath(activeElRef.current.src) : null;
+  const activeElRef = useRef<HTMLElement | null>(null);
+  const activePathRef = useRef<string | null>(null);
+  const activePath = activePathRef.current;
   const isLogo = activePath ? isLogoImage(activePath) : false;
   const currentOverride = activePath ? overrides.get(activePath) : undefined;
 
@@ -66,17 +67,34 @@ const AdminImageOverlay = () => {
 
   const handleMouseOver = useCallback((e: MouseEvent) => {
     if (dialogOpen) return;
-    const target = e.target as HTMLElement;
-    // Try the element itself or ancestors first
-    let el = target.closest?.('img') as HTMLImageElement | null;
-    // If not found, check if we're hovering over a container that has an img child
-    if (!el) {
-      el = target.querySelector?.('img') as HTMLImageElement | null;
+    const hovered = e.target as HTMLElement;
+
+    // Check for video override wrappers (div[data-media-override])
+    const overrideWrapper = hovered.closest?.('[data-media-override]') as HTMLElement | null;
+    if (overrideWrapper) {
+      const path = overrideWrapper.getAttribute('data-media-override');
+      if (path) {
+        const rect = overrideWrapper.getBoundingClientRect();
+        if (rect.width < 30 || rect.height < 30) return;
+        activeElRef.current = overrideWrapper;
+        activePathRef.current = path;
+        setTarget({ el: overrideWrapper, rect });
+        return;
+      }
     }
-    if (!el || !el.src || !extractStoragePath(el.src)) return;
+
+    // Check for regular images
+    let el = hovered.closest?.('img') as HTMLImageElement | null;
+    if (!el) {
+      el = hovered.querySelector?.('img') as HTMLImageElement | null;
+    }
+    if (!el || !el.src) return;
+    const path = extractStoragePath(el.src);
+    if (!path) return;
     const rect = el.getBoundingClientRect();
     if (rect.width < 30 || rect.height < 30) return;
     activeElRef.current = el;
+    activePathRef.current = path;
     setTarget({ el, rect });
   }, [dialogOpen]);
 
@@ -156,9 +174,14 @@ const AdminImageOverlay = () => {
   };
 
   const refreshAllMatching = (path: string, newUrl: string) => {
+    // Update matching images
     document.querySelectorAll<HTMLImageElement>('img').forEach(img => {
       const imgPath = extractStoragePath(img.src);
       if (imgPath === path) img.src = newUrl;
+    });
+    // Remove any video override wrappers for this path (they'll be replaced by the restored image on refresh)
+    document.querySelectorAll<HTMLElement>(`[data-media-override="${path}"]`).forEach(wrapper => {
+      wrapper.remove();
     });
   };
 
@@ -193,9 +216,12 @@ const AdminImageOverlay = () => {
     try {
       await supabase.from('site_media_overrides').delete().eq('storage_path', activePath);
       await refreshOverrides();
-      toast({ title: 'Reverted to original image. Refresh the page to see changes.' });
+      toast({ title: 'Reverted to original image. Page will reload.' });
       setDialogOpen(false);
       setTarget(null);
+      activePathRef.current = null;
+      // Reload to restore the original <img> element that was replaced by the video wrapper
+      setTimeout(() => window.location.reload(), 500);
     } catch (err: any) {
       toast({ title: 'Failed to revert', description: err.message, variant: 'destructive' });
     } finally {
@@ -206,6 +232,7 @@ const AdminImageOverlay = () => {
   const handleLocalUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !activePath) return;
+    const wasVideoOverride = !!currentOverride;
     setUploading(true);
     try {
       // Remove any video override when replacing with image
@@ -217,16 +244,23 @@ const AdminImageOverlay = () => {
       toast({ title: 'Image replaced successfully' });
       setDialogOpen(false);
       setTarget(null);
+      activePathRef.current = null;
+      // If replacing a video override with an image, reload to restore the <img> element
+      if (wasVideoOverride) {
+        setTimeout(() => window.location.reload(), 500);
+      }
     } catch (err: any) {
       toast({ title: 'Upload failed', description: err.message, variant: 'destructive' });
     } finally {
-      setUploading(false);
+      setUploading(true);
       if (fileInputRef.current) fileInputRef.current.value = '';
+      setUploading(false);
     }
   };
 
   const handlePickExisting = async (img: SiteImage) => {
     if (!activePath || activePath === img.file_name || activePath === `assets/${img.file_name}`) return;
+    const wasVideoOverride = !!currentOverride;
     setUploading(true);
     try {
       await supabase.from('site_media_overrides').delete().eq('storage_path', activePath);
@@ -243,6 +277,10 @@ const AdminImageOverlay = () => {
       toast({ title: `Replaced with "${img.label}"` });
       setDialogOpen(false);
       setTarget(null);
+      activePathRef.current = null;
+      if (wasVideoOverride) {
+        setTimeout(() => window.location.reload(), 500);
+      }
     } catch (err: any) {
       toast({ title: 'Replace failed', description: err.message, variant: 'destructive' });
     } finally {
@@ -330,7 +368,7 @@ const AdminImageOverlay = () => {
         document.body
       )}
 
-      <Dialog open={dialogOpen} onOpenChange={open => { setDialogOpen(open); if (!open) setTarget(null); }}>
+      <Dialog open={dialogOpen} onOpenChange={open => { setDialogOpen(open); if (!open) { setTarget(null); activePathRef.current = null; } }}>
         <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Replace Media</DialogTitle>
