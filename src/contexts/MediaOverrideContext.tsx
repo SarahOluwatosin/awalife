@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, useCallback, useRef } f
 import type { ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
-const STORAGE_PATH_MARKER = '/storage/v1/object/public/media/assets/';
+const STORAGE_PATH_MARKER = '/storage/v1/object/public/media/';
 
 type MediaOverride = {
   storage_path: string;
