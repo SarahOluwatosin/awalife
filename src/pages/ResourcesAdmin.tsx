@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Navigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Trash2, Plus, Pencil, FileText, Upload, X, Image as ImageIcon, LogOut } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Trash2, Plus, Pencil, FileText, Upload, X, Image as ImageIcon, LogOut, RefreshCw } from 'lucide-react';
 import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -27,8 +28,9 @@ import type {
   NewsCategory,
 } from '@/data/resources';
 import { toast } from '@/hooks/use-toast';
-import { uploadToStorage } from '@/lib/storage';
+import { uploadToStorage, uploadAndReplace } from '@/lib/storage';
 import { validateImageFile, validateResourceFile } from '@/lib/validation';
+import { IMAGE_ASSET_CONFIG } from '@/lib/images';
 
 type ResourceFormState = {
   title: string;
@@ -46,6 +48,91 @@ const defaultProduct = (RESOURCE_PRODUCT_OPTIONS[0]?.id || 'all') as ResourcePro
 
 const kindLabelMap = RESOURCE_KIND_CONFIG.reduce<Record<string, string>>((a, k) => { a[k.id] = k.label; return a; }, {});
 const productLabelMap = RESOURCE_PRODUCT_OPTIONS.reduce<Record<string, string>>((a, p) => { a[p.id] = p.label; return a; }, {});
+
+// ---- Site Images Manager ----
+const STORAGE_BASE_URL = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/media/assets`;
+
+const SiteImagesManager = () => {
+  const [cacheBuster, setCacheBuster] = useState<Record<string, number>>({});
+  const [uploading, setUploading] = useState<string | null>(null);
+  const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
+  const categories = [...new Set(IMAGE_ASSET_CONFIG.map(c => c.category))];
+
+  const getImageUrl = (fileName: string, key: string) => {
+    const bust = cacheBuster[key];
+    return `${STORAGE_BASE_URL}/${fileName}${bust ? `?t=${bust}` : ''}`;
+  };
+
+  const handleReplace = async (asset: typeof IMAGE_ASSET_CONFIG[0], file: File) => {
+    const error = validateImageFile(file);
+    if (error) { toast({ title: error, variant: 'destructive' }); return; }
+    setUploading(asset.key);
+    try {
+      await uploadAndReplace('media', `assets/${asset.fileName}`, file);
+      setCacheBuster(prev => ({ ...prev, [asset.key]: Date.now() }));
+      toast({ title: `${asset.label} replaced successfully` });
+    } catch {
+      toast({ title: 'Failed to replace image', variant: 'destructive' });
+    } finally {
+      setUploading(null);
+    }
+  };
+
+  return (
+    <>
+      {categories.map(category => (
+        <Card key={category}>
+          <CardHeader>
+            <CardTitle className="text-lg">{category}</CardTitle>
+            <CardDescription>Click "Replace" to upload a new version of any image.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {IMAGE_ASSET_CONFIG.filter(a => a.category === category).map(asset => (
+                <div key={asset.key} className="space-y-2">
+                  <div className="relative aspect-[4/3] rounded-lg border border-border overflow-hidden bg-muted">
+                    <img
+                      src={getImageUrl(asset.fileName, asset.key)}
+                      alt={asset.label}
+                      className="w-full h-full object-contain"
+                      onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                    />
+                    {uploading === asset.key && (
+                      <div className="absolute inset-0 bg-background/80 flex flex-col items-center justify-center gap-2">
+                        <RefreshCw className="h-5 w-5 animate-spin text-primary" />
+                        <span className="text-xs text-muted-foreground">Uploading...</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-medium text-foreground truncate">{asset.label}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="shrink-0 h-7 text-xs"
+                      disabled={uploading !== null}
+                      onClick={() => fileInputRefs.current[asset.key]?.click()}
+                    >
+                      Replace
+                    </Button>
+                    <input
+                      ref={el => { fileInputRefs.current[asset.key] = el; }}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={e => { const f = e.target.files?.[0]; if (f) void handleReplace(asset, f); e.target.value = ''; }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </>
+  );
+};
 
 const ResourcesAdmin = () => {
   const { user, isAdmin, loading: authLoading, signOut } = useAuth();
@@ -215,6 +302,7 @@ const ResourcesAdmin = () => {
               <TabsTrigger value="news">News ({data.news.length})</TabsTrigger>
               <TabsTrigger value="resources">Resources ({data.resources.length})</TabsTrigger>
               <TabsTrigger value="faq">FAQ ({data.faq.items.length})</TabsTrigger>
+              <TabsTrigger value="images">Site Images</TabsTrigger>
             </TabsList>
 
             {/* ===== NEWS TAB ===== */}
@@ -490,6 +578,11 @@ const ResourcesAdmin = () => {
                   )}
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            {/* ===== SITE IMAGES TAB ===== */}
+            <TabsContent value="images" className="space-y-6">
+              <SiteImagesManager />
             </TabsContent>
           </Tabs>
           )}

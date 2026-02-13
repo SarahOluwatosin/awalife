@@ -23,3 +23,25 @@ export const uploadToStorage = async (
 
   return data.publicUrl;
 };
+
+/**
+ * Upload a file to a fixed path, overwriting any existing file (upsert).
+ * Returns the public URL with a cache-busting query param.
+ */
+export const uploadAndReplace = async (
+  bucket: string,
+  path: string,
+  file: File
+): Promise<string> => {
+  const { error } = await supabase.storage
+    .from(bucket)
+    .upload(path, file, { upsert: true });
+
+  if (error) throw new Error('Failed to replace image. Please try again.');
+
+  const { data } = supabase.storage
+    .from(bucket)
+    .getPublicUrl(path);
+
+  return `${data.publicUrl}?t=${Date.now()}`;
+};
