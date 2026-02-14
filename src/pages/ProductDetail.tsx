@@ -437,21 +437,19 @@ const ProductDetail = () => {
       {isMicroscope && (
         <section className="py-16 lg:py-20">
           <div className={containerClass}>
-            <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 items-start">
-              <div>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
-                  User-friendly Software Built for Veterinary Workflows
-                </h2>
-                <p className={`${longParagraphClass} text-muted-foreground leading-relaxed`}>
-                  It integrates tools for cell counting, scale bars, annotations, and one-click report generation, with an embedded teaching image library for faster training.
-                </p>
-              </div>
-              <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card p-6 flex items-center justify-center">
+            <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
+                User-friendly Software Built for Veterinary Workflows
+              </h2>
+              <p className={`${longParagraphClass} text-muted-foreground leading-relaxed mb-10`}>
+                It integrates tools for cell counting, scale bars, annotations, and one-click report generation, with an embedded teaching image library for faster training.
+              </p>
+              <div className="w-full rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card p-6 flex items-center justify-center">
                 <img
                   src={images.digitalMicroscope}
                   alt="Microscope workstation software"
                   data-override-id="dm03-software"
-                  className="w-full max-w-[420px] object-contain"
+                  className="w-full max-w-[520px] object-contain"
                 />
               </div>
             </div>
