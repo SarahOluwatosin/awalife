@@ -89,13 +89,10 @@ const AdminImageOverlay = () => {
       el = hovered.querySelector?.('img') as HTMLImageElement | null;
     }
     if (!el || !el.src) return;
-    // Prefer data-override-id for per-section independent overrides
+    // ONLY allow overriding images that have a unique data-override-id
     const overrideId = el.getAttribute('data-override-id');
-    const storagePath = extractStoragePath(el.src);
-    const path = overrideId || storagePath;
-    if (!path) return;
-    // Don't allow overriding override paths to prevent circular references
-    if (!overrideId && storagePath?.startsWith('assets/overrides/')) return;
+    if (!overrideId) return;
+    const path = overrideId;
     const rect = el.getBoundingClientRect();
     if (rect.width < 30 || rect.height < 30) return;
     activeElRef.current = el;
@@ -178,27 +175,17 @@ const AdminImageOverlay = () => {
     fetchSiteVideos();
   };
 
-  const refreshAllMatching = (path: string, newUrl: string) => {
-    // Force unique cache-buster on each image to prevent stale CDN responses
+  const refreshAllMatching = (overrideId: string, newUrl: string) => {
     const bustUrl = newUrl.includes('?') ? newUrl : `${newUrl}?t=${Date.now()}`;
-    // Update matching images - match by data-override-id first, then storage path
+    // Only match by data-override-id — fully isolated per-instance
     document.querySelectorAll<HTMLImageElement>('img').forEach(img => {
-      const overrideId = img.getAttribute('data-override-id');
-      if (overrideId === path) {
-        img.src = bustUrl;
-        img.removeAttribute('srcset');
-        return;
-      }
-      // Only fall back to storage path if the target path isn't an override-id
-      if (!path.startsWith('assets/') && !path.includes('/')) return;
-      const imgPath = extractStoragePath(img.src);
-      if (imgPath === path && !overrideId) {
+      if (img.getAttribute('data-override-id') === overrideId) {
         img.src = bustUrl;
         img.removeAttribute('srcset');
       }
     });
-    // Remove any video override wrappers for this path (they'll be replaced by the restored image on refresh)
-    document.querySelectorAll<HTMLElement>(`[data-media-override="${path}"]`).forEach(wrapper => {
+    // Remove any video override wrappers for this path
+    document.querySelectorAll<HTMLElement>(`[data-media-override="${overrideId}"]`).forEach(wrapper => {
       wrapper.remove();
     });
   };
@@ -242,10 +229,13 @@ const AdminImageOverlay = () => {
         activePathRef.current = null;
         setTimeout(() => window.location.reload(), 500);
       } else {
-        // For image overrides, restore original src without reload
-        const originalUrl = `${STORAGE_MEDIA_BASE}/${activePath}?t=${Date.now()}`;
-        refreshAllMatching(activePath, originalUrl);
-        toast({ title: 'Reverted to original image' });
+        // For image overrides, restore original src by reloading the page
+        // since the original src is stored in the component's JSX, not in the override
+        toast({ title: 'Reverted to original image. Refreshing...' });
+        setDialogOpen(false);
+        setTarget(null);
+        activePathRef.current = null;
+        setTimeout(() => window.location.reload(), 500);
         setDialogOpen(false);
         setTarget(null);
         activePathRef.current = null;
@@ -435,9 +425,7 @@ const AdminImageOverlay = () => {
                 </div>
               ) : (
                 <>
-                  {activePath.startsWith('assets/') ? (
-                    <img src={`${STORAGE_MEDIA_BASE}/${activePath}?t=${Date.now()}`} alt="Current" className="max-h-32 mx-auto rounded object-contain" />
-                  ) : activeElRef.current && 'src' in activeElRef.current ? (
+                  {activeElRef.current && 'src' in activeElRef.current ? (
                     <img src={(activeElRef.current as HTMLImageElement).src} alt="Current" className="max-h-32 mx-auto rounded object-contain" />
                   ) : null}
                   <p className="text-xs text-muted-foreground text-center mt-1 break-all">{activePath}</p>
