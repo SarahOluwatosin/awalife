@@ -206,7 +206,7 @@ const ProductDetail = () => {
           <div className={heroGridClass}>
             {/* Image Gallery */}
             <div className={`relative ${heroImageClass}`}>
-              <ProductGallery images={product.images} productName={product.name} />
+              <ProductGallery images={product.images} productName={product.name} productId={productId || 'product'} />
             </div>
 
             {/* Content */}
