@@ -201,6 +201,7 @@ const News = () => {
       {/* Resource Sections */}
       {RESOURCE_KIND_CONFIG.map((section) => {
         const sectionResources = data.resources.filter((resource) => resource.kind === section.id);
+        if (!sectionResources.length) return null;
         const SectionIcon = SECTION_ICONS[section.id] || FileText;
         return (
           <section
@@ -216,15 +217,9 @@ const News = () => {
                   {section.sectionTitle}
                 </h2>
               </div>
-              {sectionResources.length ? (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {sectionResources.map(renderCard)}
-                </div>
-              ) : (
-                <div className="rounded-xl border border-dashed border-border/40 bg-secondary/5 py-12 text-center">
-                  <p className="text-muted-foreground">{section.emptyMessage}</p>
-                </div>
-              )}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {sectionResources.map(renderCard)}
+              </div>
             </div>
           </section>
         );
