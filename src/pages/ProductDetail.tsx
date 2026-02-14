@@ -10,6 +10,8 @@ import ProductGallery from '@/components/product/ProductGallery';
 import ProductComparison from '@/components/product/ProductComparison';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { images } from '@/lib/images';
+import { motion } from 'framer-motion';
+import { sectionVariants, staggerContainer, staggerContainerFast, cardVariants, cardSlideUp, fadeInLeft, fadeInRight, blurIn, popIn, viewportOnce, viewportOnceSmall, viewportOnceTiny } from '@/lib/animations';
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -201,16 +203,16 @@ const ProductDetail = () => {
       <PageHero title={product.name} subtitle={product.tagline || ''} />
 
       {/* Product Hero */}
-      <section className="py-16 lg:py-20">
+      <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceTiny} variants={sectionVariants}>
         <div className={containerClass}>
           <div className={heroGridClass}>
             {/* Image Gallery */}
-            <div className={`relative ${heroImageClass}`}>
+            <motion.div className={`relative ${heroImageClass}`} variants={fadeInRight}>
               <ProductGallery images={product.images} productName={product.name} productId={productId || 'product'} />
-            </div>
+            </motion.div>
 
             {/* Content */}
-            <div className={`lg:py-6 ${(isAIAnalyzer || isMicroscope) ? 'lg:order-1' : ''} ${isMicroscope ? 'max-w-lg' : ''}`}>
+            <motion.div className={`lg:py-6 ${(isAIAnalyzer || isMicroscope) ? 'lg:order-1' : ''} ${isMicroscope ? 'max-w-lg' : ''}`} variants={fadeInLeft}>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
                 {isMicroscope ? 'Smarter Imaging, Effortless Operation' : product.name}
               </h1>
@@ -221,22 +223,23 @@ const ProductDetail = () => {
 
               {/* Features Grid */}
               {product.features.length > 0 && !isAIAnalyzer && !isMicroscope && (
-                <div className="mb-10">
+                <motion.div className="mb-10" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   <h3 className="text-sm font-semibold uppercase tracking-wider text-primary/80 mb-5">{t.products.keyFeatures}</h3>
                   <div className="grid grid-cols-2 gap-4">
                     {product.features.map((feature: string) => (
-                      <div 
+                      <motion.div 
                         key={feature} 
                         className="flex items-start gap-3 p-3 rounded-xl bg-secondary/30 border border-border/30 hover:border-primary/30 hover:bg-secondary/50 transition-all duration-300"
+                        variants={cardVariants}
                       >
                         <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-0.5">
                           <Check className="w-3.5 h-3.5 text-primary" />
                         </div>
                         <span className="text-sm text-muted-foreground leading-tight">{feature}</span>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               )}
 
               {/* Actions */}
@@ -269,89 +272,93 @@ const ProductDetail = () => {
                   </>
                 )}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Capabilities Section */}
       {product.capabilities && !isMicroscope && (
-        <section className="py-16 lg:py-20 bg-card/50">
+        <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className={containerClass}>
-            <div className="text-center max-w-3xl mx-auto mb-14">
+            <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                 {isAIAnalyzer ? 'Key Features' : 'Capabilities'}
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                 {isAIAnalyzer ? 'AI Series Morphology Analyzer from sample to diagnosis.' : 'What It Can Do'}
               </h2>
-            </div>
+            </motion.div>
             
-            <div
+            <motion.div
               className={`grid gap-6 lg:gap-8 ${
                 isAIAnalyzer ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4'
               }`}
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnceSmall}
             >
               {product.capabilities.map((cap: any, index: number) => (
-                <div key={cap.title} className="group relative">
+                <motion.div key={cap.title} className="group relative" variants={cardSlideUp}>
                   <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative glow-card p-8 h-full text-center">
                     <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/60 mb-4">0{index + 1}</span>
-                    <div className="icon-glow mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <motion.div className="icon-glow mx-auto mb-6 group-hover:scale-110 transition-transform duration-300" variants={popIn}>
                       <cap.icon className="w-7 h-7 text-primary" />
-                    </div>
+                    </motion.div>
                     <h3 className="text-lg font-semibold text-foreground mb-3">{cap.title}</h3>
                     <p className={`${detailParagraphClass} text-muted-foreground leading-relaxed`}>{cap.desc}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* Workflow Section */}
       {isAIAnalyzer && (
-        <section className="py-16 lg:py-20">
+        <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className={containerClass}>
-            <div className="text-center max-w-3xl mx-auto mb-12">
+            <motion.div className="text-center max-w-3xl mx-auto mb-12" variants={blurIn}>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                 From Sample to Insight, One Workflow for Multiple Sample Types
               </h2>
               <p className={`${longParagraphClass} text-muted-foreground`}>
                 Awalife's workflow supports consistent results across blood, urine, feces, and pleural fluid analysis.
               </p>
-            </div>
+            </motion.div>
             <div className="relative mt-10">
               <div className="hidden md:block absolute left-0 right-0 top-6 h-px bg-border/60" />
-              <div className="grid md:grid-cols-3 gap-8">
+              <motion.div className="grid md:grid-cols-3 gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
                 {[
                   { title: 'Step 1', label: 'Load and prepare', desc: 'Simple sample prep with guided steps for blood, urine, feces, and effusion samples.' },
                   { title: 'Step 2', label: 'AI morphological scan', desc: 'High-resolution imaging and AI recognition identify cells and elements in minutes.' },
                   { title: 'Step 3', label: 'Standardized report', desc: 'Multi-parameter results with references, annotations, and share-ready outputs.' },
                 ].map((step) => (
-                  <div key={step.title} className="relative">
+                  <motion.div key={step.title} className="relative" variants={cardSlideUp}>
                     <div className="flex md:flex-col items-start md:items-center gap-4">
-                      <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 border border-primary/30 text-primary font-semibold">
+                      <motion.div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 border border-primary/30 text-primary font-semibold" variants={popIn}>
                         {step.title.split(' ')[1]}
-                      </div>
+                      </motion.div>
                       <div className="glow-card p-6 text-left md:text-center">
                         <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{step.title}</span>
                         <h3 className="font-semibold text-foreground mt-2">{step.label}</h3>
                         <p className={`${longParagraphClass} text-muted-foreground leading-relaxed mt-3`}>{step.desc}</p>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* Microscope Sample Types */}
       {isMicroscope && (
-        <section className="py-10 lg:py-12">
+        <motion.section className="py-10 lg:py-12" initial="hidden" whileInView="visible" viewport={viewportOnceTiny} variants={sectionVariants}>
           <div className={containerClass}>
             <div className="glow-card bg-secondary/20 border border-border/40 px-6 py-6">
               <div className="flex flex-col gap-5">
@@ -361,7 +368,7 @@ const ProductDetail = () => {
                     Common veterinary sample types that can be captured and documented with the workstation.
                   </p>
                 </div>
-                <div className="flex flex-wrap items-center gap-4 text-sm font-semibold text-muted-foreground">
+                <motion.div className="flex flex-wrap items-center gap-4 text-sm font-semibold text-muted-foreground" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   {[
                     { label: 'Urine', icon: FlaskConical },
                     { label: 'Fecal', icon: Bug },
@@ -372,37 +379,38 @@ const ProductDetail = () => {
                     { label: 'Serous Cavity', icon: Beaker },
                     { label: 'Effusion', icon: TestTubes },
                   ].map((item) => (
-                    <span
+                    <motion.span
                       key={item.label}
                       className="inline-flex items-center gap-2 rounded-full bg-card/70 border border-border/40 px-3 py-1.5"
+                      variants={popIn}
                     >
                       <item.icon className="h-4 w-4 text-primary" />
                       {item.label}
-                    </span>
+                    </motion.span>
                   ))}
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* Microscope Hardware Section */}
       {isMicroscope && (
-        <section className="py-16 lg:py-20">
+        <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
             <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-start">
-              <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card">
+              <motion.div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card" variants={fadeInLeft}>
                 <img
                   src={images.dm03Microscope}
                   alt="DM-03 Microscope hardware"
                   data-override-id="dm03-hardware"
                   className="w-full object-contain"
                 />
-              </div>
-              <div>
+              </motion.div>
+              <motion.div variants={fadeInRight}>
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">High-performance Hardware</h2>
-                <div className="space-y-5">
+                <motion.div className="space-y-5" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   {[
                     {
                       title: 'Infinity Optical System',
@@ -421,23 +429,23 @@ const ProductDetail = () => {
                       desc: 'It provides comfortable viewing, helping to reduce eye strain during extended use.',
                     },
                   ].map((item) => (
-                    <div key={item.title} className="border-b border-border/40 pb-4 last:border-0 last:pb-0">
+                    <motion.div key={item.title} className="border-b border-border/40 pb-4 last:border-0 last:pb-0" variants={cardVariants}>
                       <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
                       <p className={`${detailParagraphClass} text-muted-foreground leading-relaxed`}>{item.desc}</p>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* Microscope Software Section */}
       {isMicroscope && (
-        <section className="py-16 lg:py-20">
+        <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
-            <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
+            <motion.div className="flex flex-col items-center text-center max-w-3xl mx-auto" variants={blurIn}>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
                 User-friendly Software Built for Veterinary Workflows
               </h2>
@@ -452,25 +460,25 @@ const ProductDetail = () => {
                   className="w-full object-contain"
                 />
               </div>
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* Microscope Upgrade Section */}
       {isMicroscope && (
-        <section className="py-16 lg:py-20">
+        <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
             <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-start">
-              <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card">
+              <motion.div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card" variants={fadeInLeft}>
                 <img
                   src={images.dm03Medtech}
                   alt="Microscope image hub module"
                   data-override-id="dm03-imagehub"
                   className="w-full object-contain"
                 />
-              </div>
-              <div>
+              </motion.div>
+              <motion.div variants={fadeInRight}>
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
                   Already Have a Microscope?
                 </h2>
@@ -487,15 +495,15 @@ const ProductDetail = () => {
                   <li>Standardize documentation across users and sites</li>
                   <li>Built-in teaching image library for onboarding</li>
                 </ul>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* Tabs Section */}
       {!isAIAnalyzer && !isMicroscope && (
-        <section className="py-16 lg:py-20">
+        <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className="container mx-auto px-6 lg:px-16 xl:px-24">
             <Tabs defaultValue="specifications" className="w-full">
               <TabsList className="w-full max-w-2xl mx-auto mb-12 bg-secondary/50 border border-border/50 p-2 rounded-2xl grid grid-cols-3 gap-2">
@@ -611,7 +619,7 @@ const ProductDetail = () => {
               </TabsContent>
             </Tabs>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* Product Comparison */}
@@ -623,46 +631,47 @@ const ProductDetail = () => {
 
       {/* Other Products */}
       {!isAIAnalyzer && !isMicroscope && (
-        <section className="py-16 lg:py-20">
+        <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-            <div className="text-center max-w-3xl mx-auto mb-14">
+            <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                 Explore More
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Other Products</h2>
-            </div>
+            </motion.div>
             
-            <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+            <motion.div className="grid md:grid-cols-3 gap-6 lg:gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
               {otherProducts.map((prod: any) => (
-                <Link 
-                  key={prod.id} 
-                  to={`/products/${prod.id}`}
-                  className="group relative"
-                >
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative glow-card overflow-hidden h-full">
-                    <div className="h-48 bg-gradient-to-br from-secondary/50 to-card flex items-center justify-center p-6">
-                      <img 
-                        src={prod.images[0]} 
-                        alt={prod.name}
-                        data-override-id={`other-product-${prod.id}`}
-                        className="max-h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                      />
+                <motion.div key={prod.id} variants={cardSlideUp}>
+                  <Link 
+                    to={`/products/${prod.id}`}
+                    className="group relative block"
+                  >
+                    <div className="absolute -inset-1 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="relative glow-card overflow-hidden h-full">
+                      <div className="h-48 bg-gradient-to-br from-secondary/50 to-card flex items-center justify-center p-6">
+                        <img 
+                          src={prod.images[0]} 
+                          alt={prod.name}
+                          data-override-id={`other-product-${prod.id}`}
+                          className="max-h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-1">{prod.name}</h3>
+                        <p className="text-sm text-muted-foreground line-clamp-2">{prod.tagline}</p>
+                      </div>
                     </div>
-                    <div className="p-6">
-                      <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-1">{prod.name}</h3>
-                      <p className="text-sm text-muted-foreground line-clamp-2">{prod.tagline}</p>
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {isAIAnalyzer && (
-        <section className="py-16 lg:py-20">
+        <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className={containerClass}>
             <div className="text-center max-w-3xl mx-auto mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
@@ -695,11 +704,11 @@ const ProductDetail = () => {
               </Accordion>
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {isMicroscope && (
-        <section className="py-16 lg:py-20">
+        <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className={containerClass}>
             <div className="text-center max-w-3xl mx-auto mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
@@ -736,11 +745,11 @@ const ProductDetail = () => {
               </Accordion>
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* CTA */}
-      <section className="py-20 lg:py-28 bg-card/50">
+      <motion.section className="py-20 lg:py-28 bg-card/50" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className={`${containerClass} text-center`}>
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
@@ -759,7 +768,7 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
     </Layout>
   );
 };

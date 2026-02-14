@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Building2, Check, ArrowRight, Clock, Target, Zap, Users, Shield, Lightbulb, TrendingUp, Phone, Send } from 'lucide-react';
+import { Check, ArrowRight, Clock, Target, Users, TrendingUp, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -9,6 +9,8 @@ import PageHero from '@/components/shared/PageHero';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
 import { images } from '@/lib/images';
+import { motion } from 'framer-motion';
+import { sectionVariants, staggerContainer, cardSlideUp, fadeInLeft, fadeInRight, blurIn, popIn, viewportOnce, viewportOnceSmall } from '@/lib/animations';
 
 const PetClinics = () => {
   const { t } = useLanguage();
@@ -32,26 +34,10 @@ const PetClinics = () => {
   };
 
   const benefits = [
-    {
-      icon: Clock,
-      title: 'Faster Diagnosis',
-      description: 'Complete sample analysis in under 10 minutes, enabling same-visit diagnosis and treatment decisions.',
-    },
-    {
-      icon: Target,
-      title: 'Improved Accuracy',
-      description: '99%+ AI-powered cell recognition accuracy reduces human error and ensures consistent results.',
-    },
-    {
-      icon: Users,
-      title: 'Easier Staff Training',
-      description: 'Intuitive interface requires minimal training. New staff can operate the system within hours.',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Increased Revenue',
-      description: 'Offer in-house diagnostics instead of outsourcing, keeping revenue and improving client satisfaction.',
-    },
+    { icon: Clock, title: 'Faster Diagnosis', description: 'Complete sample analysis in under 10 minutes, enabling same-visit diagnosis and treatment decisions.' },
+    { icon: Target, title: 'Improved Accuracy', description: '99%+ AI-powered cell recognition accuracy reduces human error and ensures consistent results.' },
+    { icon: Users, title: 'Easier Staff Training', description: 'Intuitive interface requires minimal training. New staff can operate the system within hours.' },
+    { icon: TrendingUp, title: 'Increased Revenue', description: 'Offer in-house diagnostics instead of outsourcing, keeping revenue and improving client satisfaction.' },
   ];
 
   const workflowSteps = [
@@ -84,10 +70,10 @@ const PetClinics = () => {
       />
 
       {/* Hero Section */}
-      <section className="py-16 lg:py-20">
+      <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
+            <motion.div variants={fadeInLeft}>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                 For Veterinary Professionals
               </span>
@@ -98,16 +84,16 @@ const PetClinics = () => {
                 AWALIFE diagnostic solutions integrate seamlessly into your clinical workflow, providing rapid, accurate results that improve patient outcomes and clinic efficiency. Stop outsourcing and start diagnosing in minutes.
               </p>
               
-              <div className="grid grid-cols-2 gap-4 mb-8">
+              <motion.div className="grid grid-cols-2 gap-4 mb-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
                 {features.slice(0, 4).map((feature) => (
-                  <div key={feature} className="flex items-start gap-3 p-3 rounded-xl bg-secondary/30 border border-border/30">
+                  <motion.div key={feature} className="flex items-start gap-3 p-3 rounded-xl bg-secondary/30 border border-border/30" variants={cardSlideUp}>
                     <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-0.5 flex-shrink-0">
                       <Check className="w-3.5 h-3.5 text-primary" />
                     </div>
                     <span className="text-sm text-muted-foreground leading-tight">{feature}</span>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
 
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild>
@@ -120,59 +106,59 @@ const PetClinics = () => {
                   <Link to="/products">View Products</Link>
                 </Button>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="relative">
+            <motion.div className="relative" variants={fadeInRight}>
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
                 <img src={images.ai100vet} alt="AWALIFE Diagnostic Solution" data-override-id="petclinics-hero" className="w-full max-h-80 object-contain" />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Benefits */}
-      <section className="py-16 lg:py-20 bg-card/50">
+      <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="text-center max-w-3xl mx-auto mb-14">
+          <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Benefits
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Why Clinics Choose AWALIFE</h2>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <motion.div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {benefits.map((benefit, index) => (
-              <div key={benefit.title} className="group relative">
+              <motion.div key={benefit.title} className="group relative" variants={cardSlideUp}>
                 <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative glow-card p-8 h-full text-center">
                   <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/60 mb-4">0{index + 1}</span>
-                  <div className="icon-glow mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <motion.div className="icon-glow mx-auto mb-6 group-hover:scale-110 transition-transform duration-300" variants={popIn}>
                     <benefit.icon className="w-7 h-7 text-primary" />
-                  </div>
+                  </motion.div>
                   <h3 className="text-lg font-semibold text-foreground mb-3">{benefit.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{benefit.description}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Workflow */}
-      <section className="py-16 lg:py-20">
+      <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="text-center max-w-3xl mx-auto mb-14">
+          <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Workflow Integration
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">How It Fits Into Your Clinic</h2>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {workflowSteps.map((item, index) => (
-              <div key={item.step} className="relative">
+              <motion.div key={item.step} className="relative" variants={cardSlideUp}>
                 {index < workflowSteps.length - 1 && (
                   <div className="hidden lg:block absolute top-1/4 -right-3 w-6 h-0.5 bg-gradient-to-r from-primary/50 to-transparent" />
                 )}
@@ -181,23 +167,23 @@ const PetClinics = () => {
                   <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
                   <p className="text-sm text-muted-foreground">{item.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Contact Form */}
-      <section className="py-16 lg:py-20 bg-card/50">
+      <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-10">
+            <motion.div className="text-center mb-10" variants={blurIn}>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                 Get Started
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Request a Demo</h2>
               <p className="text-muted-foreground">See how AWALIFE can transform your clinic's diagnostic capabilities.</p>
-            </div>
+            </motion.div>
 
             <form onSubmit={handleSubmit} className="glow-card p-8 lg:p-10 space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
@@ -231,7 +217,7 @@ const PetClinics = () => {
             </form>
           </div>
         </div>
-      </section>
+      </motion.section>
     </Layout>
   );
 };
