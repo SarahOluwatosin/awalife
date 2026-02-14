@@ -175,8 +175,8 @@ const ExoticAnimals = () => {
 
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center px-0 py-0">
-                <img src={images.heroDiagnosticLab} alt="Low volume sample" data-override-id="exotic-lowvolume" className="w-full max-h-72 object-contain" />
+              <div className="relative rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card">
+                <img src={images.heroDiagnosticLab} alt="Low volume sample" data-override-id="exotic-lowvolume" className="w-full object-cover" />
               </div>
             </div>
           </div>
