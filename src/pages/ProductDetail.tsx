@@ -392,12 +392,12 @@ const ProductDetail = () => {
         <section className="py-16 lg:py-20">
           <div className={containerClass}>
             <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-start">
-              <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card p-6 flex items-center justify-center">
+              <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card">
                 <img
                   src={images.dm03Microscope}
                   alt="DM-03 Microscope hardware"
                   data-override-id="dm03-hardware"
-                  className="w-full max-w-[420px] object-contain"
+                  className="w-full object-contain"
                 />
               </div>
               <div>
@@ -462,12 +462,12 @@ const ProductDetail = () => {
         <section className="py-16 lg:py-20">
           <div className={containerClass}>
             <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-start">
-              <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card p-6 flex items-center justify-center">
+              <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card">
                 <img
                   src={images.dm03Medtech}
                   alt="Microscope image hub module"
                   data-override-id="dm03-imagehub"
-                  className="w-full max-w-[420px] object-contain"
+                  className="w-full object-contain"
                 />
               </div>
               <div>
