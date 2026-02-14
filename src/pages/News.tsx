@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Download, FileText, BookOpen, Package, MoreHorizontal } from 'lucide-react';
+import { ArrowRight, Download, FileText, BookOpen, Package, MoreHorizontal, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Layout from '@/components/layout/Layout';
@@ -27,6 +27,20 @@ const News = () => {
 
   const isExternalLink = (url: string) =>
     /^(https?:)?\/\//i.test(url) || url.startsWith('mailto:') || url.startsWith('tel:');
+
+  const isVideoLink = (url: string) => {
+    if (!url) return false;
+    return /youtube\.com|youtu\.be|vimeo\.com/i.test(url) || /\.(mp4|webm|ogg)(\?|$)/i.test(url);
+  };
+
+  const getVideoEmbedUrl = (url: string): string | null => {
+    const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+    const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+    if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+    return null;
+  };
+
   const ctaLink = data.cta.buttonUrl?.trim() || '/contact';
 
   const productLabelMap = RESOURCE_PRODUCT_OPTIONS.reduce<Record<string, string>>((acc, product) => {
@@ -50,6 +64,8 @@ const News = () => {
     const productLabel = productLabelMap[item.productId] || 'Product';
     const mediaUrl = item.mediaUrl?.trim();
     const hasMedia = Boolean(mediaUrl);
+    const isVideo = item.mediaType === 'link' && isVideoLink(mediaUrl);
+    const embedUrl = isVideo ? getVideoEmbedUrl(mediaUrl) : null;
     const actionLabel = item.mediaType === 'link' ? 'View resource' : 'Download';
     const ActionIcon = item.mediaType === 'link' ? ArrowRight : Download;
     const badge = getMediaBadge(item);
@@ -61,6 +77,21 @@ const News = () => {
       >
         {/* Accent gradient top */}
         <div className="h-1 rounded-t-2xl bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
+
+        {/* Video embed preview */}
+        {embedUrl && (
+          <div className="relative w-full aspect-video bg-muted/30">
+            <iframe
+              src={embedUrl}
+              className="w-full h-full"
+              style={{ border: 'none' }}
+              allowFullScreen
+              allow="autoplay; encrypted-media"
+              title={item.title}
+              loading="lazy"
+            />
+          </div>
+        )}
 
         <div className="flex flex-col flex-1 p-6">
           {/* Badges */}
@@ -88,24 +119,36 @@ const News = () => {
           {/* Action */}
           <div className="mt-auto pt-2">
             {hasMedia ? (
-              <Button variant="outline" size="sm" className="h-10 px-5 rounded-full border-border/40 text-primary hover:bg-primary/5 hover:border-primary/30 transition-all" asChild>
-                {item.mediaType === 'upload' ? (
-                  <a href={mediaUrl} download={item.mediaName || 'resource'}>
-                    <ActionIcon className="mr-2 h-4 w-4" />
-                    {actionLabel}
-                  </a>
-                ) : isExternalLink(mediaUrl) ? (
-                  <a href={mediaUrl} target="_blank" rel="noreferrer">
-                    <ActionIcon className="mr-2 h-4 w-4" />
-                    {actionLabel}
-                  </a>
-                ) : (
-                  <Link to={mediaUrl}>
-                    <ActionIcon className="mr-2 h-4 w-4" />
-                    {actionLabel}
-                  </Link>
+              <div className="flex flex-wrap gap-2">
+                {isVideo && (
+                  <Button variant="default" size="sm" className="h-10 px-5 rounded-full transition-all" asChild>
+                    <a href={mediaUrl} target="_blank" rel="noreferrer">
+                      <Play className="mr-2 h-4 w-4" />
+                      Watch video
+                    </a>
+                  </Button>
                 )}
-              </Button>
+                {!isVideo && (
+                  <Button variant="outline" size="sm" className="h-10 px-5 rounded-full border-border/40 text-primary hover:bg-primary/5 hover:border-primary/30 transition-all" asChild>
+                    {item.mediaType === 'upload' ? (
+                      <a href={mediaUrl} download={item.mediaName || 'resource'}>
+                        <ActionIcon className="mr-2 h-4 w-4" />
+                        {actionLabel}
+                      </a>
+                    ) : isExternalLink(mediaUrl) ? (
+                      <a href={mediaUrl} target="_blank" rel="noreferrer">
+                        <ActionIcon className="mr-2 h-4 w-4" />
+                        {actionLabel}
+                      </a>
+                    ) : (
+                      <Link to={mediaUrl}>
+                        <ActionIcon className="mr-2 h-4 w-4" />
+                        {actionLabel}
+                      </Link>
+                    )}
+                  </Button>
+                )}
+              </div>
             ) : (
               <p className="text-xs text-muted-foreground/50 italic">No file or link attached</p>
             )}
@@ -139,6 +182,7 @@ const News = () => {
                   <img
                     src={data.hero.imageUrl}
                     alt={data.hero.imageAlt}
+                    data-override-id="resources-hero"
                     className="w-full aspect-[4/3] object-cover"
                     loading="eager"
                     decoding="async"
