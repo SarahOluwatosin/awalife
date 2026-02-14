@@ -14,72 +14,72 @@ const About = () => {
   const bodyTextClass = 'text-lg';
 
   const metrics = [
-    { value: '15M+', label: 'Images Used for AI Model Training' },
-    { value: '2.4M+', label: 'Reports Generated' },
-    { value: '8,000+', label: 'Installations Worldwide' },
-  ];
+  { value: '15M+', label: 'Images Used for AI Model Training' },
+  { value: '2.4M+', label: 'Reports Generated' },
+  { value: '8,000+', label: 'Installations Worldwide' }];
+
 
   const timeline = [
-    {
-      year: '2020',
-      items: ['Jul 7 — Awalife established.'],
-    },
-    {
-      year: '2021',
-      items: ['Apr — Successful development of the first Morphology Analyzer.', 'Aug — Microscope Workstation launched in China.'],
-    },
-    {
-      year: '2022',
-      items: ['Feb — Secured Angel funding.', 'Aug — First AI-100Vet Morphology Analyzer installed in China.'],
-    },
-    {
-      year: '2023',
-      items: ['Apr — Fecal Morphology Detection launched; monthly sales surpassed RMB 1M.', 'Dec — Secured Series A funding.'],
-    },
-    {
-      year: '2024',
-      items: [
-        'Apr — First international AI-100Vet installed in Malaysia.',
-        'May — Effusion Analysis launched.',
-        'Nov — Blood Morphology for exotic animals launched.',
-        'Dec — Global monthly sales exceeded RMB 10M. Recognized as a Shenzhen Specialized and Sophisticated SME.',
-      ],
-    },
-    {
-      year: '2025',
-      items: [
-        'Jan — Global installations reached 3,000 units.',
-        'Apr — New products launched: DM-03 Microscope Workstation, AI-80Vet, AI-100Vet Elite, JH-01 Thermo Mixer.',
-        'Oct — Global installations reached 7,000 units.',
-        'Dec — Recognized as a Guangdong Provincial High-Quality & High-Tech Product. The Awalife-led industry standard for Formed Element Analyzers was officially published by the CVMA.',
-      ],
-    },
-    {
-      year: '2026 and Beyond',
-      items: ['Continued global growth with continuous innovation and new applications in development.'],
-    },
-  ];
+  {
+    year: '2020',
+    items: ['Jul 7 — Awalife established.']
+  },
+  {
+    year: '2021',
+    items: ['Apr — Successful development of the first Morphology Analyzer.', 'Aug — Microscope Workstation launched in China.']
+  },
+  {
+    year: '2022',
+    items: ['Feb — Secured Angel funding.', 'Aug — First AI-100Vet Morphology Analyzer installed in China.']
+  },
+  {
+    year: '2023',
+    items: ['Apr — Fecal Morphology Detection launched; monthly sales surpassed RMB 1M.', 'Dec — Secured Series A funding.']
+  },
+  {
+    year: '2024',
+    items: [
+    'Apr — First international AI-100Vet installed in Malaysia.',
+    'May — Effusion Analysis launched.',
+    'Nov — Blood Morphology for exotic animals launched.',
+    'Dec — Global monthly sales exceeded RMB 10M. Recognized as a Shenzhen Specialized and Sophisticated SME.']
+
+  },
+  {
+    year: '2025',
+    items: [
+    'Jan — Global installations reached 3,000 units.',
+    'Apr — New products launched: DM-03 Microscope Workstation, AI-80Vet, AI-100Vet Elite, JH-01 Thermo Mixer.',
+    'Oct — Global installations reached 7,000 units.',
+    'Dec — Recognized as a Guangdong Provincial High-Quality & High-Tech Product. The Awalife-led industry standard for Formed Element Analyzers was officially published by the CVMA.']
+
+  },
+  {
+    year: '2026 and Beyond',
+    items: ['Continued global growth with continuous innovation and new applications in development.']
+  }];
+
 
   const mission = [
-    'Future-proof Veterinary Diagnostic Tools',
-    'Delivering Innovation to Empower Our Customers',
-    'Creating Shared Value with Our Customers',
-  ];
+  'Future-proof Veterinary Diagnostic Tools',
+  'Delivering Innovation to Empower Our Customers',
+  'Creating Shared Value with Our Customers'];
+
 
   const coreValues = [
-    'Integrity with Humility',
-    'Practical Innovation',
-    'Serving Clients, Growing Together',
-    'Lifelong Learning and Ethical Excellence',
-  ];
+  'Integrity with Humility',
+  'Practical Innovation',
+  'Serving Clients, Growing Together',
+  'Lifelong Learning and Ethical Excellence'];
+
 
   return (
     <Layout>
       <PageHero
         title="About Awalife"
         subtitle="Pioneering AI-powered morphology diagnostics"
-        breadcrumb={[{ label: 'Company', path: '/company/about' }]}
-      />
+        breadcrumb={[{ label: 'Company', path: '/company/about' }]} />
+
 
       {/* Overview */}
       <section className="py-20 lg:py-28">
@@ -97,21 +97,21 @@ const About = () => {
                 expand this platform through ongoing innovation and updates.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                {metrics.map((metric) => (
-                  <div
-                    key={metric.label}
-                    className="overflow-hidden rounded-2xl border border-border/30 bg-secondary/20 p-5 transition-colors hover:border-primary/30"
-                  >
+                {metrics.map((metric) =>
+                <div
+                  key={metric.label}
+                  className="overflow-hidden rounded-2xl border border-border/30 bg-secondary/20 p-5 transition-colors hover:border-primary/30">
+
                     <div className="text-2xl md:text-3xl font-semibold text-foreground">{metric.value}</div>
                     <div className="text-sm text-muted-foreground mt-1">{metric.label}</div>
                   </div>
-                ))}
+                )}
               </div>
             </div>
 
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
+              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card px-0 py-0">
                 <img src={images.heroDiagnosticLab} alt="Awalife overview" data-override-id="about-overview" className="w-full max-h-80 object-contain" />
               </div>
             </div>
@@ -129,21 +129,21 @@ const About = () => {
             <div className="relative">
               <div className="absolute left-3 top-0 h-full w-px bg-border/60" />
               <div className="space-y-10 pl-12">
-                {timeline.map((entry) => (
-                  <div key={entry.year} className="relative">
+                {timeline.map((entry) =>
+                <div key={entry.year} className="relative">
                     <span className="absolute -left-12 top-2 h-6 w-6 rounded-full bg-primary/20 border border-primary/40" />
                     <div className="inline-flex items-center px-3 py-1 rounded-full bg-secondary/40 text-xs font-semibold tracking-wider text-foreground">
                       {entry.year}
                     </div>
                     <div className="mt-4 overflow-hidden rounded-2xl border border-border/30 bg-secondary/20 p-6">
                       <ul className={`space-y-2 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
-                        {entry.items.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
+                        {entry.items.map((item) =>
+                      <li key={item}>{item}</li>
+                      )}
                       </ul>
                     </div>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>
@@ -161,9 +161,9 @@ const About = () => {
               <div>
                 <h3 className="text-xl font-semibold text-foreground mb-4">Mission</h3>
                 <ul className={`space-y-2 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
-                  {mission.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
+                  {mission.map((item) =>
+                  <li key={item}>{item}</li>
+                  )}
                 </ul>
               </div>
               <div className="w-16 h-16 rounded-full bg-secondary/30 flex-shrink-0" />
@@ -172,9 +172,9 @@ const About = () => {
               <div>
                 <h3 className="text-xl font-semibold text-foreground mb-4">Core Values</h3>
                 <ul className={`space-y-2 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
-                  {coreValues.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
+                  {coreValues.map((item) =>
+                  <li key={item}>{item}</li>
+                  )}
                 </ul>
               </div>
               <div className="w-16 h-16 rounded-full bg-secondary/30 flex-shrink-0" />
@@ -224,8 +224,8 @@ const About = () => {
           </div>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>);
+
 };
 
 export default About;
