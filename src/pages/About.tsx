@@ -7,7 +7,7 @@ import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
 import { images } from '@/lib/images';
 
-const MetricItem = ({ value, suffix, label, delay, decimals = 0 }: { value: number; suffix: string; label: string; delay: number; decimals?: number }) => {
+const MetricItem = ({ value, suffix, label, delay, decimals = 0 }: {value: number;suffix: string;label: string;delay: number;decimals?: number;}) => {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -47,14 +47,14 @@ const MetricItem = ({ value, suffix, label, delay, decimals = 0 }: { value: numb
       className="text-center"
       initial={{ opacity: 0, y: 18 }}
       animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-      transition={{ duration: 0.6, delay: delay / 1000, ease: [0.22, 1, 0.36, 1] }}
-    >
+      transition={{ duration: 0.6, delay: delay / 1000, ease: [0.22, 1, 0.36, 1] }}>
+
       <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
         {count.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}{suffix}
       </div>
       <div className="text-muted-foreground text-sm">{label}</div>
-    </motion.div>
-  );
+    </motion.div>);
+
 };
 
 const About = () => {
@@ -65,10 +65,10 @@ const About = () => {
   const bodyTextClass = 'text-lg';
 
   const metrics = [
-    { rawValue: 15, suffix: 'M+', label: 'Images Used for AI Model Training', decimals: 0 },
-    { rawValue: 2.4, suffix: 'M+', label: 'Reports Generated', decimals: 1 },
-    { rawValue: 8000, suffix: '+', label: 'Installations Worldwide', decimals: 0 },
-  ];
+  { rawValue: 15, suffix: 'M+', label: 'Images Used for AI Model Training', decimals: 0 },
+  { rawValue: 2.4, suffix: 'M+', label: 'Reports Generated', decimals: 1 },
+  { rawValue: 8000, suffix: '+', label: 'Installations Worldwide', decimals: 0 }];
+
 
 
   const timeline = [
@@ -149,9 +149,9 @@ const About = () => {
                 expand this platform through ongoing innovation and updates.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 mt-10">
-                {metrics.map((metric, i) => (
-                  <MetricItem key={metric.label} value={metric.rawValue} suffix={metric.suffix} label={metric.label} delay={i * 100} decimals={metric.decimals} />
-                ))}
+                {metrics.map((metric, i) =>
+                <MetricItem key={metric.label} value={metric.rawValue} suffix={metric.suffix} label={metric.label} delay={i * 100} decimals={metric.decimals} />
+                )}
               </div>
             </div>
 
@@ -241,7 +241,7 @@ const About = () => {
           </div>
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-            <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
+            <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card py-0 px-0">
               <img src={images.heroMedtech} alt="Global partners" data-override-id="about-partners" className="w-full max-h-96 object-contain" />
             </div>
           </div>
