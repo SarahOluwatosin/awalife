@@ -7,6 +7,34 @@ import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
 import ApplicationImageCarousel from '@/components/sections/ApplicationImageCarousel';
 import { images } from '@/lib/images';
+import { motion } from 'framer-motion';
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
+};
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 24, scale: 0.97 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease } },
+};
+
+const fadeInLeft = {
+  hidden: { opacity: 0, x: -40 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease } },
+};
+
+const fadeInRight = {
+  hidden: { opacity: 0, x: 40 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease } },
+};
 
 const BloodAnalysis = () => {
   useEffect(() => {
@@ -27,7 +55,6 @@ const BloodAnalysis = () => {
     'Small Lymphocytes (SLYM# %)',
     'Large Lymphocytes (LLYM# %)',
     'Atypical WBC (AWBC#)']
-
   },
   {
     title: 'RBC: up to 7-part Differential',
@@ -40,7 +67,6 @@ const BloodAnalysis = () => {
     'Acanthocytes (AC#)',
     'RBC Clump (AGG#)',
     'Heinz Bodies (HEB# HEB%)']
-
   },
   {
     title: 'Platelet clump recognition & enumeration',
@@ -49,9 +75,7 @@ const BloodAnalysis = () => {
     'Total Platelets Count (PLT)',
     'Platelets Count (PLT#)',
     'Platelets Clump Count (APLT#)']
-
   }];
-
 
   const fallbackImages = [
     { url: images.speciesCanineFeline, label: 'Canine & Feline' },
@@ -59,7 +83,6 @@ const BloodAnalysis = () => {
     { url: images.speciesExoticPets, label: 'Exotic Pets' },
     { url: images.heroDiagnosticLab, label: 'Diagnostic Lab' },
   ];
-
 
   return (
     <Layout>
@@ -71,12 +94,17 @@ const BloodAnalysis = () => {
         { label: 'Blood Analysis', path: '/applications/blood' }]
         } />
 
-
       {/* Overview */}
-      <section className="py-16 lg:py-20">
+      <motion.section
+        className="py-16 lg:py-20"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={sectionVariants}
+      >
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
+            <motion.div variants={fadeInLeft}>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                 Standardized Blood Smear Review - Images and Counts in One Workflow.
               </h2>
@@ -94,20 +122,26 @@ const BloodAnalysis = () => {
                   <Link to="/contact">See it in action</Link>
                 </Button>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="relative">
+            <motion.div className="relative" variants={fadeInRight}>
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card py-0 px-0">
                 <img src={images.ai100vet} alt="Blood smear workflow" data-override-id="blood-overview" className="w-full max-h-80 object-contain" />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Analysis Categories */}
-      <section className="py-16 lg:py-20 bg-card/50">
+      <motion.section
+        className="py-16 lg:py-20 bg-card/50"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={sectionVariants}
+      >
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -123,9 +157,15 @@ const BloodAnalysis = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
             {bloodCategories.map((category) =>
-            <div key={category.title} className="glow-card p-6 text-left h-full">
+            <motion.div key={category.title} className="glow-card p-6 text-left h-full" variants={cardVariants}>
                 <h3 className="text-lg font-semibold text-foreground mb-3">{category.title}</h3>
                 <p className={`${cardTextClass} text-muted-foreground mb-4`}>{category.description}</p>
                 <ul className={`space-y-2 ${cardTextClass} text-muted-foreground`}>
@@ -138,24 +178,30 @@ const BloodAnalysis = () => {
                     </li>
                 )}
                 </ul>
-              </div>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* How It Works */}
-      <section className="py-16 lg:py-20">
+      <motion.section
+        className="py-16 lg:py-20"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={sectionVariants}
+      >
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-            <div className="relative">
+            <motion.div className="relative" variants={fadeInLeft}>
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center">
                 <img src={images.ai100vet} alt="Blood SOP Video" data-override-id="blood-sop" className="w-full max-h-80 object-contain" />
                 <p className="text-xs text-muted-foreground mt-4">Blood SOP Video-02</p>
               </div>
-            </div>
-            <div className="space-y-6">
+            </motion.div>
+            <motion.div className="space-y-6" variants={fadeInRight}>
               <div>
                 <h3 className="text-2xl md:text-3xl font-bold text-foreground">How It Works</h3>
                 <p className={`${bodyTextClass} text-muted-foreground mt-2`}>More Count</p>
@@ -174,26 +220,38 @@ const BloodAnalysis = () => {
                   <span>Nano-precision optic swiftly captures 1000+ fields within 8 minutes.</span>
                 </li>
               </ul>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Image Review */}
-      <section className="py-16 lg:py-20 bg-card/50">
+      <motion.section
+        className="py-16 lg:py-20 bg-card/50"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={sectionVariants}
+      >
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">True-to-life Images, Ready for Review</h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>
-              Review your report and verify the images with confidence - and tap into Awalife’s clinical specialists whenever needed.
+              Review your report and verify the images with confidence - and tap into Awalife's clinical specialists whenever needed.
             </p>
           </div>
           <ApplicationImageCarousel pageKey="blood" fallbackImages={fallbackImages} />
         </div>
-      </section>
+      </motion.section>
 
       {/* FAQ */}
-      <section className="py-16 lg:py-20">
+      <motion.section
+        className="py-16 lg:py-20"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={sectionVariants}
+      >
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
@@ -226,10 +284,16 @@ const BloodAnalysis = () => {
             </Accordion>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA */}
-      <section className="py-20 lg:py-28 bg-card/50">
+      <motion.section
+        className="py-20 lg:py-28 bg-card/50"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+      >
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
             Interested in Our Products?
@@ -246,9 +310,8 @@ const BloodAnalysis = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </motion.section>
     </Layout>);
-
 };
 
 export default BloodAnalysis;
