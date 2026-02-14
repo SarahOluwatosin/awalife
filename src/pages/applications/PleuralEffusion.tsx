@@ -60,7 +60,7 @@ const PleuralEffusion = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={images.ai100vet} alt="AI-100Vet Analyzer" className="w-full max-h-80 object-contain" />
+                <img src={images.ai100vet} alt="AI-100Vet Analyzer" data-override-id="pleural-overview" className="w-full max-h-80 object-contain" />
               </div>
             </div>
           </div>

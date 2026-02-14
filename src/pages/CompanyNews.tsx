@@ -42,7 +42,7 @@ const CompanyNews = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/8 to-accent/8 rounded-3xl blur-3xl opacity-50" />
               <div className="relative rounded-2xl overflow-hidden border border-border/30 bg-secondary/20 shadow-lg">
-                <img src={images.heroDiagnosticLab} alt="News cover" className="w-full aspect-[4/3] object-cover" loading="eager" decoding="async" />
+                <img src={images.heroDiagnosticLab} alt="News cover" data-override-id="news-hero" className="w-full aspect-[4/3] object-cover" loading="eager" decoding="async" />
               </div>
             </div>
           </div>

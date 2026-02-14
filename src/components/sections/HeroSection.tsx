@@ -116,6 +116,7 @@ const HeroSection = () => {
               <img
                 src={images.heroDiagnosticLab}
                 alt="Veterinary diagnostic workflow"
+                data-override-id="home-hero"
                 className="w-full h-full object-cover aspect-[5/4]"
                 fetchPriority="high"
                 decoding="async"

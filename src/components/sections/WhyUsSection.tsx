@@ -50,7 +50,7 @@ const WhyUsSection = () => {
         }}>
               <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                 <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-secondary/30">
-                  <img src={feature.image} alt={feature.alt} className="w-full h-full object-cover aspect-[4/3] transition-opacity duration-500" loading="lazy" decoding="async" width={640} height={480} />
+                  <img src={feature.image} alt={feature.alt} data-override-id={`home-whyus-${i}`} className="w-full h-full object-cover aspect-[4/3] transition-opacity duration-500" loading="lazy" decoding="async" width={640} height={480} />
                 </div>
               </div>
               <div className={`${i % 2 === 1 ? 'lg:order-1' : ''}`}>

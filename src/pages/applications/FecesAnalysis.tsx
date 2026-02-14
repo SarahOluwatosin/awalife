@@ -102,7 +102,7 @@ const FecesAnalysis = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={images.ai100vet} alt="AI-100Vet Feces Analyzer" className="w-full max-h-80 object-contain" />
+                <img src={images.ai100vet} alt="AI-100Vet Feces Analyzer" data-override-id="feces-overview" className="w-full max-h-80 object-contain" />
               </div>
             </div>
           </div>
@@ -151,7 +151,7 @@ const FecesAnalysis = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center">
-                <img src={images.ai100vet} alt="Feces SOP Video-02" className="w-full max-h-80 object-contain" />
+                <img src={images.ai100vet} alt="Feces SOP Video-02" data-override-id="feces-sop-02" className="w-full max-h-80 object-contain" />
                 <p className="text-xs text-muted-foreground mt-4">Feces SOP Video-02</p>
               </div>
             </div>
@@ -190,7 +190,7 @@ const FecesAnalysis = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center">
-                <img src={images.ai100vet} alt="Feces SOP Video-03" className="w-full max-h-80 object-contain" />
+                <img src={images.ai100vet} alt="Feces SOP Video-03" data-override-id="feces-sop-03" className="w-full max-h-80 object-contain" />
                 <p className="text-xs text-muted-foreground mt-4">Feces SOP Video-03</p>
               </div>
             </div>
