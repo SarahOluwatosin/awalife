@@ -18,15 +18,15 @@ const ExoticAnimals = () => {
       return (
         <div className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/20 mx-auto">
           <Check className="w-4 h-4 text-primary" />
-        </div>
-      );
+        </div>);
+
     }
     if (value === '/') {
       return (
         <div className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-muted/50 mx-auto">
           <Minus className="w-4 h-4 text-muted-foreground/50" />
-        </div>
-      );
+        </div>);
+
     }
     return value;
   };
@@ -37,10 +37,10 @@ const ExoticAnimals = () => {
         title="Exotics, Small Mammals & Large Animals"
         subtitle="Supporting more species with review-ready morphology"
         breadcrumb={[
-          { label: 'Applications', path: '/applications' },
-          { label: 'Exotic Animals', path: '/applications/exotic-animals' },
-        ]}
-      />
+        { label: 'Applications', path: '/applications' },
+        { label: 'Exotic Animals', path: '/applications/exotic-animals' }]
+        } />
+
 
       {/* Overview */}
       <section className="py-16 lg:py-20">
@@ -70,7 +70,7 @@ const ExoticAnimals = () => {
 
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
+              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card px-0 py-0">
                 <img src={images.ai100vet} alt="Exotic species analyzer" data-override-id="exotic-overview" className="w-full max-h-80 object-contain" />
               </div>
             </div>
@@ -105,8 +105,8 @@ const ExoticAnimals = () => {
                   <tr className="bg-secondary/30">
                     <td
                       colSpan={5}
-                      className="px-5 lg:px-6 py-3 text-sm font-semibold text-foreground uppercase tracking-wider"
-                    >
+                      className="px-5 lg:px-6 py-3 text-sm font-semibold text-foreground uppercase tracking-wider">
+
                       Species Support
                     </td>
                   </tr>
@@ -124,31 +124,31 @@ const ExoticAnimals = () => {
                   <tr className="bg-secondary/30">
                     <td
                       colSpan={5}
-                      className="px-5 lg:px-6 py-3 text-sm font-semibold text-foreground uppercase tracking-wider"
-                    >
+                      className="px-5 lg:px-6 py-3 text-sm font-semibold text-foreground uppercase tracking-wider">
+
                       Sample Types
                     </td>
                   </tr>
                   {[
-                    { label: 'Blood', values: ['+', '+', '+', '+'] },
-                    { label: 'Feces', values: ['Dog, Cat', '/', '/', '/'] },
-                    { label: 'Urine', values: ['Dog, Cat', '/', '/', '/'] },
-                    { label: 'Fluid', values: ['Dog, Cat', '/', '/', '/'] },
-                  ].map((row) => (
-                    <tr
-                      key={row.label}
-                      className="border-b border-border/30 hover:bg-secondary/20 transition-colors"
-                    >
+                  { label: 'Blood', values: ['+', '+', '+', '+'] },
+                  { label: 'Feces', values: ['Dog, Cat', '/', '/', '/'] },
+                  { label: 'Urine', values: ['Dog, Cat', '/', '/', '/'] },
+                  { label: 'Fluid', values: ['Dog, Cat', '/', '/', '/'] }].
+                  map((row) =>
+                  <tr
+                    key={row.label}
+                    className="border-b border-border/30 hover:bg-secondary/20 transition-colors">
+
                     <td className="p-5 lg:p-6 text-sm text-muted-foreground sticky left-0 bg-card z-10">
                       {row.label}
                     </td>
-                    {row.values.map((value, valueIndex) => (
-                      <td key={`${row.label}-${valueIndex}`} className="p-5 lg:p-6 text-center">
+                    {row.values.map((value, valueIndex) =>
+                    <td key={`${row.label}-${valueIndex}`} className="p-5 lg:p-6 text-center">
                         {renderSupportValue(value)}
                       </td>
-                    ))}
+                    )}
                   </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
@@ -192,28 +192,28 @@ const ExoticAnimals = () => {
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="w-full">
               {[
-                {
-                  question: 'Which species are supported for blood analysis?',
-                  answer: 'Companion animals: Dog, Cat\nSmall mammals: Rabbit, Chinchilla, Hamster, Rat, Mouse, Ferret, Guinea Pig\nLarge animals: Alpaca, Camel, Horse, Pig, Cattle, Sheep\nAvian: Pigeon, Parrot\nReptiles: Turtle, Snake, Lizard',
-                },
-                {
-                  question: 'Which species are supported for feces analysis?',
-                  answer: 'Companion animals: Dog, Cat',
-                },
-                {
-                  question: 'Which species are supported for urine analysis?',
-                  answer: 'Companion animals: Dog, Cat',
-                },
-                {
-                  question: 'Which species are supported for fluid analysis?',
-                  answer: 'Companion animals: Dog, Cat',
-                },
-              ].map((faq) => (
-                <AccordionItem key={faq.question} value={faq.question}>
+              {
+                question: 'Which species are supported for blood analysis?',
+                answer: 'Companion animals: Dog, Cat\nSmall mammals: Rabbit, Chinchilla, Hamster, Rat, Mouse, Ferret, Guinea Pig\nLarge animals: Alpaca, Camel, Horse, Pig, Cattle, Sheep\nAvian: Pigeon, Parrot\nReptiles: Turtle, Snake, Lizard'
+              },
+              {
+                question: 'Which species are supported for feces analysis?',
+                answer: 'Companion animals: Dog, Cat'
+              },
+              {
+                question: 'Which species are supported for urine analysis?',
+                answer: 'Companion animals: Dog, Cat'
+              },
+              {
+                question: 'Which species are supported for fluid analysis?',
+                answer: 'Companion animals: Dog, Cat'
+              }].
+              map((faq) =>
+              <AccordionItem key={faq.question} value={faq.question}>
                   <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
                   <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
                 </AccordionItem>
-              ))}
+              )}
             </Accordion>
           </div>
         </div>
@@ -238,8 +238,8 @@ const ExoticAnimals = () => {
           </div>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>);
+
 };
 
 export default ExoticAnimals;
