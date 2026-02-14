@@ -18,9 +18,10 @@ function extractStoragePath(src: string): string | null {
 interface ProductGalleryProps {
   images: string[];
   productName: string;
+  productId?: string;
 }
 
-const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
+const ProductGallery = ({ images, productName, productId = 'product' }: ProductGalleryProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const { overrides } = useMediaOverrides();
@@ -39,8 +40,11 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
     return overrides.get(path) || null;
   };
 
-  const renderMedia = (src: string, alt: string, className: string, onClick?: () => void) => {
-    const override = getOverride(src);
+  const getOverrideId = (index: number) => `${productId}-gallery-${index}`;
+
+  const renderMedia = (src: string, index: number, alt: string, className: string, onClick?: () => void) => {
+    const overrideId = getOverrideId(index);
+    const override = overrides.get(overrideId);
     if (override && override.media_type === 'image') {
       return (
         <img
@@ -48,6 +52,7 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
           alt={alt}
           className={className}
           onClick={onClick}
+          data-override-id={overrideId}
         />
       );
     }
@@ -92,6 +97,7 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
         alt={alt}
         className={className}
         onClick={onClick}
+        data-override-id={overrideId}
       />
     );
   };
@@ -124,6 +130,7 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
           
           {renderMedia(
             images[activeIndex],
+            activeIndex,
             `${productName} - View ${activeIndex + 1}`,
             "max-w-full max-h-[85vh] object-contain"
           )}
@@ -155,7 +162,7 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
       )}
 
       {/* Gallery */}
-      <div className="group relative" data-media-managed>
+      <div className="group relative">
         <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 rounded-3xl blur-3xl opacity-50" />
         
         {/* Main Image */}
@@ -166,6 +173,7 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
           <div className="relative aspect-square flex items-center justify-center">
             {renderMedia(
               images[activeIndex],
+              activeIndex,
               `${productName} - View ${activeIndex + 1}`,
               "max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-700 drop-shadow-2xl cursor-zoom-in",
               () => setIsZoomed(true)
@@ -209,7 +217,8 @@ const ProductGallery = ({ images, productName }: ProductGalleryProps) => {
         {images.length > 1 && (
           <div className="flex gap-3 mt-4 justify-center">
             {images.map((img, idx) => {
-              const override = getOverride(img);
+              const overrideId = getOverrideId(idx);
+              const override = overrides.get(overrideId);
               return (
                 <button
                   key={idx}
