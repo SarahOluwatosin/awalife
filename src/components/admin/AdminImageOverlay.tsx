@@ -91,6 +91,8 @@ const AdminImageOverlay = () => {
     if (!el || !el.src) return;
     const path = extractStoragePath(el.src);
     if (!path) return;
+    // Don't allow overriding override paths to prevent circular references
+    if (path.startsWith('assets/overrides/')) return;
     const rect = el.getBoundingClientRect();
     if (rect.width < 30 || rect.height < 30) return;
     activeElRef.current = el;

@@ -128,6 +128,8 @@ export const MediaOverrideProvider = ({ children }: { children: ReactNode }) => 
         
         const path = extractStoragePath(img.src);
         if (!path) return;
+        // Never apply overrides to images that are themselves override URLs
+        if (path.startsWith('assets/overrides/')) return;
         const override = overrides.get(path);
         if (!override) return;
 
