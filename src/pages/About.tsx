@@ -109,11 +109,8 @@ const About = () => {
               </div>
             </div>
 
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card px-0 py-0">
-                <img src={images.heroDiagnosticLab} alt="Awalife overview" data-override-id="about-overview" className="w-full max-h-80 object-contain" />
-              </div>
+            <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card">
+              <img src={images.heroDiagnosticLab} alt="Awalife overview" data-override-id="about-overview" className="w-full object-contain" />
             </div>
           </div>
         </div>
