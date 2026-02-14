@@ -8,7 +8,7 @@ import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
 import { RESOURCE_KIND_CONFIG, RESOURCE_PRODUCT_OPTIONS } from '@/data/resources';
 import type { ResourceItem } from '@/data/resources';
 import { motion } from 'framer-motion';
-import { sectionVariants, viewportOnce } from '@/lib/animations';
+import { sectionVariants, staggerContainer, cardSlideUp, blurIn, viewportOnce, viewportOnceSmall } from '@/lib/animations';
 
 const SECTION_ICONS: Record<string, typeof FileText> = {
   'how-to': BookOpen,
@@ -166,7 +166,7 @@ const News = () => {
       <motion.section className="pt-32 pb-16 lg:pt-36 lg:pb-20" initial="hidden" animate="visible" variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
+            <motion.div variants={blurIn}>
               <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">
                 Resource Center
               </span>
@@ -176,8 +176,8 @@ const News = () => {
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                 {data.hero.description}
               </p>
-            </div>
-            <div className="relative">
+            </motion.div>
+            <motion.div className="relative" variants={sectionVariants}>
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/8 to-accent/8 rounded-3xl blur-3xl opacity-50" />
               <div className="relative rounded-2xl overflow-hidden border border-border/30 bg-secondary/20 shadow-lg">
                 {data.hero.imageUrl ? (
@@ -195,7 +195,7 @@ const News = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </motion.section>
@@ -206,9 +206,13 @@ const News = () => {
         if (!sectionResources.length) return null;
         const SectionIcon = SECTION_ICONS[section.id] || FileText;
         return (
-          <section
+          <motion.section
             key={section.id}
             className={`py-16 lg:py-20 ${section.variant === 'muted' ? 'bg-card/50' : ''}`}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnceSmall}
+            variants={sectionVariants}
           >
             <div className="container mx-auto px-6 lg:px-16 xl:px-24">
               <div className="flex items-center gap-3 mb-8">
@@ -219,11 +223,15 @@ const News = () => {
                   {section.sectionTitle}
                 </h2>
               </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {sectionResources.map(renderCard)}
-              </div>
+              <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
+                {sectionResources.map((item) => (
+                  <motion.div key={item.id} variants={cardSlideUp}>
+                    {renderCard(item)}
+                  </motion.div>
+                ))}
+              </motion.div>
             </div>
-          </section>
+          </motion.section>
         );
       })}
 

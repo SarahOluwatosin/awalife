@@ -10,6 +10,8 @@ import PageHero from '@/components/shared/PageHero';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
 import { images } from '@/lib/images';
+import { motion } from 'framer-motion';
+import { sectionVariants, staggerContainer, cardSlideUp, fadeInLeft, fadeInRight, blurIn, popIn, viewportOnce, viewportOnceSmall } from '@/lib/animations';
 
 const Distributors = () => {
   const { t } = useLanguage();
@@ -33,49 +35,17 @@ const Distributors = () => {
   };
 
   const partnerBenefits = [
-    {
-      icon: TrendingUp,
-      title: 'Growing Market',
-      description: 'Veterinary diagnostics is a rapidly expanding market with increasing demand for in-clinic solutions.',
-    },
-    {
-      icon: Award,
-      title: 'Premium Products',
-      description: 'Represent cutting-edge AI-powered diagnostic technology with proven clinical performance.',
-    },
-    {
-      icon: Shield,
-      title: 'Exclusive Territories',
-      description: 'Protected territory agreements ensure you can build your market without competition.',
-    },
-    {
-      icon: Headphones,
-      title: 'Comprehensive Support',
-      description: '24/7 technical support, training programs, and dedicated partner success managers.',
-    },
+    { icon: TrendingUp, title: 'Growing Market', description: 'Veterinary diagnostics is a rapidly expanding market with increasing demand for in-clinic solutions.' },
+    { icon: Award, title: 'Premium Products', description: 'Represent cutting-edge AI-powered diagnostic technology with proven clinical performance.' },
+    { icon: Shield, title: 'Exclusive Territories', description: 'Protected territory agreements ensure you can build your market without competition.' },
+    { icon: Headphones, title: 'Comprehensive Support', description: '24/7 technical support, training programs, and dedicated partner success managers.' },
   ];
 
   const supportOfferings = [
-    {
-      icon: FileText,
-      title: 'Marketing Materials',
-      description: 'Professional brochures, videos, and digital assets for effective promotion.',
-    },
-    {
-      icon: Users,
-      title: 'Sales Training',
-      description: 'Comprehensive product training and sales methodology workshops.',
-    },
-    {
-      icon: Lightbulb,
-      title: 'Technical Training',
-      description: 'In-depth technical certification for installation and support.',
-    },
-    {
-      icon: Globe,
-      title: 'Demo Equipment',
-      description: 'Demo units and sample kits for customer presentations.',
-    },
+    { icon: FileText, title: 'Marketing Materials', description: 'Professional brochures, videos, and digital assets for effective promotion.' },
+    { icon: Users, title: 'Sales Training', description: 'Comprehensive product training and sales methodology workshops.' },
+    { icon: Lightbulb, title: 'Technical Training', description: 'In-depth technical certification for installation and support.' },
+    { icon: Globe, title: 'Demo Equipment', description: 'Demo units and sample kits for customer presentations.' },
   ];
 
   const requirements = [
@@ -99,10 +69,10 @@ const Distributors = () => {
       />
 
       {/* Hero Section */}
-      <section className="py-16 lg:py-20">
+      <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div className="lg:order-2">
+            <motion.div className="lg:order-2" variants={fadeInRight}>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                 Partnership Opportunity
               </span>
@@ -113,24 +83,19 @@ const Distributors = () => {
                 Partner with AWALIFE to bring revolutionary AI-powered veterinary diagnostics to your market. We provide comprehensive support, competitive margins, and a product portfolio that sets you apart from the competition.
               </p>
               
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                <div className="p-4 rounded-xl bg-secondary/30 border border-border/30 text-center">
-                  <div className="text-2xl font-bold gradient-text">15+</div>
-                  <div className="text-sm text-muted-foreground">Countries</div>
-                </div>
-                <div className="p-4 rounded-xl bg-secondary/30 border border-border/30 text-center">
-                  <div className="text-2xl font-bold gradient-text">500+</div>
-                  <div className="text-sm text-muted-foreground">Partners</div>
-                </div>
-                <div className="p-4 rounded-xl bg-secondary/30 border border-border/30 text-center">
-                  <div className="text-2xl font-bold gradient-text">1M+</div>
-                  <div className="text-sm text-muted-foreground">Pets Helped</div>
-                </div>
-                <div className="p-4 rounded-xl bg-secondary/30 border border-border/30 text-center">
-                  <div className="text-2xl font-bold gradient-text">24/7</div>
-                  <div className="text-sm text-muted-foreground">Support</div>
-                </div>
-              </div>
+              <motion.div className="grid grid-cols-2 gap-4 mb-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
+                {[
+                  { value: '15+', label: 'Countries' },
+                  { value: '500+', label: 'Partners' },
+                  { value: '1M+', label: 'Pets Helped' },
+                  { value: '24/7', label: 'Support' },
+                ].map((stat) => (
+                  <motion.div key={stat.label} className="p-4 rounded-xl bg-secondary/30 border border-border/30 text-center" variants={cardSlideUp}>
+                    <div className="text-2xl font-bold gradient-text">{stat.value}</div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                  </motion.div>
+                ))}
+              </motion.div>
 
               <Button className="btn-gradient" size="lg" asChild>
                 <a href="#partner-form">
@@ -138,76 +103,76 @@ const Distributors = () => {
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </a>
               </Button>
-            </div>
+            </motion.div>
 
-            <div className="relative lg:order-1">
+            <motion.div className="relative lg:order-1" variants={fadeInLeft}>
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
                 <img src={images.ai100vet} alt="AWALIFE Products" data-override-id="distributors-hero" className="w-full max-h-80 object-contain" />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Partner Benefits */}
-      <section className="py-16 lg:py-20 bg-card/50">
+      <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="text-center max-w-3xl mx-auto mb-14">
+          <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Partner Value Proposition
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Why Partner with AWALIFE</h2>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <motion.div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {partnerBenefits.map((benefit, index) => (
-              <div key={benefit.title} className="group relative">
+              <motion.div key={benefit.title} className="group relative" variants={cardSlideUp}>
                 <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative glow-card p-8 h-full text-center">
                   <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/60 mb-4">0{index + 1}</span>
-                  <div className="icon-glow mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <motion.div className="icon-glow mx-auto mb-6 group-hover:scale-110 transition-transform duration-300" variants={popIn}>
                     <benefit.icon className="w-7 h-7 text-primary" />
-                  </div>
+                  </motion.div>
                   <h3 className="text-lg font-semibold text-foreground mb-3">{benefit.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{benefit.description}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Support Offerings */}
-      <section className="py-16 lg:py-20">
+      <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="text-center max-w-3xl mx-auto mb-14">
+          <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Product Support
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">What We Provide</h2>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {supportOfferings.map((item) => (
-              <div key={item.title} className="glow-card p-6 text-center">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <motion.div key={item.title} className="glow-card p-6 text-center" variants={cardSlideUp}>
+                <motion.div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4" variants={popIn}>
                   <item.icon className="w-6 h-6 text-primary" />
-                </div>
+                </motion.div>
                 <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
                 <p className="text-sm text-muted-foreground">{item.description}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Requirements */}
-      <section className="py-16 lg:py-20 bg-card/50">
+      <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="max-w-4xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
+              <motion.div variants={fadeInLeft}>
                 <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                   Partner Requirements
                 </span>
@@ -225,9 +190,9 @@ const Distributors = () => {
                     </div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="glow-card p-8 text-center">
+              <motion.div className="glow-card p-8 text-center" variants={fadeInRight}>
                 <Handshake className="w-16 h-16 text-primary mx-auto mb-6" />
                 <h3 className="text-2xl font-bold text-foreground mb-4">Ready to Partner?</h3>
                 <p className="text-muted-foreground mb-6">
@@ -236,23 +201,23 @@ const Distributors = () => {
                 <Button className="btn-gradient" size="lg" asChild>
                   <a href="#partner-form">Apply Now</a>
                 </Button>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Partner Inquiry Form */}
-      <section id="partner-form" className="py-16 lg:py-20">
+      <motion.section id="partner-form" className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-10">
+            <motion.div className="text-center mb-10" variants={blurIn}>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                 Partner Inquiry
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Apply for Partnership</h2>
               <p className="text-muted-foreground">Tell us about your company and we'll be in touch.</p>
-            </div>
+            </motion.div>
 
             <form onSubmit={handleSubmit} className="glow-card p-8 lg:p-10 space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
@@ -310,7 +275,7 @@ const Distributors = () => {
             </form>
           </div>
         </div>
-      </section>
+      </motion.section>
     </Layout>
   );
 };
