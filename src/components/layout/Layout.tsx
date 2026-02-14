@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import AdminImageOverlay from '@/components/admin/AdminImageOverlay';
+import Starfield from '@/components/animations/Starfield';
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,6 +15,7 @@ const Layout = ({ children }: LayoutProps) => {
       <div className="fixed inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 animated-gradient opacity-70 pointer-events-none" />
       <div className="fixed inset-0 tech-grid opacity-10 pointer-events-none" />
       <div className="fixed inset-0 scanlines opacity-10 pointer-events-none" />
+      <Starfield starCount={40} speed={0.15} className="fixed inset-0 opacity-25" />
       <Header />
       <main className="flex-1">
         {children}
