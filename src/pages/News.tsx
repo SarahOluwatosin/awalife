@@ -7,6 +7,8 @@ import Layout from '@/components/layout/Layout';
 import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
 import { RESOURCE_KIND_CONFIG, RESOURCE_PRODUCT_OPTIONS } from '@/data/resources';
 import type { ResourceItem } from '@/data/resources';
+import { motion } from 'framer-motion';
+import { sectionVariants, viewportOnce } from '@/lib/animations';
 
 const SECTION_ICONS: Record<string, typeof FileText> = {
   'how-to': BookOpen,
@@ -161,7 +163,7 @@ const News = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-16 lg:pt-36 lg:pb-20">
+      <motion.section className="pt-32 pb-16 lg:pt-36 lg:pb-20" initial="hidden" animate="visible" variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
@@ -196,7 +198,7 @@ const News = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Resource Sections */}
       {RESOURCE_KIND_CONFIG.map((section) => {
@@ -226,7 +228,7 @@ const News = () => {
       })}
 
       {/* FAQ */}
-      <section className="py-20 lg:py-28">
+      <motion.section className="py-20 lg:py-28" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3">
@@ -255,10 +257,10 @@ const News = () => {
             <p className="text-center text-muted-foreground">No FAQs yet.</p>
           )}
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA */}
-      <section className="py-20 lg:py-28 bg-card/50">
+      <motion.section className="py-20 lg:py-28 bg-card/50" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
             {data.cta.title}
@@ -282,7 +284,7 @@ const News = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </motion.section>
     </Layout>
   );
 };
