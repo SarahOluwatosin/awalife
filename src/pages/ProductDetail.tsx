@@ -444,12 +444,12 @@ const ProductDetail = () => {
               <p className={`${longParagraphClass} text-muted-foreground leading-relaxed mb-10`}>
                 It integrates tools for cell counting, scale bars, annotations, and one-click report generation, with an embedded teaching image library for faster training.
               </p>
-              <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden">
+              <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden flex items-center justify-center">
                 <img
                   src={images.digitalMicroscope}
                   alt="Microscope workstation software"
                   data-override-id="dm03-software"
-                  className="w-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
             </div>
