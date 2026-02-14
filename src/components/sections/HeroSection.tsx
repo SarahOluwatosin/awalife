@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { images } from '@/lib/images';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import FloatingParticles from '@/components/animations/FloatingParticles';
+import Starfield from '@/components/animations/Starfield';
 import AnimatedGradientBg from '@/components/animations/AnimatedGradientBg';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -85,7 +85,7 @@ const HeroSection = () => {
   return (
     <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16">
       <AnimatedGradientBg />
-      <FloatingParticles count={22} />
+      <Starfield starCount={150} speed={0.5} />
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/10" />
       <div className="absolute -top-16 right-16 h-56 w-56 rounded-full bg-primary/10 blur-3xl animate-pulse-soft pointer-events-none" />
       <div
