@@ -89,10 +89,13 @@ const AdminImageOverlay = () => {
       el = hovered.querySelector?.('img') as HTMLImageElement | null;
     }
     if (!el || !el.src) return;
-    const path = extractStoragePath(el.src);
+    // Prefer data-override-id for per-section independent overrides
+    const overrideId = el.getAttribute('data-override-id');
+    const storagePath = extractStoragePath(el.src);
+    const path = overrideId || storagePath;
     if (!path) return;
     // Don't allow overriding override paths to prevent circular references
-    if (path.startsWith('assets/overrides/')) return;
+    if (!overrideId && storagePath?.startsWith('assets/overrides/')) return;
     const rect = el.getBoundingClientRect();
     if (rect.width < 30 || rect.height < 30) return;
     activeElRef.current = el;
@@ -178,12 +181,19 @@ const AdminImageOverlay = () => {
   const refreshAllMatching = (path: string, newUrl: string) => {
     // Force unique cache-buster on each image to prevent stale CDN responses
     const bustUrl = newUrl.includes('?') ? newUrl : `${newUrl}?t=${Date.now()}`;
-    // Update matching images
+    // Update matching images - match by data-override-id first, then storage path
     document.querySelectorAll<HTMLImageElement>('img').forEach(img => {
-      const imgPath = extractStoragePath(img.src);
-      if (imgPath === path) {
+      const overrideId = img.getAttribute('data-override-id');
+      if (overrideId === path) {
         img.src = bustUrl;
-        // Force reload by temporarily clearing src
+        img.removeAttribute('srcset');
+        return;
+      }
+      // Only fall back to storage path if the target path isn't an override-id
+      if (!path.startsWith('assets/') && !path.includes('/')) return;
+      const imgPath = extractStoragePath(img.src);
+      if (imgPath === path && !overrideId) {
+        img.src = bustUrl;
         img.removeAttribute('srcset');
       }
     });
@@ -425,7 +435,11 @@ const AdminImageOverlay = () => {
                 </div>
               ) : (
                 <>
-                  <img src={`${STORAGE_MEDIA_BASE}/${activePath}?t=${Date.now()}`} alt="Current" className="max-h-32 mx-auto rounded object-contain" />
+                  {activePath.startsWith('assets/') ? (
+                    <img src={`${STORAGE_MEDIA_BASE}/${activePath}?t=${Date.now()}`} alt="Current" className="max-h-32 mx-auto rounded object-contain" />
+                  ) : activeElRef.current && 'src' in activeElRef.current ? (
+                    <img src={(activeElRef.current as HTMLImageElement).src} alt="Current" className="max-h-32 mx-auto rounded object-contain" />
+                  ) : null}
                   <p className="text-xs text-muted-foreground text-center mt-1 break-all">{activePath}</p>
                 </>
               )}

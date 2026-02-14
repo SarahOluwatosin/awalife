@@ -105,7 +105,7 @@ const UrineAnalysis = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={images.ai100vet} alt="Urine sediment workflow" className="w-full max-h-80 object-contain" />
+                <img src={images.ai100vet} alt="Urine sediment workflow" data-override-id="urine-overview" className="w-full max-h-80 object-contain" />
               </div>
             </div>
           </div>
@@ -156,7 +156,7 @@ const UrineAnalysis = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center">
-                <img src={images.ai100vet} alt="Urine SOP Video" className="w-full max-h-80 object-contain" />
+                <img src={images.ai100vet} alt="Urine SOP Video" data-override-id="urine-sop" className="w-full max-h-80 object-contain" />
                 <p className="text-xs text-muted-foreground mt-4">Urine SOP Video-02</p>
               </div>
             </div>

@@ -126,11 +126,14 @@ export const MediaOverrideProvider = ({ children }: { children: ReactNode }) => 
         // Skip images already replaced by a video override wrapper
         if (img.closest('[data-media-override]')) return;
         
-        const path = extractStoragePath(img.src);
-        if (!path) return;
+        // Prefer data-override-id over storage path for independent per-section overrides
+        const overrideId = img.getAttribute('data-override-id');
+        const storagePath = extractStoragePath(img.src);
+        const key = overrideId || storagePath;
+        if (!key) return;
         // Never apply overrides to images that are themselves override URLs
-        if (path.startsWith('assets/overrides/')) return;
-        const override = overrides.get(path);
+        if (!overrideId && storagePath?.startsWith('assets/overrides/')) return;
+        const override = overrides.get(key);
         if (!override) return;
 
         // For image overrides, just swap the src (non-destructive)
@@ -143,12 +146,12 @@ export const MediaOverrideProvider = ({ children }: { children: ReactNode }) => 
         }
 
         // Don't apply video replacement twice
-        if (img.parentElement?.getAttribute('data-media-override') === path) return;
-        if (appliedRef.current.has(path)) return;
+        if (img.parentElement?.getAttribute('data-media-override') === key) return;
+        if (appliedRef.current.has(key)) return;
 
         const videoEl = createVideoElement(override, img);
         img.parentElement?.replaceChild(videoEl, img);
-        appliedRef.current.add(path);
+        appliedRef.current.add(key);
       });
     };
 

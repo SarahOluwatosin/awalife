@@ -112,7 +112,7 @@ const About = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
               <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={images.heroDiagnosticLab} alt="Awalife overview" className="w-full max-h-80 object-contain" />
+                <img src={images.heroDiagnosticLab} alt="Awalife overview" data-override-id="about-overview" className="w-full max-h-80 object-contain" />
               </div>
             </div>
           </div>
@@ -199,7 +199,7 @@ const About = () => {
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
             <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-              <img src={images.heroMedtech} alt="Global partners" className="w-full max-h-96 object-contain" />
+              <img src={images.heroMedtech} alt="Global partners" data-override-id="about-partners" className="w-full max-h-96 object-contain" />
             </div>
           </div>
         </div>

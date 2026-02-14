@@ -76,6 +76,7 @@ const ProductsSection = () => {
                   <img
                     src={product.image}
                     alt={product.name}
+                    data-override-id={`home-products-${i}`}
                     className="w-full h-full object-cover object-center"
                     loading="lazy"
                     decoding="async"

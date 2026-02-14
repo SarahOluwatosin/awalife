@@ -32,6 +32,7 @@ const GlobalPartnersSection = () => {
             <img
               src={images.heroMedtech}
               alt="Global veterinary partners"
+              data-override-id="home-partners"
               className="w-full h-full object-cover aspect-[16/7] transition-opacity duration-500"
               loading="lazy"
               decoding="async"

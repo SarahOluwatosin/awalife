@@ -87,18 +87,18 @@ const Products = () => {
             <div className="relative grid grid-cols-2 gap-4">
               <div className="space-y-4">
                 <div className="overflow-hidden rounded-2xl bg-secondary/30">
-                  <img src={images.ai100vet} alt="AI-100Vet Analyzer" className="w-full h-48 object-cover" />
+                  <img src={images.ai100vet} alt="AI-100Vet Analyzer" data-override-id="products-intro-0" className="w-full h-48 object-cover" />
                 </div>
                 <div className="overflow-hidden rounded-2xl bg-secondary/30">
-                  <img src={images.reagents} alt="AWALIFE Reagents" className="w-full h-32 object-cover" />
+                  <img src={images.reagents} alt="AWALIFE Reagents" data-override-id="products-intro-1" className="w-full h-32 object-cover" />
                 </div>
               </div>
               <div className="space-y-4 pt-8">
                 <div className="overflow-hidden rounded-2xl bg-secondary/30">
-                  <img src={images.microscopeStation} alt="Microscope Station" className="w-full h-32 object-cover" />
+                  <img src={images.microscopeStation} alt="Microscope Station" data-override-id="products-intro-2" className="w-full h-32 object-cover" />
                 </div>
                 <div className="overflow-hidden rounded-2xl bg-secondary/30">
-                  <img src={images.ai100vet} alt="Product Showcase" className="w-full h-48 object-cover" />
+                  <img src={images.ai100vet} alt="Product Showcase" data-override-id="products-intro-3" className="w-full h-48 object-cover" />
                 </div>
               </div>
             </div>
@@ -125,6 +125,7 @@ const Products = () => {
                     <img
                       src={product.image}
                       alt={product.name}
+                      data-override-id={`products-grid-${index}`}
                       className="relative z-10 max-h-80 w-auto object-contain group-hover:scale-105 transition-transform duration-700 ease-out drop-shadow-xl"
                     />
                   </div>
@@ -188,19 +189,19 @@ const Products = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
             <div className="col-span-2 row-span-2 overflow-hidden rounded-2xl">
-              <img src={images.ai100vet} alt="AI-100Vet Main" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+              <img src={images.ai100vet} alt="AI-100Vet Main" data-override-id="products-gallery-0" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="overflow-hidden rounded-2xl bg-secondary/30">
-              <img src={images.microscopeStation} alt="Microscope" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+              <img src={images.microscopeStation} alt="Microscope" data-override-id="products-gallery-1" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="overflow-hidden rounded-2xl bg-secondary/30">
-              <img src={images.reagents} alt="Reagents" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+              <img src={images.reagents} alt="Reagents" data-override-id="products-gallery-2" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="overflow-hidden rounded-2xl bg-secondary/30">
-              <img src={images.ai100vet} alt="Product Detail" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+              <img src={images.ai100vet} alt="Product Detail" data-override-id="products-gallery-3" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="overflow-hidden rounded-2xl bg-secondary/30">
-              <img src={images.microscopeStation} alt="Lab Equipment" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+              <img src={images.microscopeStation} alt="Lab Equipment" data-override-id="products-gallery-4" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
             </div>
           </div>
         </div>
@@ -211,7 +212,7 @@ const Products = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="relative rounded-2xl overflow-hidden bg-secondary/30 p-8 lg:p-12">
-              <img src={images.ai100vet} alt="AWALIFE Technology" className="w-full h-auto object-contain" />
+              <img src={images.ai100vet} alt="AWALIFE Technology" data-override-id="products-stats" className="w-full h-auto object-contain" />
             </div>
             <div>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
