@@ -1,10 +1,61 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
 import { images } from '@/lib/images';
+
+const MetricItem = ({ value, suffix, label, delay, decimals = 0 }: { value: number; suffix: string; label: string; delay: number; decimals?: number }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setIsVisible(true);
+    }, { threshold: 0.3 });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    const timer = setTimeout(() => {
+      const duration = 2000;
+      const steps = 60;
+      const increment = value / steps;
+      let current = 0;
+      const counter = setInterval(() => {
+        current += increment;
+        if (current >= value) {
+          setCount(value);
+          clearInterval(counter);
+        } else {
+          setCount(current);
+        }
+      }, duration / steps);
+      return () => clearInterval(counter);
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [isVisible, value, delay]);
+
+  return (
+    <motion.div
+      ref={ref}
+      className="text-center"
+      initial={{ opacity: 0, y: 18 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+      transition={{ duration: 0.6, delay: delay / 1000, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
+        {count.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}{suffix}
+      </div>
+      <div className="text-muted-foreground text-sm">{label}</div>
+    </motion.div>
+  );
+};
 
 const About = () => {
   useEffect(() => {
@@ -14,9 +65,10 @@ const About = () => {
   const bodyTextClass = 'text-lg';
 
   const metrics = [
-  { value: '15M+', label: 'Images Used for AI Model Training' },
-  { value: '2.4M+', label: 'Reports Generated' },
-  { value: '8,000+', label: 'Installations Worldwide' }];
+    { rawValue: 15, suffix: 'M+', label: 'Images Used for AI Model Training', decimals: 0 },
+    { rawValue: 2.4, suffix: 'M+', label: 'Reports Generated', decimals: 1 },
+    { rawValue: 8000, suffix: '+', label: 'Installations Worldwide', decimals: 0 },
+  ];
 
 
   const timeline = [
@@ -96,16 +148,10 @@ const About = () => {
                 review-ready reports with images and counts across blood, urine, feces, and body fluids. We continue to
                 expand this platform through ongoing innovation and updates.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                {metrics.map((metric) =>
-                <div
-                  key={metric.label}
-                  className="overflow-hidden rounded-2xl border border-border/30 bg-secondary/20 p-5 transition-colors hover:border-primary/30">
-
-                    <div className="text-2xl md:text-3xl font-semibold text-foreground">{metric.value}</div>
-                    <div className="text-sm text-muted-foreground mt-1">{metric.label}</div>
-                  </div>
-                )}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 mt-10">
+                {metrics.map((metric, i) => (
+                  <MetricItem key={metric.label} value={metric.rawValue} suffix={metric.suffix} label={metric.label} delay={i * 100} decimals={metric.decimals} />
+                ))}
               </div>
             </div>
 
