@@ -7,7 +7,7 @@ import { sectionVariants, viewportOnce } from '@/lib/animations';
 
 const CTASection = () => {
   return (
-    <section className="relative py-20 lg:py-28 bg-card/50 overflow-hidden">
+    <section className="relative py-20 lg:py-28 bg-gradient-to-b from-primary/[0.04] to-transparent overflow-hidden">
       <AnimatedGradientBg />
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
         <motion.div
@@ -18,7 +18,7 @@ const CTASection = () => {
           variants={sectionVariants}
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Interested in Our Products?
+            Interested in <span className="gradient-text">Our Products</span>?
           </h2>
           <p className="text-[18px] text-muted-foreground mb-10">
             Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.

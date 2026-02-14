@@ -144,7 +144,7 @@ const HeroSection = () => {
             transition={{ duration: 0.9, ease }}
           >
             <motion.div
-              className="rounded-2xl overflow-hidden border border-border/40 shadow-xl bg-secondary/30 transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.12)]"
+              className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]"
               style={{ y: imageY }}
             >
               <img

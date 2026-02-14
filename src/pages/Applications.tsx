@@ -32,7 +32,7 @@ const Applications = () => {
         </div>
       </motion.section>
 
-      <section className="py-20 lg:py-28 pb-28 lg:pb-36">
+      <section className="py-20 lg:py-28 pb-28 lg:pb-36 bg-gradient-to-b from-primary/[0.03] to-transparent">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="space-y-16 lg:space-y-24">
             {applications.map((app, index) => (
@@ -63,7 +63,7 @@ const Applications = () => {
         </div>
       </section>
 
-      <motion.section className="py-20 lg:py-28 bg-card/50" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
+      <motion.section className="py-20 lg:py-28 bg-secondary/20" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">{t.cta.title} <span className="gradient-text">{t.cta.titleHighlight}</span></h2>

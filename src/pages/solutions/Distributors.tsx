@@ -106,9 +106,8 @@ const Distributors = () => {
             </motion.div>
 
             <motion.div className="relative lg:order-1" variants={fadeInLeft}>
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={images.ai100vet} alt="AWALIFE Products" data-override-id="distributors-hero" className="w-full max-h-80 object-contain" />
+              <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
+                <img src={images.ai100vet} alt="AWALIFE Products" data-override-id="distributors-hero" className="w-full aspect-[4/3] object-cover" />
               </div>
             </motion.div>
           </div>
@@ -116,21 +115,21 @@ const Distributors = () => {
       </motion.section>
 
       {/* Partner Benefits */}
-      <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
+      <motion.section className="py-16 lg:py-20 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Partner Value Proposition
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Why Partner with AWALIFE</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Why Partner with <span className="gradient-text">AWALIFE</span></h2>
           </motion.div>
 
           <motion.div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {partnerBenefits.map((benefit, index) => (
               <motion.div key={benefit.title} className="group relative" variants={cardSlideUp}>
                 <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative glow-card p-8 h-full text-center">
-                  <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/60 mb-4">0{index + 1}</span>
+                <div className="relative rounded-2xl border border-border/50 bg-card p-8 h-full text-center shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
+                  <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">0{index + 1}</span>
                   <motion.div className="icon-glow mx-auto mb-6 group-hover:scale-110 transition-transform duration-300" variants={popIn}>
                     <benefit.icon className="w-7 h-7 text-primary" />
                   </motion.div>
@@ -150,12 +149,12 @@ const Distributors = () => {
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
               Product Support
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">What We Provide</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">What We <span className="gradient-text">Provide</span></h2>
           </motion.div>
 
           <motion.div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {supportOfferings.map((item) => (
-              <motion.div key={item.title} className="glow-card p-6 text-center" variants={cardSlideUp}>
+              <motion.div key={item.title} className="rounded-2xl border border-border/50 bg-card p-6 text-center shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400" variants={cardSlideUp}>
                 <motion.div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4" variants={popIn}>
                   <item.icon className="w-6 h-6 text-primary" />
                 </motion.div>
@@ -168,7 +167,7 @@ const Distributors = () => {
       </motion.section>
 
       {/* Requirements */}
-      <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
+      <motion.section className="py-16 lg:py-20 bg-secondary/20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="max-w-4xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -176,7 +175,7 @@ const Distributors = () => {
                 <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                   Partner Requirements
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Ideal Partner Profile</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Ideal <span className="gradient-text">Partner Profile</span></h2>
                 <p className="text-muted-foreground mb-8">
                   We're looking for partners who share our commitment to quality and customer success. Here's what we look for:
                 </p>

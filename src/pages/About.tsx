@@ -78,23 +78,24 @@ const About = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div variants={fadeInLeft}>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Pioneering AI-Powered Morphology Diagnostics</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Pioneering <span className="gradient-text">AI-Powered Morphology</span> Diagnostics</h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife is a dedicated innovator in AI-powered morphology for veterinary diagnostics, with a long-term focus on formed element analysis. By pairing high-quality microscopy imaging with AI-assisted morphology recognition, we help clinics standardize workflows and document findings with clarity—through review-ready reports with images and counts across blood, urine, feces, and body fluids. We continue to expand this platform through ongoing innovation and updates.</p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 mt-10">
                 {metrics.map((metric, i) => <MetricItem key={metric.label} value={metric.rawValue} suffix={metric.suffix} label={metric.label} delay={i * 100} decimals={metric.decimals} />)}
               </div>
             </motion.div>
-            <motion.div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card" variants={fadeInRight}>
+            <motion.div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]" variants={fadeInRight}>
               <img src={images.heroDiagnosticLab} alt="Awalife overview" data-override-id="about-overview" className="w-full object-contain" />
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      <motion.section className="py-20 lg:py-28 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
+      <motion.section className="py-20 lg:py-28 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Key Moments That Shaped Awalife</h2>
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/15 text-primary border border-primary/25 mb-6">Our Journey</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Key Moments That <span className="gradient-text">Shaped Awalife</span></h2>
           </div>
           <div className="max-w-4xl mx-auto">
             <div className="relative">
@@ -120,7 +121,7 @@ const About = () => {
       <motion.section className="py-20 lg:py-28" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Mission and Core Values</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Mission and <span className="gradient-text">Core Values</span></h2>
           </div>
           <motion.div className="grid md:grid-cols-2 gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             <motion.div className="glow-card p-8 flex items-start justify-between gap-6" variants={cardVariants}>
@@ -141,24 +142,23 @@ const About = () => {
         </div>
       </motion.section>
 
-      <motion.section className="py-20 lg:py-28" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
+      <motion.section className="py-20 lg:py-28 bg-secondary/20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Scaling globally through partners who deliver locally</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Scaling <span className="gradient-text">globally</span> through partners who deliver locally</h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-4`}>From product design to service processes, Awalife is built for international deployment. With standardized workflows, review-ready outputs, and a platform that keeps expanding across sample types, we help teams deliver consistent clinical value across regions and practice settings.</p>
           </div>
           <div className="relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-            <div className="relative rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card">
+            <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
               <img src={images.heroMedtech} alt="Global partners" data-override-id="about-partners" className="w-full object-cover" />
             </div>
           </div>
         </div>
       </motion.section>
 
-      <motion.section className="py-20 lg:py-28 bg-card/50" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
+      <motion.section className="py-20 lg:py-28 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in Our Products?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in <span className="gradient-text">Our Products</span>?</h2>
           <p className={`${bodyTextClass} text-muted-foreground max-w-2xl mx-auto mb-10`}>Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>
