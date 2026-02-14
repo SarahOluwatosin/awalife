@@ -396,6 +396,7 @@ const ProductDetail = () => {
                 <img
                   src={images.dm03Microscope}
                   alt="DM-03 Microscope hardware"
+                  data-override-id="dm03-hardware"
                   className="w-full max-w-[420px] object-contain"
                 />
               </div>
@@ -449,6 +450,7 @@ const ProductDetail = () => {
                 <img
                   src={images.digitalMicroscope}
                   alt="Microscope workstation software"
+                  data-override-id="dm03-software"
                   className="w-full max-w-[420px] object-contain"
                 />
               </div>
@@ -466,6 +468,7 @@ const ProductDetail = () => {
                 <img
                   src={images.dm03Medtech}
                   alt="Microscope image hub module"
+                  data-override-id="dm03-imagehub"
                   className="w-full max-w-[420px] object-contain"
                 />
               </div>
@@ -644,6 +647,7 @@ const ProductDetail = () => {
                       <img 
                         src={prod.images[0]} 
                         alt={prod.name}
+                        data-override-id={`other-product-${prod.id}`}
                         className="max-h-full object-contain group-hover:scale-110 transition-transform duration-500"
                       />
                     </div>
