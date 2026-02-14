@@ -3,6 +3,21 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { images } from '@/lib/images';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import FloatingParticles from '@/components/animations/FloatingParticles';
+import AnimatedGradientBg from '@/components/animations/AnimatedGradientBg';
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const fadeUp = (delay = 0) => ({
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease, delay } },
+});
 
 interface MetricItemProps {
   value: number;
@@ -57,6 +72,10 @@ const MetricItem = ({ value, suffix, label, decimals = 0, delay = 0 }: MetricIte
 };
 
 const HeroSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollY } = useScroll();
+  const imageY = useTransform(scrollY, [0, 600], [0, 90]);
+
   const metrics = [
     { value: 15, suffix: 'M+', label: 'Images Used for AI Model Training' },
     { value: 2.4, suffix: 'M+', label: 'Reports Generated', decimals: 1 },
@@ -64,7 +83,9 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden pt-28 pb-16">
+    <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16">
+      <AnimatedGradientBg />
+      <FloatingParticles count={22} />
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/10" />
       <div className="absolute -top-16 right-16 h-56 w-56 rounded-full bg-primary/10 blur-3xl animate-pulse-soft pointer-events-none" />
       <div
@@ -74,25 +95,30 @@ const HeroSection = () => {
 
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
-          <div className="max-w-xl">
-            <div className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 opacity-0 animate-fade-in">
+          <motion.div
+            className="max-w-xl"
+            initial="hidden"
+            animate="visible"
+            variants={stagger}
+          >
+            <motion.div variants={fadeUp()} className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
               <span className="text-[11px] sm:text-sm text-foreground/80 tracking-[0.02em] whitespace-nowrap">
                 Pioneering AI-Powered Morpology Diagnostics
               </span>
-            </div>
+            </motion.div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 opacity-0 animate-fade-in delay-100 leading-tight">
+            <motion.h1 variants={fadeUp(0.05)} className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               <span className="text-foreground">Morphology isn't </span>
               <br />
               <span className="text-foreground">a feature for us, </span>
               <span className="gradient-text">it's the foundation</span>
-            </h1>
+            </motion.h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 opacity-0 animate-fade-in delay-200 leading-relaxed">
+            <motion.p variants={fadeUp(0.1)} className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 leading-relaxed">
               We turn cellular morphology into visible, quantifiable, and review-ready evidence, helping veterinarians diagnose with greater depth and confidence.
-            </p>
+            </motion.p>
 
-            <div className="flex flex-wrap gap-4 opacity-0 animate-fade-in delay-300">
+            <motion.div variants={fadeUp(0.15)} className="flex flex-wrap gap-4">
               <Button size="lg" className="btn-gradient group px-8" asChild>
                 <Link to="/contact">
                   Contact us
@@ -102,17 +128,25 @@ const HeroSection = () => {
               <Button size="lg" variant="outline" className="border-border/50 hover:border-primary/40 px-8" asChild>
                 <Link to="/products">Explore products</Link>
               </Button>
-            </div>
+            </motion.div>
 
-            <div className="mt-10 grid gap-8 sm:grid-cols-3">
+            <motion.div variants={fadeUp(0.2)} className="mt-10 grid gap-8 sm:grid-cols-3">
               {metrics.map((metric, index) => (
                 <MetricItem key={metric.label} {...metric} delay={index * 120} />
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <div className="relative">
-            <div className="rounded-2xl overflow-hidden border border-border/40 shadow-xl bg-secondary/30">
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, scale: 0.95, rotateY: -4 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 0.9, ease }}
+          >
+            <motion.div
+              className="rounded-2xl overflow-hidden border border-border/40 shadow-xl bg-secondary/30 transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.12)]"
+              style={{ y: imageY }}
+            >
               <img
                 src={images.heroDiagnosticLab}
                 alt="Veterinary diagnostic workflow"
@@ -123,9 +157,13 @@ const HeroSection = () => {
                 width={800}
                 height={640}
               />
-            </div>
-            <div className="absolute -bottom-6 -left-6 w-28 h-28 rounded-2xl bg-primary/10 border border-primary/20 hidden md:block" />
-          </div>
+            </motion.div>
+            <motion.div
+              className="absolute -bottom-6 -left-6 w-28 h-28 rounded-2xl bg-primary/10 border border-primary/20 hidden md:block"
+              animate={{ y: [0, -12, 0], rotate: [0, 2, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </motion.div>
         </div>
       </div>
     </section>

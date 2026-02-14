@@ -28,7 +28,7 @@ const GlobalPartnersSection = () => {
           </p>
         </div>
         <div className={`mt-12 transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-secondary/30">
+          <div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-secondary/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_hsl(var(--accent)/0.15)]">
             <img
               src={images.heroMedtech}
               alt="Global veterinary partners"

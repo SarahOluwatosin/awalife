@@ -61,7 +61,7 @@ const ProductsSection = () => {
           >
             <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
               <div
-                className="relative rounded-2xl bg-gradient-to-br from-secondary/50 to-card overflow-hidden shadow-lg aspect-[4/3]"
+                className="relative rounded-2xl bg-gradient-to-br from-secondary/50 to-card overflow-hidden shadow-lg aspect-[4/3] transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_hsl(var(--accent)/0.15)]"
                 style={{ perspective: '1200px' }}
               >
                 <span className="absolute top-6 left-6 text-6xl font-bold text-primary/10 z-10">
