@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,13 +7,20 @@ import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
 import ApplicationImageCarousel from '@/components/sections/ApplicationImageCarousel';
 import { images } from '@/lib/images';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { sectionVariants, staggerContainer, cardVariants, fadeInLeft, fadeInRight, viewportOnce, viewportOnceSmall } from '@/lib/animations';
 
 const FecesAnalysis = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   const bodyTextClass = 'text-lg';
   const cardTextClass = 'text-base';
+
+  const imgRef1 = useRef<HTMLElement>(null);
+  const imgRef2 = useRef<HTMLElement>(null);
+  const { scrollYProgress: sp1 } = useScroll({ target: imgRef1, offset: ['start end', 'end start'] });
+  const { scrollYProgress: sp2 } = useScroll({ target: imgRef2, offset: ['start end', 'end start'] });
+  const py1 = useTransform(sp1, [0, 1], [40, -40]);
+  const py2 = useTransform(sp2, [0, 1], [40, -40]);
 
   const fallbackImages = [
     { url: images.speciesCanineFeline, label: 'Canine & Feline' },
@@ -34,31 +41,31 @@ const FecesAnalysis = () => {
     <Layout>
       <PageHero title="Feces Analysis" subtitle="From repetitive inefficiency to simple efficiency" breadcrumb={[{ label: 'Applications', path: '/applications' }, { label: 'Feces Analysis', path: '/applications/feces' }]} />
 
-      <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
+      <motion.section ref={imgRef1} className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Slide-free Fecal Analysis - Results within 30 Minutes</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Slide-free Fecal Analysis - <span className="gradient-text">Results within 30 Minutes</span></h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife streamlines fecal screening with a slide-free workflow and two sampling options, delivering review-ready images and actionable findings in under 30 minutes - designed for consistent interpretation and documentation.</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
                 <Button variant="outline" size="lg" asChild><Link to="/contact">See it in action</Link></Button>
               </div>
             </motion.div>
-            <motion.div className="relative" variants={fadeInRight}>
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={images.ai100vet} alt="AI-100Vet Feces Analyzer" data-override-id="feces-overview" className="w-full max-h-80 object-contain" />
+            <motion.div className="relative" variants={fadeInRight} style={{ y: py1 }}>
+              <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
+                <img src={images.ai100vet} alt="AI-100Vet Feces Analyzer" data-override-id="feces-overview" className="w-full aspect-[4/3] object-cover" />
               </div>
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
+      <motion.section className="py-16 lg:py-20 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">No Slides, Two Sampling Options</h2>
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/15 text-primary border border-primary/25 mb-6">Two Sampling Options</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">No Slides, <span className="gradient-text">Two Sampling Options</span></h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Powered by our latest AI model, continuously improving with regular updates.</p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
@@ -68,16 +75,19 @@ const FecesAnalysis = () => {
           </div>
           <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {samplingCategories.map((category) => (
-              <motion.div key={category.title} className="glow-card p-6 text-left" variants={cardVariants}>
-                <h3 className="text-lg font-semibold text-foreground mb-4">{category.title}</h3>
-                <ul className={`space-y-2 ${cardTextClass} text-muted-foreground`}>
-                  {category.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-primary"><Check className="h-3 w-3" /></span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+              <motion.div key={category.title} className="group relative" variants={cardVariants}>
+                <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative rounded-2xl border border-border/50 bg-card p-6 text-left shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">{category.title}</h3>
+                  <ul className={`space-y-2 ${cardTextClass} text-muted-foreground`}>
+                    {category.items.map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary"><Check className="h-3 w-3" /></span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -88,14 +98,15 @@ const FecesAnalysis = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div className="relative" variants={fadeInLeft}>
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center">
-                <img src={images.ai100vet} alt="Feces SOP Video-02" data-override-id="feces-sop-02" className="w-full max-h-80 object-contain" />
-                <p className="text-xs text-muted-foreground mt-4">Feces SOP Video-02</p>
+              <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
+                <img src={images.ai100vet} alt="Feces SOP Video-02" data-override-id="feces-sop-02" className="w-full aspect-[4/3] object-cover" />
+                <div className="p-4 bg-secondary/20 border-t border-border/30">
+                  <p className="text-xs text-muted-foreground">Feces SOP Video-02</p>
+                </div>
               </div>
             </motion.div>
             <motion.div variants={fadeInRight}>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How It Works</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How It <span className="gradient-text">Works</span></h3>
               <p className={`${bodyTextClass} text-muted-foreground mb-6`}>Direct Sampling</p>
               <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
                 <li>Broader coverage with more reportable parameters/findings.</li>
@@ -107,11 +118,11 @@ const FecesAnalysis = () => {
         </div>
       </motion.section>
 
-      <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
+      <motion.section ref={imgRef2} className="py-16 lg:py-20 bg-secondary/20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div variants={fadeInLeft}>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How It Works</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How It <span className="gradient-text">Works</span></h3>
               <p className={`${bodyTextClass} text-muted-foreground mb-6`}>Flotation Sampling (Centrifugal Flotation)</p>
               <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
                 <li>Uses a horizontal centrifuge to concentrate eggs/cysts.</li>
@@ -120,21 +131,23 @@ const FecesAnalysis = () => {
                 <li>Recommended when: The sample is low concentration, or parasite enrichment is clinically important.</li>
               </ul>
             </motion.div>
-            <motion.div className="relative" variants={fadeInRight}>
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center">
-                <img src={images.ai100vet} alt="Feces SOP Video-03" data-override-id="feces-sop-03" className="w-full max-h-80 object-contain" />
-                <p className="text-xs text-muted-foreground mt-4">Feces SOP Video-03</p>
+            <motion.div className="relative" variants={fadeInRight} style={{ y: py2 }}>
+              <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
+                <img src={images.ai100vet} alt="Feces SOP Video-03" data-override-id="feces-sop-03" className="w-full aspect-[4/3] object-cover" />
+                <div className="p-4 bg-secondary/20 border-t border-border/30">
+                  <p className="text-xs text-muted-foreground">Feces SOP Video-03</p>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
+      <motion.section className="py-16 lg:py-20 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">True-to-life Images, Ready for Review</h2>
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/15 text-primary border border-primary/25 mb-6">Clinical Images</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground"><span className="gradient-text">True-to-life Images</span>, Ready for Review</h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Review your report and verify the images with confidence - and tap into Awalife's clinical specialists whenever needed.</p>
           </div>
           <ApplicationImageCarousel pageKey="feces" fallbackImages={fallbackImages} />
@@ -144,7 +157,7 @@ const FecesAnalysis = () => {
       <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
           </div>
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="w-full">
@@ -164,9 +177,9 @@ const FecesAnalysis = () => {
         </div>
       </motion.section>
 
-      <motion.section className="py-20 lg:py-28 bg-card/50" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
+      <motion.section className="py-20 lg:py-28 bg-secondary/20" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in Our Products?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in <span className="gradient-text">Our Products</span>?</h2>
           <p className={`${bodyTextClass} text-muted-foreground max-w-2xl mx-auto mb-10`}>Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>

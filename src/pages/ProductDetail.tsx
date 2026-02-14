@@ -214,7 +214,7 @@ const ProductDetail = () => {
             {/* Content */}
             <motion.div className={`lg:py-6 ${(isAIAnalyzer || isMicroscope) ? 'lg:order-1' : ''} ${isMicroscope ? 'max-w-lg' : ''}`} variants={fadeInLeft}>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
-                {isMicroscope ? 'Smarter Imaging, Effortless Operation' : product.name}
+                {isMicroscope ? <>Smarter Imaging, <span className="gradient-text">Effortless Operation</span></> : product.name}
               </h1>
               
               <p className={`${longParagraphClass} text-muted-foreground leading-relaxed mb-10`}>
@@ -279,14 +279,14 @@ const ProductDetail = () => {
 
       {/* Capabilities Section */}
       {product.capabilities && !isMicroscope && (
-        <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
+        <motion.section className="py-16 lg:py-20 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className={containerClass}>
             <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                 {isAIAnalyzer ? 'Key Features' : 'Capabilities'}
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                {isAIAnalyzer ? 'AI Series Morphology Analyzer from sample to diagnosis.' : 'What It Can Do'}
+                {isAIAnalyzer ? <>AI Series Morphology Analyzer from <span className="gradient-text">sample to diagnosis</span>.</> : <>What It <span className="gradient-text">Can Do</span></>}
               </h2>
             </motion.div>
             
@@ -302,8 +302,8 @@ const ProductDetail = () => {
               {product.capabilities.map((cap: any, index: number) => (
                 <motion.div key={cap.title} className="group relative" variants={cardSlideUp}>
                   <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative glow-card p-8 h-full text-center">
-                    <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/60 mb-4">0{index + 1}</span>
+                   <div className="relative rounded-2xl border border-border/50 bg-card p-8 h-full text-center shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
+                    <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">0{index + 1}</span>
                     <motion.div className="icon-glow mx-auto mb-6 group-hover:scale-110 transition-transform duration-300" variants={popIn}>
                       <cap.icon className="w-7 h-7 text-primary" />
                     </motion.div>
@@ -323,7 +323,7 @@ const ProductDetail = () => {
           <div className={containerClass}>
             <motion.div className="text-center max-w-3xl mx-auto mb-12" variants={blurIn}>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                From Sample to Insight, One Workflow for Multiple Sample Types
+                From Sample to Insight, <span className="gradient-text">One Workflow</span> for Multiple Sample Types
               </h2>
               <p className={`${longParagraphClass} text-muted-foreground`}>
                 Awalife's workflow supports consistent results across blood, urine, feces, and pleural fluid analysis.
@@ -624,7 +624,7 @@ const ProductDetail = () => {
 
       {/* Product Comparison */}
       {!isMicroscope && (
-        <div className="bg-card/50">
+        <div className="bg-gradient-to-b from-primary/[0.04] to-transparent">
           <ProductComparison variant={isAIAnalyzer ? 'ai-analyzer' : 'full'} />
         </div>
       )}
@@ -637,7 +637,7 @@ const ProductDetail = () => {
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
                 Explore More
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Other Products</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Other <span className="gradient-text">Products</span></h2>
             </motion.div>
             
             <motion.div className="grid md:grid-cols-3 gap-6 lg:gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
@@ -648,8 +648,8 @@ const ProductDetail = () => {
                     className="group relative block"
                   >
                     <div className="absolute -inset-1 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="relative glow-card overflow-hidden h-full">
-                      <div className="h-48 bg-gradient-to-br from-secondary/50 to-card flex items-center justify-center p-6">
+                     <div className="relative rounded-2xl border border-border/50 bg-card overflow-hidden h-full shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
+                       <div className="h-48 bg-gradient-to-br from-secondary/30 to-card flex items-center justify-center p-6">
                         <img 
                           src={prod.images[0]} 
                           alt={prod.name}
@@ -749,11 +749,11 @@ const ProductDetail = () => {
       )}
 
       {/* CTA */}
-      <motion.section className="py-20 lg:py-28 bg-card/50" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
+      <motion.section className="py-20 lg:py-28 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className={`${containerClass} text-center`}>
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              Interested in Our Products?
+              Interested in <span className="gradient-text">Our Products</span>?
             </h2>
             <p className={`${longParagraphClass} text-muted-foreground mb-10`}>
               Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.
