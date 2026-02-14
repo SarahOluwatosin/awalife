@@ -73,7 +73,7 @@ const ApplicationImageCarousel = ({ pageKey, fallbackImages = [] }: ApplicationI
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {displayImages.map((img, idx) => (
           <div key={idx} className="glow-card p-4 text-center">
-            <img src={img.url} alt={img.label || `Sample ${idx + 1}`} className="w-full aspect-square object-cover rounded-lg" />
+            <img src={img.url} alt={img.label || `Sample ${idx + 1}`} data-override-id={`${pageKey}-carousel-${idx}`} className="w-full aspect-square object-cover rounded-lg" />
             {img.label && (
               <p className="text-xs text-muted-foreground mt-2 truncate">{img.label}</p>
             )}
