@@ -358,17 +358,16 @@ const ProductDetail = () => {
 
       {/* Microscope Sample Types */}
       {isMicroscope && (
-        <motion.section className="py-10 lg:py-12" initial="hidden" whileInView="visible" viewport={viewportOnceTiny} variants={sectionVariants}>
+        <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceTiny} variants={sectionVariants}>
           <div className={containerClass}>
-            <div className="glow-card bg-secondary/20 border border-border/40 px-6 py-6">
-              <div className="flex flex-col gap-5">
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">Samples supported on the microscope</h3>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Common veterinary sample types that can be captured and documented with the workstation.
-                  </p>
-                </div>
-                <motion.div className="flex flex-wrap items-center gap-4 text-sm font-semibold text-muted-foreground" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">Samples Supported</h2>
+                <p className="text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                  Common veterinary sample types that can be captured and documented with the workstation.
+                </p>
+              </div>
+              <motion.div className="flex flex-wrap justify-center items-center gap-4 text-base font-medium text-muted-foreground" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   {[
                     { label: 'Urine', icon: FlaskConical },
                     { label: 'Fecal', icon: Bug },
@@ -389,7 +388,6 @@ const ProductDetail = () => {
                     </motion.span>
                   ))}
                 </motion.div>
-              </div>
             </div>
           </div>
         </motion.section>
@@ -399,8 +397,8 @@ const ProductDetail = () => {
       {isMicroscope && (
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
-            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-start">
-              <motion.div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card" variants={fadeInLeft}>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div className="rounded-3xl overflow-hidden max-w-md mx-auto" variants={fadeInLeft}>
                 <img
                   src={images.dm03Microscope}
                   alt="DM-03 Microscope hardware"
@@ -408,8 +406,8 @@ const ProductDetail = () => {
                   className="w-full object-contain"
                 />
               </motion.div>
-              <motion.div variants={fadeInRight}>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">High-performance Hardware</h2>
+              <motion.div className="max-w-xl" variants={fadeInRight}>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">High-performance Hardware</h2>
                 <motion.div className="space-y-5" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   {[
                     {
@@ -430,8 +428,8 @@ const ProductDetail = () => {
                     },
                   ].map((item) => (
                     <motion.div key={item.title} className="border-b border-border/40 pb-4 last:border-0 last:pb-0" variants={cardVariants}>
-                      <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
-                      <p className={`${detailParagraphClass} text-muted-foreground leading-relaxed`}>{item.desc}</p>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
+                      <p className="text-base text-muted-foreground leading-relaxed">{item.desc}</p>
                     </motion.div>
                   ))}
                 </motion.div>
@@ -445,14 +443,14 @@ const ProductDetail = () => {
       {isMicroscope && (
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
-            <motion.div className="flex flex-col items-center text-center max-w-3xl mx-auto" variants={blurIn}>
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
+            <motion.div className="flex flex-col items-center text-center max-w-4xl mx-auto" variants={blurIn}>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
                 User-friendly Software Built for Veterinary Workflows
               </h2>
-              <p className={`${longParagraphClass} text-muted-foreground leading-relaxed mb-10`}>
+              <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-2xl">
                 It integrates tools for cell counting, scale bars, annotations, and one-click report generation, with an embedded teaching image library for faster training.
               </p>
-              <div className="w-full rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card">
+              <div className="w-full max-w-2xl rounded-3xl overflow-hidden">
                 <img
                   src={images.digitalMicroscope}
                   alt="Microscope workstation software"
@@ -469,8 +467,8 @@ const ProductDetail = () => {
       {isMicroscope && (
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
-            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-start">
-              <motion.div className="rounded-2xl overflow-hidden border border-border/40 shadow-lg bg-card" variants={fadeInLeft}>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div className="rounded-3xl overflow-hidden max-w-md mx-auto" variants={fadeInLeft}>
                 <img
                   src={images.dm03Medtech}
                   alt="Microscope image hub module"
@@ -478,17 +476,17 @@ const ProductDetail = () => {
                   className="w-full object-contain"
                 />
               </motion.div>
-              <motion.div variants={fadeInRight}>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+              <motion.div className="max-w-xl" variants={fadeInRight}>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
                   Already Have a Microscope?
                 </h2>
-                <h3 className="text-lg font-semibold text-foreground mb-4">
+                <h3 className="text-xl font-semibold text-foreground mb-4">
                   Upgrade it with Awalife Microscope Image Hub.
                 </h3>
-                <p className={`${longParagraphClass} text-muted-foreground leading-relaxed mb-6`}>
+                <p className="text-base text-muted-foreground leading-relaxed mb-6">
                   Keep your Leica or Olympus microscope and unlock the same Awalife software workflow—capture, measure, annotate, count, and report on a PC.
                 </p>
-                <ul className={`${longParagraphClass} text-muted-foreground space-y-3 list-disc list-inside`}>
+                <ul className="text-base text-muted-foreground space-y-3 list-disc list-inside">
                   <li>Compatible with Leica and Olympus microscopes (models as applicable)</li>
                   <li>Plug-and-play connection to PC</li>
                   <li>Unlock user friendly software: capture, measure, annotate, count, report</li>
