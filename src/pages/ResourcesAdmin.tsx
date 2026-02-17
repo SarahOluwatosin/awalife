@@ -485,7 +485,7 @@ const ResourcesAdmin = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="flex items-center justify-between">
             <div>
-              <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-2">Admin</span>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Admin</span>
               <h1 className="text-3xl md:text-4xl font-bold text-foreground">Content Management</h1>
               <p className="text-muted-foreground mt-2">Manage Resources and News. Changes are saved to the database.</p>
             </div>

@@ -24,11 +24,11 @@ const CertificationsSection = () => {
       <div className="container mx-auto px-6 lg:px-16 xl:px-24">
         <div className={`grid gap-12 lg:grid-cols-2 items-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
           <div className="max-w-lg">
-            <span className="text-sm font-semibold tracking-wider uppercase text-primary mb-3 inline-block">
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               Regulatory Credibility
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-              Certified for global veterinary diagnostics.
+              Certified for <span className="gradient-text">global</span> veterinary diagnostics.
             </h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-2">

@@ -34,7 +34,7 @@ const BodyFluids = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div className="lg:order-2" variants={fadeInRight}>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">Advanced Analysis</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Beyond Standard Sample Types</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6"><span className="gradient-text">Beyond Standard</span> Sample Types</h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">AWALIFE analyzers support analysis of pleural fluid, ascitic fluid, and skin samples. With AI-powered recognition and counting of cellular morphology, the system assists veterinarians in determining fluid characteristics and provides multi-dimensional diagnostic insights for complex cases.</p>
               <div className="space-y-4 mb-8">
                 {['Pleural fluid cytology', 'Ascitic fluid analysis', 'Skin scraping examination', 'AI-powered cell counting'].map((feature) => (
@@ -63,7 +63,7 @@ const BodyFluids = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">Sample Types</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Specialized Analysis Capabilities</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground"><span className="gradient-text">Specialized</span> Analysis Capabilities</h2>
           </div>
           <motion.div className="grid md:grid-cols-2 gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {analysisTypes.map((type) => (
@@ -89,7 +89,7 @@ const BodyFluids = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">Clinical Applications</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Typical Clinical Scenarios</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground"><span className="gradient-text">Typical</span> Clinical Scenarios</h2>
           </div>
           <motion.div className="grid md:grid-cols-2 gap-6 lg:gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {clinicalScenarios.map((scenario, index) => (

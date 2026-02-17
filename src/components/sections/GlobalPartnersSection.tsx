@@ -17,11 +17,11 @@ const GlobalPartnersSection = () => {
     <section ref={sectionRef} className="py-24">
       <div className="container mx-auto px-6 lg:px-16 xl:px-24">
         <div className={`max-w-2xl mx-auto text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3">
+          <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
             Global Partners
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
-            Scaling Globally through Partners Who Deliver Locally
+            Scaling <span className="gradient-text">Globally</span> through Partners Who Deliver <span className="gradient-text">Locally</span>
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed max-w-4xl mx-auto">
             From product design to service processes, Awalife is built for international deployment. With standardized workflows, review-ready outputs, and a platform that keeps expanding across sample types, we help teams deliver consistent clinical value across regions and practice settings.

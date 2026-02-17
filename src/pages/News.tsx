@@ -167,7 +167,7 @@ const News = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={blurIn}>
-              <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 Resource Center
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
@@ -239,7 +239,7 @@ const News = () => {
       <motion.section className="py-20 lg:py-28" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3">
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               FAQ
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">{data.faq.title}</h2>

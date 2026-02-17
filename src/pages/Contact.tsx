@@ -19,55 +19,101 @@ const Contact = () => {
 
   return (
     <Layout>
-      <motion.section className="pt-32 pb-16 lg:pt-36 lg:pb-20" initial="hidden" animate="visible" variants={sectionVariants}>
+      {/* Hero Section with Contact Info */}
+      <motion.section className="pt-32 pb-20 lg:pt-36 lg:pb-24" initial="hidden" animate="visible" variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="max-w-2xl">
-            <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">Get in Touch</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">Contact Us</h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">If you're interested in learning more about Awalife's products or exploring potential business opportunities, feel free to reach out and we'll respond as soon as possible.</p>
-          </div>
-        </div>
-      </motion.section>
-
-      <motion.section className="pb-24 lg:pb-32" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
-        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="grid lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-16">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left: Text and Contact Icons */}
             <motion.div variants={fadeInLeft}>
-              <h2 className="text-xl font-semibold text-foreground mb-6">Contact Channels</h2>
-              <div className="space-y-5">
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Get in Touch</span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">Contact Us</h1>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">If you're interested in learning more about Awalife's products or exploring potential business opportunities, feel free to reach out and we'll respond as soon as possible.</p>
+
+              <p className="text-sm text-muted-foreground mb-6">Our dedicated customer support team is always ready to assist you:</p>
+
+              {/* Contact Icons Row */}
+              <div className="flex flex-wrap gap-4">
                 {contactChips.map((chip) => (
-                  <a key={chip.label} href={chip.href} target="_blank" rel="noreferrer" className="flex items-center gap-4 group p-4 rounded-xl border border-border/30 bg-secondary/10 hover:border-primary/30 hover:bg-secondary/20 transition-all duration-300">
-                    <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary/15 transition-colors"><chip.icon className="h-5 w-5" /></span>
-                    <div>
-                      <div className="text-sm font-semibold text-foreground">{chip.label}</div>
-                      <div className="text-sm text-muted-foreground group-hover:text-primary transition-colors">{chip.display}</div>
-                    </div>
+                  <a
+                    key={chip.label}
+                    href={chip.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 hover:scale-110 transition-all duration-300"
+                    title={chip.display}
+                  >
+                    <chip.icon className="h-5 w-5" />
                   </a>
                 ))}
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInRight}>
-              <h2 className="text-xl font-semibold text-foreground mb-2">Send us a message</h2>
-              <p className="text-muted-foreground mb-8">Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
-              <div className="rounded-2xl border border-border/30 bg-secondary/10 p-8">
-                <form className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div><label className="block text-sm font-medium text-foreground mb-2.5">Full Name *</label><Input required className="bg-background/50 border-border/40 h-12 focus:border-primary/50 transition-colors" /></div>
-                    <div><label className="block text-sm font-medium text-foreground mb-2.5">Position *</label><Input required className="bg-background/50 border-border/40 h-12 focus:border-primary/50 transition-colors" /></div>
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div><label className="block text-sm font-medium text-foreground mb-2.5">Company / Hospital / Clinic *</label><Input required className="bg-background/50 border-border/40 h-12 focus:border-primary/50 transition-colors" /></div>
-                    <div><label className="block text-sm font-medium text-foreground mb-2.5">Email Address *</label><Input type="email" required className="bg-background/50 border-border/40 h-12 focus:border-primary/50 transition-colors" /></div>
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div><label className="block text-sm font-medium text-foreground mb-2.5">WhatsApp Number</label><Input className="bg-background/50 border-border/40 h-12 focus:border-primary/50 transition-colors" /></div>
-                    <div><label className="block text-sm font-medium text-foreground mb-2.5">Country / Region *</label><Input required className="bg-background/50 border-border/40 h-12 focus:border-primary/50 transition-colors" /></div>
-                  </div>
-                  <div><label className="block text-sm font-medium text-foreground mb-2.5">Your Message *</label><Textarea required rows={5} className="bg-background/50 border-border/40 resize-none focus:border-primary/50 transition-colors" /></div>
-                  <Button className="btn-gradient group px-10" size="lg">Submit<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Button>
-                </form>
+            {/* Right: Image */}
+            <motion.div variants={fadeInRight} className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/8 to-accent/8 rounded-3xl blur-3xl opacity-50" />
+              <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-border/30 p-8 flex items-center justify-center min-h-[400px]">
+                <div className="text-center text-muted-foreground">
+                  <Mail className="h-24 w-24 mx-auto mb-4 opacity-20" />
+                  <p className="text-sm">Contact illustration</p>
+                </div>
               </div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Form Section */}
+      <motion.section className="pb-24 lg:pb-32 bg-secondary/5" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+          <div className="max-w-4xl mx-auto">
+            <motion.div variants={fadeInLeft} className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Send us a <span className="gradient-text">message</span></h2>
+              <p className="text-lg text-muted-foreground">Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
+            </motion.div>
+
+            <motion.div variants={fadeInRight} className="rounded-2xl border border-border/30 bg-background p-8 lg:p-10">
+              <form className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2.5">Full Name *</label>
+                    <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2.5">Position *</label>
+                    <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2.5">Company / Hospital / Clinic *</label>
+                    <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2.5">Email Address *</label>
+                    <Input type="email" required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2.5">WhatsApp Number</label>
+                    <Input className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2.5">Country / Region *</label>
+                    <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2.5">Your Message *</label>
+                  <Textarea required rows={5} className="bg-background border-border/40 resize-none focus:border-primary/50 transition-colors" />
+                </div>
+                <div className="flex justify-center pt-2">
+                  <Button className="btn-gradient group px-12" size="lg">
+                    Submit
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </div>
+              </form>
             </motion.div>
           </div>
         </div>

@@ -44,11 +44,11 @@ const ProductsSection = () => {
       />
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
         <div className={`max-w-2xl mx-auto text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3">
+          <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
             Featured Products
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-            Diagnostic tools built for real-world veterinary workflows
+            Diagnostic tools built for <span className="gradient-text">real-world</span> veterinary workflows
           </h2>
         </div>
         {products.map((product, i) => (

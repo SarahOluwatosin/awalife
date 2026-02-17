@@ -42,7 +42,7 @@ const AboutSection = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Column */}
           <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               About Awalife
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">

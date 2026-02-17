@@ -53,7 +53,7 @@ const ContactSection = () => {
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span
-            className={`inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4 ${
+            className={`inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3 ${
               isVisible ? 'opacity-100 animate-fade-in' : 'opacity-0'
             }`}
           >

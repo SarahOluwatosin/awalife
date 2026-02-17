@@ -362,7 +362,7 @@ const ProductDetail = () => {
           <div className={containerClass}>
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">Samples Supported</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight"><span className="gradient-text">Samples</span> Supported</h2>
                 <p className="text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                   Common veterinary sample types that can be captured and documented with the workstation.
                 </p>
@@ -407,7 +407,7 @@ const ProductDetail = () => {
                 />
               </motion.div>
               <motion.div className="max-w-xl" variants={fadeInRight}>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">High-performance Hardware</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight"><span className="gradient-text">High-performance</span> Hardware</h2>
                 <motion.div className="space-y-5" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   {[
                     {
@@ -445,7 +445,7 @@ const ProductDetail = () => {
           <div className={containerClass}>
             <motion.div className="flex flex-col items-center text-center max-w-4xl mx-auto" variants={blurIn}>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
-                User-friendly Software Built for Veterinary Workflows
+                <span className="gradient-text">User-friendly</span> Software Built for Veterinary Workflows
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-2xl">
                 It integrates tools for cell counting, scale bars, annotations, and one-click report generation, with an embedded teaching image library for faster training.
@@ -478,7 +478,7 @@ const ProductDetail = () => {
               </motion.div>
               <motion.div className="max-w-xl" variants={fadeInRight}>
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
-                  Already Have a Microscope?
+                  <span className="gradient-text">Already Have</span> a Microscope?
                 </h2>
                 <h3 className="text-xl font-semibold text-foreground mb-4">
                   Upgrade it with Awalife Microscope Image Hub.

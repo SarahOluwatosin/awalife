@@ -40,7 +40,7 @@ const TestimonialsSection = () => {
     <section ref={sectionRef} className="py-24">
       <div className="container mx-auto px-8 lg:px-24 xl:px-32">
         <div className={`text-center max-w-2xl mx-auto mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3">
+          <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
             {t.testimonials.title}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
