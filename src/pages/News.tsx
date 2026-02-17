@@ -170,7 +170,7 @@ const News = () => {
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 Explore resources 
               </span>
-               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">Welcome to                 to Resource CenterCenter
+               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">Welcome to          Resource Center
                 <span className="gradient-text">{data.hero.title}</span>
 175:               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
