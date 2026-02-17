@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 import { sectionVariants, fadeInLeft, fadeInRight, scaleIn, viewportOnce } from '@/lib/animations';
 
 const ExoticAnimals = () => {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => {window.scrollTo(0, 0);}, []);
   const bodyTextClass = 'text-lg';
 
   const renderSupportValue = (value: string) => {
@@ -74,16 +74,16 @@ const ExoticAnimals = () => {
                   </tr>
                   <tr className="bg-secondary/30"><td colSpan={5} className="px-5 lg:px-6 py-3 text-sm font-semibold text-foreground uppercase tracking-wider">Sample Types</td></tr>
                   {[
-                    { label: 'Blood', values: ['+', '+', '+', '+'] },
-                    { label: 'Feces', values: ['Dog, Cat', '/', '/', '/'] },
-                    { label: 'Urine', values: ['Dog, Cat', '/', '/', '/'] },
-                    { label: 'Fluid', values: ['Dog, Cat', '/', '/', '/'] },
-                  ].map((row) => (
-                    <tr key={row.label} className="border-b border-border/30 hover:bg-secondary/20 transition-colors">
+                  { label: 'Blood', values: ['+', '+', '+', '+'] },
+                  { label: 'Feces', values: ['Dog, Cat', '/', '/', '/'] },
+                  { label: 'Urine', values: ['Dog, Cat', '/', '/', '/'] },
+                  { label: 'Fluid', values: ['Dog, Cat', '/', '/', '/'] }].
+                  map((row) =>
+                  <tr key={row.label} className="border-b border-border/30 hover:bg-secondary/20 transition-colors">
                       <td className="p-5 lg:p-6 text-sm text-muted-foreground sticky left-0 bg-card z-10">{row.label}</td>
                       {row.values.map((value, valueIndex) => <td key={`${row.label}-${valueIndex}`} className="p-5 lg:p-6 text-center">{renderSupportValue(value)}</td>)}
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
@@ -105,7 +105,7 @@ const ExoticAnimals = () => {
             </motion.div>
             <motion.div className="relative" variants={fadeInRight}>
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center px-0 py-0">
+              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card text-center px-0 py-0 rounded-none shadow-none">
                 <img src={images.heroDiagnosticLab} alt="Low volume sample" data-override-id="exotic-lowvolume" className="w-full max-h-72 object-contain" />
               </div>
             </motion.div>
@@ -122,16 +122,16 @@ const ExoticAnimals = () => {
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="w-full">
               {[
-                { question: 'Which species are supported for blood analysis?', answer: 'Companion animals: Dog, Cat\nSmall mammals: Rabbit, Chinchilla, Hamster, Rat, Mouse, Ferret, Guinea Pig\nLarge animals: Alpaca, Camel, Horse, Pig, Cattle, Sheep\nAvian: Pigeon, Parrot\nReptiles: Turtle, Snake, Lizard' },
-                { question: 'Which species are supported for feces analysis?', answer: 'Companion animals: Dog, Cat' },
-                { question: 'Which species are supported for urine analysis?', answer: 'Companion animals: Dog, Cat' },
-                { question: 'Which species are supported for fluid analysis?', answer: 'Companion animals: Dog, Cat' },
-              ].map((faq) => (
-                <AccordionItem key={faq.question} value={faq.question}>
+              { question: 'Which species are supported for blood analysis?', answer: 'Companion animals: Dog, Cat\nSmall mammals: Rabbit, Chinchilla, Hamster, Rat, Mouse, Ferret, Guinea Pig\nLarge animals: Alpaca, Camel, Horse, Pig, Cattle, Sheep\nAvian: Pigeon, Parrot\nReptiles: Turtle, Snake, Lizard' },
+              { question: 'Which species are supported for feces analysis?', answer: 'Companion animals: Dog, Cat' },
+              { question: 'Which species are supported for urine analysis?', answer: 'Companion animals: Dog, Cat' },
+              { question: 'Which species are supported for fluid analysis?', answer: 'Companion animals: Dog, Cat' }].
+              map((faq) =>
+              <AccordionItem key={faq.question} value={faq.question}>
                   <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
                   <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
                 </AccordionItem>
-              ))}
+              )}
             </Accordion>
           </div>
         </div>
@@ -146,8 +146,8 @@ const ExoticAnimals = () => {
           </div>
         </div>
       </motion.section>
-    </Layout>
-  );
+    </Layout>);
+
 };
 
 export default ExoticAnimals;
