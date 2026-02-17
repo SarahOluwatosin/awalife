@@ -45,26 +45,60 @@ const WhyUsSection = () => {
         </div>
 
         <div className="space-y-16">
-          {features.map((feature, i) => <div key={feature.title} className={`grid lg:grid-cols-2 gap-10 items-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{
-          transitionDelay: `${0.1 + i * 0.1}s`
-        }}>
-              <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
-                <div className="rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.01]">
-                  <div className="relative">
-                    <img src={feature.image} alt={feature.alt} data-override-id={`home-whyus-${i}`} className="w-full h-full object-cover aspect-[4/3] transition-opacity duration-500" loading="lazy" decoding="async" width={640} height={480} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/8 via-transparent to-transparent pointer-events-none" />
+          {features.map((feature, i) => {
+            // Items 1 and 2 render side-by-side (paired cards)
+            if (i === 1) {
+              const next = features[2];
+              return (
+                <div
+                  key="paired-cards"
+                  className={`grid md:grid-cols-2 gap-8 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                  style={{ transitionDelay: '0.2s' }}
+                >
+                  {[feature, next].map((f, fi) => (
+                    <div key={f.title} className="flex flex-col">
+                      <div className="rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.01] mb-6">
+                        <div className="relative">
+                          <img src={f.image} alt={f.alt} data-override-id={`home-whyus-${fi + 1}`} className="w-full h-full object-cover aspect-[4/3] transition-opacity duration-500" loading="lazy" decoding="async" width={640} height={480} />
+                          <div className="absolute inset-0 bg-gradient-to-t from-primary/8 via-transparent to-transparent pointer-events-none" />
+                        </div>
+                      </div>
+                      <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3 leading-tight">
+                        {f.title}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed text-base">
+                        {f.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              );
+            }
+            if (i === 2) return null; // already rendered with i===1
+
+            return (
+              <div key={feature.title} className={`grid lg:grid-cols-2 gap-10 items-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{
+                transitionDelay: `${0.1 + i * 0.1}s`
+              }}>
+                <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+                  <div className="rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.01]">
+                    <div className="relative">
+                      <img src={feature.image} alt={feature.alt} data-override-id={`home-whyus-${i}`} className="w-full h-full object-cover aspect-[4/3] transition-opacity duration-500" loading="lazy" decoding="async" width={640} height={480} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary/8 via-transparent to-transparent pointer-events-none" />
+                    </div>
                   </div>
                 </div>
+                <div className={`${i % 2 === 1 ? 'lg:order-1' : ''} max-w-xl`}>
+                  <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-4 leading-tight">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed text-lg max-w-prose">
+                    {feature.desc}
+                  </p>
+                </div>
               </div>
-              <div className={`${i % 2 === 1 ? 'lg:order-1' : ''} max-w-xl`}>
-                <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-4 leading-tight">
-                  {feature.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed text-lg max-w-prose">
-                  {feature.desc}
-                </p>
-              </div>
-            </div>)}
+            );
+          })}
         </div>
       </div>
     </section>;

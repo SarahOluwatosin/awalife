@@ -20,7 +20,7 @@ const CTASection = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
             Interested in <span className="gradient-text">Our Products</span>?
           </h2>
-          <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-prose mx-auto">
+          <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-3xl mx-auto">
             Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
