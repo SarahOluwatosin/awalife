@@ -65,7 +65,7 @@ const FecesAnalysis = () => {
       <motion.section className="py-16 lg:py-20 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">AI POWERED ANALYSIS</span>
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">AI-POWERED ANALYSIS</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">No Slides, <span className="gradient-text">Two Sampling Options</span></h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Powered by our latest AI model, continuously improving with regular updates.</p>
             <div className="mt-6">
