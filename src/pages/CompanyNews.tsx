@@ -137,7 +137,7 @@ const CompanyNews = () => {
       {/* CTA */}
       <section className="py-20 lg:py-28 bg-card/50">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{data.cta.title}</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in <span className="gradient-text">Our Products</span>?</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">{data.cta.description}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild>

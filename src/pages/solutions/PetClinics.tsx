@@ -110,7 +110,7 @@ const PetClinics = () => {
 
             <motion.div className="relative" variants={fadeInRight}>
               <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
-                <img src={images.ai100vet} alt="AWALIFE Diagnostic Solution" data-override-id="petclinics-hero" className="w-full aspect-[4/3] object-cover" />
+                <img src={images.ai100vet} alt="AWALIFE Diagnostic Solution" data-override-id="petclinics-hero" className="w-full aspect-[3/2] object-cover" />
               </div>
             </motion.div>
           </div>
