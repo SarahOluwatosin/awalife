@@ -14,7 +14,7 @@ const SECTION_ICONS: Record<string, typeof FileText> = {
   'how-to': BookOpen,
   'medical': FileText,
   'product': Package,
-  'other': MoreHorizontal,
+  'other': MoreHorizontal
 };
 
 const News = () => {
@@ -28,7 +28,7 @@ const News = () => {
   const faqColumns = [data.faq.items.slice(0, faqMidpoint), data.faq.items.slice(faqMidpoint)];
 
   const isExternalLink = (url: string) =>
-    /^(https?:)?\/\//i.test(url) || url.startsWith('mailto:') || url.startsWith('tel:');
+  /^(https?:)?\/\//i.test(url) || url.startsWith('mailto:') || url.startsWith('tel:');
 
   const isVideoLink = (url: string) => {
     if (!url) return false;
@@ -75,25 +75,25 @@ const News = () => {
     return (
       <div
         key={item.id}
-        className="group relative flex flex-col rounded-2xl bg-card border border-border/20 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300"
-      >
+        className="group relative flex flex-col rounded-2xl bg-card border border-border/20 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300">
+
         {/* Accent gradient top */}
         <div className="h-1 rounded-t-2xl bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
 
         {/* Video embed preview */}
-        {embedUrl && (
-          <div className="relative w-full aspect-video bg-muted/30">
+        {embedUrl &&
+        <div className="relative w-full aspect-video bg-muted/30">
             <iframe
-              src={embedUrl}
-              className="w-full h-full"
-              style={{ border: 'none' }}
-              allowFullScreen
-              allow="autoplay; encrypted-media"
-              title={item.title}
-              loading="lazy"
-            />
+            src={embedUrl}
+            className="w-full h-full"
+            style={{ border: 'none' }}
+            allowFullScreen
+            allow="autoplay; encrypted-media"
+            title={item.title}
+            loading="lazy" />
+
           </div>
-        )}
+        }
 
         <div className="flex flex-col flex-1 p-6">
           {/* Badges */}
@@ -112,52 +112,52 @@ const News = () => {
           </h3>
 
           {/* Summary */}
-          {item.summary && (
-            <p className="text-sm text-muted-foreground leading-relaxed mb-6 line-clamp-3 flex-1">
+          {item.summary &&
+          <p className="text-sm text-muted-foreground leading-relaxed mb-6 line-clamp-3 flex-1">
               {item.summary}
             </p>
-          )}
+          }
 
           {/* Action */}
           <div className="mt-auto pt-2">
-            {hasMedia ? (
-              <div className="flex flex-wrap gap-2">
-                {isVideo && (
-                  <Button variant="default" size="sm" className="h-10 px-5 rounded-full transition-all" asChild>
+            {hasMedia ?
+            <div className="flex flex-wrap gap-2">
+                {isVideo &&
+              <Button variant="default" size="sm" className="h-10 px-5 rounded-full transition-all" asChild>
                     <a href={mediaUrl} target="_blank" rel="noreferrer">
                       <Play className="mr-2 h-4 w-4" />
                       Watch video
                     </a>
                   </Button>
-                )}
-                {!isVideo && (
-                  <Button variant="outline" size="sm" className="h-10 px-5 rounded-full border-border/40 text-primary hover:bg-primary/5 hover:border-primary/30 transition-all" asChild>
-                    {item.mediaType === 'upload' ? (
-                      <a href={mediaUrl} download={item.mediaName || 'resource'}>
+              }
+                {!isVideo &&
+              <Button variant="outline" size="sm" className="h-10 px-5 rounded-full border-border/40 text-primary hover:bg-primary/5 hover:border-primary/30 transition-all" asChild>
+                    {item.mediaType === 'upload' ?
+                <a href={mediaUrl} download={item.mediaName || 'resource'}>
                         <ActionIcon className="mr-2 h-4 w-4" />
                         {actionLabel}
-                      </a>
-                    ) : isExternalLink(mediaUrl) ? (
-                      <a href={mediaUrl} target="_blank" rel="noreferrer">
+                      </a> :
+                isExternalLink(mediaUrl) ?
+                <a href={mediaUrl} target="_blank" rel="noreferrer">
                         <ActionIcon className="mr-2 h-4 w-4" />
                         {actionLabel}
-                      </a>
-                    ) : (
-                      <Link to={mediaUrl}>
+                      </a> :
+
+                <Link to={mediaUrl}>
                         <ActionIcon className="mr-2 h-4 w-4" />
                         {actionLabel}
                       </Link>
-                    )}
+                }
                   </Button>
-                )}
-              </div>
-            ) : (
-              <p className="text-xs text-muted-foreground/50 italic">No file or link attached</p>
-            )}
+              }
+              </div> :
+
+            <p className="text-xs text-muted-foreground/50 italic">No file or link attached</p>
+            }
           </div>
         </div>
-      </div>
-    );
+      </div>);
+
   };
 
   return (
@@ -168,7 +168,7 @@ const News = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={blurIn}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                Resource Center
+                Explore resources 
               </span>
                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
 174:                 <span className="gradient-text">{data.hero.title}</span>
@@ -180,20 +180,20 @@ const News = () => {
             <motion.div className="relative" variants={sectionVariants}>
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/8 to-accent/8 rounded-3xl blur-3xl opacity-50" />
               <div className="relative rounded-2xl overflow-hidden border border-border/30 bg-secondary/20 shadow-lg">
-                {data.hero.imageUrl ? (
-                  <img
-                    src={data.hero.imageUrl}
-                    alt={data.hero.imageAlt}
-                    data-override-id="resources-hero"
-                    className="w-full aspect-[4/3] object-cover"
-                    loading="eager"
-                    decoding="async"
-                  />
-                ) : (
-                  <div className="h-64 flex items-center justify-center text-sm text-muted-foreground">
+                {data.hero.imageUrl ?
+                <img
+                  src={data.hero.imageUrl}
+                  alt={data.hero.imageAlt}
+                  data-override-id="resources-hero"
+                  className="w-full aspect-[4/3] object-cover"
+                  loading="eager"
+                  decoding="async" /> :
+
+
+                <div className="h-64 flex items-center justify-center text-sm text-muted-foreground">
                     No image set
                   </div>
-                )}
+                }
               </div>
             </motion.div>
           </div>
@@ -212,8 +212,8 @@ const News = () => {
             initial="hidden"
             whileInView="visible"
             viewport={viewportOnceSmall}
-            variants={sectionVariants}
-          >
+            variants={sectionVariants}>
+
             <div className="container mx-auto px-6 lg:px-16 xl:px-24">
               <div className="flex items-center gap-3 mb-8">
                 <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
@@ -224,15 +224,15 @@ const News = () => {
                 </h2>
               </div>
               <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
-                {sectionResources.map((item) => (
-                  <motion.div key={item.id} variants={cardSlideUp}>
+                {sectionResources.map((item) =>
+                <motion.div key={item.id} variants={cardSlideUp}>
                     {renderCard(item)}
                   </motion.div>
-                ))}
+                )}
               </motion.div>
             </div>
-          </motion.section>
-        );
+          </motion.section>);
+
       })}
 
       {/* FAQ */}
@@ -244,12 +244,12 @@ const News = () => {
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
           </div>
-          {data.faq.items.length ? (
-            <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-              {faqColumns.map((items, index) => (
-                <Accordion key={`faq-col-${index}`} type="single" collapsible className="w-full">
-                  {items.map((item) => (
-                    <AccordionItem key={item.id} value={item.id} className="border-border/30">
+          {data.faq.items.length ?
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+              {faqColumns.map((items, index) =>
+            <Accordion key={`faq-col-${index}`} type="single" collapsible className="w-full">
+                  {items.map((item) =>
+              <AccordionItem key={item.id} value={item.id} className="border-border/30">
                       <AccordionTrigger className="text-left text-foreground hover:text-primary transition-colors">
                         {item.question}
                       </AccordionTrigger>
@@ -257,13 +257,13 @@ const News = () => {
                         {item.answer}
                       </AccordionContent>
                     </AccordionItem>
-                  ))}
+              )}
                 </Accordion>
-              ))}
-            </div>
-          ) : (
-            <p className="text-center text-muted-foreground">No FAQs yet.</p>
-          )}
+            )}
+            </div> :
+
+          <p className="text-center text-muted-foreground">No FAQs yet.</p>
+          }
         </div>
       </motion.section>
 
@@ -278,23 +278,23 @@ const News = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild>
-              {isExternalLink(ctaLink) ? (
-                <a href={ctaLink} target="_blank" rel="noreferrer">
+              {isExternalLink(ctaLink) ?
+              <a href={ctaLink} target="_blank" rel="noreferrer">
                   {data.cta.buttonLabel}
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-              ) : (
-                <Link to={ctaLink}>
+                </a> :
+
+              <Link to={ctaLink}>
                   {data.cta.buttonLabel}
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
-              )}
+              }
             </Button>
           </div>
         </div>
       </motion.section>
-    </Layout>
-  );
+    </Layout>);
+
 };
 
 export default News;
