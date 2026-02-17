@@ -29,6 +29,7 @@ const PleuralEffusion = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Body Fluid Analysis</span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Review-ready Morphology in a <span className="gradient-text">Standardized Workflow</span></h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife helps standardize pleural and abdominal effusion review by combining high-quality microscopy imaging with AI-assisted morphology recognition. Results are delivered as a review-ready report with images and structured findings, including up to 19 reportable items.</p>
               <div className="flex flex-wrap gap-4">
@@ -49,6 +50,7 @@ const PleuralEffusion = () => {
       <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto">
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Cell Counting</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Morphology-based <span className="gradient-text">TNCC Enumeration</span></h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>In many workflows, TNCC is approximated using total WBC counts, which can overlook non-WBC formed elements and introduce variability across operators and methods. Awalife takes a morphology-first approach: it captures true-to-life microscopy images and performs morphology-based TNCC enumeration, counting nucleated cells based on what is actually present in the sample. The result is a review-ready output with image evidence, supporting more consistent TNCC reporting and clearer clinical communication for pleural and abdominal effusions.</p>
           </div>
@@ -58,6 +60,7 @@ const PleuralEffusion = () => {
       <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Image Quality</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground"><span className="gradient-text">True-to-life Images</span>, Ready for Review</h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Review your report and verify the images with confidence - and tap into Awalife's clinical specialists whenever needed.</p>
           </div>
@@ -68,6 +71,7 @@ const PleuralEffusion = () => {
       <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">FAQ</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
           </div>
           <div className="max-w-3xl mx-auto">

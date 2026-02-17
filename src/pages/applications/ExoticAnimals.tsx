@@ -27,6 +27,7 @@ const ExoticAnimals = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Multi-Species Support</span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Exotics, Small Mammals & <span className="gradient-text">Large Animals</span></h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife extends morphology-first, AI-assisted analysis beyond dogs and cats—supporting a wider range of species with review-ready reports that combine images and quantitative results. Capabilities may vary by species and sample type.</p>
               <div className="flex flex-wrap gap-4">
@@ -47,6 +48,7 @@ const ExoticAnimals = () => {
       <motion.section className="py-16 lg:py-20 bg-card/50" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Species Coverage</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Supporting Species from Small Mammals to <span className="gradient-text">Large Animals</span></h2>
           </div>
           <motion.div className="glow-card overflow-hidden" variants={scaleIn}>
@@ -93,6 +95,7 @@ const ExoticAnimals = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Low Volume Sampling</span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Only 10 μL Blood samples Required for <span className="gradient-text">CBC Testing</span></h2>
               <p className={`${bodyTextClass} text-muted-foreground mb-6`}>Especially for exotic pets, critically ill, anemic, and recovering cats and dogs.</p>
               <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
@@ -113,6 +116,7 @@ const ExoticAnimals = () => {
       <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">FAQ</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
           </div>
           <div className="max-w-3xl mx-auto">
