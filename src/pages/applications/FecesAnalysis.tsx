@@ -11,7 +11,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { sectionVariants, staggerContainer, cardVariants, fadeInLeft, fadeInRight, viewportOnce, viewportOnceSmall } from '@/lib/animations';
 
 const FecesAnalysis = () => {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => {window.scrollTo(0, 0);}, []);
   const bodyTextClass = 'text-lg';
   const cardTextClass = 'text-base';
 
@@ -23,19 +23,19 @@ const FecesAnalysis = () => {
   const py2 = useTransform(sp2, [0, 1], [40, -40]);
 
   const fallbackImages = [
-    { url: images.speciesCanineFeline, label: 'Canine & Feline' },
-    { url: images.speciesSmallMammals, label: 'Small Mammals' },
-    { url: images.speciesExoticPets, label: 'Exotic Pets' },
-    { url: images.heroDiagnosticLab, label: 'Diagnostic Lab' },
-  ];
+  { url: images.speciesCanineFeline, label: 'Canine & Feline' },
+  { url: images.speciesSmallMammals, label: 'Small Mammals' },
+  { url: images.speciesExoticPets, label: 'Exotic Pets' },
+  { url: images.heroDiagnosticLab, label: 'Diagnostic Lab' }];
+
 
   const samplingCategories = [
-    { title: 'Intestinal Protozoa', items: ['TRI (Trichomonas)', 'GIA (Giardia)', 'GIT (Giardia Trophozoite)', 'GIC (Giardia Cyst)', 'COC (Coccidia)'] },
-    { title: 'Pathogen', items: ['COS (Cocci)', 'BAC (Bacillus)', 'SPR (Spirochetes)', 'HEL (Helicobacter)', 'YEA (Yeast)'] },
-    { title: 'Parasite', items: ['ASC (Roundworm)', 'HOO (Hookworm)', 'TAP (Tapeworm)', 'SPI (Spirometra)', 'WHP (Whipworm)'] },
-    { title: 'Cells', items: ['RBC', 'WBC', 'EPC (Epithelial Cell)'] },
-    { title: 'Digestive Function', items: ['STA (Starch Granule)', 'FAT (Lipid Droplet)', 'PLN (Plant Fiber)', 'MUS (Muscle Fiber)'] },
-  ];
+  { title: 'Intestinal Protozoa', items: ['TRI (Trichomonas)', 'GIA (Giardia)', 'GIT (Giardia Trophozoite)', 'GIC (Giardia Cyst)', 'COC (Coccidia)'] },
+  { title: 'Pathogen', items: ['COS (Cocci)', 'BAC (Bacillus)', 'SPR (Spirochetes)', 'HEL (Helicobacter)', 'YEA (Yeast)'] },
+  { title: 'Parasite', items: ['ASC (Roundworm)', 'HOO (Hookworm)', 'TAP (Tapeworm)', 'SPI (Spirometra)', 'WHP (Whipworm)'] },
+  { title: 'Cells', items: ['RBC', 'WBC', 'EPC (Epithelial Cell)'] },
+  { title: 'Digestive Function', items: ['STA (Starch Granule)', 'FAT (Lipid Droplet)', 'PLN (Plant Fiber)', 'MUS (Muscle Fiber)'] }];
+
 
   return (
     <Layout>
@@ -65,7 +65,7 @@ const FecesAnalysis = () => {
       <motion.section className="py-16 lg:py-20 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Two Sampling Options</span>
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">AI POWERED ANALYSIS</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">No Slides, <span className="gradient-text">Two Sampling Options</span></h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Powered by our latest AI model, continuously improving with regular updates.</p>
             <div className="mt-6">
@@ -75,22 +75,22 @@ const FecesAnalysis = () => {
             </div>
           </div>
           <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
-            {samplingCategories.map((category) => (
-              <motion.div key={category.title} className="group relative" variants={cardVariants}>
+            {samplingCategories.map((category) =>
+            <motion.div key={category.title} className="group relative" variants={cardVariants}>
                 <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative rounded-2xl border border-border/50 bg-card p-6 text-left shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
                   <h3 className="text-lg font-semibold text-foreground mb-4">{category.title}</h3>
                   <ul className={`space-y-2 ${cardTextClass} text-muted-foreground`}>
-                    {category.items.map((item) => (
-                      <li key={item} className="flex items-start gap-2">
+                    {category.items.map((item) =>
+                  <li key={item} className="flex items-start gap-2">
                         <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary"><Check className="h-3 w-3" /></span>
                         <span>{item}</span>
                       </li>
-                    ))}
+                  )}
                   </ul>
                 </div>
               </motion.div>
-            ))}
+            )}
           </motion.div>
         </div>
       </motion.section>
@@ -164,16 +164,16 @@ const FecesAnalysis = () => {
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="w-full">
               {[
-                { question: 'How long does a typical fecal analysis take?', answer: 'Most samples are processed and reported in under 10 minutes depending on sample conditions.' },
-                { question: 'What elements can be detected?', answer: 'Parasite eggs, protozoa, pathogens, and digestive indicators are identified with images and counts.' },
-                { question: 'Is sample preparation automated?', answer: 'Yes. The workflow automates preparation, imaging, and AI-assisted recognition.' },
-                { question: 'Can reports be reviewed and shared easily?', answer: 'Yes. Reports include images, counts, and annotations for review and sharing.' },
-              ].map((faq) => (
-                <AccordionItem key={faq.question} value={faq.question}>
+              { question: 'How long does a typical fecal analysis take?', answer: 'Most samples are processed and reported in under 10 minutes depending on sample conditions.' },
+              { question: 'What elements can be detected?', answer: 'Parasite eggs, protozoa, pathogens, and digestive indicators are identified with images and counts.' },
+              { question: 'Is sample preparation automated?', answer: 'Yes. The workflow automates preparation, imaging, and AI-assisted recognition.' },
+              { question: 'Can reports be reviewed and shared easily?', answer: 'Yes. Reports include images, counts, and annotations for review and sharing.' }].
+              map((faq) =>
+              <AccordionItem key={faq.question} value={faq.question}>
                   <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
                   <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
                 </AccordionItem>
-              ))}
+              )}
             </Accordion>
           </div>
         </div>
@@ -188,8 +188,8 @@ const FecesAnalysis = () => {
           </div>
         </div>
       </motion.section>
-    </Layout>
-  );
+    </Layout>);
+
 };
 
 export default FecesAnalysis;
