@@ -51,7 +51,7 @@ const UrineAnalysis = () => {
             </motion.div>
             <motion.div className="relative" variants={fadeInRight} style={{ y: imgY }}>
               <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
-                <img src={images.ai100vet} alt="Urine sediment workflow" data-override-id="urine-overview" className="w-full aspect-[4/3] object-cover" />
+                <img src={images.ai100vet} alt="Urine sediment workflow" data-override-id="urine-overview" className="w-full aspect-[3/2] object-cover" />
               </div>
             </motion.div>
           </div>
@@ -96,7 +96,7 @@ const UrineAnalysis = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div className="relative" variants={fadeInLeft}>
               <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
-                <img src={images.ai100vet} alt="Urine SOP Video" data-override-id="urine-sop" className="w-full aspect-[4/3] object-cover" />
+                <img src={images.ai100vet} alt="Urine SOP Video" data-override-id="urine-sop" className="w-full aspect-[3/2] object-cover" />
                 <div className="p-4 bg-secondary/20 border-t border-border/30">
                   <p className="text-xs text-muted-foreground">Urine SOP Video-02</p>
                 </div>

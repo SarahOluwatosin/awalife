@@ -170,9 +170,9 @@ const News = () => {
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 Resource Center
               </span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                {data.hero.title}
-              </h1>
+               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+174:                 <span className="gradient-text">{data.hero.title}</span>
+175:               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                 {data.hero.description}
               </p>
@@ -242,7 +242,7 @@ const News = () => {
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               FAQ
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{data.faq.title}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
           </div>
           {data.faq.items.length ? (
             <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
@@ -270,8 +270,8 @@ const News = () => {
       {/* CTA */}
       <motion.section className="py-20 lg:py-28 bg-card/50" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            {data.cta.title}
+           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+            Interested in <span className="gradient-text">Our Products</span>?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
             {data.cta.description}

@@ -26,7 +26,7 @@ const Contact = () => {
             {/* Left: Text and Contact Icons */}
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Get in Touch</span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">Contact Us</h1>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"><span className="gradient-text">Contact</span> Us</h1>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">If you're interested in learning more about Awalife's products or exploring potential business opportunities, feel free to reach out and we'll respond as soon as possible.</p>
 
               <p className="text-sm text-muted-foreground mb-6">Our dedicated customer support team is always ready to assist you:</p>
