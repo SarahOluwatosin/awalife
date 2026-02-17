@@ -23,7 +23,7 @@ const GlobalPartnersSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
             Scaling Globally through Partners Who Deliver Locally
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed max-w-prose mx-auto">
+          <p className="text-muted-foreground text-lg leading-relaxed max-w-4xl mx-auto">
             From product design to service processes, Awalife is built for international deployment. With standardized workflows, review-ready outputs, and a platform that keeps expanding across sample types, we help teams deliver consistent clinical value across regions and practice settings.
           </p>
         </div>

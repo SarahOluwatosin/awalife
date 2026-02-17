@@ -59,7 +59,7 @@ const ProductsSection = () => {
           >
             <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
               <motion.div
-                className="relative rounded-3xl overflow-hidden aspect-[4/3] transition-all duration-500 hover:scale-[1.01]"
+                className={`relative rounded-3xl transition-all duration-500 hover:scale-[1.01] ${i === 1 ? 'overflow-visible -my-8' : 'overflow-hidden aspect-[4/3]'}`}
                 whileHover={{ y: -4 }}
                 transition={{ type: 'spring', stiffness: 140, damping: 14 }}
               >
@@ -67,7 +67,7 @@ const ProductsSection = () => {
                   src={product.image}
                   alt={product.name}
                   data-override-id={`home-products-${i}`}
-                  className="w-full h-full object-cover object-center"
+                  className={`w-full object-center ${i === 1 ? 'object-contain scale-110' : 'h-full object-cover'}`}
                   loading="lazy"
                   decoding="async"
                   width={640}
