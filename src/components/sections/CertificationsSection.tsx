@@ -20,28 +20,26 @@ const CertificationsSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-12">
+    <section ref={sectionRef} className="py-24">
       <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-        <div className={`rounded-3xl border border-primary/20 bg-primary/5 px-8 py-10 lg:px-12 lg:py-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] items-center">
-            <div>
-              <span className="text-xs font-semibold tracking-[0.35em] uppercase text-primary/70">
-                Regulatory Credibility
-              </span>
-              <h2 className="text-3xl md:text-4xl font-semibold text-foreground mt-4">
-                Certified for global veterinary diagnostics.
-              </h2>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {certifications.map((cert) => (
-                <div key={cert.label} className="flex items-center gap-3 text-muted-foreground text-sm font-medium">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <cert.icon className="h-4 w-4" />
-                  </span>
-                  {cert.label}
-                </div>
-              ))}
-            </div>
+        <div className={`grid gap-12 lg:grid-cols-2 items-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className="max-w-lg">
+            <span className="text-sm font-semibold tracking-wider uppercase text-primary mb-3 inline-block">
+              Regulatory Credibility
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+              Certified for global veterinary diagnostics.
+            </h2>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {certifications.map((cert) => (
+              <div key={cert.label} className="flex items-center gap-3 text-muted-foreground font-medium">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/15 text-primary">
+                  <cert.icon className="h-5 w-5" />
+                </span>
+                <span className="text-base">{cert.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

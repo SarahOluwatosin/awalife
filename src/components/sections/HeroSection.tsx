@@ -114,7 +114,7 @@ const HeroSection = () => {
               <span className="gradient-text">it's the foundation</span>
             </motion.h1>
 
-            <motion.p variants={fadeUp(0.1)} className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 leading-relaxed">
+            <motion.p variants={fadeUp(0.1)} className="text-lg md:text-xl text-muted-foreground max-w-prose mb-8 leading-relaxed">
               We turn cellular morphology into visible, quantifiable, and review-ready evidence, helping veterinarians diagnose with greater depth and confidence.
             </motion.p>
 
@@ -144,25 +144,23 @@ const HeroSection = () => {
             transition={{ duration: 0.9, ease }}
           >
             <motion.div
-              className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]"
+              className="rounded-3xl overflow-hidden"
               style={{ y: imageY }}
             >
-              <img
-                src={images.heroDiagnosticLab}
-                alt="Veterinary diagnostic workflow"
-                data-override-id="home-hero"
-                className="w-full h-full object-cover aspect-[5/4]"
-                fetchPriority="high"
-                decoding="async"
-                width={800}
-                height={640}
-              />
+              <div className="relative">
+                <img
+                  src={images.heroDiagnosticLab}
+                  alt="Veterinary diagnostic workflow"
+                  data-override-id="home-hero"
+                  className="w-full h-full object-cover aspect-[5/4]"
+                  fetchPriority="high"
+                  decoding="async"
+                  width={800}
+                  height={640}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-transparent pointer-events-none" />
+              </div>
             </motion.div>
-            <motion.div
-              className="absolute -bottom-6 -left-6 w-28 h-28 rounded-2xl bg-primary/10 border border-primary/20 hidden md:block"
-              animate={{ y: [0, -12, 0], rotate: [0, 2, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-            />
           </motion.div>
         </div>
       </div>

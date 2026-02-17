@@ -11,16 +11,16 @@ const CTASection = () => {
       <AnimatedGradientBg />
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
         <motion.div
-          className="max-w-3xl mx-auto text-center"
+          className="max-w-2xl mx-auto text-center"
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
           variants={sectionVariants}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
             Interested in <span className="gradient-text">Our Products</span>?
           </h2>
-          <p className="text-[18px] text-muted-foreground mb-10">
+          <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-prose mx-auto">
             Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

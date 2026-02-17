@@ -18,18 +18,16 @@ const ProductsSection = () => {
   }, []);
 
   const products = [
-    { 
+    {
       id: 'ai-100vet-elite',
-      image: images.awalifeAnalyzerProducts, 
-      number: '01',
+      image: images.awalifeAnalyzerProducts,
       name: 'Awalife AI Series Morphology Analyzer',
       description: 'Awalife AI Series Morphology Analyzer is an AI-powered veterinary system that automatically analyzes blood, urine, feces, and body fluids in one workflow. It combines multi-focus imaging, rapid liquid-based staining, AI-assisted morphology recognition, and report generation with true-to-life images and quantitative results—supported by an expandable parameter set for deeper clinical insight.',
       primaryCta: 'Explore product',
     },
-    { 
+    {
       id: 'microscope',
-      image: images.dm03Microscope, 
-      number: '02',
+      image: images.dm03Microscope,
       name: 'DM-03 Microscope Workstation',
       description: 'An integrated imaging and reporting workflow built for veterinary practice. The Awalife Microscope Workstation brings imaging, measurement, cell counting, and documentation into a streamlined workflow with built-in tools to annotate, add scales, and generate reports in one click.',
       primaryCta: 'Explore product',
@@ -45,11 +43,11 @@ const ProductsSection = () => {
         style={{ animationDelay: '1.4s' }}
       />
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
-        <div className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div className={`max-w-2xl mx-auto text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3">
             Featured Products
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
             Diagnostic tools built for real-world veterinary workflows
           </h2>
         </div>
@@ -60,37 +58,29 @@ const ProductsSection = () => {
             style={{ transitionDelay: `${0.1 + i * 0.2}s` }}
           >
             <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
-              <div
-                className="relative rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card aspect-[4/3] transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]"
-                style={{ perspective: '1200px' }}
+              <motion.div
+                className="relative rounded-3xl overflow-hidden aspect-[4/3] transition-all duration-500 hover:scale-[1.01]"
+                whileHover={{ y: -4 }}
+                transition={{ type: 'spring', stiffness: 140, damping: 14 }}
               >
-                <span className="absolute top-6 left-6 text-6xl font-bold text-primary/10 z-10">
-                  {product.number}
-                </span>
-                <motion.div
-                  className="absolute inset-0"
-                  style={{ transformStyle: 'preserve-3d' }}
-                  whileHover={{ rotateX: 6, rotateY: -8 }}
-                  transition={{ type: 'spring', stiffness: 140, damping: 14 }}
-                >
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    data-override-id={`home-products-${i}`}
-                    className="w-full h-full object-cover object-center"
-                    loading="lazy"
-                    decoding="async"
-                    width={640}
-                    height={480}
-                  />
-                </motion.div>
-              </div>
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  data-override-id={`home-products-${i}`}
+                  className="w-full h-full object-cover object-center"
+                  loading="lazy"
+                  decoding="async"
+                  width={640}
+                  height={480}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/6 via-transparent to-transparent pointer-events-none" />
+              </motion.div>
             </div>
-            <div className={`${i % 2 === 1 ? 'lg:order-1' : ''}`}>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+            <div className={`${i % 2 === 1 ? 'lg:order-1' : ''} max-w-xl`}>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4 leading-tight">
                 {product.name}
               </h3>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+              <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-prose">
                 {product.description}
               </p>
               <div className="flex flex-wrap gap-4">

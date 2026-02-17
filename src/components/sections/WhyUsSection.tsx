@@ -35,11 +35,11 @@ const WhyUsSection = () => {
   }];
   return <section ref={sectionRef} className="py-24 bg-primary-foreground">
       <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-        <div className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div className={`max-w-2xl mx-auto text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-3">
             Platform Growth
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
             An Expandable AI Morphology Platform Grows with New Samples and Applications
           </h2>
         </div>
@@ -49,15 +49,18 @@ const WhyUsSection = () => {
           transitionDelay: `${0.1 + i * 0.1}s`
         }}>
               <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
-                <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
-                  <img src={feature.image} alt={feature.alt} data-override-id={`home-whyus-${i}`} className="w-full h-full object-cover aspect-[4/3] transition-opacity duration-500" loading="lazy" decoding="async" width={640} height={480} />
+                <div className="rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.01]">
+                  <div className="relative">
+                    <img src={feature.image} alt={feature.alt} data-override-id={`home-whyus-${i}`} className="w-full h-full object-cover aspect-[4/3] transition-opacity duration-500" loading="lazy" decoding="async" width={640} height={480} />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/8 via-transparent to-transparent pointer-events-none" />
+                  </div>
                 </div>
               </div>
-              <div className={`${i % 2 === 1 ? 'lg:order-1' : ''}`}>
-                <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-4">
+              <div className={`${i % 2 === 1 ? 'lg:order-1' : ''} max-w-xl`}>
+                <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-4 leading-tight">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed text-xl">
+                <p className="text-muted-foreground leading-relaxed text-lg max-w-prose">
                   {feature.desc}
                 </p>
               </div>
