@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Linkedin, Twitter, Youtube, Github } from 'lucide-react';
+import { Phone, Mail, MapPin, Linkedin, Instagram, Facebook } from 'lucide-react';
 import { images } from '@/lib/images';
 
 const Footer = () => {
@@ -32,10 +32,9 @@ const Footer = () => {
             </p>
             <div className="flex gap-4 mt-8">
               {[
-                { icon: Github, href: 'https://github.com' },
-                { icon: Linkedin, href: 'https://linkedin.com' },
-                { icon: Twitter, href: 'https://twitter.com' },
-                { icon: Youtube, href: 'https://youtube.com' },
+                { icon: Linkedin, href: 'https://www.linkedin.com/company/awalife' },
+                { icon: Instagram, href: 'https://www.instagram.com/awalife' },
+                { icon: Facebook, href: 'https://www.facebook.com/awalife' },
               ].map((social, i) => (
                 <a
                   key={i}
