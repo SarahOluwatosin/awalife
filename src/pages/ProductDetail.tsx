@@ -416,13 +416,13 @@ const ProductDetail = () => {
       {isMicroscope && (
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
-            <div className="grid lg:grid-cols-2 gap-12 items-stretch">
-              <motion.div className="rounded-3xl overflow-hidden h-full flex items-center bg-secondary/10" variants={fadeInLeft}>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div className="rounded-3xl overflow-hidden flex items-center justify-center bg-secondary/10" variants={fadeInLeft}>
                 <img
                   src={images.dm03Microscope}
                   alt="DM-03 Microscope hardware"
                   data-override-id="dm03-hardware"
-                  className="w-full h-full object-contain rounded-3xl"
+                  className="w-full max-h-[380px] object-contain rounded-3xl"
                 />
               </motion.div>
               <motion.div className="max-w-xl" variants={fadeInRight}>

@@ -157,8 +157,7 @@ const PetClinics = () => {
           <motion.div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {workflowSteps.map((item, index) => (
               <motion.div key={item.step} className="relative" variants={cardSlideUp}>
-                {index < workflowSteps.length - 1 && (
-                )}
+                {index < workflowSteps.length - 1 && null}
                 <div className="rounded-2xl border border-border/50 bg-card p-6 h-full shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
                   <div className="text-4xl font-bold gradient-text mb-4">{item.step}</div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>

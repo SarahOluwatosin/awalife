@@ -100,8 +100,8 @@ const ExoticAnimals = () => {
                 <li>A more efficient diagnostic workflow.</li>
               </ul>
             </motion.div>
-            <motion.div className="relative" variants={fadeInRight}>
-              <img src={images.heroDiagnosticLab} alt="Low volume sample" data-override-id="exotic-lowvolume" className="w-full h-full object-cover rounded-3xl" />
+            <motion.div className="relative flex items-center justify-center" variants={fadeInRight}>
+              <img src={images.heroDiagnosticLab} alt="Low volume sample" data-override-id="exotic-lowvolume" className="w-full max-h-[320px] object-cover rounded-3xl" />
             </motion.div>
           </div>
         </div>
