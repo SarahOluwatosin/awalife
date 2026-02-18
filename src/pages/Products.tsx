@@ -38,12 +38,12 @@ const Products = () => {
             </motion.div>
             <motion.div className="relative grid grid-cols-2 gap-4" variants={fadeInRight}>
               <div className="space-y-4">
-                <div className="overflow-hidden rounded-2xl bg-secondary/30"><img src={images.ai100vet} alt="AI-100Vet Analyzer" data-override-id="products-intro-0" className="w-full h-48 object-cover" /></div>
-                <div className="overflow-hidden rounded-2xl bg-secondary/30"><img src={images.reagents} alt="AWALIFE Reagents" data-override-id="products-intro-1" className="w-full h-32 object-cover" /></div>
+                <div className="overflow-hidden rounded-2xl bg-secondary/30"><img src={images.ai100vet} alt="AI-100Vet Analyzer" data-override-id="products-intro-0" className="w-full h-48 object-cover rounded-2xl" /></div>
+                <div className="overflow-hidden rounded-2xl bg-secondary/30"><img src={images.reagents} alt="AWALIFE Reagents" data-override-id="products-intro-1" className="w-full h-32 object-cover rounded-2xl" /></div>
               </div>
               <div className="space-y-4 pt-8">
-                <div className="overflow-hidden rounded-2xl bg-secondary/30"><img src={images.microscopeStation} alt="Microscope Station" data-override-id="products-intro-2" className="w-full h-32 object-cover" /></div>
-                <div className="overflow-hidden rounded-2xl bg-secondary/30"><img src={images.ai100vet} alt="Product Showcase" data-override-id="products-intro-3" className="w-full h-48 object-cover" /></div>
+                <div className="overflow-hidden rounded-2xl bg-secondary/30"><img src={images.microscopeStation} alt="Microscope Station" data-override-id="products-intro-2" className="w-full h-32 object-cover rounded-2xl" /></div>
+                <div className="overflow-hidden rounded-2xl bg-secondary/30"><img src={images.ai100vet} alt="Product Showcase" data-override-id="products-intro-3" className="w-full h-48 object-cover rounded-2xl" /></div>
               </div>
             </motion.div>
           </div>
@@ -56,7 +56,7 @@ const Products = () => {
             {products.map((product, index) => (
               <motion.div key={product.id} className="group" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
                 <div className={`grid lg:grid-cols-2 gap-12 items-center`}>
-                  <motion.div className={`relative min-h-[350px] lg:min-h-[450px] bg-gradient-to-br from-secondary/50 via-secondary/30 to-secondary/50 rounded-2xl flex items-center justify-center p-8 lg:p-12 overflow-hidden ${index % 2 !== 0 ? 'lg:order-2' : ''}`} variants={index % 2 === 0 ? fadeInLeft : fadeInRight}>
+                  <motion.div className={`relative min-h-[350px] lg:min-h-[450px] bg-secondary/30 rounded-2xl flex items-center justify-center p-8 lg:p-12 overflow-hidden ${index % 2 !== 0 ? 'lg:order-2' : ''}`} variants={index % 2 === 0 ? fadeInLeft : fadeInRight}>
                     {product.featured && (
                       <div className="absolute top-6 left-6 z-10">
                         <div className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-xs font-semibold rounded-full">

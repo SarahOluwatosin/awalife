@@ -36,12 +36,6 @@ const ProductsSection = () => {
 
   return (
     <section id="products" ref={sectionRef} className="relative py-24 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent animated-gradient" />
-      <div className="absolute -top-24 right-0 h-64 w-64 rounded-full bg-primary/10 blur-3xl animate-pulse-soft pointer-events-none" />
-      <div
-        className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-accent/10 blur-3xl animate-pulse-soft pointer-events-none"
-        style={{ animationDelay: '1.4s' }}
-      />
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
         <div className={`max-w-2xl mx-auto text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
@@ -51,49 +45,46 @@ const ProductsSection = () => {
             Diagnostic tools built for <span className="gradient-text">real-world</span> veterinary workflows
           </h2>
         </div>
-        {products.map((product, i) => (
-          <div 
-            key={product.id}
-            className={`grid lg:grid-cols-2 gap-12 items-center mb-24 last:mb-0 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-            style={{ transitionDelay: `${0.1 + i * 0.2}s` }}
-          >
-            <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
-              <motion.div
-                className={`relative rounded-3xl transition-all duration-500 hover:scale-[1.01] ${i === 1 ? 'overflow-visible -my-8' : 'overflow-hidden aspect-[4/3]'}`}
-                whileHover={{ y: -4 }}
-                transition={{ type: 'spring', stiffness: 140, damping: 14 }}
-              >
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+          {products.map((product, i) => (
+            <motion.div
+              key={product.id}
+              className={`flex flex-col transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              style={{ transitionDelay: `${0.1 + i * 0.2}s` }}
+              whileHover={{ y: -4 }}
+              transition={{ type: 'spring', stiffness: 140, damping: 14 }}
+            >
+              <div className="relative rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.01] mb-6 bg-secondary/20">
                 <img
                   src={product.image}
                   alt={product.name}
                   data-override-id={`home-products-${i}`}
-                  className={`w-full object-center ${i === 1 ? 'object-contain scale-110' : 'h-full object-cover'}`}
+                  className={`w-full h-auto aspect-[4/3] object-center rounded-3xl ${i === 1 ? 'object-contain' : 'object-cover'}`}
                   loading="lazy"
                   decoding="async"
                   width={640}
                   height={480}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/6 via-transparent to-transparent pointer-events-none" />
-              </motion.div>
-            </div>
-            <div className={`${i % 2 === 1 ? 'lg:order-1' : ''} max-w-xl`}>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4 leading-tight">
-                {product.name}
-              </h3>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-prose">
-                {product.description}
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Button className="btn-gradient group" asChild>
-                  <Link to={`/products/${product.id}`}>
-                    {product.primaryCta}
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
               </div>
-            </div>
-          </div>
-        ))}
+              <div className="flex flex-col flex-grow">
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3 leading-tight">
+                  {product.name}
+                </h3>
+                <p className="text-muted-foreground text-lg leading-relaxed mb-6 flex-grow">
+                  {product.description}
+                </p>
+                <div>
+                  <Button className="btn-gradient group" asChild>
+                    <Link to={`/products/${product.id}`}>
+                      {product.primaryCta}
+                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

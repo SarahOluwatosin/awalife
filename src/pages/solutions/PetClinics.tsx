@@ -110,7 +110,7 @@ const PetClinics = () => {
 
             <motion.div className="relative" variants={fadeInRight}>
               <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
-                <img src={images.ai100vet} alt="AWALIFE Diagnostic Solution" data-override-id="petclinics-hero" className="w-full aspect-[3/2] object-cover" />
+                <img src={images.ai100vet} alt="AWALIFE Diagnostic Solution" data-override-id="petclinics-hero" className="w-full h-full aspect-[3/2] object-cover rounded-3xl" />
               </div>
             </motion.div>
           </div>
@@ -118,7 +118,7 @@ const PetClinics = () => {
       </motion.section>
 
       {/* Benefits */}
-      <motion.section className="py-16 lg:py-20 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
+      <motion.section className="py-16 lg:py-20 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
@@ -130,8 +130,7 @@ const PetClinics = () => {
           <motion.div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {benefits.map((benefit, index) => (
               <motion.div key={benefit.title} className="group relative" variants={cardSlideUp}>
-                <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative rounded-2xl border border-border/50 bg-card p-8 h-full text-center shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
+                <div className="rounded-2xl border border-border/50 bg-card p-8 h-full text-center shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
                   <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">0{index + 1}</span>
                   <motion.div className="icon-glow mx-auto mb-6 group-hover:scale-110 transition-transform duration-300" variants={popIn}>
                     <benefit.icon className="w-7 h-7 text-primary" />
@@ -159,7 +158,6 @@ const PetClinics = () => {
             {workflowSteps.map((item, index) => (
               <motion.div key={item.step} className="relative" variants={cardSlideUp}>
                 {index < workflowSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/4 -right-3 w-6 h-0.5 bg-gradient-to-r from-primary/50 to-transparent" />
                 )}
                 <div className="rounded-2xl border border-border/50 bg-card p-6 h-full shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
                   <div className="text-4xl font-bold gradient-text mb-4">{item.step}</div>
@@ -184,7 +182,7 @@ const PetClinics = () => {
               <p className="text-muted-foreground">See how AWALIFE can transform your clinic's diagnostic capabilities.</p>
             </motion.div>
 
-            <form onSubmit={handleSubmit} className="glow-card p-8 lg:p-10 space-y-6">
+            <form onSubmit={handleSubmit} className="rounded-2xl border border-border/50 bg-card shadow-sm p-8 lg:p-10 space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Clinic Name</label>

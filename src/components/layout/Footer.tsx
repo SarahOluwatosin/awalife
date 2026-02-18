@@ -19,7 +19,6 @@ const Footer = () => {
   return (
     <footer className="relative bg-card border-t border-border">
       {/* Gradient top border */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 py-20">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">

@@ -26,7 +26,7 @@ const CompanyNews = () => {
       {/* Hero */}
       <section className="pt-32 pb-16 lg:pt-36 lg:pb-20">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <div>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 Get Updates
@@ -40,9 +40,8 @@ const CompanyNews = () => {
               </p>
             </div>
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/8 to-accent/8 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative rounded-2xl overflow-hidden border border-border/30 bg-secondary/20 shadow-lg">
-                <img src={images.heroDiagnosticLab} alt="News cover" data-override-id="news-hero" className="w-full aspect-[4/3] object-cover" loading="eager" decoding="async" />
+              <div className="rounded-2xl overflow-hidden">
+                <img src={images.heroDiagnosticLab} alt="News cover" data-override-id="news-hero" className="w-full h-full max-h-[400px] object-cover rounded-3xl" loading="eager" decoding="async" />
               </div>
             </div>
           </div>
@@ -66,7 +65,7 @@ const CompanyNews = () => {
       </section>
 
       {/* News Grid */}
-      <section className="py-20 lg:py-28 pb-28 lg:pb-36">
+      <section className="pt-8 lg:pt-12 pb-28 lg:pb-36">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           {filtered.length ?
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
@@ -78,7 +77,7 @@ const CompanyNews = () => {
                   <img
                     src={item.imageUrl}
                     alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
                     decoding="async" /> :
 
@@ -87,7 +86,6 @@ const CompanyNews = () => {
                           No image
                         </div>
                   }
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
                       <div className="absolute top-5 left-5">
                         <span className="px-4 py-1.5 bg-primary/90 text-primary-foreground text-xs font-semibold rounded-full">
                           {item.category}
@@ -138,7 +136,7 @@ const CompanyNews = () => {
       <section className="py-20 lg:py-28 bg-card/50">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in <span className="gradient-text">Our Products</span>?</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">{data.cta.description}</p>
+          <p className="text-lg text-muted-foreground max-w-5xl mx-auto mb-10">{data.cta.description}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild>
               {isExternalLink(ctaLink) ?

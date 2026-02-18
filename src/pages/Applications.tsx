@@ -32,7 +32,7 @@ const Applications = () => {
         </div>
       </motion.section>
 
-      <section className="py-20 lg:py-28 pb-28 lg:pb-36 bg-gradient-to-b from-primary/[0.03] to-transparent">
+      <section className="py-20 lg:py-28 pb-28 lg:pb-36">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="space-y-16 lg:space-y-24">
             {applications.map((app, index) => (
@@ -53,7 +53,7 @@ const Applications = () => {
                     </div>
                     <Button className="btn-gradient group/btn" size="lg" asChild><Link to="/products">{t.products.learnMore}<ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" /></Link></Button>
                   </motion.div>
-                  <motion.div className={`relative min-h-[300px] lg:min-h-[400px] bg-gradient-to-br from-secondary/50 via-secondary/30 to-secondary/50 rounded-2xl flex items-center justify-center overflow-hidden ${index % 2 !== 0 ? 'lg:order-1' : ''}`} variants={index % 2 === 0 ? fadeInRight : fadeInLeft}>
+                  <motion.div className={`relative min-h-[300px] lg:min-h-[400px] bg-secondary/30 rounded-2xl flex items-center justify-center overflow-hidden ${index % 2 !== 0 ? 'lg:order-1' : ''}`} variants={index % 2 === 0 ? fadeInRight : fadeInLeft}>
                     <div className={`relative z-10 w-32 h-32 lg:w-40 lg:h-40 rounded-3xl ${app.color} flex items-center justify-center`}><app.icon className="w-16 h-16 lg:w-20 lg:h-20" /></div>
                   </motion.div>
                 </div>
@@ -67,7 +67,7 @@ const Applications = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">{t.cta.title} <span className="gradient-text">{t.cta.titleHighlight}</span></h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">{t.cta.description}</p>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-10">{t.cta.description}</p>
             <Button className="btn-gradient" size="lg" asChild><Link to="/contact">{t.cta.button}</Link></Button>
           </div>
         </div>

@@ -78,7 +78,6 @@ const News = () => {
         className="group relative flex flex-col rounded-2xl bg-card border border-border/20 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300">
 
         {/* Accent gradient top */}
-        <div className="h-1 rounded-t-2xl bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
 
         {/* Video embed preview */}
         {embedUrl &&
@@ -165,27 +164,26 @@ const News = () => {
       {/* Hero */}
       <motion.section className="pt-32 pb-16 lg:pt-36 lg:pb-20" initial="hidden" animate="visible" variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div variants={blurIn}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 Explore resources 
               </span>
-               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">Welcome to          Resource Center
-                <span className="gradient-text">{data.hero.title}</span>
-175:               </h1>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+                Welcome to <span className="gradient-text">Resource</span> Center
+              </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                 {data.hero.description}
               </p>
             </motion.div>
             <motion.div className="relative" variants={sectionVariants}>
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/8 to-accent/8 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative rounded-2xl overflow-hidden border border-border/30 bg-secondary/20 shadow-lg">
+              <div className="rounded-2xl overflow-hidden">
                 {data.hero.imageUrl ?
                 <img
                   src={data.hero.imageUrl}
                   alt={data.hero.imageAlt}
                   data-override-id="resources-hero"
-                  className="w-full aspect-[4/3] object-cover"
+                  className="w-full h-full max-h-[400px] object-cover rounded-3xl"
                   loading="eager"
                   decoding="async" /> :
 
@@ -273,7 +271,7 @@ const News = () => {
            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
             Interested in <span className="gradient-text">Our Products</span>?
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
+          <p className="text-lg text-muted-foreground max-w-5xl mx-auto mb-10">
             {data.cta.description}
           </p>
           <div className="flex flex-wrap justify-center gap-4">

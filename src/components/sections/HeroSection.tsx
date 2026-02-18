@@ -5,18 +5,17 @@ import { Link } from 'react-router-dom';
 import { images } from '@/lib/images';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Starfield from '@/components/animations/Starfield';
-import AnimatedGradientBg from '@/components/animations/AnimatedGradientBg';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.2 } },
 };
 
 const fadeUp = (delay = 0) => ({
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease, delay } },
+  hidden: { opacity: 0, y: 40, x: -20 },
+  visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.8, ease, delay } },
 });
 
 interface MetricItemProps {
@@ -84,14 +83,7 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16">
-      <AnimatedGradientBg />
       <Starfield starCount={150} speed={0.5} />
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/10" />
-      <div className="absolute -top-16 right-16 h-56 w-56 rounded-full bg-primary/10 blur-3xl animate-pulse-soft pointer-events-none" />
-      <div
-        className="absolute bottom-10 left-10 h-64 w-64 rounded-full bg-accent/10 blur-3xl animate-pulse-soft pointer-events-none"
-        style={{ animationDelay: '1.3s' }}
-      />
 
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
@@ -107,11 +99,49 @@ const HeroSection = () => {
               </span>
             </motion.div>
 
-            <motion.h1 variants={fadeUp(0.05)} className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              <span className="text-foreground">Morphology isn't </span>
+            <motion.h1
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight max-w-3xl"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: {
+                    staggerChildren: 0.08,
+                    delayChildren: 0.05
+                  }
+                }
+              }}
+            >
+              <span className="text-foreground inline-block">
+                {["Morphology", "isn't", "a", "feature", "for", "us,"].map((word, i) => (
+                  <motion.span
+                    key={i}
+                    className="inline-block mr-[0.25em]"
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } }
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </span>
               <br />
-              <span className="text-foreground">a feature for us, </span>
-              <span className="gradient-text">it's the foundation</span>
+              <span className="gradient-text inline-block">
+                {["it's", "the", "foundation"].map((word, i) => (
+                  <motion.span
+                    key={i}
+                    className="inline-block mr-[0.25em]"
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } }
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </span>
             </motion.h1>
 
             <motion.p variants={fadeUp(0.1)} className="text-lg md:text-xl text-muted-foreground max-w-prose mb-8 leading-relaxed">
@@ -152,13 +182,12 @@ const HeroSection = () => {
                   src={images.heroDiagnosticLab}
                   alt="Veterinary diagnostic workflow"
                   data-override-id="home-hero"
-                  className="w-full h-full object-cover aspect-[5/4]"
+                  className="w-full h-full object-cover aspect-[5/4] rounded-3xl"
                   fetchPriority="high"
                   decoding="async"
                   width={800}
                   height={640}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-transparent pointer-events-none" />
               </div>
             </motion.div>
           </motion.div>

@@ -72,7 +72,7 @@ const NewsDetail = () => {
                 <img
                   src={item.imageUrl}
                   alt={item.title}
-                  className="w-full aspect-video object-cover"
+                  className="w-full h-full aspect-video object-cover rounded-2xl"
                 />
               </div>
             )}

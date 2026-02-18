@@ -12,8 +12,7 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Global ambient gradients */}
-      <div className="fixed inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 animated-gradient opacity-70 pointer-events-none" />
+      {/* Global ambient effects */}
       <div className="fixed inset-0 tech-grid opacity-10 pointer-events-none" />
       <div className="fixed inset-0 scanlines opacity-10 pointer-events-none" />
       <Starfield starCount={40} speed={0.15} className="fixed inset-0 opacity-25" />

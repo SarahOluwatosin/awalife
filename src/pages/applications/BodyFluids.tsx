@@ -50,9 +50,8 @@ const BodyFluids = () => {
               </div>
             </motion.div>
             <motion.div className="relative lg:order-1" variants={fadeInLeft}>
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative glow-card p-10 bg-gradient-to-br from-secondary/50 to-card">
-                <img src={images.ai100vet} alt="AI-100Vet Analyzer" data-override-id="bodyfluids-overview" className="w-full max-h-80 object-contain" />
+              <div className="rounded-2xl bg-card p-10">
+                <img src={images.ai100vet} alt="AI-100Vet Analyzer" data-override-id="bodyfluids-overview" className="w-full h-full object-cover rounded-3xl" />
               </div>
             </motion.div>
           </div>
@@ -68,8 +67,7 @@ const BodyFluids = () => {
           <motion.div className="grid md:grid-cols-2 gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {analysisTypes.map((type) => (
               <motion.div key={type.title} className="group relative" variants={cardVariants}>
-                <div className="absolute -inset-2 bg-gradient-to-br from-primary/10 to-accent/5 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative glow-card p-8 lg:p-10 h-full">
+                <div className="rounded-2xl border border-border/50 bg-card p-8 lg:p-10 h-full shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
                   <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6"><Beaker className="w-8 h-8 text-primary" /></div>
                   <h3 className="text-2xl font-semibold text-foreground mb-4">{type.title}</h3>
                   <p className="text-muted-foreground leading-relaxed mb-6">{type.description}</p>
@@ -94,8 +92,7 @@ const BodyFluids = () => {
           <motion.div className="grid md:grid-cols-2 gap-6 lg:gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {clinicalScenarios.map((scenario, index) => (
               <motion.div key={scenario.title} className="group relative" variants={cardVariants}>
-                <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative glow-card p-8 h-full">
+                <div className="rounded-2xl border border-border/50 bg-card p-8 h-full shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
                   <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary/60 mb-4">0{index + 1}</span>
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6"><scenario.icon className="w-7 h-7 text-primary" /></div>
                   <h3 className="text-xl font-semibold text-foreground mb-3">{scenario.title}</h3>

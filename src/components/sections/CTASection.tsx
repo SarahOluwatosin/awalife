@@ -2,16 +2,14 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import AnimatedGradientBg from '@/components/animations/AnimatedGradientBg';
 import { sectionVariants, viewportOnce } from '@/lib/animations';
 
 const CTASection = () => {
   return (
-    <section className="relative py-20 lg:py-28 bg-gradient-to-b from-primary/[0.04] to-transparent overflow-hidden">
-      <AnimatedGradientBg />
+    <section className="relative py-20 lg:py-28 bg-card/50 overflow-hidden">
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
         <motion.div
-          className="max-w-2xl mx-auto text-center"
+          className="max-w-4xl mx-auto text-center"
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
@@ -20,7 +18,7 @@ const CTASection = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
             Interested in <span className="gradient-text">Our Products</span>?
           </h2>
-          <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-5xl mx-auto">
             Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

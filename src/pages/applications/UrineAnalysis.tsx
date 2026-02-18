@@ -52,14 +52,14 @@ const UrineAnalysis = () => {
             </motion.div>
             <motion.div className="relative" variants={fadeInRight} style={{ y: imgY }}>
               <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
-                <img src={images.ai100vet} alt="Urine sediment workflow" data-override-id="urine-overview" className="w-full aspect-[3/2] object-cover" />
+                <img src={images.ai100vet} alt="Urine sediment workflow" data-override-id="urine-overview" className="w-full h-full aspect-[3/2] object-cover rounded-3xl" />
               </div>
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      <motion.section className="py-16 lg:py-20 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
+      <motion.section className="py-16 lg:py-20 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">AI-Powered Analysis</span>
@@ -73,9 +73,8 @@ const UrineAnalysis = () => {
           </div>
           <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {sedimentCategories.map((category) => (
-              <motion.div key={category.title} className="group relative" variants={cardVariants}>
-                <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative rounded-2xl border border-border/50 bg-card p-6 text-left shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
+              <motion.div key={category.title} className="group relative h-full" variants={cardVariants}>
+                <div className="rounded-2xl border border-border/50 bg-card p-6 text-left h-full shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
                   <h3 className="text-lg font-semibold text-foreground mb-4">{category.title}</h3>
                   <ul className={`space-y-2 ${cardTextClass} text-muted-foreground`}>
                     {category.items.map((item) => (
@@ -94,25 +93,23 @@ const UrineAnalysis = () => {
 
       <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-            <motion.div className="relative" variants={fadeInLeft}>
-              <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
-                <img src={images.ai100vet} alt="Urine SOP Video" data-override-id="urine-sop" className="w-full aspect-[3/2] object-cover" />
-                <div className="p-4 bg-secondary/20 border-t border-border/30">
-                  <p className="text-xs text-muted-foreground">Urine SOP Video-02</p>
-                </div>
-              </div>
-            </motion.div>
-            <motion.div variants={fadeInRight}>
+          <div className="space-y-8">
+            <motion.div className="text-center max-w-4xl mx-auto" variants={fadeInLeft}>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">How It Works</span>
               <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How It <span className="gradient-text">Works</span></h3>
               <p className={`${bodyTextClass} text-muted-foreground mb-6`}>From sample to report - in under 10 minutes</p>
-              <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
-                <li>Focus particles help the system rapidly lock focus on formed elements, minimizing manual adjustments.</li>
-                <li>Centrifugation is optional for routine samples.</li>
-                <li>For very dilute/clear urine, centrifugation is recommended to concentrate formed elements.</li>
-                <li>For very turbid samples or hematuria, dilution is recommended to improve imaging and recognition.</li>
+              <ul className={`grid md:grid-cols-2 gap-x-8 gap-y-3 ${bodyTextClass} text-muted-foreground text-left`}>
+                <li className="flex items-start gap-2"><span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary flex-shrink-0"><Check className="h-3 w-3" /></span><span>Focus particles help the system rapidly lock focus on formed elements, minimizing manual adjustments.</span></li>
+                <li className="flex items-start gap-2"><span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary flex-shrink-0"><Check className="h-3 w-3" /></span><span>Centrifugation is optional for routine samples.</span></li>
+                <li className="flex items-start gap-2"><span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary flex-shrink-0"><Check className="h-3 w-3" /></span><span>For very dilute/clear urine, centrifugation is recommended to concentrate formed elements.</span></li>
+                <li className="flex items-start gap-2"><span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary flex-shrink-0"><Check className="h-3 w-3" /></span><span>For very turbid samples or hematuria, dilution is recommended to improve imaging and recognition.</span></li>
               </ul>
               <p className={`${bodyTextClass} italic text-muted-foreground mt-6`}>*Workflow recommendations may vary by sample condition and clinical protocols</p>
+            </motion.div>
+            <motion.div className="relative w-full" variants={fadeInRight}>
+              <div className="rounded-2xl overflow-hidden">
+                <img src={images.ai100vet} alt="Urine SOP Video" data-override-id="urine-sop" className="w-full object-cover" />
+              </div>
             </motion.div>
           </div>
         </div>
@@ -153,10 +150,10 @@ const UrineAnalysis = () => {
         </div>
       </motion.section>
 
-      <motion.section className="py-20 lg:py-28 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
+      <motion.section className="py-20 lg:py-28 bg-white" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in <span className="gradient-text">Our Products</span>?</h2>
-          <p className={`${bodyTextClass} text-muted-foreground max-w-2xl mx-auto mb-10`}>Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
+          <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>
           </div>

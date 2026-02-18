@@ -54,7 +54,7 @@ const TestimonialsSection = () => {
           {installations.map((installation, i) => (
             <div
               key={installation.type}
-              className={`glow-card p-6 md:p-8 transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              className={`rounded-2xl border border-border/50 bg-card shadow-sm p-6 md:p-8 transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
               style={{ transitionDelay: `${0.2 + i * 0.15}s` }}
             >
               <div className="flex items-center gap-2 text-primary mb-4">

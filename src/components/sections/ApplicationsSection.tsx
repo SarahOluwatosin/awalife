@@ -91,7 +91,6 @@ const ApplicationsSection = () => {
               <p className="text-foreground/70 leading-relaxed">{app.description}</p>
 
               {/* Decorative Element */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
           ))}
         </div>

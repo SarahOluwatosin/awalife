@@ -39,10 +39,10 @@ const MetricItem = ({ value, suffix, label, delay, decimals = 0 }: {value: numbe
 
   return (
     <motion.div ref={ref} className="text-center" initial={{ opacity: 0, y: 18 }} animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }} transition={{ duration: 0.6, delay: delay / 1000, ease: [0.22, 1, 0.36, 1] }}>
-      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
+      <div className="text-xl md:text-2xl font-semibold text-foreground">
         {count.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}{suffix}
       </div>
-      <div className="text-muted-foreground text-sm">{label}</div>
+      <p className="text-[11px] md:text-xs text-muted-foreground mt-2">{label}</p>
     </motion.div>
   );
 };
@@ -78,36 +78,50 @@ const About = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div variants={fadeInLeft}>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+                Our Story
+              </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Pioneering <span className="gradient-text">AI-Powered Morphology</span> Diagnostics</h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife is a dedicated innovator in AI-powered morphology for veterinary diagnostics, with a long-term focus on formed element analysis. By pairing high-quality microscopy imaging with AI-assisted morphology recognition, we help clinics standardize workflows and document findings with clarity—through review-ready reports with images and counts across blood, urine, feces, and body fluids. We continue to expand this platform through ongoing innovation and updates.</p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 mt-10">
                 {metrics.map((metric, i) => <MetricItem key={metric.label} value={metric.rawValue} suffix={metric.suffix} label={metric.label} delay={i * 100} decimals={metric.decimals} />)}
               </div>
             </motion.div>
-            <motion.div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]" variants={fadeInRight}>
-              <img src={images.heroDiagnosticLab} alt="Awalife overview" data-override-id="about-overview" className="w-full object-contain" />
+            <motion.div className="rounded-2xl overflow-hidden" variants={fadeInRight}>
+              <img src={images.heroDiagnosticLab} alt="Awalife overview" data-override-id="about-overview" className="w-full h-full object-cover rounded-3xl" />
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      <motion.section className="py-20 lg:py-28 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
+      <motion.section className="py-20 lg:py-28 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/15 text-primary border border-primary/25 mb-6">Our Journey</span>
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+              Our Journey
+            </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Key Moments That <span className="gradient-text">Shaped Awalife</span></h2>
           </div>
           <div className="max-w-4xl mx-auto">
             <div className="relative">
               <div className="absolute left-3 top-0 h-full w-px bg-border/60" />
-              <motion.div className="space-y-10 pl-12" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
+              <motion.div className="space-y-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
                 {timeline.map((entry) => (
-                  <motion.div key={entry.year} className="relative" variants={cardVariants}>
-                    <span className="absolute -left-12 top-2 h-6 w-6 rounded-full bg-primary/20 border border-primary/40" />
-                    <div className="inline-flex items-center px-3 py-1 rounded-full bg-secondary/40 text-xs font-semibold tracking-wider text-foreground">{entry.year}</div>
-                    <div className="mt-4 overflow-hidden rounded-2xl border border-border/30 bg-secondary/20 p-6">
-                      <ul className={`space-y-2 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
-                        {entry.items.map((item) => <li key={item}>{item}</li>)}
+                  <motion.div key={entry.year} className="relative pl-12 group" variants={cardVariants}>
+                    <div className="absolute left-0 top-3 h-7 w-7 rounded-full bg-primary/15 border-2 border-primary/40 flex items-center justify-center group-hover:bg-primary/25 group-hover:border-primary/60 transition-all duration-300">
+                      <div className="h-2 w-2 rounded-full bg-primary" />
+                    </div>
+                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-xs font-bold tracking-wider text-primary mb-3">
+                      {entry.year}
+                    </div>
+                    <div className="relative overflow-hidden rounded-xl border border-border/40 bg-card/50 backdrop-blur-sm p-6 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 group-hover:bg-card/80">
+                      <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground relative z-10`}>
+                        {entry.items.map((item) => (
+                          <li key={item} className="flex items-start gap-3 leading-relaxed">
+                            <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/60 mt-2 flex-shrink-0" />
+                            <span className="flex-1">{item}</span>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   </motion.div>
@@ -121,17 +135,20 @@ const About = () => {
       <motion.section className="py-20 lg:py-28" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+              Our Principles
+            </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Mission and <span className="gradient-text">Core Values</span></h2>
           </div>
           <motion.div className="grid md:grid-cols-2 gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
-            <motion.div className="glow-card p-8 flex items-start justify-between gap-6" variants={cardVariants}>
+            <motion.div className="rounded-2xl border border-border/50 bg-card shadow-sm p-8 flex items-start justify-between gap-6" variants={cardVariants}>
               <div>
                 <h3 className="text-xl font-semibold text-foreground mb-4">Mission</h3>
                 <ul className={`space-y-2 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>{mission.map((item) => <li key={item}>{item}</li>)}</ul>
               </div>
               <div className="w-16 h-16 rounded-full bg-secondary/30 flex-shrink-0" />
             </motion.div>
-            <motion.div className="glow-card p-8 flex items-start justify-between gap-6" variants={cardVariants}>
+            <motion.div className="rounded-2xl border border-border/50 bg-card shadow-sm p-8 flex items-start justify-between gap-6" variants={cardVariants}>
               <div>
                 <h3 className="text-xl font-semibold text-foreground mb-4">Core Values</h3>
                 <ul className={`space-y-2 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>{coreValues.map((item) => <li key={item}>{item}</li>)}</ul>
@@ -144,22 +161,25 @@ const About = () => {
 
       <motion.section className="py-20 lg:py-28 bg-secondary/20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="text-center max-w-4xl mx-auto mb-12">
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+              Global Reach
+            </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Scaling <span className="gradient-text">globally</span> through partners who deliver locally</h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-4`}>From product design to service processes, Awalife is built for international deployment. With standardized workflows, review-ready outputs, and a platform that keeps expanding across sample types, we help teams deliver consistent clinical value across regions and practice settings.</p>
           </div>
           <div className="relative">
-            <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
+            <div className="rounded-2xl overflow-hidden">
               <img src={images.heroMedtech} alt="Global partners" data-override-id="about-partners" className="w-full object-cover" />
             </div>
           </div>
         </div>
       </motion.section>
 
-      <motion.section className="py-20 lg:py-28 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
+      <motion.section className="py-20 lg:py-28 bg-white" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in <span className="gradient-text">Our Products</span>?</h2>
-          <p className={`${bodyTextClass} text-muted-foreground max-w-2xl mx-auto mb-10`}>Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
+          <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>
           </div>

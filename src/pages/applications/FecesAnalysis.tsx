@@ -55,14 +55,14 @@ const FecesAnalysis = () => {
             </motion.div>
             <motion.div className="relative" variants={fadeInRight} style={{ y: py1 }}>
               <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
-                <img src={images.ai100vet} alt="AI-100Vet Feces Analyzer" data-override-id="feces-overview" className="w-full aspect-[3/2] object-cover" />
+                <img src={images.ai100vet} alt="AI-100Vet Feces Analyzer" data-override-id="feces-overview" className="w-full h-full aspect-[3/2] object-cover rounded-3xl" />
               </div>
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      <motion.section className="py-16 lg:py-20 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
+      <motion.section className="py-16 lg:py-20 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">AI-POWERED ANALYSIS</span>
@@ -76,9 +76,8 @@ const FecesAnalysis = () => {
           </div>
           <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {samplingCategories.map((category) =>
-            <motion.div key={category.title} className="group relative" variants={cardVariants}>
-                <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative rounded-2xl border border-border/50 bg-card p-6 text-left shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
+            <motion.div key={category.title} className="group relative h-full" variants={cardVariants}>
+                <div className="rounded-2xl border border-border/50 bg-card p-6 text-left h-full shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
                   <h3 className="text-lg font-semibold text-foreground mb-4">{category.title}</h3>
                   <ul className={`space-y-2 ${cardTextClass} text-muted-foreground`}>
                     {category.items.map((item) =>
@@ -101,9 +100,6 @@ const FecesAnalysis = () => {
             <motion.div className="relative" variants={fadeInLeft}>
               <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
                 <img src={images.ai100vet} alt="Feces SOP Video-02" data-override-id="feces-sop-02" className="w-full aspect-[3/2] object-cover" />
-                <div className="p-4 bg-secondary/20 border-t border-border/30">
-                  <p className="text-xs text-muted-foreground">Feces SOP Video-02</p>
-                </div>
               </div>
             </motion.div>
             <motion.div variants={fadeInRight}>
@@ -135,16 +131,13 @@ const FecesAnalysis = () => {
             <motion.div className="relative" variants={fadeInRight} style={{ y: py2 }}>
               <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card transition-shadow duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.15)]">
                 <img src={images.ai100vet} alt="Feces SOP Video-03" data-override-id="feces-sop-03" className="w-full aspect-[3/2] object-cover" />
-                <div className="p-4 bg-secondary/20 border-t border-border/30">
-                  <p className="text-xs text-muted-foreground">Feces SOP Video-03</p>
-                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      <motion.section className="py-16 lg:py-20 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
+      <motion.section className="py-16 lg:py-20 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Clinical Images</span>
@@ -182,7 +175,7 @@ const FecesAnalysis = () => {
       <motion.section className="py-20 lg:py-28 bg-secondary/20" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in <span className="gradient-text">Our Products</span>?</h2>
-          <p className={`${bodyTextClass} text-muted-foreground max-w-2xl mx-auto mb-10`}>Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
+          <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>
           </div>

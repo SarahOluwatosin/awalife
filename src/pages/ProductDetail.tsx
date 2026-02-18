@@ -213,8 +213,22 @@ const ProductDetail = () => {
 
             {/* Content */}
             <motion.div className={`lg:py-6 ${(isAIAnalyzer || isMicroscope) ? 'lg:order-1' : ''} ${isMicroscope ? 'max-w-lg' : ''}`} variants={fadeInLeft}>
+              {isAIAnalyzer && (
+                <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-4">
+                  Product Overview
+                </span>
+              )}
+              {isMicroscope && (
+                <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-4">
+                  Digital Microscope
+                </span>
+              )}
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
-                {isMicroscope ? <>Smarter Imaging, <span className="gradient-text">Effortless Operation</span></> : product.name}
+                {isMicroscope
+                  ? <>Smarter Imaging, <span className="gradient-text">Effortless Operation</span></>
+                  : isAIAnalyzer
+                    ? <>AI Series <span className="gradient-text">Morphology Analyzer</span></>
+                    : product.name}
               </h1>
               
               <p className={`${longParagraphClass} text-muted-foreground leading-relaxed mb-10`}>
@@ -279,10 +293,10 @@ const ProductDetail = () => {
 
       {/* Capabilities Section */}
       {product.capabilities && !isMicroscope && (
-        <motion.section className="py-16 lg:py-20 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
+        <motion.section className="py-16 lg:py-20 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className={containerClass}>
             <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
-              <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 {isAIAnalyzer ? 'Key Features' : 'Capabilities'}
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -301,8 +315,7 @@ const ProductDetail = () => {
             >
               {product.capabilities.map((cap: any, index: number) => (
                 <motion.div key={cap.title} className="group relative" variants={cardSlideUp}>
-                  <div className="absolute -inset-1 bg-gradient-to-br from-primary/10 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                   <div className="relative rounded-2xl border border-border/50 bg-card p-8 h-full text-center shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
+                   <div className="rounded-2xl border border-border/50 bg-card p-8 h-full text-center shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
                     <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">0{index + 1}</span>
                     <motion.div className="icon-glow mx-auto mb-6 group-hover:scale-110 transition-transform duration-300" variants={popIn}>
                       <cap.icon className="w-7 h-7 text-primary" />
@@ -322,6 +335,9 @@ const ProductDetail = () => {
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className={containerClass}>
             <motion.div className="text-center max-w-3xl mx-auto mb-12" variants={blurIn}>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+                Workflow
+              </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                 From Sample to Insight, <span className="gradient-text">One Workflow</span> for Multiple Sample Types
               </h2>
@@ -342,7 +358,7 @@ const ProductDetail = () => {
                       <motion.div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 border border-primary/30 text-primary font-semibold" variants={popIn}>
                         {step.title.split(' ')[1]}
                       </motion.div>
-                      <div className="glow-card p-6 text-left md:text-center">
+                      <div className="rounded-2xl border border-border/50 bg-card shadow-sm p-6 text-left md:text-center">
                         <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{step.title}</span>
                         <h3 className="font-semibold text-foreground mt-2">{step.label}</h3>
                         <p className={`${longParagraphClass} text-muted-foreground leading-relaxed mt-3`}>{step.desc}</p>
@@ -360,14 +376,17 @@ const ProductDetail = () => {
       {isMicroscope && (
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceTiny} variants={sectionVariants}>
           <div className={containerClass}>
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-7xl mx-auto">
               <div className="text-center mb-8">
+                <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+                  Sample Types
+                </span>
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight"><span className="gradient-text">Samples</span> Supported</h2>
                 <p className="text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                   Common veterinary sample types that can be captured and documented with the workstation.
                 </p>
               </div>
-              <motion.div className="flex flex-wrap justify-center items-center gap-4 text-base font-medium text-muted-foreground" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
+              <motion.div className="flex flex-nowrap justify-center items-center gap-4 text-base font-medium text-muted-foreground overflow-x-auto pb-2" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   {[
                     { label: 'Urine', icon: FlaskConical },
                     { label: 'Fecal', icon: Bug },
@@ -397,16 +416,19 @@ const ProductDetail = () => {
       {isMicroscope && (
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div className="rounded-3xl overflow-hidden max-w-md mx-auto" variants={fadeInLeft}>
+            <div className="grid lg:grid-cols-2 gap-12 items-stretch">
+              <motion.div className="rounded-3xl overflow-hidden h-full flex items-center bg-secondary/10" variants={fadeInLeft}>
                 <img
                   src={images.dm03Microscope}
                   alt="DM-03 Microscope hardware"
                   data-override-id="dm03-hardware"
-                  className="w-full object-contain"
+                  className="w-full h-full object-contain rounded-3xl"
                 />
               </motion.div>
               <motion.div className="max-w-xl" variants={fadeInRight}>
+                <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+                  Hardware
+                </span>
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight"><span className="gradient-text">High-performance</span> Hardware</h2>
                 <motion.div className="space-y-5" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   {[
@@ -443,22 +465,25 @@ const ProductDetail = () => {
       {isMicroscope && (
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
-            <motion.div className="flex flex-col items-center text-center max-w-4xl mx-auto" variants={blurIn}>
+            <motion.div className="flex flex-col items-center text-center" variants={blurIn}>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+                Software
+              </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
                 <span className="gradient-text">User-friendly</span> Software Built for Veterinary Workflows
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-2xl">
                 It integrates tools for cell counting, scale bars, annotations, and one-click report generation, with an embedded teaching image library for faster training.
               </p>
-              <div className="w-full max-w-2xl rounded-3xl overflow-hidden">
-                <img
-                  src={images.digitalMicroscope}
-                  alt="Microscope workstation software"
-                  data-override-id="dm03-software"
-                  className="w-full object-contain"
-                />
-              </div>
             </motion.div>
+            <div className="w-full rounded-3xl overflow-hidden">
+              <img
+                src={images.digitalMicroscope}
+                alt="Microscope workstation software"
+                data-override-id="dm03-software"
+                className="w-full h-full object-cover rounded-3xl"
+              />
+            </div>
           </div>
         </motion.section>
       )}
@@ -467,16 +492,19 @@ const ProductDetail = () => {
       {isMicroscope && (
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div className="rounded-3xl overflow-hidden max-w-md mx-auto" variants={fadeInLeft}>
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              <motion.div className="rounded-3xl overflow-hidden h-full flex items-center" variants={fadeInLeft}>
                 <img
                   src={images.dm03Medtech}
                   alt="Microscope image hub module"
                   data-override-id="dm03-imagehub"
-                  className="w-full object-contain"
+                  className="w-full h-full object-cover rounded-3xl"
                 />
               </motion.div>
               <motion.div className="max-w-xl" variants={fadeInRight}>
+                <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+                  Upgrade Option
+                </span>
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
                   <span className="gradient-text">Already Have</span> a Microscope?
                 </h2>
@@ -527,7 +555,7 @@ const ProductDetail = () => {
 
               <TabsContent value="specifications" className="animate-fade-in">
                 <div className="max-w-4xl mx-auto">
-                  <div className="glow-card overflow-hidden">
+                  <div className="rounded-2xl border border-border/50 bg-card shadow-sm overflow-hidden">
                     <div className="p-6 lg:p-8 border-b border-border/50 bg-secondary/20">
                       <h3 className="text-xl font-semibold text-foreground">Technical Specifications</h3>
                     <p className={`${detailParagraphClass} text-muted-foreground mt-1`}>Detailed specifications for {product.name}</p>
@@ -556,8 +584,7 @@ const ProductDetail = () => {
                       { name: 'Quick Start Guide', type: 'PDF', size: '0.8 MB' },
                     ].map((doc) => (
                       <div key={doc.name} className="group relative">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <div className="relative glow-card p-6 flex items-center gap-5 cursor-pointer transition-all duration-300 hover:-translate-y-1">
+                        <div className="rounded-2xl border border-border/50 bg-card p-6 flex items-center gap-5 cursor-pointer shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
                           <div className="icon-glow group-hover:scale-110 transition-transform duration-300">
                             <FileText className="w-6 h-6 text-primary" />
                           </div>
@@ -575,7 +602,7 @@ const ProductDetail = () => {
 
               <TabsContent value="certifications" className="animate-fade-in">
                 <div className="max-w-4xl mx-auto">
-                  <div className="glow-card overflow-hidden">
+                  <div className="rounded-2xl border border-border/50 bg-card shadow-sm overflow-hidden">
                     <div className="p-6 lg:p-8 border-b border-border/50 bg-secondary/20">
                       <h3 className="text-xl font-semibold text-foreground">Patents & Regulatory Approvals</h3>
                       <p className={`${detailParagraphClass} text-muted-foreground mt-1`}>Quality certifications and intellectual property</p>
@@ -622,7 +649,7 @@ const ProductDetail = () => {
 
       {/* Product Comparison */}
       {!isMicroscope && (
-        <div className="bg-gradient-to-b from-primary/[0.04] to-transparent">
+        <div className="bg-white">
           <ProductComparison variant={isAIAnalyzer ? 'ai-analyzer' : 'full'} />
         </div>
       )}
@@ -632,7 +659,7 @@ const ProductDetail = () => {
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className="container mx-auto px-6 lg:px-16 xl:px-24">
             <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
-              <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 Explore More
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Other <span className="gradient-text">Products</span></h2>
@@ -645,14 +672,13 @@ const ProductDetail = () => {
                     to={`/products/${prod.id}`}
                     className="group relative block"
                   >
-                    <div className="absolute -inset-1 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                     <div className="relative rounded-2xl border border-border/50 bg-card overflow-hidden h-full shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
-                       <div className="h-48 bg-gradient-to-br from-secondary/30 to-card flex items-center justify-center p-6">
-                        <img 
-                          src={prod.images[0]} 
+                     <div className="rounded-2xl border border-border/50 bg-card overflow-hidden h-full shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
+                       <div className="h-48 bg-secondary/30 flex items-center justify-center p-6">
+                        <img
+                          src={prod.images[0]}
                           alt={prod.name}
                           data-override-id={`other-product-${prod.id}`}
-                          className="max-h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                          className="max-h-full w-full object-contain rounded-2xl group-hover:scale-110 transition-transform duration-500"
                         />
                       </div>
                       <div className="p-6">
@@ -672,7 +698,10 @@ const ProductDetail = () => {
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className={containerClass}>
             <div className="text-center max-w-3xl mx-auto mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+                FAQ
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
             </div>
             <div className="max-w-3xl mx-auto">
               <Accordion type="single" collapsible className="w-full">
@@ -709,7 +738,10 @@ const ProductDetail = () => {
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className={containerClass}>
             <div className="text-center max-w-3xl mx-auto mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+                FAQ
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
             </div>
             <div className="max-w-3xl mx-auto">
               <Accordion type="single" collapsible className="w-full">
@@ -747,9 +779,9 @@ const ProductDetail = () => {
       )}
 
       {/* CTA */}
-      <motion.section className="py-20 lg:py-28 bg-gradient-to-b from-primary/[0.04] to-transparent" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
+      <motion.section className="py-20 lg:py-28 bg-white" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className={`${containerClass} text-center`}>
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
               Interested in <span className="gradient-text">Our Products</span>?
             </h2>

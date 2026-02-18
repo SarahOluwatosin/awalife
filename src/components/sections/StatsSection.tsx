@@ -68,7 +68,6 @@ const StatsSection = () => {
 
   return (
     <section id="stats" className="relative py-20 border-y border-border/30 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 animated-gradient" />
       <div className="absolute inset-0 scanlines opacity-15 pointer-events-none" />
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12">

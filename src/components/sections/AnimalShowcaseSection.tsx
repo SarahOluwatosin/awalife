@@ -93,19 +93,8 @@ const AnimalShowcaseSection = () => {
 
   return (
     <section ref={sectionRef} className="relative py-20 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background pointer-events-none" />
       <div className="absolute inset-0 tech-grid opacity-30 pointer-events-none" />
       <div className="absolute inset-0 scanlines opacity-20 pointer-events-none" />
-      <div className="absolute -top-24 right-0 w-72 h-72 rounded-full bg-primary/10 blur-3xl animate-pulse-soft pointer-events-none" />
-      <div
-        className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent/10 blur-3xl animate-pulse-soft pointer-events-none"
-        style={{ animationDelay: '1.2s' }}
-      />
-      <div
-        ref={orbRef}
-        className="absolute left-1/2 top-10 h-64 w-64 -translate-x-1/2 rounded-full bg-gradient-to-br from-primary/15 via-transparent to-accent/15 blur-3xl pointer-events-none"
-        style={{ transform: `translate(-50%, ${orbOffset}px)` }}
-      />
 
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
         <div className="grid lg:grid-cols-[1.1fr_1.9fr] gap-12 items-center">
@@ -136,14 +125,10 @@ const AnimalShowcaseSection = () => {
                 }`}
                 style={{ transitionDelay: `${index * 120}ms` }}
               >
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <div className="absolute inset-0 scanlines opacity-0 transition-opacity duration-500 group-hover:opacity-40" />
                 <div className="absolute -top-16 left-0 right-0 h-24 scanline-sweep opacity-0 group-hover:opacity-100" />
-                <div className="absolute inset-x-6 top-6 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-70 animate-shimmer bg-[length:200%_100%]" />
 
                 <div className="relative flex items-center justify-center rounded-2xl bg-background/70 border border-border/60 p-6 mb-6">
-                  <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-primary/20 via-transparent to-accent/20 blur-xl opacity-70" />
-                  <div className="absolute inset-2 rounded-2xl border border-primary/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100 animate-[spin_22s_linear_infinite]" />
                   <div
                     className="relative animate-float transition-transform duration-500 group-hover:scale-[1.03] group-hover:-rotate-2"
                     style={{ animationDelay: `${index * 0.6}s` }}

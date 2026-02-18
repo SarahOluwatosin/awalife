@@ -163,10 +163,9 @@ const ProductGallery = ({ images, productName, productId = 'product' }: ProductG
 
       {/* Gallery */}
       <div className="group relative">
-        <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 rounded-3xl blur-3xl opacity-50" />
-        
+
         {/* Main Image */}
-        <div className="relative glow-card p-6 lg:p-10 bg-gradient-to-br from-secondary/50 via-card to-secondary/30 overflow-hidden">
+        <div className="relative rounded-2xl border border-border/50 bg-card p-6 lg:p-10 overflow-hidden shadow-sm">
           <div className="absolute top-8 right-8 w-32 h-32 rounded-full bg-primary/5 animate-float" />
           <div className="absolute bottom-12 left-8 w-20 h-20 rounded-full bg-accent/5 animate-float" style={{ animationDelay: '2s' }} />
           

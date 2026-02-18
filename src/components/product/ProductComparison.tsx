@@ -181,7 +181,7 @@ const ProductComparison = ({ variant = 'full' }: ProductComparisonProps) => {
             Compare Products
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Find the Right Solution
+            Find the <span className="gradient-text">Right Solution</span>
           </h2>
           <p className="text-muted-foreground">
             {variant === 'ai-analyzer'
@@ -190,7 +190,7 @@ const ProductComparison = ({ variant = 'full' }: ProductComparisonProps) => {
           </p>
         </div>
         
-        <div className="glow-card overflow-hidden">
+        <div className="rounded-2xl border border-border/50 bg-card shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[800px]">
               {/* Header */}

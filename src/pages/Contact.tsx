@@ -50,8 +50,7 @@ const Contact = () => {
 
             {/* Right: Image */}
             <motion.div variants={fadeInRight} className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/8 to-accent/8 rounded-3xl blur-3xl opacity-50" />
-              <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-border/30 p-8 flex items-center justify-center min-h-[400px]">
+              <div className="rounded-2xl overflow-hidden bg-card/50 border border-border/30 p-8 flex items-center justify-center min-h-[400px]">
                 <div className="text-center text-muted-foreground">
                   <Mail className="h-24 w-24 mx-auto mb-4 opacity-20" />
                   <p className="text-sm">Contact illustration</p>
@@ -67,6 +66,9 @@ const Contact = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="max-w-4xl mx-auto">
             <motion.div variants={fadeInLeft} className="text-center mb-12">
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+                Contact Form
+              </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Send us a <span className="gradient-text">message</span></h2>
               <p className="text-lg text-muted-foreground">Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
             </motion.div>
