@@ -9,6 +9,7 @@ import ApplicationImageCarousel from '@/components/sections/ApplicationImageCaro
 import { images } from '@/lib/images';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { sectionVariants, staggerContainer, cardVariants, fadeInLeft, fadeInRight, viewportOnce, viewportOnceSmall } from '@/lib/animations';
+import GsapReveal from '@/components/animations/GsapReveal';
 
 const BloodAnalysis = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -64,7 +65,7 @@ const BloodAnalysis = () => {
             </motion.div>
             <motion.div className="relative" variants={fadeInRight} style={{ y: y1 }}>
               <div className="rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl bg-card">
-                <img src={images.ai100vet} alt="Blood smear workflow" data-override-id="blood-overview" className="w-full h-full object-cover rounded-3xl" />
+                <img src={images.ai100vet} alt="Blood smear workflow" data-override-id="blood-overview" className="w-full h-full object-cover rounded-xl" />
               </div>
             </motion.div>
           </div>
@@ -73,7 +74,7 @@ const BloodAnalysis = () => {
 
       <motion.section className="py-16 lg:py-20 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">AI-Powered Classification</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Deeper Blood <span className="gradient-text">Morphology Classification</span> - Built for Clinical Review</h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Powered by our latest AI model, continuously improving with regular updates.</p>
@@ -82,7 +83,7 @@ const BloodAnalysis = () => {
                 <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013016271-paiyw3.pdf" target="_blank" rel="noopener noreferrer" download>Download the sample report</a>
               </Button>
             </div>
-          </div>
+          </GsapReveal>
           <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
             {bloodCategories.map((category) =>
             <motion.div key={category.title} className="group relative" variants={cardVariants}>
@@ -118,7 +119,7 @@ const BloodAnalysis = () => {
             </motion.div>
             <motion.div className="relative w-full" variants={fadeInRight} style={{ y: y2 }}>
               <div className="rounded-2xl overflow-hidden">
-                <img src={images.ai100vet} alt="Blood SOP Video" data-override-id="blood-sop" className="w-full h-full object-cover rounded-3xl" />
+                <img src={images.ai100vet} alt="Blood SOP Video" data-override-id="blood-sop" className="w-full h-full object-cover rounded-xl" />
               </div>
             </motion.div>
           </div>
@@ -142,20 +143,35 @@ const BloodAnalysis = () => {
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">FAQ</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
           </div>
-          <div className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="w-full">
-              {[
+          {(() => {
+            const bloodFaqs = [
               { question: 'Which species are supported for blood analysis?', answer: 'Companion animals: Dog, Cat. Small mammals: Rabbit, Chinchilla, Hamster, Rat, Mouse, Ferret, Guinea Pig. Large animals: Alpaca, Camel, Horse, Pig, Cattle, Sheep. Avian: Pigeon, Parrot. Reptiles: Turtle, Snake, Lizard.' },
               { question: 'What advanced parameters are available compared to a traditional 5-part differential?', answer: '9-part WBC differential, including band neutrophils, segmented neutrophils, hypersegmented neutrophils, large lymphocytes, and atypical leukocytes. Estimated platelet count and large platelet count (may interfere with CBC analyzers). 7-part RBC differential, including reticulocytes, nucleated RBCs, spherocytes, ghost RBCs, Heinz bodies, acanthocytes, and agglutinated RBCs.' },
               { question: 'How do I choose the sample volume for anemic animals?', answer: 'The default volume is 10 µL. If anemia is obvious (e.g., pale mucous membranes) or the sample looks diluted, select 40 µL.' },
               { question: 'Can blood parasites be detected?', answer: 'Coming soon: Heartworm (Dirofilaria immitis) and Hepatozoon.' },
-              ].map((faq) =>
-              <AccordionItem key={faq.question} value={faq.question}>
-                  <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
-                  <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
-              </AccordionItem>)}
-            </Accordion>
-          </div>
+            ];
+            const mid = Math.ceil(bloodFaqs.length / 2);
+            return (
+              <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-x-10">
+                <Accordion type="single" collapsible className="w-full">
+                  {bloodFaqs.slice(0, mid).map((faq) => (
+                    <AccordionItem key={faq.question} value={faq.question}>
+                      <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                      <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+                <Accordion type="single" collapsible className="w-full">
+                  {bloodFaqs.slice(mid).map((faq) => (
+                    <AccordionItem key={faq.question} value={faq.question}>
+                      <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                      <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            );
+          })()}
         </div>
       </motion.section>
 

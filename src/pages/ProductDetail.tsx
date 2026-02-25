@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowRight, Check, Download, FileText, Play, Cpu, Zap, Target, Shield, Droplets, Bug, TestTubes, Beaker, PawPrint, Microscope, RefreshCw, FlaskConical, Layers, Link2, Stethoscope } from 'lucide-react';
+import { ArrowRight, Check, Download, FileText, Play, Cpu, Zap, Target, Shield, Droplets, Bug, TestTubes, Beaker, PawPrint, Microscope, TrendingUp, FlaskConical, Layers, Plug, Stethoscope } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -34,11 +34,11 @@ const ProductDetail = () => {
         { icon: PawPrint, title: 'Multi-Species Support', desc: 'Companion animals, small mammals, avian species, reptiles, and more.' },
         { icon: Microscope, title: 'True-to-Life Microscopy Imaging', desc: 'High-resolution imaging for diagnostic-level clarity.' },
         { icon: Cpu, title: 'AI-Assisted Recognition & Counting', desc: 'Rapid classification with automated quantification.' },
-        { icon: RefreshCw, title: 'Continuous AI Improvement', desc: 'Models improve with real-world data and iteration.' },
+        { icon: TrendingUp, title: 'Continuous AI Improvement', desc: 'Models improve with real-world data and iteration.' },
         { icon: FlaskConical, title: 'Three-Step Sample Preparation', desc: 'Streamlined prep from sample to result.' },
         { icon: Layers, title: 'Microfluidic Cell Layering', desc: 'Consistent smearing and staining quality.' },
         { icon: FileText, title: 'Comprehensive Reporting', desc: 'Images, annotations, and quantitative results included.' },
-        { icon: Link2, title: 'LIS Integration', desc: 'Connects to lab systems for seamless data exchange.' },
+        { icon: Plug, title: 'LIS Integration', desc: 'Connects to lab systems for seamless data exchange.' },
       ],
       flagship: true,
     },
@@ -317,8 +317,8 @@ const ProductDetail = () => {
                 <motion.div key={cap.title} className="group relative" variants={cardSlideUp}>
                    <div className="rounded-2xl border border-border/50 bg-card p-8 h-full text-center shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-400">
                     <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">0{index + 1}</span>
-                    <motion.div className="icon-glow mx-auto mb-6 group-hover:scale-110 transition-transform duration-300" variants={popIn}>
-                      <cap.icon className="w-7 h-7 text-primary" />
+                    <motion.div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300" variants={popIn}>
+                      <cap.icon className="w-5 h-5 text-primary" />
                     </motion.div>
                     <h3 className="text-lg font-semibold text-foreground mb-3">{cap.title}</h3>
                     <p className={`${detailParagraphClass} text-muted-foreground leading-relaxed`}>{cap.desc}</p>
@@ -417,12 +417,12 @@ const ProductDetail = () => {
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
             <div className="grid lg:grid-cols-2 gap-12 items-stretch">
-              <motion.div className="rounded-3xl overflow-hidden flex items-center justify-center bg-secondary/10" variants={fadeInLeft}>
+              <motion.div className="rounded-xl overflow-hidden flex items-center justify-center bg-secondary/10" variants={fadeInLeft}>
                 <img
                   src={images.dm03Microscope}
                   alt="DM-03 Microscope hardware"
                   data-override-id="dm03-hardware"
-                  className="w-full h-full object-cover rounded-3xl"
+                  className="w-full h-full object-cover rounded-xl"
                 />
               </motion.div>
               <motion.div className="max-w-xl" variants={fadeInRight}>
@@ -476,12 +476,12 @@ const ProductDetail = () => {
                 It integrates tools for cell counting, scale bars, annotations, and one-click report generation, with an embedded teaching image library for faster training.
               </p>
             </motion.div>
-            <div className="w-full rounded-3xl overflow-hidden">
+            <div className="w-full rounded-xl overflow-hidden">
               <img
                 src={images.digitalMicroscope}
                 alt="Microscope workstation software"
                 data-override-id="dm03-software"
-                className="w-full h-full object-cover rounded-3xl"
+                className="w-full object-cover object-top max-h-[420px] rounded-xl"
               />
             </div>
           </div>
@@ -493,12 +493,12 @@ const ProductDetail = () => {
         <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
           <div className={containerClass}>
             <div className="grid lg:grid-cols-2 gap-12 items-start">
-              <motion.div className="rounded-3xl overflow-hidden h-full flex items-center" variants={fadeInLeft}>
+              <motion.div className="rounded-xl overflow-hidden h-full flex items-center" variants={fadeInLeft}>
                 <img
                   src={images.dm03Medtech}
                   alt="Microscope image hub module"
                   data-override-id="dm03-imagehub"
-                  className="w-full h-full object-cover rounded-3xl"
+                  className="w-full h-full object-cover rounded-xl"
                 />
               </motion.div>
               <motion.div className="max-w-xl" variants={fadeInRight}>
@@ -703,33 +703,49 @@ const ProductDetail = () => {
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
             </div>
-            <div className="max-w-3xl mx-auto">
-              <Accordion type="single" collapsible className="w-full">
-                {[
-                  {
-                    question: 'What sample types can the AI Series Morphology Analyzer process?',
-                    answer: 'It supports blood, urine, feces, and body fluid samples with standardized preparation and analysis steps.',
-                  },
-                  {
-                    question: 'How long does a typical analysis take?',
-                    answer: 'Most workflows complete within minutes, depending on sample type and required parameters.',
-                  },
-                  {
-                    question: 'Does the system support multi-species diagnostics?',
-                    answer: 'Yes. It is designed for companion animals and supports a broad range of exotic species and livestock.',
-                  },
-                  {
-                    question: 'Can reports be integrated with LIS systems?',
-                    answer: 'Yes. The platform supports LIS integration for efficient data exchange and reporting.',
-                  },
-                ].map((faq) => (
-                  <AccordionItem key={faq.question} value={faq.question}>
-                    <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
+            {(() => {
+              const aiAnalyzerFaqs = [
+                {
+                  question: 'What sample types can the AI Series Morphology Analyzer process?',
+                  answer: 'It supports blood, urine, feces, and body fluid samples with standardized preparation and analysis steps.',
+                },
+                {
+                  question: 'How long does a typical analysis take?',
+                  answer: 'Most workflows complete within minutes, depending on sample type and required parameters.',
+                },
+                {
+                  question: 'Does the system support multi-species diagnostics?',
+                  answer: 'Yes. It is designed for companion animals and supports a broad range of exotic species and livestock.',
+                },
+                {
+                  question: 'Can reports be integrated with LIS systems?',
+                  answer: 'Yes. The platform supports LIS integration for efficient data exchange and reporting.',
+                },
+              ];
+              const mid = Math.ceil(aiAnalyzerFaqs.length / 2);
+              const leftFaqs = aiAnalyzerFaqs.slice(0, mid);
+              const rightFaqs = aiAnalyzerFaqs.slice(mid);
+              return (
+                <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-x-10">
+                  <Accordion type="single" collapsible className="w-full">
+                    {leftFaqs.map((faq) => (
+                      <AccordionItem key={faq.question} value={faq.question}>
+                        <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                  <Accordion type="single" collapsible className="w-full">
+                    {rightFaqs.map((faq) => (
+                      <AccordionItem key={faq.question} value={faq.question}>
+                        <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </div>
+              );
+            })()}
           </div>
         </motion.section>
       )}
@@ -743,37 +759,53 @@ const ProductDetail = () => {
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
             </div>
-            <div className="max-w-3xl mx-auto">
-              <Accordion type="single" collapsible className="w-full">
-                {[
-                  {
-                    question: 'What is the DM-03 Microscope Workstation?',
-                    answer: 'DM-03 Microscope Workstation is a microscope workstation equipped with a 4K camera and an intelligent system for one-click capture, reporting, annotation, counting, and measurement.',
-                  },
-                  {
-                    question: 'What are the key benefits of the DM-03 Microscope Workstation?',
-                    answer: 'Faster documentation, automated reports, a built-in reference library (542+ canine/feline images), SOP support, and improved communication, training, and collaboration.',
-                  },
-                  {
-                    question: 'Can I buy only the camera module?',
-                    answer: 'Yes. If you have an infinity optical microscope, the camera module can be customized and supplied separately.',
-                  },
-                  {
-                    question: 'What tools are included?',
-                    answer: 'Cell counting, multi-shape annotation, real-time measurement with a digital scale, customizable templates, and multi-account management.',
-                  },
-                  {
-                    question: 'Can I upload my own SOPs or reference images?',
-                    answer: 'Yes. DM-03 Microscope Workstation supports personalized uploads of reference images, videos, and SOPs.',
-                  },
-                ].map((faq) => (
-                  <AccordionItem key={faq.question} value={faq.question}>
-                    <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
+            {(() => {
+              const microscopeFaqs = [
+                {
+                  question: 'What is the DM-03 Microscope Workstation?',
+                  answer: 'DM-03 Microscope Workstation is a microscope workstation equipped with a 4K camera and an intelligent system for one-click capture, reporting, annotation, counting, and measurement.',
+                },
+                {
+                  question: 'What are the key benefits of the DM-03 Microscope Workstation?',
+                  answer: 'Faster documentation, automated reports, a built-in reference library (542+ canine/feline images), SOP support, and improved communication, training, and collaboration.',
+                },
+                {
+                  question: 'Can I buy only the camera module?',
+                  answer: 'Yes. If you have an infinity optical microscope, the camera module can be customized and supplied separately.',
+                },
+                {
+                  question: 'What tools are included?',
+                  answer: 'Cell counting, multi-shape annotation, real-time measurement with a digital scale, customizable templates, and multi-account management.',
+                },
+                {
+                  question: 'Can I upload my own SOPs or reference images?',
+                  answer: 'Yes. DM-03 Microscope Workstation supports personalized uploads of reference images, videos, and SOPs.',
+                },
+              ];
+              const mid = Math.ceil(microscopeFaqs.length / 2);
+              const leftFaqs = microscopeFaqs.slice(0, mid);
+              const rightFaqs = microscopeFaqs.slice(mid);
+              return (
+                <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-x-10">
+                  <Accordion type="single" collapsible className="w-full">
+                    {leftFaqs.map((faq) => (
+                      <AccordionItem key={faq.question} value={faq.question}>
+                        <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                  <Accordion type="single" collapsible className="w-full">
+                    {rightFaqs.map((faq) => (
+                      <AccordionItem key={faq.question} value={faq.question}>
+                        <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </div>
+              );
+            })()}
           </div>
         </motion.section>
       )}

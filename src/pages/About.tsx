@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
 import { images } from '@/lib/images';
-import { sectionVariants, staggerContainer, cardVariants, fadeInLeft, fadeInRight, viewportOnce, viewportOnceSmall } from '@/lib/animations';
+import { sectionVariants, staggerContainer, staggerContainerDelayed, cardVariants, fadeInLeft, fadeInRight, popIn, viewportOnce, viewportOnceSmall } from '@/lib/animations';
+import GsapReveal from '@/components/animations/GsapReveal';
 
 const MetricItem = ({ value, suffix, label, delay, decimals = 0 }: {value: number;suffix: string;label: string;delay: number;decimals?: number;}) => {
   const [count, setCount] = useState(0);
@@ -88,7 +89,7 @@ const About = () => {
               </div>
             </motion.div>
             <motion.div className="rounded-2xl overflow-hidden" variants={fadeInRight}>
-              <img src={images.heroDiagnosticLab} alt="Awalife overview" data-override-id="about-overview" className="w-full h-full object-cover rounded-3xl" />
+              <img src={images.heroDiagnosticLab} alt="Awalife overview" data-override-id="about-overview" className="w-full h-full object-cover rounded-xl" />
             </motion.div>
           </div>
         </div>
@@ -96,24 +97,34 @@ const About = () => {
 
       <motion.section className="py-20 lg:py-28 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               Our Journey
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Key Moments That <span className="gradient-text">Shaped Awalife</span></h2>
-          </div>
+          </GsapReveal>
           <div className="max-w-4xl mx-auto">
             <div className="relative">
               <div className="absolute left-3 top-0 h-full w-px bg-border/60" />
-              <motion.div className="space-y-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
-                {timeline.map((entry) => (
-                  <motion.div key={entry.year} className="relative pl-12 group" variants={cardVariants}>
+              <div className="space-y-8">
+                {timeline.map((entry, i) => (
+                  <motion.div
+                    key={entry.year}
+                    className="relative pl-12 group"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={viewportOnceSmall}
+                    variants={i % 2 === 0 ? fadeInLeft : fadeInRight}
+                  >
                     <div className="absolute left-0 top-3 h-7 w-7 rounded-full bg-primary/15 border-2 border-primary/40 flex items-center justify-center group-hover:bg-primary/25 group-hover:border-primary/60 transition-all duration-300">
                       <div className="h-2 w-2 rounded-full bg-primary" />
                     </div>
-                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-xs font-bold tracking-wider text-primary mb-3">
+                    <motion.div
+                      className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-xs font-bold tracking-wider text-primary mb-3"
+                      variants={popIn}
+                    >
                       {entry.year}
-                    </div>
+                    </motion.div>
                     <div className="relative overflow-hidden rounded-xl border border-border/40 bg-card/50 backdrop-blur-sm p-6 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 group-hover:bg-card/80">
                       <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground relative z-10`}>
                         {entry.items.map((item) => (
@@ -126,7 +137,7 @@ const About = () => {
                     </div>
                   </motion.div>
                 ))}
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
@@ -134,26 +145,26 @@ const About = () => {
 
       <motion.section className="py-20 lg:py-28" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               Our Principles
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Mission and <span className="gradient-text">Core Values</span></h2>
-          </div>
-          <motion.div className="grid md:grid-cols-2 gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
-            <motion.div className="rounded-2xl border border-border/50 bg-card shadow-sm p-8 flex items-start justify-between gap-6" variants={cardVariants}>
+          </GsapReveal>
+          <motion.div className="grid md:grid-cols-2 gap-8" variants={staggerContainerDelayed} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
+            <motion.div className="rounded-2xl border border-border/50 bg-card shadow-sm p-8 flex items-start justify-between gap-6" variants={cardVariants} whileHover={{ y: -4, scale: 1.02 }}>
               <div>
                 <h3 className="text-xl font-semibold text-foreground mb-4">Mission</h3>
                 <ul className={`space-y-2 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>{mission.map((item) => <li key={item}>{item}</li>)}</ul>
               </div>
-              <div className="w-16 h-16 rounded-full bg-secondary/30 flex-shrink-0" />
+              <motion.div className="w-16 h-16 rounded-full bg-secondary/30 flex-shrink-0" variants={popIn} />
             </motion.div>
-            <motion.div className="rounded-2xl border border-border/50 bg-card shadow-sm p-8 flex items-start justify-between gap-6" variants={cardVariants}>
+            <motion.div className="rounded-2xl border border-border/50 bg-card shadow-sm p-8 flex items-start justify-between gap-6" variants={cardVariants} whileHover={{ y: -4, scale: 1.02 }}>
               <div>
                 <h3 className="text-xl font-semibold text-foreground mb-4">Core Values</h3>
                 <ul className={`space-y-2 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>{coreValues.map((item) => <li key={item}>{item}</li>)}</ul>
               </div>
-              <div className="w-16 h-16 rounded-full bg-secondary/30 flex-shrink-0" />
+              <motion.div className="w-16 h-16 rounded-full bg-secondary/30 flex-shrink-0" variants={popIn} />
             </motion.div>
           </motion.div>
         </div>

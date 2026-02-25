@@ -39,7 +39,7 @@ const PleuralEffusion = () => {
             </motion.div>
             <motion.div className="relative" variants={fadeInRight}>
               <div className="rounded-2xl bg-card p-10">
-                <img src={images.ai100vet} alt="AI-100Vet Analyzer" data-override-id="pleural-overview" className="w-full h-full object-cover rounded-3xl" />
+                <img src={images.ai100vet} alt="AI-100Vet Analyzer" data-override-id="pleural-overview" className="w-full h-full object-cover rounded-xl" />
               </div>
             </motion.div>
           </div>
@@ -73,20 +73,34 @@ const PleuralEffusion = () => {
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">FAQ</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
           </div>
-          <div className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="w-full">
-              {[
-                { question: 'Which species are supported for fluid analysis?', answer: 'Validated for dogs and cats.' },
-                { question: 'What parameters can fluid analysis detect?', answer: '19 parameters, including:\n\nNucleated cells: Inflammatory cells, granulocytes, lymphocytes, macrophages, neutrophils, degenerative neutrophils, phagocytic cells, mesothelial cells, and unclassified nucleated cells\n\nRBC-related: RBC, PCV\n\nMicroorganisms: Cocci, rods' },
-                { question: 'What are the limitations for certain effusion samples?', answer: 'Neoplastic effusions: AI may flag suspicious cells but cannot confirm tumor cells—manual review is required.\n\nSpecial effusions (e.g., biliary ascites or urinary ascites): Interpretation should be combined with biochemical testing.' },
-              ].map((faq) => (
-                <AccordionItem key={faq.question} value={faq.question}>
-                  <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
-                  <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
+          {(() => {
+            const pleuralFaqs = [
+              { question: 'Which species are supported for fluid analysis?', answer: 'Validated for dogs and cats.' },
+              { question: 'What parameters can fluid analysis detect?', answer: '19 parameters, including:\n\nNucleated cells: Inflammatory cells, granulocytes, lymphocytes, macrophages, neutrophils, degenerative neutrophils, phagocytic cells, mesothelial cells, and unclassified nucleated cells\n\nRBC-related: RBC, PCV\n\nMicroorganisms: Cocci, rods' },
+              { question: 'What are the limitations for certain effusion samples?', answer: 'Neoplastic effusions: AI may flag suspicious cells but cannot confirm tumor cells—manual review is required.\n\nSpecial effusions (e.g., biliary ascites or urinary ascites): Interpretation should be combined with biochemical testing.' },
+            ];
+            const mid = Math.ceil(pleuralFaqs.length / 2);
+            return (
+              <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-x-10">
+                <Accordion type="single" collapsible className="w-full">
+                  {pleuralFaqs.slice(0, mid).map((faq) => (
+                    <AccordionItem key={faq.question} value={faq.question}>
+                      <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                      <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+                <Accordion type="single" collapsible className="w-full">
+                  {pleuralFaqs.slice(mid).map((faq) => (
+                    <AccordionItem key={faq.question} value={faq.question}>
+                      <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                      <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            );
+          })()}
         </div>
       </motion.section>
 

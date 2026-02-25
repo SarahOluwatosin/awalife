@@ -17,19 +17,19 @@
     --popover: 0 0% 100%;
     --popover-foreground: 160 30% 10%;
 
-    /* Primary: Emerald – vivid & bright */
-    --primary: 158 82% 42%;
+    /* Primary: Brand teal-green #1a9580 */
+    --primary: 170 70% 34%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: Soft emerald tint */
-    --secondary: 155 25% 95%;
-    --secondary-foreground: 160 30% 10%;
+    /* Secondary: Soft teal tint */
+    --secondary: 170 20% 95%;
+    --secondary-foreground: 170 30% 10%;
 
-    --muted: 155 15% 92%;
-    --muted-foreground: 160 12% 35%;
+    --muted: 170 12% 92%;
+    --muted-foreground: 170 10% 35%;
 
-    /* Accent: Vibrant emerald green – maximum vibrancy */
-    --accent: 152 80% 48%;
+    /* Accent: Lighter brand teal */
+    --accent: 168 65% 40%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -37,44 +37,44 @@
 
     --border: 155 15% 88%;
     --input: 155 15% 88%;
-    --ring: 158 82% 42%;
+    --ring: 170 70% 34%;
 
     --radius: 0.75rem;
 
     /* Sidebar */
-    --sidebar-background: 155 15% 97%;
-    --sidebar-foreground: 160 30% 10%;
-    --sidebar-primary: 158 82% 42%;
+    --sidebar-background: 170 12% 97%;
+    --sidebar-foreground: 170 30% 10%;
+    --sidebar-primary: 170 70% 34%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 155 20% 95%;
-    --sidebar-accent-foreground: 160 30% 10%;
-    --sidebar-border: 155 15% 90%;
-    --sidebar-ring: 158 82% 42%;
+    --sidebar-accent: 170 18% 95%;
+    --sidebar-accent-foreground: 170 30% 10%;
+    --sidebar-border: 170 12% 90%;
+    --sidebar-ring: 170 70% 34%;
 
     /* Charts */
-    --chart-1: 158 82% 42%;
-    --chart-2: 152 70% 46%;
-    --chart-3: 170 55% 45%;
-    --chart-4: 140 50% 38%;
-    --chart-5: 180 60% 35%;
+    --chart-1: 170 70% 34%;
+    --chart-2: 168 65% 40%;
+    --chart-3: 158 60% 42%;
+    --chart-4: 150 55% 36%;
+    --chart-5: 180 58% 32%;
 
     /* Typography */
     --font-sans: 'Jost', ui-sans-serif, system-ui, sans-serif;
     --font-display: 'Jost', ui-sans-serif, system-ui, sans-serif;
 
     /* Premium shadows and glows for light mode */
-    --shadow-glow: 0 0 60px hsl(158 82% 42% / 0.12);
-    --shadow-glow-strong: 0 0 100px hsl(152 80% 48% / 0.18);
-    --shadow-card: 0 4px 24px hsl(160 30% 10% / 0.05), 0 1px 3px hsl(160 30% 10% / 0.03);
-    --shadow-card-hover: 0 12px 48px hsl(160 30% 10% / 0.08), 0 0 30px hsl(152 80% 48% / 0.1);
+    --shadow-glow: 0 0 60px hsl(170 70% 34% / 0.14);
+    --shadow-glow-strong: 0 0 100px hsl(168 65% 40% / 0.20);
+    --shadow-card: 0 4px 24px hsl(170 30% 10% / 0.05), 0 1px 3px hsl(170 30% 10% / 0.03);
+    --shadow-card-hover: 0 12px 48px hsl(170 30% 10% / 0.10), 0 0 30px hsl(168 65% 40% / 0.12);
 
-    /* Gradients - emerald – vivid */
-    --gradient-primary: linear-gradient(135deg, hsl(158 82% 42%), hsl(152 80% 48%));
-    --gradient-dark: linear-gradient(180deg, hsl(0 0% 100%), hsl(155 15% 97%));
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(155 10% 98%));
-    --gradient-border: linear-gradient(135deg, hsl(158 82% 42% / 0.16), hsl(152 80% 48% / 0.1));
-    --gradient-hero: radial-gradient(ellipse at 50% 0%, hsl(158 82% 42% / 0.08) 0%, transparent 60%);
-    --gradient-orb: radial-gradient(circle, hsl(152 70% 46% / 0.1) 0%, transparent 70%);
+    /* Gradients — bright emerald → brand teal-green */
+    --gradient-primary: linear-gradient(135deg, hsl(158 78% 42%), hsl(170 70% 34%));
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 100%), hsl(170 12% 97%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(170 8% 98%));
+    --gradient-border: linear-gradient(135deg, hsl(170 70% 34% / 0.16), hsl(168 65% 40% / 0.10));
+    --gradient-hero: radial-gradient(ellipse at 50% 0%, hsl(170 70% 34% / 0.07) 0%, transparent 60%);
+    --gradient-orb: radial-gradient(circle, hsl(168 65% 40% / 0.10) 0%, transparent 70%);
   }
 
   .dark {

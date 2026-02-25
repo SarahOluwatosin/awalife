@@ -36,7 +36,7 @@ const ExoticAnimals = () => {
               </div>
             </motion.div>
             <motion.div className="relative" variants={fadeInRight}>
-              <img src={images.ai100vet} alt="Exotic species analyzer" data-override-id="exotic-overview" className="w-full h-full object-cover rounded-3xl" />
+              <img src={images.ai100vet} alt="Exotic species analyzer" data-override-id="exotic-overview" className="w-full h-full object-cover rounded-xl" />
             </motion.div>
           </div>
         </div>
@@ -101,7 +101,7 @@ const ExoticAnimals = () => {
               </ul>
             </motion.div>
             <motion.div className="relative flex items-center justify-center" variants={fadeInRight}>
-              <img src={images.heroDiagnosticLab} alt="Low volume sample" data-override-id="exotic-lowvolume" className="w-full max-h-[320px] object-cover rounded-3xl" />
+              <img src={images.heroDiagnosticLab} alt="Low volume sample" data-override-id="exotic-lowvolume" className="w-full max-h-[320px] object-cover rounded-xl" />
             </motion.div>
           </div>
         </div>
@@ -113,21 +113,35 @@ const ExoticAnimals = () => {
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">FAQ</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
           </div>
-          <div className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="w-full">
-              {[
+          {(() => {
+            const exoticFaqs = [
               { question: 'Which species are supported for blood analysis?', answer: 'Companion animals: Dog, Cat\nSmall mammals: Rabbit, Chinchilla, Hamster, Rat, Mouse, Ferret, Guinea Pig\nLarge animals: Alpaca, Camel, Horse, Pig, Cattle, Sheep\nAvian: Pigeon, Parrot\nReptiles: Turtle, Snake, Lizard' },
               { question: 'Which species are supported for feces analysis?', answer: 'Companion animals: Dog, Cat' },
               { question: 'Which species are supported for urine analysis?', answer: 'Companion animals: Dog, Cat' },
-              { question: 'Which species are supported for fluid analysis?', answer: 'Companion animals: Dog, Cat' }].
-              map((faq) =>
-              <AccordionItem key={faq.question} value={faq.question}>
-                  <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
-                  <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
-                </AccordionItem>
-              )}
-            </Accordion>
-          </div>
+              { question: 'Which species are supported for fluid analysis?', answer: 'Companion animals: Dog, Cat' },
+            ];
+            const mid = Math.ceil(exoticFaqs.length / 2);
+            return (
+              <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-x-10">
+                <Accordion type="single" collapsible className="w-full">
+                  {exoticFaqs.slice(0, mid).map((faq) => (
+                    <AccordionItem key={faq.question} value={faq.question}>
+                      <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                      <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+                <Accordion type="single" collapsible className="w-full">
+                  {exoticFaqs.slice(mid).map((faq) => (
+                    <AccordionItem key={faq.question} value={faq.question}>
+                      <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                      <AccordionContent className={`${bodyTextClass} text-muted-foreground`}>{faq.answer}</AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            );
+          })()}
         </div>
       </motion.section>
 

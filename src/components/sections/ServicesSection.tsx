@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Stethoscope, Cog, Activity, Phone, GraduationCap, Network } from 'lucide-react';
+import { Wrench, Cog, FileText, Headphones, GraduationCap, Network } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const ServicesSection = () => {
@@ -16,11 +16,11 @@ const ServicesSection = () => {
   }, []);
 
   const services = [
-    { icon: Stethoscope, ...t.services.installation },
+    { icon: Wrench, ...t.services.installation },
     { icon: GraduationCap, ...t.services.training },
-    { icon: Phone, ...t.services.support },
+    { icon: Headphones, ...t.services.support },
     { icon: Cog, ...t.services.maintenance },
-    { icon: Activity, ...t.services.documentation },
+    { icon: FileText, ...t.services.documentation },
     { icon: Network, ...t.services.workflow },
   ];
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Cpu, Layers, Zap, Globe } from 'lucide-react';
+import { Cpu, TestTubes, Zap, Globe } from 'lucide-react';
 
 const AboutSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,7 +20,7 @@ const AboutSection = () => {
       desc: 'Integrates cell morphology, biochemistry, microfluidics, optics, and AI technologies.' 
     },
     { 
-      icon: Layers, 
+      icon: TestTubes,
       title: 'Multi-Sample Testing', 
       desc: 'Analyzes blood, feces, urine, and abdominal fluid samples automatically.' 
     },

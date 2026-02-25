@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { images } from '@/lib/images';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Starfield from '@/components/animations/Starfield';
+import AnimatedGradientBg from '@/components/animations/AnimatedGradientBg';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -84,6 +85,7 @@ const HeroSection = () => {
   return (
     <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16">
       <Starfield starCount={150} speed={0.5} />
+      <AnimatedGradientBg />
 
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
@@ -174,7 +176,7 @@ const HeroSection = () => {
             transition={{ duration: 0.9, ease }}
           >
             <motion.div
-              className="rounded-3xl overflow-hidden"
+              className="rounded-xl overflow-hidden"
               style={{ y: imageY }}
             >
               <div className="relative">
@@ -182,7 +184,7 @@ const HeroSection = () => {
                   src={images.heroDiagnosticLab}
                   alt="Veterinary diagnostic workflow"
                   data-override-id="home-hero"
-                  className="w-full h-full object-cover aspect-[5/4] rounded-3xl"
+                  className="w-full h-full object-cover aspect-[5/4] rounded-xl"
                   fetchPriority="high"
                   decoding="async"
                   width={800}
