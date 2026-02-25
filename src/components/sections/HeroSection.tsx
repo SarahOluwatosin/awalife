@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { images } from '@/lib/images';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import Starfield from '@/components/animations/Starfield';
+
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const stagger = {
@@ -82,7 +82,6 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16 bg-background">
-      <Starfield starCount={150} speed={0.5} />
 
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">

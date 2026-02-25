@@ -68,18 +68,6 @@ const PawCursorTrail = () => {
     resize();
     window.addEventListener('resize', resize);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (reducedMotion.current) return;
-      const dx = e.clientX - lastPosRef.current.x;
-      const dy = e.clientY - lastPosRef.current.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist > 40) {
-        spawnPaw(e.clientX, e.clientY);
-        lastPosRef.current = { x: e.clientX, y: e.clientY };
-      }
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-
     const render = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
@@ -96,7 +84,7 @@ const PawCursorTrail = () => {
         ctx.translate(paw.x, paw.y);
         ctx.rotate((paw.rotation * Math.PI) / 180);
         ctx.scale(paw.scale, paw.scale);
-        ctx.translate(-8, -8); // center the 16x16 path
+        ctx.translate(-8, -8);
 
         ctx.globalAlpha = paw.opacity;
         ctx.fillStyle = 'hsl(160, 65%, 36%)';
@@ -106,10 +94,31 @@ const PawCursorTrail = () => {
         ctx.restore();
       }
 
-      rafRef.current = requestAnimationFrame(render);
+      if (pawsRef.current.length > 0) {
+        rafRef.current = requestAnimationFrame(render);
+      } else {
+        rafRef.current = 0;
+      }
     };
 
-    rafRef.current = requestAnimationFrame(render);
+    const startRenderLoop = () => {
+      if (!rafRef.current) {
+        rafRef.current = requestAnimationFrame(render);
+      }
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (reducedMotion.current) return;
+      const dx = e.clientX - lastPosRef.current.x;
+      const dy = e.clientY - lastPosRef.current.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist > 40) {
+        spawnPaw(e.clientX, e.clientY);
+        lastPosRef.current = { x: e.clientX, y: e.clientY };
+        startRenderLoop();
+      }
+    };
+    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
       cancelAnimationFrame(rafRef.current);
