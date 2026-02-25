@@ -6,7 +6,7 @@ import { images } from '@/lib/images';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Starfield from '@/components/animations/Starfield';
 import FloatingParticles from '@/components/animations/FloatingParticles';
-
+import heroBg from '@/assets/hero-bg.png';
 
 const ease = [0.16, 1, 0.3, 1] as const; // checkout.com-style smooth ease
 
@@ -90,6 +90,14 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16 bg-background">
+      {/* Background image */}
+      <img
+        src={heroBg}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover opacity-20 dark:opacity-12 pointer-events-none"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
 
       {/* Ambient effects */}
       <Starfield starCount={80} speed={0.3} className="opacity-40" />
