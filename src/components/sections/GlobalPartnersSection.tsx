@@ -20,8 +20,8 @@ const GlobalPartnersSection = () => (
         </p>
       </ScrollReveal>
 
-
       {/* Main image with scroll-triggered scale-in and hover zoom */}
+      <div className="mt-12" />
       <motion.div
         className="relative rounded-xl overflow-hidden group"
         initial="hidden"
