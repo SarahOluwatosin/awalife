@@ -142,8 +142,8 @@ const HeroSection = () => {
                     key={i}
                     className="inline-block mr-[0.25em]"
                     variants={{
-                      hidden: { opacity: 0, y: 24, filter: 'blur(6px)' },
-                      visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease } }
+                      hidden: { opacity: 0, y: 24 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } }
                     }}
                   >
                     {word}
