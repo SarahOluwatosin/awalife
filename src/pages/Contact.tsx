@@ -8,14 +8,14 @@ import { motion } from 'framer-motion';
 import { sectionVariants, fadeInLeft, fadeInRight, viewportOnce } from '@/lib/animations';
 
 const Contact = () => {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => {window.scrollTo(0, 0);}, []);
 
   const contactChips = [
-    { label: 'Email', icon: Mail, href: 'mailto:info@awalife.com.cn', display: 'info@awalife.com.cn' },
-    { label: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/awalife', display: 'linkedin.com/company/awalife' },
-    { label: 'Facebook', icon: Facebook, href: 'https://facebook.com/profile.php?id=615799284554', display: 'facebook.com/awalife' },
-    { label: 'Instagram', icon: Instagram, href: 'https://instagram.com/awalife_es', display: 'instagram.com/awalife_es' },
-  ];
+  { label: 'Email', icon: Mail, href: 'mailto:info@awalife.com.cn', display: 'info@awalife.com.cn' },
+  { label: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/awalife', display: 'linkedin.com/company/awalife' },
+  { label: 'Facebook', icon: Facebook, href: 'https://facebook.com/profile.php?id=615799284554', display: 'facebook.com/awalife' },
+  { label: 'Instagram', icon: Instagram, href: 'https://instagram.com/awalife_es', display: 'instagram.com/awalife_es' }];
+
 
   return (
     <Layout>
@@ -33,18 +33,18 @@ const Contact = () => {
 
               {/* Contact Icons Row */}
               <div className="flex flex-wrap gap-4">
-                {contactChips.map((chip) => (
-                  <a
-                    key={chip.label}
-                    href={chip.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 hover:scale-110 transition-all duration-300"
-                    title={chip.display}
-                  >
+                {contactChips.map((chip) =>
+                <a
+                  key={chip.label}
+                  href={chip.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 hover:scale-110 transition-all duration-300"
+                  title={chip.display}>
+
                     <chip.icon className="h-5 w-5" />
                   </a>
-                ))}
+                )}
               </div>
             </motion.div>
 
@@ -69,7 +69,7 @@ const Contact = () => {
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 Contact Form
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Send us a <span className="gradient-text">message</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Send Us A Message<span className="gradient-text">message</span></h2>
               <p className="text-lg text-muted-foreground">Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
             </motion.div>
 
@@ -120,8 +120,8 @@ const Contact = () => {
           </div>
         </div>
       </motion.section>
-    </Layout>
-  );
+    </Layout>);
+
 };
 
 export default Contact;
