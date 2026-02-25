@@ -32,9 +32,9 @@ const Footer = () => {
             </p>
             <div className="flex gap-4 mt-8">
               {[
-                { icon: Linkedin, href: 'https://www.linkedin.com/company/awalife' },
-                { icon: Instagram, href: 'https://www.instagram.com/awalife' },
-                { icon: Facebook, href: 'https://www.facebook.com/awalife' },
+                { icon: Linkedin, href: 'https://linkedin.com/company/awalife' },
+                { icon: Instagram, href: 'https://instagram.com/awalife_es' },
+                { icon: Facebook, href: 'https://facebook.com/profile.php?id=615799284554' },
               ].map((social, i) => (
                 <a
                   key={i}

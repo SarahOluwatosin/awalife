@@ -106,7 +106,7 @@ const News = () => {
           </div>
 
           {/* Title */}
-          <h3 className="text-lg font-bold text-foreground leading-snug mb-2 group-hover:text-primary transition-colors">
+          <h3 className="text-lg font-bold text-foreground leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2 min-h-[3.5rem]">
             {item.title}
           </h3>
 
@@ -243,7 +243,7 @@ const News = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
           </div>
           {data.faq.items.length ?
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6">
               {faqColumns.map((items, index) =>
             <Accordion key={`faq-col-${index}`} type="single" collapsible className="w-full">
                   {items.map((item) =>

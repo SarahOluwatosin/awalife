@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { images } from '@/lib/images';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import AnimatedGradientBg from '@/components/animations/AnimatedGradientBg';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -50,8 +49,7 @@ const features = [
 ];
 
 const WhyUsSection = () => (
-  <section className="py-24 bg-primary/5 relative">
-    <AnimatedGradientBg />
+<section className="py-24 relative">
     <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
 
       {/* Section header */}
