@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Award, Globe, Microscope, ShieldCheck, Sparkles, Target, TrendingUp, Cpu, Zap, Users, Lightbulb, Heart, BookOpen } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, Award, Globe, Microscope, ShieldCheck, Sparkles, Target, TrendingUp, Cpu, Zap, Users, Lightbulb, Heart, BookOpen, Eye, Rocket, HandHeart, GraduationCap } from 'lucide-react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
@@ -48,6 +48,163 @@ const MetricItem = ({ value, suffix, label, delay, decimals = 0 }: {value: numbe
   );
 };
 
+/* ── Timeline Node ── */
+const TimelineNode = ({ entry, index, total }: { entry: { year: string; icon: any; items: string[]; highlight?: string }; index: number; total: number }) => {
+  const isLeft = index % 2 === 0;
+  const Icon = entry.icon;
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.div
+      className={`relative flex flex-col md:flex-row ${!isLeft ? 'md:flex-row-reverse' : ''} pl-14 md:pl-0`}
+      initial={{ opacity: 0, y: 60, filter: 'blur(8px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.06 * index }}
+    >
+      {/* Mobile node */}
+      <div className="absolute left-0 top-0 md:hidden flex flex-col items-center">
+        <motion.div
+          className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary bg-background shadow-lg"
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.1 }}
+        >
+          <Icon className="h-4 w-4 text-primary" />
+        </motion.div>
+      </div>
+
+      {/* Card */}
+      <div className={`md:w-[calc(50%-2.5rem)] ${isLeft ? 'md:pr-6' : 'md:pl-6'}`}>
+        <motion.div
+          className="group relative overflow-hidden rounded-2xl border border-border/40 bg-card p-6 md:p-7 cursor-default backdrop-blur-sm"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          whileHover={{ y: -8, scale: 1.02 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+          style={{ boxShadow: isHovered ? '0 25px 50px -12px rgba(0,0,0,0.15), 0 0 30px -5px hsl(var(--primary) / 0.15)' : '0 4px 20px -4px rgba(0,0,0,0.06)' }}
+        >
+          {/* Animated background gradient */}
+          <motion.div
+            className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/8 via-primary/3 to-transparent"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
+            transition={{ duration: 0.4 }}
+          />
+
+          {/* Top accent bar - always visible, grows on hover */}
+          <div className="absolute inset-x-0 top-0 h-1 rounded-t-2xl overflow-hidden">
+            <motion.div
+              className="h-full bg-gradient-to-r from-primary via-primary/80 to-primary/40"
+              initial={{ scaleX: 0.3, originX: isLeft ? 0 : 1 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3 + index * 0.05 }}
+            />
+          </div>
+
+          {/* Large faded year watermark */}
+          <span className="pointer-events-none absolute right-3 bottom-0 text-[90px] font-black text-primary/[0.04] select-none leading-none tabular-nums">
+            {entry.year.length > 4 ? entry.year.slice(0, 4) : entry.year}
+          </span>
+
+          {/* Header */}
+          <div className="relative flex items-center gap-3 mb-5">
+            <motion.div
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-lg group-hover:shadow-primary/30"
+              animate={isHovered ? { rotate: [0, -6, 6, 0] } : {}}
+              transition={{ duration: 0.5 }}
+            >
+              <Icon className="h-5 w-5" />
+            </motion.div>
+            <div>
+              <span className="text-lg font-bold tracking-wide text-primary">{entry.year}</span>
+              {entry.highlight && (
+                <p className="text-[11px] text-muted-foreground font-medium">{entry.highlight}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Items with stagger */}
+          <ul className="relative space-y-3">
+            {entry.items.map((item, j) => (
+              <motion.li
+                key={j}
+                className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground"
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.15 + j * 0.08 }}
+              >
+                <motion.span
+                  className="mt-[6px] h-2 w-2 shrink-0 rounded-full bg-primary/60"
+                  animate={isHovered ? { scale: [1, 1.4, 1] } : {}}
+                  transition={{ duration: 0.4, delay: j * 0.05 }}
+                />
+                <span>{item}</span>
+              </motion.li>
+            ))}
+          </ul>
+        </motion.div>
+
+        {/* Connector line from card to center (desktop) */}
+        <div className={`hidden md:block absolute top-7 ${isLeft ? 'right-[calc(50%-2.5rem)]' : 'left-[calc(50%-2.5rem)]'} w-[2.5rem] h-px`}>
+          <motion.div
+            className="h-full bg-gradient-to-r from-primary/50 to-primary/20"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            style={{ originX: isLeft ? 1 : 0 }}
+          />
+        </div>
+      </div>
+
+      {/* Center icon node (desktop) */}
+      <div className="hidden md:flex w-20 shrink-0 flex-col items-center pt-1">
+        <motion.div
+          className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary/50 bg-background shadow-xl"
+          initial={{ scale: 0, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ type: 'spring', stiffness: 280, damping: 18, delay: 0.2 }}
+          whileHover={{ scale: 1.15, borderColor: 'hsl(var(--primary))' }}
+        >
+          <Icon className="h-5 w-5 text-primary" />
+          {/* Pulse rings */}
+          <motion.span
+            className="absolute inset-0 rounded-full border border-primary/30"
+            animate={{ scale: [1, 2.2], opacity: [0.6, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.4 }}
+          />
+          <motion.span
+            className="absolute inset-0 rounded-full border border-primary/20"
+            animate={{ scale: [1, 1.8], opacity: [0.4, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.4 + 0.5 }}
+          />
+          {/* Glow */}
+          <div className="absolute inset-0 rounded-full bg-primary/10 blur-md" />
+        </motion.div>
+
+        {/* Year label under node */}
+        <motion.span
+          className="mt-2 text-[10px] font-bold text-primary/60 tracking-widest"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+        >
+          {entry.year.length > 4 ? entry.year.slice(0, 4) : entry.year}
+        </motion.span>
+      </div>
+
+      {/* Empty spacer */}
+      <div className="hidden md:block md:w-[calc(50%-2.5rem)]" />
+    </motion.div>
+  );
+};
+
 const About = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   const bodyTextClass = 'text-lg';
@@ -66,13 +223,26 @@ const About = () => {
   ];
 
   const timeline = [
-    { year: '2020', icon: Sparkles, items: ['Jul 7 — Awalife established.'] },
-    { year: '2021', icon: Microscope, items: ['Apr — Successful development of the first Morphology Analyzer.', 'Aug — Microscope Workstation launched in China.'] },
-    { year: '2022', icon: Target, items: ['Feb — Secured Angel funding.', 'Aug — First AI-100Vet Morphology Analyzer installed in China.'] },
-    { year: '2023', icon: TrendingUp, items: ['Apr — Fecal Morphology Detection launched; monthly sales surpassed RMB 1M.', 'Dec — Secured Series A funding.'] },
-    { year: '2024', icon: Globe, items: ['Apr — First international AI-100Vet installed in Malaysia.', 'May — Effusion Analysis launched.', 'Nov — Blood Morphology for exotic animals launched.', 'Dec — Global monthly sales exceeded RMB 10M. Recognized as a Shenzhen Specialized and Sophisticated SME.'] },
-    { year: '2025', icon: Award, items: ['Jan — Global installations reached 3,000 units.', 'Apr — New products launched: DM-03 Microscope Workstation, AI-80Vet, AI-100Vet Elite, JH-01 Thermo Mixer.', 'Oct — Global installations reached 7,000 units.', 'Dec — Recognized as a Guangdong Provincial High-Quality & High-Tech Product. The Awalife-led industry standard for Formed Element Analyzers was officially published by the CVMA.'] },
-    { year: '2026 and Beyond', icon: ShieldCheck, items: ['Continued global growth with continuous innovation and new applications in development.'] },
+    { year: '2020', icon: Sparkles, highlight: 'Founded', items: ['Jul 7 — Awalife established.'] },
+    { year: '2021', icon: Microscope, highlight: 'First Product', items: ['Apr — Successful development of the first Morphology Analyzer.', 'Aug — Microscope Workstation launched in China.'] },
+    { year: '2022', icon: Target, highlight: 'Funded', items: ['Feb — Secured Angel funding.', 'Aug — First AI-100Vet Morphology Analyzer installed in China.'] },
+    { year: '2023', icon: TrendingUp, highlight: 'Rapid Growth', items: ['Apr — Fecal Morphology Detection launched; monthly sales surpassed RMB 1M.', 'Dec — Secured Series A funding.'] },
+    { year: '2024', icon: Globe, highlight: 'Global Expansion', items: ['Apr — First international AI-100Vet installed in Malaysia.', 'May — Effusion Analysis launched.', 'Nov — Blood Morphology for exotic animals launched.', 'Dec — Global monthly sales exceeded RMB 10M. Recognized as a Shenzhen Specialized and Sophisticated SME.'] },
+    { year: '2025', icon: Award, highlight: 'Industry Leader', items: ['Jan — Global installations reached 3,000 units.', 'Apr — New products launched: DM-03 Microscope Workstation, AI-80Vet, AI-100Vet Elite, JH-01 Thermo Mixer.', 'Oct — Global installations reached 7,000 units.', 'Dec — Recognized as a Guangdong Provincial High-Quality & High-Tech Product. The Awalife-led industry standard for Formed Element Analyzers was officially published by the CVMA.'] },
+    { year: '2026 and Beyond', icon: Rocket, highlight: 'Future', items: ['Continued global growth with continuous innovation and new applications in development.'] },
+  ];
+
+  const visionItems = [
+    { text: 'Future-proof Veterinary Diagnostic Tools', icon: Eye, desc: 'Shaping the next generation of veterinary diagnostics through forward-thinking technology.' },
+    { text: 'Delivering Innovation to Empower Our Customers', icon: Zap, desc: 'Continuous R&D to provide cutting-edge solutions that drive clinical excellence.' },
+    { text: 'Creating Shared Value with Our Customers', icon: HandHeart, desc: 'Building partnerships where mutual growth leads to better outcomes for all.' },
+  ];
+
+  const coreValues = [
+    { text: 'Integrity with Humility', icon: ShieldCheck, desc: 'Honest and grounded in everything we do.' },
+    { text: 'Practical Innovation', icon: Lightbulb, desc: 'Real-world solutions, not just ideas.' },
+    { text: 'Serving Clients, Growing Together', icon: Heart, desc: 'Success shared across our community.' },
+    { text: 'Lifelong Learning and Ethical Excellence', icon: GraduationCap, desc: 'Always evolving with integrity.' },
   ];
 
 
@@ -100,132 +270,66 @@ const About = () => {
         </div>
       </motion.section>
 
-      <section className="py-20 lg:py-28 bg-white">
-        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-16">
+      {/* ── Timeline ── */}
+      <section className="py-20 lg:py-28 bg-secondary/20 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/3 rounded-full blur-3xl" />
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
+          <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-20">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               Our Journey
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Key Moments That <span className="gradient-text">Shaped Awalife</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Key Moments That <span className="gradient-text">Shaped Awalife</span></h2>
+            <p className="text-muted-foreground">From a bold idea in 2020 to a global presence — every milestone reflects our commitment to innovation.</p>
           </GsapReveal>
 
           <div ref={timelineRef} className="relative max-w-5xl mx-auto">
             {/* Scroll-fill vertical line */}
-            <div className="pointer-events-none absolute inset-y-0 left-4 md:left-1/2 -translate-x-px">
-              <div className="absolute left-0 top-0 h-full w-px bg-border/40" />
+            <div className="pointer-events-none absolute inset-y-0 left-[18px] md:left-1/2 md:-translate-x-px">
+              <div className="absolute left-0 top-0 h-full w-px bg-border/30" />
               <motion.div
-                className="absolute left-0 top-0 h-full w-px origin-top bg-gradient-to-b from-primary via-primary/60 to-transparent"
+                className="absolute left-0 top-0 h-full w-[2px] -translate-x-[0.5px] origin-top bg-gradient-to-b from-primary via-primary/70 to-primary/20"
                 style={{ scaleY: timelineScale }}
               />
+              {/* Traveling glow dot */}
               <motion.div
-                className="absolute -left-12 top-0 h-40 w-40 rounded-full bg-primary/10 blur-3xl"
-                style={{ opacity: timelineGlow }}
+                className="absolute left-[-4px] w-[10px] h-[10px] rounded-full bg-primary shadow-lg shadow-primary/50"
+                style={{ top: useTransform(timelineProgress, [0, 1], ['0%', '100%']) }}
               />
             </div>
 
-            <div className="space-y-10 md:space-y-8">
-              {timeline.map((entry, i) => {
-                const isLeft = i % 2 === 0;
-                const Icon = entry.icon;
-                return (
-                  <motion.div
-                    key={entry.year}
-                    className={`relative flex flex-col md:flex-row ${!isLeft ? 'md:flex-row-reverse' : ''} pl-10 md:pl-0`}
-                    initial={{ opacity: 0, x: isLeft ? -48 : 48, filter: 'blur(6px)' }}
-                    whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                    viewport={viewportOnceSmall}
-                    transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.04 * i }}
-                  >
-                    {/* Mobile dot */}
-                    <div className="absolute left-[5px] top-5 h-4 w-4 rounded-full bg-primary ring-4 ring-primary/20 md:hidden" />
-
-                    {/* Card */}
-                    <div className={`md:w-[calc(50%-3rem)] ${isLeft ? 'md:pr-8' : 'md:pl-8'}`}>
-                      <motion.div
-                        className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/95 p-6 shadow-sm cursor-default"
-                        whileHover={{ y: -6, boxShadow: '0 20px 40px -12px rgba(0,0,0,0.12)', borderColor: 'rgba(var(--primary) / 0.35)' }}
-                        transition={{ type: 'spring', stiffness: 220, damping: 18 }}
-                      >
-                        {/* Large faded year watermark */}
-                        <span className="pointer-events-none absolute right-3 bottom-1 text-[80px] font-black text-primary/[0.05] select-none leading-none tabular-nums">
-                          {entry.year.length > 4 ? entry.year.slice(0, 4) : entry.year}
-                        </span>
-                        {/* Hover gradient overlay */}
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/6 via-transparent to-transparent opacity-0 transition-opacity duration-400 group-hover:opacity-100" />
-                        {/* Top accent line on hover */}
-                        <div className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-                        {/* Header */}
-                        <div className="relative flex items-center gap-3 mb-4">
-                          <motion.div
-                            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/30"
-                          >
-                            <Icon className="h-4.5 w-4.5" />
-                          </motion.div>
-                          <span className="text-sm font-bold tracking-widest uppercase text-primary">{entry.year}</span>
-                        </div>
-
-                        {/* Divider */}
-                        <div className={`relative mb-4 h-px bg-gradient-to-r ${isLeft ? 'from-primary/30 to-transparent' : 'from-transparent to-primary/30'}`} />
-
-                        {/* Items */}
-                        <ul className="relative space-y-2.5">
-                          {entry.items.map((item, j) => (
-                            <li key={j} className="flex items-start gap-2.5 text-sm leading-relaxed text-muted-foreground">
-                              <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-primary/50" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    </div>
-
-                    {/* Center icon node */}
-                    <div className="hidden md:flex w-24 shrink-0 flex-col items-center pt-[18px]">
-                      <motion.div
-                        className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary/40 bg-background shadow-lg shadow-primary/10"
-                        initial={{ scale: 0, opacity: 0 }}
-                        whileInView={{ scale: 1, opacity: 1 }}
-                        viewport={viewportOnceSmall}
-                        transition={{ type: 'spring', stiffness: 280, damping: 18, delay: 0.15 }}
-                      >
-                        <Icon className="h-4 w-4 text-primary" />
-                        <motion.span
-                          className="absolute inset-0 rounded-full bg-primary/20"
-                          animate={{ scale: [1, 2.4], opacity: [0.5, 0] }}
-                          transition={{ duration: 3, repeat: Infinity, delay: i * 0.3 }}
-                        />
-                        <motion.span
-                          className="absolute inset-0 rounded-full bg-primary/10"
-                          animate={{ scale: [1, 1.7], opacity: [0.4, 0] }}
-                          transition={{ duration: 3, repeat: Infinity, delay: i * 0.3 + 0.6 }}
-                        />
-                      </motion.div>
-                    </div>
-
-                    {/* Empty spacer */}
-                    <div className="hidden md:block md:w-[calc(50%-3rem)]" />
-                  </motion.div>
-                );
-              })}
+            <div className="space-y-8 md:space-y-6">
+              {timeline.map((entry, i) => (
+                <TimelineNode key={entry.year} entry={entry} index={i} total={timeline.length} />
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20 lg:py-28 bg-gradient-to-b from-background to-primary/[0.03]">
-        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-16">
+      {/* ── Vision & Core Values ── */}
+      <section className="py-20 lg:py-28 bg-gradient-to-b from-background to-primary/[0.03] relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/[0.03] rounded-full blur-3xl" />
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
+          <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-20">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               Our Principles
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Vision and <span className="gradient-text">Core Values</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Our Vision and <span className="gradient-text">Core Values</span></h2>
+            <p className="text-muted-foreground">The guiding principles that drive every decision, product, and partnership at Awalife.</p>
           </GsapReveal>
 
           {/* ── Vision ── */}
-          <div className="mb-14">
+          <div className="mb-20">
             <motion.div
-              className="flex items-center gap-4 mb-8"
+              className="flex items-center gap-4 mb-10"
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={viewportOnceSmall}
@@ -240,43 +344,55 @@ const About = () => {
             </motion.div>
 
             <motion.div
-              className="grid sm:grid-cols-3 gap-5"
+              className="grid sm:grid-cols-3 gap-6"
               variants={staggerContainerDelayed}
               initial="hidden"
               whileInView="visible"
               viewport={viewportOnceSmall}
             >
-              {[
-                { text: 'Future-proof Veterinary Diagnostic Tools', icon: Cpu },
-                { text: 'Delivering Innovation to Empower Our Customers', icon: Zap },
-                { text: 'Creating Shared Value with Our Customers', icon: Users },
-              ].map((item, i) => (
+              {visionItems.map((item, i) => (
                 <motion.div
                   key={i}
-                  className="group relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-br from-card to-primary/[0.04] p-7 cursor-default"
+                  className="group relative overflow-hidden rounded-2xl border border-border/40 bg-gradient-to-br from-card to-primary/[0.04] p-8 cursor-default"
                   variants={cardVariants}
-                  whileHover={{ y: -7, boxShadow: '0 24px 48px -12px rgba(0,0,0,0.12)' }}
-                  transition={{ type: 'spring', stiffness: 220, damping: 18 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+                  style={{ boxShadow: '0 4px 20px -4px rgba(0,0,0,0.06)' }}
                 >
                   {/* Number watermark */}
-                  <span className="pointer-events-none absolute right-2 top-0 text-[88px] font-black text-primary/[0.04] select-none leading-none tabular-nums">
+                  <span className="pointer-events-none absolute right-3 top-0 text-[100px] font-black text-primary/[0.04] select-none leading-none tabular-nums">
                     0{i + 1}
                   </span>
-                  {/* Top glow line on hover */}
-                  <div className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  {/* Top glow line */}
+                  <motion.div
+                    className="absolute inset-x-0 top-0 h-1 rounded-t-2xl bg-gradient-to-r from-primary/60 via-primary to-primary/60"
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 + i * 0.1 }}
+                  />
+                  {/* Hover gradient */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/8 via-transparent to-transparent opacity-0 transition-opacity duration-400 group-hover:opacity-100" />
 
                   {/* Icon */}
                   <motion.div
-                    className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/25"
-                    whileHover={{ rotate: [0, -8, 8, 0], transition: { duration: 0.45 } }}
+                    className="relative mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-all duration-400 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-xl group-hover:shadow-primary/25"
+                    whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
                   >
-                    <item.icon className="h-6 w-6" />
+                    <item.icon className="h-7 w-7" />
+                    {/* Icon pulse on hover */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl bg-primary/20 opacity-0 group-hover:opacity-100"
+                      animate={{ scale: [1, 1.3], opacity: [0.3, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    />
                   </motion.div>
 
                   {/* Accent bar */}
-                  <div className="mb-4 h-0.5 w-10 rounded-full bg-gradient-to-r from-primary to-primary/20 transition-all duration-300 group-hover:w-16" />
+                  <div className="mb-4 h-0.5 w-10 rounded-full bg-gradient-to-r from-primary to-primary/20 transition-all duration-400 group-hover:w-20" />
 
-                  <p className="relative text-sm font-medium text-foreground/75 leading-relaxed">{item.text}</p>
+                  <h3 className="relative text-base font-bold text-foreground mb-2 leading-snug">{item.text}</h3>
+                  <p className="relative text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -285,7 +401,7 @@ const About = () => {
           {/* ── Core Values ── */}
           <div>
             <motion.div
-              className="flex items-center gap-4 mb-8"
+              className="flex items-center gap-4 mb-10"
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={viewportOnceSmall}
@@ -300,48 +416,48 @@ const About = () => {
             </motion.div>
 
             <motion.div
-              className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"
+              className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
               variants={staggerContainerDelayed}
               initial="hidden"
               whileInView="visible"
               viewport={viewportOnceSmall}
             >
-              {[
-                { text: 'Integrity with Humility', icon: ShieldCheck },
-                { text: 'Practical Innovation', icon: Lightbulb },
-                { text: 'Serving Clients, Growing Together', icon: Heart },
-                { text: 'Lifelong Learning and Ethical Excellence', icon: BookOpen },
-              ].map((item, i) => (
+              {coreValues.map((item, i) => (
                 <motion.div
                   key={i}
-                  className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card p-6 cursor-default"
+                  className="group relative overflow-hidden rounded-2xl border border-border/40 bg-card p-7 cursor-default text-center"
                   variants={cardVariants}
-                  whileHover={{ y: -7, boxShadow: '0 20px 40px -12px rgba(0,0,0,0.10)' }}
-                  transition={{ type: 'spring', stiffness: 220, damping: 18 }}
+                  whileHover={{ y: -8, scale: 1.03 }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+                  style={{ boxShadow: '0 4px 20px -4px rgba(0,0,0,0.06)' }}
                 >
-                  {/* Bottom glow line on hover */}
-                  <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-                  {/* Number badge */}
-                  <span className="mb-4 block text-[10px] font-black tracking-widest text-primary/30 uppercase">
-                    0{i + 1}
-                  </span>
+                  {/* Border glow on hover */}
+                  <div className="absolute inset-0 rounded-2xl ring-1 ring-transparent transition-all duration-300 group-hover:ring-primary/30 group-hover:shadow-[0_0_20px_-4px_hsl(var(--primary)/0.2)]" />
+                  {/* Bottom accent */}
+                  <motion.div
+                    className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent"
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.3 + i * 0.1 }}
+                  />
 
                   {/* Icon */}
                   <motion.div
-                    className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/30"
-                    whileHover={{ scale: 1.12 }}
+                    className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-400 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-lg group-hover:shadow-primary/30"
+                    whileHover={{ scale: 1.15, rotate: 5 }}
                     transition={{ type: 'spring', stiffness: 300 }}
                   >
-                    <item.icon className="h-5 w-5" />
+                    <item.icon className="h-6 w-6" />
                   </motion.div>
 
                   {/* Title */}
-                  <h4 className="text-sm font-semibold text-foreground leading-snug">{item.text}</h4>
+                  <h4 className="text-sm font-bold text-foreground leading-snug mb-2">{item.text}</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
 
-                  {/* Subtle right-arrow hint on hover */}
-                  <div className="mt-3 flex items-center gap-1 text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <div className="h-px flex-1 bg-primary/30" />
+                  {/* Decorative arrow on hover */}
+                  <div className="mt-4 flex items-center justify-center gap-1 text-primary opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2">
+                    <div className="h-px w-8 bg-primary/40" />
                     <ArrowRight className="h-3 w-3" />
                   </div>
                 </motion.div>
