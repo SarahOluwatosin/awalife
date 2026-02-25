@@ -50,7 +50,7 @@ const features = [
 ];
 
 const WhyUsSection = () => (
-  <section className="py-24 bg-primary/5 relative overflow-hidden">
+  <section className="py-24 bg-primary/5 relative">
     <AnimatedGradientBg />
     <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
 
