@@ -91,11 +91,13 @@ const HeroSection = () => {
   return (
     <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16 bg-background">
       {/* Background image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15 dark:opacity-10"
-        style={{ backgroundImage: `url(${heroBg})` }}
+      <img
+        src={heroBg}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover opacity-20 dark:opacity-12 pointer-events-none"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
 
       {/* Ambient effects */}
       <Starfield starCount={80} speed={0.3} className="opacity-40" />
