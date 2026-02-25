@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,25 +17,28 @@ interface ApplicationImageCarouselProps {
   fallbackImages?: { url: string; label: string }[];
 }
 
-const ease = [0.22, 1, 0.36, 1] as const;
+const ease = [0.16, 1, 0.3, 1] as const;
 
 const slideVariants = {
   enter: (dir: number) => ({
-    x: dir > 0 ? 60 : -60,
+    x: dir > 0 ? 80 : -80,
     opacity: 0,
-    filter: 'blur(4px)',
+    filter: 'blur(6px)',
+    scale: 0.97,
   }),
   center: {
     x: 0,
     opacity: 1,
     filter: 'blur(0px)',
-    transition: { duration: 0.45, ease },
+    scale: 1,
+    transition: { duration: 0.6, ease },
   },
   exit: (dir: number) => ({
-    x: dir > 0 ? -60 : 60,
+    x: dir > 0 ? -80 : 80,
     opacity: 0,
-    filter: 'blur(4px)',
-    transition: { duration: 0.3, ease },
+    filter: 'blur(6px)',
+    scale: 0.97,
+    transition: { duration: 0.4, ease },
   }),
 };
 
@@ -81,13 +84,34 @@ const ApplicationImageCarousel = ({ pageKey, fallbackImages = [] }: ApplicationI
 
   const scrollPrev = useCallback(() => {
     setDirection(-1);
-    setCurrentIndex(prev => Math.max(0, prev - 1));
-  }, []);
+    setCurrentIndex(prev => prev <= 0 ? maxIndex : prev - 1);
+  }, [maxIndex]);
 
   const scrollNext = useCallback(() => {
     setDirection(1);
-    setCurrentIndex(prev => Math.min(maxIndex, prev + 1));
+    setCurrentIndex(prev => prev >= maxIndex ? 0 : prev + 1);
   }, [maxIndex]);
+
+  // Auto-scroll
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startAutoScroll = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      scrollNext();
+    }, 4000);
+  }, [scrollNext]);
+
+  useEffect(() => {
+    if (displayImages.length <= itemsPerView) return;
+    startAutoScroll();
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, [displayImages.length, itemsPerView, startAutoScroll]);
+
+  const handleManualNav = useCallback((cb: () => void) => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    cb();
+    startAutoScroll();
+  }, [startAutoScroll]);
 
   if (loading) {
     return (
@@ -134,8 +158,7 @@ const ApplicationImageCarousel = ({ pageKey, fallbackImages = [] }: ApplicationI
           variant="outline"
           size="icon"
           className="h-8 w-8 rounded-full shrink-0"
-          disabled={currentIndex === 0}
-          onClick={scrollPrev}
+          onClick={() => handleManualNav(scrollPrev)}
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
@@ -171,8 +194,7 @@ const ApplicationImageCarousel = ({ pageKey, fallbackImages = [] }: ApplicationI
           variant="outline"
           size="icon"
           className="h-8 w-8 rounded-full shrink-0"
-          disabled={currentIndex >= maxIndex}
-          onClick={scrollNext}
+          onClick={() => handleManualNav(scrollNext)}
         >
           <ChevronRight className="h-4 w-4" />
         </Button>
@@ -187,10 +209,10 @@ const ApplicationImageCarousel = ({ pageKey, fallbackImages = [] }: ApplicationI
               "w-2 h-2 rounded-full transition-colors",
               i === currentIndex ? "bg-primary" : "bg-muted-foreground/30"
             )}
-            onClick={() => {
+            onClick={() => handleManualNav(() => {
               setDirection(i > currentIndex ? 1 : -1);
               setCurrentIndex(i);
-            }}
+            })}
           />
         ))}
       </div>
