@@ -166,8 +166,11 @@ const HeroSection = () => {
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-border/50 hover:border-primary/40 px-8" asChild>
-                <Link to="/products">Explore products</Link>
+              <Button size="lg" variant="outline" className="border-border/50 hover:border-primary/40 px-8 group" asChild>
+                <Link to="/products">
+                  Explore products
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </Button>
             </motion.div>
 

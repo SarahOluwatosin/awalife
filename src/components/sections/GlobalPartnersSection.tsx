@@ -1,21 +1,9 @@
 import { motion } from 'framer-motion';
 import { images } from '@/lib/images';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import Marquee from '@/components/animations/Marquee';
+
 import { scaleIn, viewportOnce } from '@/lib/animations';
 
-const marqueeItems = [
-  '15M+ AI Training Images',
-  'CE Certified',
-  'ISO 9001',
-  'ISO 13485',
-  '2.4M+ Reports Generated',
-  '100+ Innovations & Patents',
-  'Multi-Species Coverage',
-  'Global Distribution Network',
-  'Rapid Liquid-Based Staining',
-  '6.5 MP Imaging System',
-];
 
 const GlobalPartnersSection = () => (
   <section className="py-24">
@@ -32,20 +20,6 @@ const GlobalPartnersSection = () => (
         </p>
       </ScrollReveal>
 
-      {/* Animated ticker */}
-      <div className="mt-10 mb-10">
-        <Marquee duration="28s">
-          {marqueeItems.map((item) => (
-            <div
-              key={item}
-              className="flex items-center gap-2.5 px-5 py-2 rounded-full bg-primary/8 border border-primary/15 text-sm font-medium text-foreground whitespace-nowrap select-none"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-              {item}
-            </div>
-          ))}
-        </Marquee>
-      </div>
 
       {/* Main image with scroll-triggered scale-in and hover zoom */}
       <motion.div
