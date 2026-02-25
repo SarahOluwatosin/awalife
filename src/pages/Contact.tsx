@@ -14,7 +14,7 @@ const Contact = () => {
   const contactChips = [
   { label: 'Email', icon: Mail, href: 'mailto:info@awalife.com.cn', display: 'info@awalife.com.cn' },
   { label: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/awalife', display: 'linkedin.com/company/awalife' },
-  { label: 'Facebook', icon: Facebook, href: 'https://facebook.com/profile.php?id=615799284554', display: 'facebook.com/awalife' },
+  { label: 'Facebook', icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61575919264554', display: 'facebook.com/awalife' },
   { label: 'Instagram', icon: Instagram, href: 'https://instagram.com/awalife_es', display: 'instagram.com/awalife_es' }];
 
 

@@ -56,7 +56,7 @@ const FecesAnalysis = () => {
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife streamlines fecal screening with a slide-free workflow and two sampling options, delivering review-ready images and actionable findings in under 30 minutes - designed for consistent interpretation and documentation.</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
-                <Button variant="outline" size="lg" asChild><Link to="/contact">See it in action</Link></Button>
+                <Button variant="outline" size="lg" asChild><Link to="/contact">See it in action<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
               </div>
             </motion.div>
             <motion.div className="relative" variants={fadeInRight} style={{ y: py1 }}>
@@ -76,7 +76,7 @@ const FecesAnalysis = () => {
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Powered by our latest AI model, continuously improving with regular updates.</p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
-                <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013179540-cxqmcu.pdf" target="_blank" rel="noopener noreferrer" download>Download the sample report</a>
+                <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013179540-cxqmcu.pdf" target="_blank" rel="noopener noreferrer" download><ArrowRight className="mr-2 w-4 h-4" />Download the sample report</a>
               </Button>
             </div>
           </GsapReveal>
@@ -181,7 +181,7 @@ const FecesAnalysis = () => {
             ];
             const mid = Math.ceil(fecesFaqs.length / 2);
             return (
-              <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-x-10">
+              <div className="lg:grid lg:grid-cols-2 lg:gap-x-10">
                 <Accordion type="single" collapsible className="w-full">
                   {fecesFaqs.slice(0, mid).map((faq) => (
                     <AccordionItem key={faq.question} value={faq.question}>
