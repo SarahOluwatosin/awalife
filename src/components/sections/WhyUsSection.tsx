@@ -58,7 +58,7 @@ const WhyUsSection = () => (
           Platform Growth
         </span>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-          An <span className="gradient-text">Expandable</span> AI Morphology Platform Grows with New Samples and Applications
+          An <span className="gradient-text font-bold">Expandable</span> AI Morphology <span className="gradient-text font-bold">Platform</span> Grows with New Samples and Applications
         </h2>
       </ScrollReveal>
 
@@ -91,7 +91,7 @@ const WhyUsSection = () => (
             {/* Text */}
             <div className={`${i % 2 === 1 ? 'lg:order-1' : ''} flex flex-col justify-center p-8 lg:p-12`}>
               <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-4 leading-tight">
-                {feature.highlight}
+                {feature.title}
               </h3>
               <p className="text-muted-foreground leading-relaxed text-lg">
                 {feature.desc}

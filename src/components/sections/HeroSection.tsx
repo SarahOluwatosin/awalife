@@ -125,7 +125,7 @@ const HeroSection = () => {
               }}
             >
               <span className="text-foreground inline-block">
-                {["Morphology", "isn't", "a", "feature", "for", "us,"].map((word, i) => (
+                {["Morphology", "Isn't", "a", "Feature", "for", "Us,"].map((word, i) => (
                   <motion.span
                     key={i}
                     className="inline-block mr-[0.25em]"
@@ -140,7 +140,7 @@ const HeroSection = () => {
               </span>
               <br />
               <span className="gradient-text inline-block">
-                {["it's", "the", "foundation"].map((word, i) => (
+                {["It's", "the", "Foundation"].map((word, i) => (
                   <motion.span
                     key={i}
                     className="inline-block mr-[0.25em]"
