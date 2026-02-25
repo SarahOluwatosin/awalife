@@ -12,9 +12,8 @@ import Index from "./pages/Index";
 import Company from "./pages/About";
 import CompanyNews from "./pages/CompanyNews";
 import NewsDetail from "./pages/NewsDetail";
-import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
-import Applications from "./pages/Applications";
+import Applications from "./pages/Applications"; // redirect only
 import BloodAnalysis from "./pages/applications/BloodAnalysis";
 import FecesAnalysis from "./pages/applications/FecesAnalysis";
 import UrineAnalysis from "./pages/applications/UrineAnalysis";
@@ -39,12 +38,12 @@ const AnimatedRoutes = () => {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Index /></PageTransition>} />
           <Route path="/company" element={<Navigate to="/company/about" replace />} />
+          <Route path="/products" element={<Navigate to="/products/ai-analyzer" replace />} />
+          <Route path="/applications" element={<Navigate to="/applications/blood" replace />} />
           <Route path="/company/about" element={<PageTransition><Company /></PageTransition>} />
           <Route path="/company/news" element={<PageTransition><CompanyNews /></PageTransition>} />
           <Route path="/company/news/:newsId" element={<PageTransition><NewsDetail /></PageTransition>} />
-          <Route path="/products" element={<PageTransition><Products /></PageTransition>} />
           <Route path="/products/:productId" element={<PageTransition><ProductDetail /></PageTransition>} />
-          <Route path="/applications" element={<PageTransition><Applications /></PageTransition>} />
           <Route path="/applications/blood" element={<PageTransition><BloodAnalysis /></PageTransition>} />
           <Route path="/applications/feces" element={<PageTransition><FecesAnalysis /></PageTransition>} />
           <Route path="/applications/urine" element={<PageTransition><UrineAnalysis /></PageTransition>} />
