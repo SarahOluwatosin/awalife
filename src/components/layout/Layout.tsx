@@ -15,7 +15,7 @@ const Layout = ({ children }: LayoutProps) => {
       {/* Global ambient effects */}
       <div className="fixed inset-0 tech-grid opacity-10 pointer-events-none" />
       <div className="fixed inset-0 scanlines opacity-10 pointer-events-none" />
-      <Starfield starCount={40} speed={0.15} className="fixed inset-0 opacity-25" />
+      <Starfield starCount={20} speed={0.1} className="fixed inset-0 opacity-20" />
       <Header />
       <main className="flex-1">
         {children}
