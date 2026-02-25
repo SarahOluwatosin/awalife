@@ -103,40 +103,57 @@ const About = () => {
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Key Moments That <span className="gradient-text">Shaped Awalife</span></h2>
           </GsapReveal>
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <div className="relative">
-              <div className="absolute left-3 top-0 h-full w-px bg-border/60" />
-              <div className="space-y-8">
-                {timeline.map((entry, i) => (
-                  <motion.div
-                    key={entry.year}
-                    className="relative pl-12 group"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={viewportOnceSmall}
-                    variants={i % 2 === 0 ? fadeInLeft : fadeInRight}
-                  >
-                    <div className="absolute left-0 top-3 h-7 w-7 rounded-full bg-primary/15 border-2 border-primary/40 flex items-center justify-center group-hover:bg-primary/25 group-hover:border-primary/60 transition-all duration-300">
-                      <div className="h-2 w-2 rounded-full bg-primary" />
-                    </div>
+              {/* Center line */}
+              <div className="absolute left-1/2 top-0 h-full w-px bg-border/60 -translate-x-1/2 hidden md:block" />
+              <div className="absolute left-3 top-0 h-full w-px bg-border/60 md:hidden" />
+              <div className="space-y-8 md:space-y-0">
+                {timeline.map((entry, i) => {
+                  const isLeft = i % 2 === 0;
+                  return (
                     <motion.div
-                      className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-xs font-bold tracking-wider text-primary mb-3"
-                      variants={popIn}
+                      key={entry.year}
+                      className={`relative md:flex md:items-start ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'} pl-12 md:pl-0`}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={viewportOnceSmall}
+                      variants={isLeft ? fadeInLeft : fadeInRight}
                     >
-                      {entry.year}
+                      {/* Mobile dot */}
+                      <div className="absolute left-0 top-3 h-7 w-7 rounded-full bg-primary/15 border-2 border-primary/40 flex items-center justify-center md:hidden">
+                        <div className="h-2 w-2 rounded-full bg-primary" />
+                      </div>
+                      {/* Content side */}
+                      <div className={`md:w-[calc(50%-2rem)] ${isLeft ? 'md:pr-0 md:text-right' : 'md:pl-0 md:text-left'}`}>
+                        <motion.div
+                          className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-xs font-bold tracking-wider text-primary mb-3"
+                          variants={popIn}
+                        >
+                          {entry.year}
+                        </motion.div>
+                        <div className="relative overflow-hidden rounded-xl border border-border/40 bg-card/50 backdrop-blur-sm p-6 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 text-left">
+                          <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground`}>
+                            {entry.items.map((item) => (
+                              <li key={item} className="flex items-start gap-3 leading-relaxed">
+                                <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/60 mt-2 flex-shrink-0" />
+                                <span className="flex-1">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                      {/* Center dot (desktop) */}
+                      <div className="hidden md:flex items-start justify-center w-16 flex-shrink-0 pt-3">
+                        <div className="h-7 w-7 rounded-full bg-primary/15 border-2 border-primary/40 flex items-center justify-center group-hover:bg-primary/25 transition-all">
+                          <div className="h-2 w-2 rounded-full bg-primary" />
+                        </div>
+                      </div>
+                      {/* Empty side */}
+                      <div className="hidden md:block md:w-[calc(50%-2rem)]" />
                     </motion.div>
-                    <div className="relative overflow-hidden rounded-xl border border-border/40 bg-card/50 backdrop-blur-sm p-6 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 group-hover:bg-card/80">
-                      <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground relative z-10`}>
-                        {entry.items.map((item) => (
-                          <li key={item} className="flex items-start gap-3 leading-relaxed">
-                            <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/60 mt-2 flex-shrink-0" />
-                            <span className="flex-1">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </motion.div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>

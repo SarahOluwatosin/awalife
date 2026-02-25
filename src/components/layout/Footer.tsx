@@ -4,15 +4,20 @@ import { images } from '@/lib/images';
 
 const Footer = () => {
   const footerLinks = {
-    company: [
-      { label: 'Company', path: '/company/about' },
-      { label: 'Products', path: '/products' },
-      { label: 'Applications', path: '/applications' },
-      { label: 'Resources', path: '/resources' },
+    quickLinks: [
+      { label: 'AI Morphological Analyzer', path: '/products/ai-analyzer' },
+      { label: 'DM-03 Microscope Workstation', path: '/products/dm-03' },
+      { label: 'Blood Analysis', path: '/applications/blood' },
+      { label: 'Urine Analysis', path: '/applications/urine' },
+      { label: 'Feces Analysis', path: '/applications/feces' },
+      { label: 'Pleural Effusion', path: '/applications/pleural-effusion' },
+      { label: 'Exotic Animals', path: '/applications/exotic-animals' },
     ],
-    products: [
-      { label: 'AI Series Morphology Analyzer', path: '/products/ai-100vet-elite' },
-      { label: 'DM-03 Microscope Workstation', path: '/products/microscope' },
+    company: [
+      { label: 'About Awalife', path: '/company/about' },
+      { label: 'News Center', path: '/company/news' },
+      { label: 'Resources', path: '/resources' },
+      { label: 'Contact', path: '/contact' },
     ],
   };
 
@@ -49,11 +54,11 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Company Links */}
+          {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-5">Company</h4>
+            <h4 className="font-semibold text-foreground mb-5">Quick Links</h4>
             <ul className="space-y-4 text-sm">
-              {footerLinks.company.map((link) => (
+              {footerLinks.quickLinks.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
@@ -66,11 +71,11 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Products Links */}
+          {/* Company Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-5">Products</h4>
+            <h4 className="font-semibold text-foreground mb-5">Company</h4>
             <ul className="space-y-4 text-sm">
-              {footerLinks.products.map((link) => (
+              {footerLinks.company.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
