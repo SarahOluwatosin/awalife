@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Linkedin, Instagram, Facebook, Lock } from 'lucide-react';
+import { Phone, Mail, MapPin, Linkedin, Instagram, Facebook } from 'lucide-react';
 import { images } from '@/lib/images';
 
 const Footer = () => {
@@ -52,7 +52,7 @@ const Footer = () => {
           {/* Company Links */}
           <div>
             <h4 className="font-semibold text-foreground mb-5">Company</h4>
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-4">
               {footerLinks.company.map((link) => (
                 <li key={link.path}>
                   <Link
@@ -69,7 +69,7 @@ const Footer = () => {
           {/* Products Links */}
           <div>
             <h4 className="font-semibold text-foreground mb-5">Products</h4>
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-4">
               {footerLinks.products.map((link) => (
                 <li key={link.path}>
                   <Link
@@ -103,7 +103,7 @@ const Footer = () => {
               </a>
               <div className="flex items-start gap-3 text-muted-foreground">
                 <MapPin className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
-                <span className="text-sm leading-relaxed">
+                <span className="text-xs leading-relaxed">
                   Shenzhen, China
                 </span>
               </div>
@@ -112,17 +112,10 @@ const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 pt-10 border-t border-border flex items-center justify-between gap-4 flex-wrap">
+        <div className="mt-16 pt-10 border-t border-border">
           <p className="text-sm text-muted-foreground">
             2026 SHENZHEN ANLV MEDICAL TECHNOLOGY CO., LTD. All rights reserved.
           </p>
-          <Link
-            to="/admin/login"
-            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors"
-          >
-            <Lock className="w-3 h-3" />
-            Admin
-          </Link>
         </div>
       </div>
     </footer>

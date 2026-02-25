@@ -12,7 +12,14 @@ import Index from "./pages/Index";
 import Company from "./pages/About";
 import CompanyNews from "./pages/CompanyNews";
 import NewsDetail from "./pages/NewsDetail";
+import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import Applications from "./pages/Applications";
+import BloodAnalysis from "./pages/applications/BloodAnalysis";
+import FecesAnalysis from "./pages/applications/FecesAnalysis";
+import UrineAnalysis from "./pages/applications/UrineAnalysis";
+import PleuralEffusion from "./pages/applications/PleuralEffusion";
+import ExoticAnimals from "./pages/applications/ExoticAnimals";
 import Resources from "./pages/News";
 import ResourcesAdmin from "./pages/ResourcesAdmin";
 import AdminLogin from "./pages/AdminLogin";
@@ -35,7 +42,14 @@ const AnimatedRoutes = () => {
           <Route path="/company/about" element={<PageTransition><Company /></PageTransition>} />
           <Route path="/company/news" element={<PageTransition><CompanyNews /></PageTransition>} />
           <Route path="/company/news/:newsId" element={<PageTransition><NewsDetail /></PageTransition>} />
+          <Route path="/products" element={<PageTransition><Products /></PageTransition>} />
           <Route path="/products/:productId" element={<PageTransition><ProductDetail /></PageTransition>} />
+          <Route path="/applications" element={<PageTransition><Applications /></PageTransition>} />
+          <Route path="/applications/blood" element={<PageTransition><BloodAnalysis /></PageTransition>} />
+          <Route path="/applications/feces" element={<PageTransition><FecesAnalysis /></PageTransition>} />
+          <Route path="/applications/urine" element={<PageTransition><UrineAnalysis /></PageTransition>} />
+          <Route path="/applications/pleural-effusion" element={<PageTransition><PleuralEffusion /></PageTransition>} />
+          <Route path="/applications/exotic-animals" element={<PageTransition><ExoticAnimals /></PageTransition>} />
           <Route path="/resources" element={<PageTransition><Resources /></PageTransition>} />
           <Route path="/admin/login" element={<PageTransition><AdminLogin /></PageTransition>} />
           <Route path="/admin/resources" element={<PageTransition><ResourcesAdmin /></PageTransition>} />

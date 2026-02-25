@@ -3,7 +3,6 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { images } from '@/lib/images';
-import ProgressiveImage from '@/components/ui/progressive-image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Starfield from '@/components/animations/Starfield';
 import AnimatedGradientBg from '@/components/animations/AnimatedGradientBg';
@@ -84,9 +83,9 @@ const HeroSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16 bg-white dark:bg-background">
+    <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16">
       <Starfield starCount={150} speed={0.5} />
-      {/* AnimatedGradientBg removed, Starfield animation kept */}
+      <AnimatedGradientBg />
 
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
@@ -180,17 +179,18 @@ const HeroSection = () => {
               className="rounded-xl overflow-hidden"
               style={{ y: imageY }}
             >
-              <ProgressiveImage
-                src={images.heroDiagnosticLab}
-                alt="Veterinary diagnostic workflow"
-                data-override-id="home-hero"
-                aspectClassName="aspect-[5/4]"
-                className="w-full h-full object-cover rounded-xl"
-                fetchPriority="high"
-                decoding="async"
-                width={800}
-                height={640}
-              />
+              <div className="relative">
+                <img
+                  src={images.heroDiagnosticLab}
+                  alt="Veterinary diagnostic workflow"
+                  data-override-id="home-hero"
+                  className="w-full h-full object-cover aspect-[5/4] rounded-xl"
+                  fetchPriority="high"
+                  decoding="async"
+                  width={800}
+                  height={640}
+                />
+              </div>
             </motion.div>
           </motion.div>
         </div>

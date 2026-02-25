@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { images } from '@/lib/images';
-import ProgressiveImage from '@/components/ui/progressive-image';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 import Marquee from '@/components/animations/Marquee';
 import { scaleIn, viewportOnce } from '@/lib/animations';
@@ -56,12 +55,11 @@ const GlobalPartnersSection = () => (
         viewport={viewportOnce}
         variants={scaleIn}
       >
-        <ProgressiveImage
+        <img
           src={images.heroMedtech}
           alt="Global veterinary partners"
           data-override-id="home-partners"
-          aspectClassName="aspect-[16/6]"
-          className="w-full h-full object-cover rounded-xl transition-transform duration-700 ease-out group-hover:scale-[1.02] will-change-transform"
+          className="w-full h-full object-cover aspect-[16/6] rounded-xl transition-transform duration-700 ease-out group-hover:scale-[1.02] will-change-transform"
           loading="lazy"
           decoding="async"
           width={1280}
