@@ -12,7 +12,7 @@ const CompanyNews = () => {
   const { data } = useResourcesCMS();
   const newsItems = data.news;
 
-  const categories = ['All', ...Array.from(new Set(newsItems.map((n) => n.category)))];
+  const categories = ['All', 'Company News', 'Product Updates', 'Events'];
   const [activeCategory, setActiveCategory] = useState('All');
 
   const filtered = activeCategory === 'All' ? newsItems : newsItems.filter((n) => n.category === activeCategory);

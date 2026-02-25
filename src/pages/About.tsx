@@ -111,13 +111,6 @@ const TimelineNode = ({ entry, index, total }: { entry: { year: string; icon: an
 
           {/* Header */}
           <div className="relative flex items-center gap-3 mb-5">
-            <motion.div
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-lg group-hover:shadow-primary/30"
-              animate={isHovered ? { rotate: [0, -6, 6, 0] } : {}}
-              transition={{ duration: 0.5 }}
-            >
-              <Icon className="h-5 w-5" />
-            </motion.div>
             <div>
               <span className="text-lg font-bold tracking-wide text-primary">{entry.year}</span>
               {entry.highlight && (
@@ -172,17 +165,6 @@ const TimelineNode = ({ entry, index, total }: { entry: { year: string; icon: an
           whileHover={{ scale: 1.15, borderColor: 'hsl(var(--primary))' }}
         >
           <Icon className="h-5 w-5 text-primary" />
-          {/* Pulse rings */}
-          <motion.span
-            className="absolute inset-0 rounded-full border border-primary/30"
-            animate={{ scale: [1, 2.2], opacity: [0.6, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.4 }}
-          />
-          <motion.span
-            className="absolute inset-0 rounded-full border border-primary/20"
-            animate={{ scale: [1, 1.8], opacity: [0.4, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.4 + 0.5 }}
-          />
           {/* Glow */}
           <div className="absolute inset-0 rounded-full bg-primary/10 blur-md" />
         </motion.div>
@@ -336,8 +318,7 @@ const About = () => {
               transition={{ duration: 0.5 }}
             >
               <div className="h-px flex-1 bg-gradient-to-r from-primary/40 to-transparent" />
-              <span className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-primary">
-                <Target className="h-3.5 w-3.5" />
+              <span className="text-xs font-bold tracking-widest uppercase text-primary">
                 Vision
               </span>
               <div className="h-px flex-1 bg-gradient-to-l from-primary/40 to-transparent" />
@@ -408,8 +389,7 @@ const About = () => {
               transition={{ duration: 0.5 }}
             >
               <div className="h-px flex-1 bg-gradient-to-r from-primary/40 to-transparent" />
-              <span className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-primary">
-                <ShieldCheck className="h-3.5 w-3.5" />
+              <span className="text-xs font-bold tracking-widest uppercase text-primary">
                 Core Values
               </span>
               <div className="h-px flex-1 bg-gradient-to-l from-primary/40 to-transparent" />
@@ -455,11 +435,6 @@ const About = () => {
                   <h4 className="text-sm font-bold text-foreground leading-snug mb-2">{item.text}</h4>
                   <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
 
-                  {/* Decorative arrow on hover */}
-                  <div className="mt-4 flex items-center justify-center gap-1 text-primary opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2">
-                    <div className="h-px w-8 bg-primary/40" />
-                    <ArrowRight className="h-3 w-3" />
-                  </div>
                 </motion.div>
               ))}
             </motion.div>

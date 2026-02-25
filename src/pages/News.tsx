@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Download, FileText, BookOpen, Package, MoreHorizontal, Play } from 'lucide-react';
+import { ArrowRight, Download, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Layout from '@/components/layout/Layout';
@@ -10,12 +10,6 @@ import type { ResourceItem } from '@/data/resources';
 import { motion } from 'framer-motion';
 import { sectionVariants, staggerContainer, cardSlideUp, blurIn, viewportOnce, viewportOnceSmall } from '@/lib/animations';
 
-const SECTION_ICONS: Record<string, typeof FileText> = {
-  'how-to': BookOpen,
-  'medical': FileText,
-  'product': Package,
-  'other': MoreHorizontal
-};
 
 const News = () => {
   useEffect(() => {
@@ -23,6 +17,16 @@ const News = () => {
   }, []);
 
   const { data } = useResourcesCMS();
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+
+  const CATEGORY_TABS = [
+    { id: 'All', label: 'All' },
+    ...RESOURCE_KIND_CONFIG.map((k) => ({ id: k.id, label: k.sectionTitle })),
+  ];
+
+  const filteredResources = activeCategory === 'All'
+    ? data.resources
+    : data.resources.filter((r) => r.kind === activeCategory);
 
   const faqMidpoint = Math.ceil(data.faq.items.length / 2);
   const faqColumns = [data.faq.items.slice(0, faqMidpoint), data.faq.items.slice(faqMidpoint)];
@@ -195,43 +199,49 @@ const News = () => {
               </div>
             </motion.div>
           </div>
+          {/* Category tabs */}
+          <div className="flex flex-wrap gap-3 mt-12">
+            {CATEGORY_TABS.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                  activeCategory === cat.id
+                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
+                    : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground border border-border/30 hover:border-primary/30'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
         </div>
       </motion.section>
 
-      {/* Resource Sections */}
-      {RESOURCE_KIND_CONFIG.map((section) => {
-        const sectionResources = data.resources.filter((resource) => resource.kind === section.id);
-        if (!sectionResources.length) return null;
-        const SectionIcon = SECTION_ICONS[section.id] || FileText;
-        return (
-          <motion.section
-            key={section.id}
-            className={`py-16 lg:py-20 ${section.variant === 'muted' ? 'bg-card/50' : ''}`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportOnceSmall}
-            variants={sectionVariants}>
-
-            <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-              <div className="flex items-center gap-3 mb-8">
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <SectionIcon className="h-4 w-4" />
-                </span>
-                <h2 className="text-2xl md:text-3xl font-semibold text-foreground">
-                  {section.sectionTitle}
-                </h2>
-              </div>
-              <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
-                {sectionResources.map((item) =>
+      {/* Resources Grid */}
+      <motion.section
+        className="py-16 lg:py-20"
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportOnceSmall}
+        variants={sectionVariants}
+      >
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+          {filteredResources.length > 0 ? (
+            <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
+              {filteredResources.map((item) => (
                 <motion.div key={item.id} variants={cardSlideUp}>
-                    {renderCard(item)}
-                  </motion.div>
-                )}
-              </motion.div>
+                  {renderCard(item)}
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <div className="rounded-xl border border-dashed border-border/40 bg-secondary/5 py-16 text-center">
+              <p className="text-muted-foreground">No resources in this category yet.</p>
             </div>
-          </motion.section>);
-
-      })}
+          )}
+        </div>
+      </motion.section>
 
       {/* FAQ */}
       <motion.section className="py-20 lg:py-28" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
