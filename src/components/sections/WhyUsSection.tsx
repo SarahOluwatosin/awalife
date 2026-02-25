@@ -3,11 +3,11 @@ import { images } from '@/lib/images';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 import AnimatedGradientBg from '@/components/animations/AnimatedGradientBg';
 
-const ease = [0.22, 1, 0.36, 1] as const;
+const ease = [0.16, 1, 0.3, 1] as const;
 
 const cardVariant = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
+  hidden: { opacity: 0, y: 36, filter: 'blur(6px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.85, ease } },
 };
 
 const features = [
