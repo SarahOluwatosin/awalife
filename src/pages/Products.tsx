@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check, Cpu, Zap, Shield, Target } from 'lucide-react';
+import { ArrowRight, Check, Cpu, Zap, Shield, Target, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
@@ -32,8 +32,8 @@ const Products = () => {
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">Next-Generation <span className="gradient-text">Veterinary Diagnostics</span></h2>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">{t.products.description}</p>
               <div className="flex flex-wrap gap-4">
-                <Button className="btn-gradient" size="lg" asChild><Link to="/contact">Request Demo</Link></Button>
-                <Button variant="outline" size="lg" className="border-border/50 hover:bg-secondary hover:border-primary/30">Download Catalog</Button>
+                <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Request Demo <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>
+                <Button variant="outline" size="lg" className="border-border/50 hover:bg-secondary hover:border-primary/30"><Download className="mr-2 w-4 h-4" />Download Catalog</Button>
               </div>
             </motion.div>
             <motion.div className="relative grid grid-cols-2 gap-4" variants={fadeInRight}>
@@ -81,7 +81,7 @@ const Products = () => {
                     </div>
                     <div className="flex flex-wrap gap-4">
                       <Button className="btn-gradient group/btn" size="lg" asChild><Link to={`/products/${product.id}`}>{t.products.viewDetails}<ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" /></Link></Button>
-                      <Button variant="outline" size="lg" className="border-border/50 hover:bg-secondary hover:border-primary/30">{t.products.brochure}</Button>
+                      <Button variant="outline" size="lg" className="border-border/50 hover:bg-secondary hover:border-primary/30"><Download className="mr-2 w-4 h-4" />{t.products.brochure}</Button>
                     </div>
                   </motion.div>
                 </div>

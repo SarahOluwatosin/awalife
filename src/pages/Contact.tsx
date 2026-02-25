@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import { Mail, Linkedin, Facebook, Instagram, ArrowRight } from 'lucide-react';
+import { Mail, Linkedin, Facebook, Instagram, ArrowRight, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Layout from '@/components/layout/Layout';
 import { motion } from 'framer-motion';
 import { sectionVariants, fadeInLeft, fadeInRight, viewportOnce } from '@/lib/animations';
+import contactIllustration from '@/assets/contact-illustration.png';
 
 const Contact = () => {
   useEffect(() => {window.scrollTo(0, 0);}, []);
@@ -50,11 +51,12 @@ const Contact = () => {
 
             {/* Right: Image */}
             <motion.div variants={fadeInRight} className="relative">
-              <div className="rounded-2xl overflow-hidden bg-card/50 border border-border/30 p-8 flex items-center justify-center min-h-[400px]">
-                <div className="text-center text-muted-foreground">
-                  <Mail className="h-24 w-24 mx-auto mb-4 opacity-20" />
-                  <p className="text-sm">Contact illustration</p>
-                </div>
+              <div className="rounded-2xl overflow-hidden">
+                <img
+                  src={contactIllustration}
+                  alt="Awalife customer support"
+                  className="w-full h-auto rounded-2xl object-cover"
+                />
               </div>
             </motion.div>
           </div>
@@ -75,35 +77,29 @@ const Contact = () => {
 
             <motion.div variants={fadeInRight} className="rounded-2xl border border-border/30 bg-background p-8 lg:p-10">
               <form className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2.5">Full Name *</label>
-                    <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2.5">Position *</label>
-                    <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2.5">Full Name *</label>
+                  <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2.5">Company / Hospital / Clinic *</label>
-                    <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2.5">Email Address *</label>
-                    <Input type="email" required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2.5">Position *</label>
+                  <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2.5">WhatsApp Number</label>
-                    <Input className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2.5">Country / Region *</label>
-                    <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2.5">Company / Hospital / Clinic *</label>
+                  <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2.5">Email Address *</label>
+                  <Input type="email" required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2.5">WhatsApp Number</label>
+                  <Input className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2.5">Country / Region *</label>
+                  <Input required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2.5">Your Message *</label>
@@ -111,8 +107,8 @@ const Contact = () => {
                 </div>
                 <div className="flex justify-center pt-2">
                   <Button className="btn-gradient group px-12" size="lg">
+                    <Send className="mr-2 w-4 h-4" />
                     Submit
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </div>
               </form>

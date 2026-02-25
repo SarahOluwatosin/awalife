@@ -267,13 +267,15 @@ const ProductDetail = () => {
                       </Link>
                     </Button>
                     <Button variant="outline" size="lg" className="border-border/50 hover:border-primary/30" asChild>
-                      <Link to="/contact">Download brochure</Link>
+                      <Link to="/contact">
+                        <Download className="mr-2 w-4 h-4" />Download brochure
+                      </Link>
                     </Button>
                   </>
                 ) : (
                   <>
-                    <Button className="btn-gradient" size="lg" asChild>
-                      <Link to="/contact">Request Quote</Link>
+                     <Button className="btn-gradient group" size="lg" asChild>
+                      <Link to="/contact">Request Quote <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link>
                     </Button>
                     <Button variant="outline" size="lg" className="border-border/50 hover:border-primary/30">
                       <Download className="mr-2 w-4 h-4" />
@@ -349,18 +351,17 @@ const ProductDetail = () => {
               <div className="hidden md:block absolute left-0 right-0 top-6 h-px bg-border/60" />
               <motion.div className="grid md:grid-cols-3 gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
                 {[
-                  { title: 'Step 1', label: 'Load and prepare', desc: 'Simple sample prep with guided steps for blood, urine, feces, and effusion samples.' },
-                  { title: 'Step 2', label: 'AI morphological scan', desc: 'High-resolution imaging and AI recognition identify cells and elements in minutes.' },
-                  { title: 'Step 3', label: 'Standardized report', desc: 'Multi-parameter results with references, annotations, and share-ready outputs.' },
-                ].map((step) => (
-                  <motion.div key={step.title} className="relative" variants={cardSlideUp}>
+                  { label: 'Load and prepare', desc: 'Simple sample prep with guided steps for blood, urine, feces, and effusion samples.' },
+                  { label: 'AI morphological scan', desc: 'High-resolution imaging and AI recognition identify cells and elements in minutes.' },
+                  { label: 'Standardized report', desc: 'Multi-parameter results with references, annotations, and share-ready outputs.' },
+                ].map((step, index) => (
+                  <motion.div key={step.label} className="relative" variants={cardSlideUp}>
                     <div className="flex md:flex-col items-start md:items-center gap-4">
                       <motion.div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 border border-primary/30 text-primary font-semibold" variants={popIn}>
-                        {step.title.split(' ')[1]}
+                        {index + 1}
                       </motion.div>
                       <div className="rounded-2xl border border-border/50 bg-card shadow-sm p-6 text-left md:text-center">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{step.title}</span>
-                        <h3 className="font-semibold text-foreground mt-2">{step.label}</h3>
+                        <h3 className="font-semibold text-foreground">{step.label}</h3>
                         <p className={`${longParagraphClass} text-muted-foreground leading-relaxed mt-3`}>{step.desc}</p>
                       </div>
                     </div>
@@ -508,9 +509,9 @@ const ProductDetail = () => {
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
                   <span className="gradient-text">Already Have</span> a Microscope?
                 </h2>
-                <h3 className="text-xl font-semibold text-foreground mb-4">
-                  Upgrade it with Awalife Microscope Image Hub.
-                </h3>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 leading-tight">
+                  Upgrade it with Awalife <span className="gradient-text">Microscope Image Hub</span>.
+                </h2>
                 <p className="text-base text-muted-foreground leading-relaxed mb-6">
                   Keep your Leica or Olympus microscope and unlock the same Awalife software workflow—capture, measure, annotate, count, and report on a PC.
                 </p>
@@ -726,7 +727,7 @@ const ProductDetail = () => {
               const leftFaqs = aiAnalyzerFaqs.slice(0, mid);
               const rightFaqs = aiAnalyzerFaqs.slice(mid);
               return (
-                <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-x-10">
+                <div className="lg:grid lg:grid-cols-2 lg:gap-x-10">
                   <Accordion type="single" collapsible className="w-full">
                     {leftFaqs.map((faq) => (
                       <AccordionItem key={faq.question} value={faq.question}>
@@ -786,7 +787,7 @@ const ProductDetail = () => {
               const leftFaqs = microscopeFaqs.slice(0, mid);
               const rightFaqs = microscopeFaqs.slice(mid);
               return (
-                <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-x-10">
+                <div className="lg:grid lg:grid-cols-2 lg:gap-x-10">
                   <Accordion type="single" collapsible className="w-full">
                     {leftFaqs.map((faq) => (
                       <AccordionItem key={faq.question} value={faq.question}>
