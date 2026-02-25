@@ -21,24 +21,21 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 const slideVariants = {
   enter: (dir: number) => ({
-    x: dir > 0 ? 80 : -80,
+    x: dir > 0 ? 50 : -50,
     opacity: 0,
-    filter: 'blur(6px)',
-    scale: 0.97,
+    filter: 'blur(4px)',
   }),
   center: {
     x: 0,
     opacity: 1,
     filter: 'blur(0px)',
-    scale: 1,
-    transition: { duration: 0.6, ease },
+    transition: { duration: 0.5, ease },
   },
   exit: (dir: number) => ({
-    x: dir > 0 ? -80 : 80,
+    x: dir > 0 ? -50 : 50,
     opacity: 0,
-    filter: 'blur(6px)',
-    scale: 0.97,
-    transition: { duration: 0.4, ease },
+    filter: 'blur(4px)',
+    transition: { duration: 0.35, ease },
   }),
 };
 
@@ -149,7 +146,16 @@ const ApplicationImageCarousel = ({ pageKey, fallbackImages = [] }: ApplicationI
     );
   }
 
-  const visibleImages = displayImages.slice(currentIndex, currentIndex + itemsPerView);
+  // Handle wrapping: if near the end, wrap around to get enough items
+  const getVisibleImages = () => {
+    const result = [];
+    for (let i = 0; i < itemsPerView; i++) {
+      const idx = (currentIndex + i) % displayImages.length;
+      result.push(displayImages[idx]);
+    }
+    return result;
+  };
+  const visibleImages = getVisibleImages();
 
   return (
     <div className="relative">
@@ -164,7 +170,7 @@ const ApplicationImageCarousel = ({ pageKey, fallbackImages = [] }: ApplicationI
         </Button>
 
         <div className="overflow-hidden flex-1">
-          <AnimatePresence initial={false} custom={direction} mode="wait">
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <motion.div
               key={currentIndex}
               custom={direction}
