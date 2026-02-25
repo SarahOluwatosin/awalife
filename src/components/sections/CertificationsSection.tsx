@@ -25,7 +25,7 @@ const CertificationsSection = () => (
             Regulatory Credibility
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-            Certified for <span className="gradient-text">global</span> veterinary diagnostics.
+            Certified for <span className="gradient-text">Global</span> Veterinary Diagnostics
           </h2>
         </motion.div>
 

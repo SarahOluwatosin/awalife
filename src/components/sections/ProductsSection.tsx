@@ -37,7 +37,7 @@ const ProductsSection = () => (
           Featured Products
         </span>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-          Diagnostic tools built for <span className="gradient-text">real-world</span> veterinary workflows
+          Diagnostics Tools Built for <span className="gradient-text font-bold">Real-world Veterinary</span> Workflows
         </h2>
       </ScrollReveal>
 
