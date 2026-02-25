@@ -4,17 +4,24 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { images } from '@/lib/images';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import Starfield from '@/components/animations/Starfield';
+import FloatingParticles from '@/components/animations/FloatingParticles';
 
-const ease = [0.22, 1, 0.36, 1] as const;
+const ease = [0.16, 1, 0.3, 1] as const; // checkout.com-style smooth ease
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.2 } },
+  visible: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
 };
 
 const fadeUp = (delay = 0) => ({
-  hidden: { opacity: 0, y: 40, x: -20 },
-  visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.8, ease, delay } },
+  hidden: { opacity: 0, y: 32, filter: 'blur(8px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 1, ease, delay },
+  },
 });
 
 interface MetricItemProps {
@@ -82,6 +89,9 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16 bg-background">
+      {/* Ambient effects */}
+      <Starfield starCount={80} speed={0.3} className="opacity-40" />
+      <FloatingParticles count={18} />
 
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
@@ -105,8 +115,8 @@ const HeroSection = () => {
                 hidden: {},
                 visible: {
                   transition: {
-                    staggerChildren: 0.08,
-                    delayChildren: 0.05
+                    staggerChildren: 0.06,
+                    delayChildren: 0.15
                   }
                 }
               }}
@@ -117,8 +127,8 @@ const HeroSection = () => {
                     key={i}
                     className="inline-block mr-[0.25em]"
                     variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } }
+                      hidden: { opacity: 0, y: 24, filter: 'blur(6px)' },
+                      visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease } }
                     }}
                   >
                     {word}
@@ -132,8 +142,8 @@ const HeroSection = () => {
                     key={i}
                     className="inline-block mr-[0.25em]"
                     variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } }
+                      hidden: { opacity: 0, y: 24, filter: 'blur(6px)' },
+                      visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease } }
                     }}
                   >
                     {word}
@@ -158,7 +168,7 @@ const HeroSection = () => {
               </Button>
             </motion.div>
 
-            <motion.div variants={fadeUp(0.2)} className="mt-10 grid gap-8 sm:grid-cols-3">
+            <motion.div variants={fadeUp(0.25)} className="mt-10 grid gap-8 sm:grid-cols-3">
               {metrics.map((metric, index) => (
                 <MetricItem key={metric.label} {...metric} delay={index * 120} />
               ))}
@@ -167,9 +177,9 @@ const HeroSection = () => {
 
           <motion.div
             className="relative"
-            initial={{ opacity: 0, scale: 0.95, rotateY: -4 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 0.9, ease }}
+            initial={{ opacity: 0, scale: 0.96, filter: 'blur(12px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 1.2, ease, delay: 0.3 }}
           >
             <motion.div
               className="rounded-xl overflow-hidden"

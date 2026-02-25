@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 
-const ease = [0.22, 1, 0.36, 1] as const;
+const ease = [0.16, 1, 0.3, 1] as const;
 
 // Child variant used when ScrollReveal acts as a stagger container
 export const revealItemVariants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease } },
+  hidden: { opacity: 0, y: 24, filter: 'blur(4px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.75, ease } },
 };
 
 interface ScrollRevealProps {
@@ -43,8 +43,8 @@ const ScrollReveal = ({
         visible: { transition: { staggerChildren: stagger, delayChildren: delay } },
       }
     : {
-        hidden: { opacity: 0, y },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease, delay } },
+        hidden: { opacity: 0, y, filter: 'blur(6px)' },
+        visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.85, ease, delay } },
       };
 
   return (

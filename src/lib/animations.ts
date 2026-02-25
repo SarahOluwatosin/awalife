@@ -1,8 +1,8 @@
-const ease = [0.22, 1, 0.36, 1] as const;
+const ease = [0.16, 1, 0.3, 1] as const; // Smooth checkout.com-style ease
 
 export const sectionVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } },
+  hidden: { opacity: 0, y: 40, filter: 'blur(6px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.9, ease } },
 };
 
 export const staggerContainer = {
@@ -16,40 +16,40 @@ export const staggerContainerFast = {
 };
 
 export const cardVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.96 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease } },
+  hidden: { opacity: 0, y: 28, scale: 0.97, filter: 'blur(4px)' },
+  visible: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transition: { duration: 0.65, ease } },
 };
 
 export const fadeInLeft = {
-  hidden: { opacity: 0, x: -60, filter: 'blur(4px)' },
-  visible: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease } },
+  hidden: { opacity: 0, x: -50, filter: 'blur(6px)' },
+  visible: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.85, ease } },
 };
 
 export const fadeInRight = {
-  hidden: { opacity: 0, x: 60, filter: 'blur(4px)' },
-  visible: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease } },
+  hidden: { opacity: 0, x: 50, filter: 'blur(6px)' },
+  visible: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.85, ease } },
 };
 
 export const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
+  hidden: { opacity: 0, y: 24, filter: 'blur(4px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease } },
 };
 
 export const scaleIn = {
-  hidden: { opacity: 0, scale: 0.92 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease } },
+  hidden: { opacity: 0, scale: 0.92, filter: 'blur(6px)' },
+  visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 0.7, ease } },
 };
 
 // Blur-in effect inspired by motion.dev
 export const blurIn = {
-  hidden: { opacity: 0, filter: 'blur(8px)', y: 12 },
-  visible: { opacity: 1, filter: 'blur(0px)', y: 0, transition: { duration: 0.7, ease } },
+  hidden: { opacity: 0, filter: 'blur(12px)', y: 12 },
+  visible: { opacity: 1, filter: 'blur(0px)', y: 0, transition: { duration: 0.8, ease } },
 };
 
 // Slide up with slight rotation for cards
 export const cardSlideUp = {
-  hidden: { opacity: 0, y: 40, rotateX: 8 },
-  visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.6, ease } },
+  hidden: { opacity: 0, y: 36, rotateX: 6, filter: 'blur(4px)' },
+  visible: { opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease } },
 };
 
 // Pop-in for icons and small elements
