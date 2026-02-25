@@ -83,7 +83,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16">
+    <section ref={sectionRef} className="relative overflow-hidden pt-28 pb-16 bg-white dark:bg-background">
       <Starfield starCount={150} speed={0.5} />
       <AnimatedGradientBg />
 
