@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { images } from '@/lib/images';
+import ProgressiveImage from '@/components/ui/progressive-image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Starfield from '@/components/animations/Starfield';
 import AnimatedGradientBg from '@/components/animations/AnimatedGradientBg';
@@ -179,18 +180,17 @@ const HeroSection = () => {
               className="rounded-xl overflow-hidden"
               style={{ y: imageY }}
             >
-              <div className="relative">
-                <img
-                  src={images.heroDiagnosticLab}
-                  alt="Veterinary diagnostic workflow"
-                  data-override-id="home-hero"
-                  className="w-full h-full object-cover aspect-[5/4] rounded-xl"
-                  fetchPriority="high"
-                  decoding="async"
-                  width={800}
-                  height={640}
-                />
-              </div>
+              <ProgressiveImage
+                src={images.heroDiagnosticLab}
+                alt="Veterinary diagnostic workflow"
+                data-override-id="home-hero"
+                aspectClassName="aspect-[5/4]"
+                className="w-full h-full object-cover rounded-xl"
+                fetchPriority="high"
+                decoding="async"
+                width={800}
+                height={640}
+              />
             </motion.div>
           </motion.div>
         </div>
