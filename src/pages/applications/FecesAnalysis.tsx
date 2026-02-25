@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Check, ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Layout from '@/components/layout/Layout';
@@ -76,7 +76,7 @@ const FecesAnalysis = () => {
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Powered by our latest AI model, continuously improving with regular updates.</p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
-                <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013179540-cxqmcu.pdf" target="_blank" rel="noopener noreferrer" download><ArrowRight className="mr-2 w-4 h-4" />Download the sample report</a>
+                <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013179540-cxqmcu.pdf" target="_blank" rel="noopener noreferrer" download><Download className="mr-2 w-4 h-4" />Download the sample report</a>
               </Button>
             </div>
           </GsapReveal>

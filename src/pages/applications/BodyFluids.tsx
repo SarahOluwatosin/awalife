@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Beaker, Check, ArrowRight, Microscope, Target, Zap, Shield } from 'lucide-react';
+import { Beaker, Check, ArrowRight, Download, Microscope, Target, Zap, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import PageHero from '@/components/shared/PageHero';
@@ -46,7 +46,7 @@ const BodyFluids = () => {
               </div>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/products/ai-100vet">View AI-100Vet<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
-                <Button variant="outline" size="lg" asChild><a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013242151-23x4mi.pdf" target="_blank" rel="noopener noreferrer" download><ArrowRight className="mr-2 w-4 h-4" />Download the sample report</a></Button>
+                <Button variant="outline" size="lg" asChild><a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013242151-23x4mi.pdf" target="_blank" rel="noopener noreferrer" download><Download className="mr-2 w-4 h-4" />Download the sample report</a></Button>
               </div>
             </motion.div>
             <motion.div className="relative lg:order-1" variants={fadeInLeft}>

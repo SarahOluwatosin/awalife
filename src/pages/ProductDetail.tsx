@@ -302,7 +302,7 @@ const ProductDetail = () => {
                 {isAIAnalyzer ? 'Key Features' : 'Capabilities'}
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                {isAIAnalyzer ? <>AI Series Morphology Analyzer from <span className="gradient-text">sample to diagnosis</span>.</> : <>What It <span className="gradient-text">Can Do</span></>}
+                {isAIAnalyzer ? <>AI Series Morphology Analyzer from <span className="gradient-text">Sample to Diagnosis</span>.</> : <>What It <span className="gradient-text">Can Do</span></>}
               </h2>
             </motion.div>
             
@@ -471,7 +471,7 @@ const ProductDetail = () => {
                 Software
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
-                <span className="gradient-text">User-friendly</span> Software Built for Veterinary Workflows
+                <span className="gradient-text">User-friendly</span> <span className="gradient-text">Software</span> Built for Veterinary Workflows
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-2xl">
                 It integrates tools for cell counting, scale bars, annotations, and one-click report generation, with an embedded teaching image library for faster training.
@@ -507,10 +507,10 @@ const ProductDetail = () => {
                   Upgrade Option
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
-                  <span className="gradient-text">Already Have</span> a Microscope?
+                  Already Have a Microscope?
                 </h2>
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 leading-tight">
-                  Upgrade it with Awalife <span className="gradient-text">Microscope Image Hub</span>.
+                  <span className="gradient-text">Upgrade it with Awalife Microscope Image Hub.</span>
                 </h2>
                 <p className="text-base text-muted-foreground leading-relaxed mb-6">
                   Keep your Leica or Olympus microscope and unlock the same Awalife software workflow—capture, measure, annotate, count, and report on a PC.

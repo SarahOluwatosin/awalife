@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Layout from '@/components/layout/Layout';
@@ -35,7 +35,7 @@ const BloodAnalysis = () => {
     items: ['Reticulocytes (RET# RET%)', 'Nucleated RBC (NRBC# NRBC/WBC)', 'Ghost Cells (ETG# ETG%)', 'Spherocytes (SPH# SPH%)', 'Acanthocytes (AC#)', 'RBC Clump (AGG#)', 'Heinz Bodies (HEB# HEB%)']
   },
   {
-    title: 'Platelet clump recognition & enumeration',
+    title: 'Platelet clump recognition',
     description: 'Recognizes platelet clumps and converts clumped platelets into single-platelet equivalents for platelet enumeration.',
     items: ['Total Platelets Count (PLT)', 'Platelets Count (PLT#)', 'Platelets Clump Count (APLT#)']
   }];
@@ -80,7 +80,7 @@ const BloodAnalysis = () => {
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Powered by our latest AI model, continuously improving with regular updates.</p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
-                <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013016271-paiyw3.pdf" target="_blank" rel="noopener noreferrer" download><ArrowRight className="mr-2 w-4 h-4" />Download the sample report</a>
+                <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013016271-paiyw3.pdf" target="_blank" rel="noopener noreferrer" download><Download className="mr-2 w-4 h-4" />Download the sample report</a>
               </Button>
             </div>
           </GsapReveal>
@@ -109,8 +109,7 @@ const BloodAnalysis = () => {
             <motion.div className="space-y-6 text-center max-w-3xl mx-auto" variants={fadeInLeft}>
               <div>
                 <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">How It Works</span>
-                <h3 className="text-2xl md:text-3xl font-bold text-foreground">How It <span className="gradient-text">Works</span></h3>
-                <p className={`${bodyTextClass} text-muted-foreground mt-2`}>More Count</p>
+                <h3 className="text-2xl md:text-3xl font-bold text-foreground">More <span className="gradient-text">Count</span></h3>
               </div>
               <ul className={`space-y-4 ${bodyTextClass} text-muted-foreground text-left inline-block`}>
                 <li className="flex items-start gap-3"><span className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/15 text-primary"><Check className="h-4 w-4" /></span><span>10μL blood, allows instant capture of 200,000 to 500,000 cells, with full reports.</span></li>

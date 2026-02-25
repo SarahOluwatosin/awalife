@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Check, ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Layout from '@/components/layout/Layout';
@@ -73,7 +73,7 @@ const UrineAnalysis = () => {
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Powered by our latest AI model, continuously improving with regular updates.</p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
-                <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013094726-jpuaxn.pdf" target="_blank" rel="noopener noreferrer" download><ArrowRight className="mr-2 w-4 h-4" />Download the sample report</a>
+                <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013094726-jpuaxn.pdf" target="_blank" rel="noopener noreferrer" download><Download className="mr-2 w-4 h-4" />Download the sample report</a>
               </Button>
             </div>
           </GsapReveal>
@@ -114,8 +114,7 @@ const UrineAnalysis = () => {
           <div className="space-y-8">
             <motion.div className="text-center max-w-4xl mx-auto" variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">How It Works</span>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How It <span className="gradient-text">Works</span></h3>
-              <p className={`${bodyTextClass} text-muted-foreground mb-6`}>From sample to report - in under 10 minutes</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">From Sample to Report - in <span className="gradient-text">Under 10 minutes</span></h3>
               <ul className={`grid md:grid-cols-2 gap-x-8 gap-y-3 ${bodyTextClass} text-muted-foreground text-left`}>
                 <li className="flex items-start gap-2"><span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary flex-shrink-0"><Check className="h-3 w-3" /></span><span>Focus particles help the system rapidly lock focus on formed elements, minimizing manual adjustments.</span></li>
                 <li className="flex items-start gap-2"><span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary flex-shrink-0"><Check className="h-3 w-3" /></span><span>Centrifugation is optional for routine samples.</span></li>
