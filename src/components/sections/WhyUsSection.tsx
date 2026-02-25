@@ -54,7 +54,7 @@ const WhyUsSection = () => (
     <AnimatedGradientBg />
     <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
 
-      {/* Section header */
+      {/* Section header */}
       <ScrollReveal className="max-w-4xl mx-auto text-center mb-16">
         <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
           Platform Growth
