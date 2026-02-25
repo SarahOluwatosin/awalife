@@ -69,7 +69,7 @@ const Contact = () => {
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 Contact Form
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Send Us A Message<span className="gradient-text">message</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Send Us A <span className="gradient-text">Message</span></h2>
               <p className="text-lg text-muted-foreground">Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
             </motion.div>
 
