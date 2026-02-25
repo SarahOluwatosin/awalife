@@ -32,7 +32,7 @@ const ExoticAnimals = () => {
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife extends morphology-first, AI-assisted analysis beyond dogs and cats—supporting a wider range of species with review-ready reports that combine images and quantitative results. Capabilities may vary by species and sample type.</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
-                <Button variant="outline" size="lg" asChild><a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013290352-bha0kp.pdf" target="_blank" rel="noopener noreferrer" download>Download the sample report</a></Button>
+                <Button variant="outline" size="lg" asChild><a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013290352-bha0kp.pdf" target="_blank" rel="noopener noreferrer" download><ArrowRight className="mr-2 w-4 h-4" />Download the sample report</a></Button>
               </div>
             </motion.div>
             <motion.div className="relative" variants={fadeInRight}>
@@ -122,7 +122,7 @@ const ExoticAnimals = () => {
             ];
             const mid = Math.ceil(exoticFaqs.length / 2);
             return (
-              <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-x-10">
+              <div className="lg:grid lg:grid-cols-2 lg:gap-x-10">
                 <Accordion type="single" collapsible className="w-full">
                   {exoticFaqs.slice(0, mid).map((faq) => (
                     <AccordionItem key={faq.question} value={faq.question}>

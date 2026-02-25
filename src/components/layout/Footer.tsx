@@ -39,7 +39,7 @@ const Footer = () => {
               {[
                 { icon: Linkedin, href: 'https://linkedin.com/company/awalife' },
                 { icon: Instagram, href: 'https://instagram.com/awalife_es' },
-                { icon: Facebook, href: 'https://facebook.com/profile.php?id=615799284554' },
+                { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61575919264554' },
               ].map((social, i) => (
                 <a
                   key={i}

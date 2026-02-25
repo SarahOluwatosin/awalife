@@ -53,7 +53,7 @@ const UrineAnalysis = () => {
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife brings a repeatable, clinic-ready workflow for urine formed elements. From sample processing to imaging and AI-assisted recognition, results are delivered as review-ready reports with images and quantified outputs, helping teams work faster and more consistently.</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
-                <Button variant="outline" size="lg" asChild><Link to="/contact">See it in action</Link></Button>
+                <Button variant="outline" size="lg" asChild><Link to="/contact">See it in action<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
               </div>
             </motion.div>
             <motion.div className="relative" variants={fadeInRight} style={{ y: imgY }}>
@@ -73,7 +73,7 @@ const UrineAnalysis = () => {
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Powered by our latest AI model, continuously improving with regular updates.</p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
-                <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013094726-jpuaxn.pdf" target="_blank" rel="noopener noreferrer" download>Download the sample report</a>
+                <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013094726-jpuaxn.pdf" target="_blank" rel="noopener noreferrer" download><ArrowRight className="mr-2 w-4 h-4" />Download the sample report</a>
               </Button>
             </div>
           </GsapReveal>
@@ -159,7 +159,7 @@ const UrineAnalysis = () => {
             ];
             const mid = Math.ceil(urineFaqs.length / 2);
             return (
-              <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-x-10">
+              <div className="lg:grid lg:grid-cols-2 lg:gap-x-10">
                 <Accordion type="single" collapsible className="w-full">
                   {urineFaqs.slice(0, mid).map((faq) => (
                     <AccordionItem key={faq.question} value={faq.question}>

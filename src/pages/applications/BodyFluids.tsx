@@ -46,7 +46,7 @@ const BodyFluids = () => {
               </div>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/products/ai-100vet">View AI-100Vet<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
-                <Button variant="outline" size="lg" asChild><a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013242151-23x4mi.pdf" target="_blank" rel="noopener noreferrer" download>Download the sample report</a></Button>
+                <Button variant="outline" size="lg" asChild><a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013242151-23x4mi.pdf" target="_blank" rel="noopener noreferrer" download><ArrowRight className="mr-2 w-4 h-4" />Download the sample report</a></Button>
               </div>
             </motion.div>
             <motion.div className="relative lg:order-1" variants={fadeInLeft}>
@@ -109,8 +109,8 @@ const BodyFluids = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Handle <span className="gradient-text">Complex Cases</span> with Confidence</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">Get multi-dimensional diagnostic insights for challenging cases requiring fluid cytology.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button className="btn-gradient" size="lg" asChild><Link to="/contact">Request a Demo</Link></Button>
-            <Button variant="outline" size="lg" asChild><Link to="/products">View All Products</Link></Button>
+            <Button className="btn-gradient" size="lg" asChild><Link to="/contact">Request a Demo<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
+            <Button variant="outline" size="lg" asChild><Link to="/products/ai-analyzer">View All Products<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
           </div>
         </div>
       </motion.section>
