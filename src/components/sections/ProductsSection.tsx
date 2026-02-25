@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { images } from '@/lib/images';
+import ProgressiveImage from '@/components/ui/progressive-image';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 import { staggerContainer, cardVariants } from '@/lib/animations';
 
@@ -59,11 +60,12 @@ const ProductsSection = () => (
           >
             {/* Image container — zooms on card hover via group-hover */}
             <div className="relative rounded-xl overflow-hidden mb-6 bg-secondary/20">
-              <img
+              <ProgressiveImage
                 src={product.image}
                 alt={product.name}
                 data-override-id={`home-products-${i}`}
-                className={`w-full h-auto aspect-[4/3] object-center rounded-xl transition-transform duration-500 ease-out group-hover:scale-[1.04] will-change-transform ${product.objectFit}`}
+                aspectClassName="aspect-[4/3]"
+                className={`w-full h-auto object-center rounded-xl transition-transform duration-500 ease-out group-hover:scale-[1.04] will-change-transform ${product.objectFit}`}
                 loading="lazy"
                 decoding="async"
                 width={640}

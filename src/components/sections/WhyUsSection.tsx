@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { images } from '@/lib/images';
+import ProgressiveImage from '@/components/ui/progressive-image';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 import AnimatedGradientBg from '@/components/animations/AnimatedGradientBg';
 
@@ -78,7 +79,7 @@ const WhyUsSection = () => (
           >
             {/* Image — zooms on hover via group-hover */}
             <div className={`${i % 2 === 1 ? 'lg:order-2' : ''} bg-secondary/30 overflow-hidden`}>
-              <img
+              <ProgressiveImage
                 src={feature.image}
                 alt={feature.alt}
                 data-override-id={`home-whyus-${i}`}
