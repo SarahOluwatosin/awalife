@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Download, FileText, BookOpen, Package, MoreHorizontal, Play } from 'lucide-react';
+import { ArrowRight, Download, FileText, BookOpen, Package, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Layout from '@/components/layout/Layout';
@@ -68,94 +68,89 @@ const News = () => {
     const isVideo = item.mediaType === 'link' && isVideoLink(mediaUrl);
     const embedUrl = isVideo ? getVideoEmbedUrl(mediaUrl) : null;
     const actionLabel = item.mediaType === 'link' ? 'View resource' : 'Download';
-    const ActionIcon = item.mediaType === 'link' ? ArrowRight : Download;
     const badge = getMediaBadge(item);
+    const KindIcon = SECTION_ICONS[item.kind] || FileText;
+    const kindLabel = RESOURCE_KIND_CONFIG.find((k) => k.id === item.kind)?.label || item.kind;
 
     return (
-      <div
-        key={item.id}
-        className="group relative flex h-full flex-col rounded-2xl bg-card border border-border/20 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300">
-
-        {/* Accent gradient top */}
-
-        {/* Video embed preview */}
-        {embedUrl &&
-        <div className="relative w-full aspect-video bg-muted/30">
+      <div key={item.id} className="group overflow-hidden rounded-2xl border border-border/30 hover:border-primary/30 transition-colors h-full flex flex-col bg-secondary/10">
+        {/* Top media area */}
+        <div className="relative h-56 lg:h-64 overflow-hidden bg-secondary/30">
+          {embedUrl ? (
             <iframe
-            src={embedUrl}
-            className="w-full h-full"
-            style={{ border: 'none' }}
-            allowFullScreen
-            allow="autoplay; encrypted-media"
-            title={item.title}
-            loading="lazy" />
-
-          </div>
-        }
-
-        <div className="flex flex-col flex-1 p-6">
-          {/* Badges */}
-          <div className="flex flex-wrap items-center gap-2 mb-4">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] uppercase tracking-wider font-semibold bg-primary/8 text-primary border border-primary/10">
-              {productLabel}
+              src={embedUrl}
+              className="w-full h-full"
+              style={{ border: 'none' }}
+              allowFullScreen
+              allow="autoplay; encrypted-media"
+              title={item.title}
+              loading="lazy"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <KindIcon className="h-12 w-12 text-muted-foreground/20" />
+            </div>
+          )}
+          {/* Kind badge */}
+          <div className="absolute top-5 left-5">
+            <span className="px-4 py-1.5 bg-primary/90 text-primary-foreground text-xs font-semibold rounded-full">
+              {kindLabel}
             </span>
-            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-secondary text-muted-foreground border border-border/30">
+          </div>
+          {/* File type badge */}
+          <div className="absolute top-5 right-5">
+            <span className="px-2 py-1 bg-background/90 text-muted-foreground text-[10px] font-bold rounded-md border border-border/30">
               {badge}
             </span>
           </div>
+        </div>
 
-          {/* Title */}
-          <h3 className="text-lg font-bold text-foreground leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2 min-h-[3.5rem]">
+        {/* Content */}
+        <div className="p-6 lg:p-7 flex flex-col flex-grow">
+          <p className="text-xs font-medium text-primary/70 mb-4">{productLabel}</p>
+
+          <h3 className="text-xl lg:text-2xl font-semibold text-foreground mb-4 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
             {item.title}
           </h3>
 
-          {/* Summary */}
-          {item.summary &&
-          <p className="text-sm text-muted-foreground leading-relaxed mb-6 line-clamp-3 flex-1">
+          {item.summary && (
+            <p className="text-muted-foreground mb-6 line-clamp-3 flex-grow leading-relaxed">
               {item.summary}
             </p>
-          }
+          )}
 
-          {/* Action */}
-          <div className="mt-auto pt-2">
-            {hasMedia ?
-            <div className="flex flex-wrap gap-2">
-                {isVideo &&
-              <Button variant="default" size="sm" className="h-10 px-5 rounded-full transition-all" asChild>
-                    <a href={mediaUrl} target="_blank" rel="noreferrer">
-                      <Play className="mr-2 h-4 w-4" />
-                      Watch video
-                    </a>
-                  </Button>
-              }
-                {!isVideo &&
-              <Button variant="outline" size="sm" className="h-10 px-5 rounded-full border-border/40 text-primary hover:bg-primary/5 hover:border-primary/30 transition-all" asChild>
-                    {item.mediaType === 'upload' ?
-                <a href={mediaUrl} download={item.mediaName || 'resource'}>
-                        <ActionIcon className="mr-2 h-4 w-4" />
-                        {actionLabel}
-                      </a> :
-                isExternalLink(mediaUrl) ?
-                <a href={mediaUrl} target="_blank" rel="noreferrer">
-                        <ActionIcon className="mr-2 h-4 w-4" />
-                        {actionLabel}
-                      </a> :
-
-                <Link to={mediaUrl}>
-                        <ActionIcon className="mr-2 h-4 w-4" />
-                        {actionLabel}
-                      </Link>
-                }
-                  </Button>
-              }
-              </div> :
-
-            <p className="text-xs text-muted-foreground/50 italic">No file or link attached</p>
-            }
+          <div className="mt-auto">
+            {hasMedia ? (
+              <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary group/btn w-fit" asChild>
+                {isVideo ? (
+                  <a href={mediaUrl} target="_blank" rel="noreferrer">
+                    Watch video
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </a>
+                ) : item.mediaType === 'upload' ? (
+                  <a href={mediaUrl} download={item.mediaName || 'resource'}>
+                    {actionLabel}
+                    <Download className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </a>
+                ) : isExternalLink(mediaUrl) ? (
+                  <a href={mediaUrl} target="_blank" rel="noreferrer">
+                    {actionLabel}
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </a>
+                ) : (
+                  <Link to={mediaUrl}>
+                    {actionLabel}
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
+                )}
+              </Button>
+            ) : (
+              <p className="text-xs text-muted-foreground/50 italic">No file or link attached</p>
+            )}
           </div>
         </div>
-      </div>);
-
+      </div>
+    );
   };
 
   return (
