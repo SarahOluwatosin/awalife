@@ -122,11 +122,20 @@ const FecesAnalysis = () => {
             </motion.div>
             <motion.div variants={fadeInRight}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">How It Works</span>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6"><span className="gradient-text">Direct Sampling</span></h3>
-              <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
-                <li>Broader coverage with more reportable parameters/findings.</li>
-                <li>Best for: Routine screening and fast workflow.</li>
-                <li>Recommended when: You want a quick, comprehensive review with minimal preparation.</li>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6"><span className="gradient-text">Direct</span> Sampling</h3>
+              <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground`}>
+                {[
+                  'Broader coverage with more reportable parameters/findings.',
+                  'Best for: Routine screening and fast workflow.',
+                  'Recommended when: You want a quick, comprehensive review with minimal preparation.',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary">
+                      <Check className="h-3 w-3" />
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </motion.div>
           </div>
@@ -138,12 +147,21 @@ const FecesAnalysis = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">How It Works</span>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6"><span className="gradient-text">Flotation Sampling</span> (Centrifugal Flotation)</h3>
-              <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
-                <li>Uses a horizontal centrifuge to concentrate eggs/cysts.</li>
-                <li>Best for: Targeted parasite enrichment and low-burden/intermittent shedding cases.</li>
-                <li>Key advantage: Improved recovery of common parasites, especially: Roundworm eggs, Hookworm eggs, Tapeworm eggs, Whipworm eggs, Coccidia oocysts, Giardia cysts.</li>
-                <li>Recommended when: The sample is low concentration, or parasite enrichment is clinically important.</li>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6"><span className="gradient-text">Flotation</span> Sampling (Centrifugal Flotation)</h3>
+              <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground`}>
+                {[
+                  'Uses a horizontal centrifuge to concentrate eggs/cysts.',
+                  'Best for: Targeted parasite enrichment and low-burden/intermittent shedding cases.',
+                  'Key advantage: Improved recovery of common parasites, especially: Roundworm eggs, Hookworm eggs, Tapeworm eggs, Whipworm eggs, Coccidia oocysts, Giardia cysts.',
+                  'Recommended when: The sample is low concentration, or parasite enrichment is clinically important.',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary">
+                      <Check className="h-3 w-3" />
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </motion.div>
             <motion.div className="relative" variants={fadeInRight} style={{ y: py2 }}>
@@ -174,10 +192,11 @@ const FecesAnalysis = () => {
           </div>
           {(() => {
             const fecesFaqs = [
-              { question: 'How long does a typical fecal analysis take?', answer: 'Most samples are processed and reported in under 10 minutes depending on sample conditions.' },
-              { question: 'What elements can be detected?', answer: 'Parasite eggs, protozoa, pathogens, and digestive indicators are identified with images and counts.' },
-              { question: 'Is sample preparation automated?', answer: 'Yes. The workflow automates preparation, imaging, and AI-assisted recognition.' },
-              { question: 'Can reports be reviewed and shared easily?', answer: 'Yes. Reports include images, counts, and annotations for review and sharing.' },
+              { question: 'Which species are supported for fecal analysis?', answer: 'Validated for dogs and cats.' },
+              { question: 'What sample types are supported?', answer: 'Fresh stool, lavage fluid, or anal swab (not recommended).' },
+              { question: 'What can the flotation method detect?', answer: '7 parasite parameters, including:\n\nEggs: Roundworm, Hookworm, Whipworm, Spirometra, Dipylidium caninum\n\nProtozoa: Giardia cyst, Isospora (coccidia)' },
+              { question: 'What can the direct method detect?', answer: '33 parameters, including:\n\nParasites: Roundworm, Hookworm, Whipworm, Spirometra, Dipylidium caninum, Alaria alata\n\nProtozoa: Trichomonas, Giardia trophozoite, Giardia cyst, Isospora (coccidia)\n\nMicroorganisms: Cocci, rods, cocci/rods ratio, curved rods, spore-forming rods, spirochetes, spiral-shaped rods, yeast\n\nCells: RBC, WBC, epithelial cells\n\nDigestive contents: Starch granules, muscle fibers, plant fibers, lipid droplets' },
+              { question: 'What is the difference between flotation and direct methods?', answer: 'Flotation: Higher sensitivity for parasite eggs/cysts, especially at low egg counts\n\nDirect: Faster and simpler; also evaluates flora, digestion, and cells for quick screening' },
             ];
             const mid = Math.ceil(fecesFaqs.length / 2);
             return (

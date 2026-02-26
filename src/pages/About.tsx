@@ -448,7 +448,7 @@ const About = () => {
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               Global Reach
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground lg:whitespace-nowrap">Scaling Globally Through Partners Who Deliver <span className="gradient-text">Locally</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground lg:whitespace-nowrap">Scaling <span className="text-primary">Globally</span> Through Partners Who Deliver <span className="gradient-text">Locally</span></h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-4`}>From product design to service processes, Awalife is built for international deployment. With standardized workflows, review-ready outputs, and a platform that keeps expanding across sample types, we help teams deliver consistent clinical value across regions and practice settings.</p>
           </div>
           <div className="relative">

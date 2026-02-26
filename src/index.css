@@ -206,6 +206,19 @@
     box-shadow: 0 10px 40px hsl(150 70% 40% / 0.5);
   }
 
+  .btn-gradient-outline:hover,
+  .btn-gradient-outline:focus-visible {
+    background: var(--gradient-primary);
+    color: hsl(var(--primary-foreground));
+    border-color: transparent;
+  }
+
+  .btn-gradient-outline:active {
+    background: var(--gradient-primary);
+    color: hsl(var(--primary-foreground));
+    border-color: transparent;
+  }
+
   /* Glass morphism */
   .glass {
     @apply backdrop-blur-xl bg-card/80 border border-border/50;

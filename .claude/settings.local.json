@@ -28,7 +28,10 @@
       "Bash(git add Dockerfile nginx.conf docker-compose.yml .env.example .dockerignore)",
       "Bash(bun run build)",
       "Bash(git add src/pages/About.tsx src/pages/News.tsx src/pages/CompanyNews.tsx src/data/resources.ts)",
-      "Bash(git add src/pages/News.tsx)"
+      "Bash(git add src/pages/News.tsx)",
+      "Bash(git add .github/)",
+      "Bash(git stash)",
+      "Bash(git stash pop)"
     ]
   }
 }

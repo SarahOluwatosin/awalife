@@ -95,9 +95,18 @@ const ExoticAnimals = () => {
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Low Volume Sampling</span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Only 10 μL Blood samples Required for <span className="gradient-text">CBC Testing</span></h2>
               <p className={`${bodyTextClass} text-muted-foreground mb-6`}>Especially for exotic pets, critically ill, anemic, and recovering cats and dogs.</p>
-              <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
-                <li>A safer diagnostic experience for animals.</li>
-                <li>A more efficient diagnostic workflow.</li>
+              <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground`}>
+                {[
+                  'A safer diagnostic experience for animals.',
+                  'A more efficient diagnostic workflow.',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary">
+                      <Check className="h-3 w-3" />
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </motion.div>
             <motion.div className="relative flex items-center justify-center" variants={fadeInRight}>

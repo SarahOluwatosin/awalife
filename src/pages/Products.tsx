@@ -33,7 +33,7 @@ const Products = () => {
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">{t.products.description}</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Request Demo <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>
-                <Button variant="outline" size="lg" className="border-border/50 hover:bg-secondary hover:border-primary/30"><Download className="mr-2 w-4 h-4" />Download Catalog</Button>
+                <Button variant="outline" size="lg" className="border-border/50"><Download className="mr-2 w-4 h-4" />Download Catalog</Button>
               </div>
             </motion.div>
             <motion.div className="relative grid grid-cols-2 gap-4" variants={fadeInRight}>
@@ -81,7 +81,7 @@ const Products = () => {
                     </div>
                     <div className="flex flex-wrap gap-4">
                       <Button className="btn-gradient group/btn" size="lg" asChild><Link to={`/products/${product.id}`}>{t.products.viewDetails}<ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" /></Link></Button>
-                      <Button variant="outline" size="lg" className="border-border/50 hover:bg-secondary hover:border-primary/30"><Download className="mr-2 w-4 h-4" />{t.products.brochure}</Button>
+                      <Button variant="outline" size="lg" className="border-border/50"><Download className="mr-2 w-4 h-4" />{t.products.brochure}</Button>
                     </div>
                   </motion.div>
                 </div>

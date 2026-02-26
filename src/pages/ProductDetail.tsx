@@ -266,7 +266,7 @@ const ProductDetail = () => {
                         <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
-                    <Button variant="outline" size="lg" className="border-border/50 hover:border-primary/30" asChild>
+                    <Button variant="outline" size="lg" className="border-border/50" asChild>
                       <Link to="/contact">
                         <Download className="mr-2 w-4 h-4" />Download brochure
                       </Link>
@@ -277,7 +277,7 @@ const ProductDetail = () => {
                      <Button className="btn-gradient group" size="lg" asChild>
                       <Link to="/contact">Request Quote <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link>
                     </Button>
-                    <Button variant="outline" size="lg" className="border-border/50 hover:border-primary/30">
+                    <Button variant="outline" size="lg" className="border-border/50">
                       <Download className="mr-2 w-4 h-4" />
                       {t.products.brochure}
                     </Button>
@@ -515,12 +515,21 @@ const ProductDetail = () => {
                 <p className="text-base text-muted-foreground leading-relaxed mb-6">
                   Keep your Leica or Olympus microscope and unlock the same Awalife software workflow—capture, measure, annotate, count, and report on a PC.
                 </p>
-                <ul className="text-base text-muted-foreground space-y-3 list-disc list-inside">
-                  <li>Compatible with Leica and Olympus microscopes (models as applicable)</li>
-                  <li>Plug-and-play connection to PC</li>
-                  <li>Unlock user friendly software: capture, measure, annotate, count, report</li>
-                  <li>Standardize documentation across users and sites</li>
-                  <li>Built-in teaching image library for onboarding</li>
+                <ul className="space-y-3 text-base text-muted-foreground">
+                  {[
+                    'Compatible with Leica and Olympus microscopes (models as applicable)',
+                    'Plug-and-play connection to PC',
+                    'Unlock user friendly software: capture, measure, annotate, count, report',
+                    'Standardize documentation across users and sites',
+                    'Built-in teaching image library for onboarding',
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary">
+                        <Check className="h-3 w-3" />
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
                 </ul>
               </motion.div>
             </div>
