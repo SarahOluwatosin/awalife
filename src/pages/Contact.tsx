@@ -66,16 +66,13 @@ const Contact = () => {
       {/* Form Section */}
       <motion.section className="pb-24 lg:pb-32 bg-secondary/5" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="max-w-4xl mx-auto">
-            <motion.div variants={fadeInLeft} className="text-center mb-12">
-              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                Contact Form
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Send Us A <span className="gradient-text">Message</span></h2>
+          <div className="w-full">
+            <motion.div variants={fadeInLeft} className="text-left mb-12">
+              <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">Interested in Our Products?</h3>
               <p className="text-lg text-muted-foreground">Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
             </motion.div>
 
-            <motion.div variants={fadeInRight} className="rounded-2xl border border-border/30 bg-background p-8 lg:p-10">
+            <motion.div variants={fadeInRight} className="rounded-2xl border border-border/30 bg-background p-8 lg:p-10 w-full">
               <form className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2.5">Full Name *</label>
@@ -105,7 +102,7 @@ const Contact = () => {
                   <label className="block text-sm font-medium text-foreground mb-2.5">Your Message *</label>
                   <Textarea required rows={5} className="bg-background border-border/40 resize-none focus:border-primary/50 transition-colors" />
                 </div>
-                <div className="flex justify-center pt-2">
+                <div className="flex justify-start pt-2">
                   <Button className="btn-gradient group px-12" size="lg">
                     <Send className="mr-2 w-4 h-4" />
                     Submit

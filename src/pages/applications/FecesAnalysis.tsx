@@ -121,8 +121,8 @@ const FecesAnalysis = () => {
               </div>
             </motion.div>
             <motion.div variants={fadeInRight}>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How It <span className="gradient-text">Works</span></h3>
-              <p className={`${bodyTextClass} text-muted-foreground mb-6`}>Direct Sampling</p>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">How It Works</span>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6"><span className="gradient-text">Direct Sampling</span></h3>
               <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
                 <li>Broader coverage with more reportable parameters/findings.</li>
                 <li>Best for: Routine screening and fast workflow.</li>
@@ -137,8 +137,8 @@ const FecesAnalysis = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div variants={fadeInLeft}>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How It <span className="gradient-text">Works</span></h3>
-              <p className={`${bodyTextClass} text-muted-foreground mb-6`}>Flotation Sampling (Centrifugal Flotation)</p>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">How It Works</span>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6"><span className="gradient-text">Flotation Sampling</span> (Centrifugal Flotation)</h3>
               <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground list-disc list-inside`}>
                 <li>Uses a horizontal centrifuge to concentrate eggs/cysts.</li>
                 <li>Best for: Targeted parasite enrichment and low-burden/intermittent shedding cases.</li>

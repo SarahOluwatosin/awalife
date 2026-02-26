@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.checkout.com)",
+      "Bash(bun run tsc --noEmit)",
+      "Bash(bun add gsap)",
+      "Bash(npm install gsap --save)",
+      "Bash(npm install gsap)",
+      "Bash(git add src/components/sections/AboutSection.tsx src/components/sections/CTASection.tsx src/components/sections/CertificationsSection.tsx src/components/sections/GlobalPartnersSection.tsx src/components/sections/HeroSection.tsx src/components/sections/ProductsSection.tsx src/components/sections/ServicesSection.tsx src/components/sections/WhyUsSection.tsx src/index.css src/pages/About.tsx src/pages/Index.tsx src/pages/ProductDetail.tsx src/pages/applications/BloodAnalysis.tsx src/pages/applications/ExoticAnimals.tsx src/pages/applications/FecesAnalysis.tsx src/pages/applications/PleuralEffusion.tsx src/pages/applications/UrineAnalysis.tsx package.json package-lock.json src/components/animations/Marquee.tsx src/components/animations/ScrollReveal.tsx)",
+      "Bash(git add src/lib/gsap-setup.ts src/components/animations/GsapReveal.tsx src/components/sections/ApplicationImageCarousel.tsx src/lib/animations.ts)",
+      "Bash(git -C /Users/SarahO/Downloads/awal3/awalife add src/lib/gsap-setup.ts src/components/animations/GsapReveal.tsx src/components/sections/ApplicationImageCarousel.tsx src/lib/animations.ts)",
+      "Bash(git -C /Users/SarahO/Downloads/awal3/awalife status --short)",
+      "Bash(ls src/lib/gsap*)",
+      "Bash(python3 -:*)",
+      "Bash(git add src/lib/animations.ts src/lib/gsap-setup.ts src/components/animations/GsapReveal.tsx src/components/sections/ApplicationImageCarousel.tsx src/components/sections/HeroSection.tsx src/components/sections/WhyUsSection.tsx src/pages/About.tsx src/pages/applications/BloodAnalysis.tsx src/pages/applications/UrineAnalysis.tsx src/pages/applications/FecesAnalysis.tsx)",
+      "Bash(git commit:*)",
+      "Bash(git add src/components/sections/WhyUsSection.tsx)",
+      "Bash(git push origin main)",
+      "Bash(git pull --rebase origin main)",
+      "Bash(git add src/components/layout/Footer.tsx)",
+      "Bash(git add -A)",
+      "Bash(git restore --staged .claude/settings.local.json)",
+      "Bash(git add src/components/layout/Footer.tsx src/components/sections/HeroSection.tsx)",
+      "Bash(git add src/components/sections/HeroSection.tsx)",
+      "Bash(git pull origin main)",
+      "Bash(npm run build)",
+      "Bash(ls /Users/SarahO/Downloads/awal3/awalife/.env*)",
+      "Bash(git add Dockerfile nginx.conf docker-compose.yml .env.example .dockerignore)",
+      "Bash(bun run build)",
+      "Bash(git add src/pages/About.tsx src/pages/News.tsx src/pages/CompanyNews.tsx src/data/resources.ts)",
+      "Bash(git add src/pages/News.tsx)"
+    ]
+  }
+}

@@ -32,11 +32,11 @@ const ProductsSection = () => (
     <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
 
       {/* Section header — single fade-up */}
-      <ScrollReveal className="max-w-2xl mx-auto text-center mb-16">
+      <ScrollReveal className="max-w-5xl mx-auto text-center mb-16 w-full">
         <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
           Featured Products
         </span>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight lg:whitespace-nowrap">
           Diagnostics Tools Built for <span className="gradient-text font-bold">Real-world Veterinary</span> Workflows
         </h2>
       </ScrollReveal>

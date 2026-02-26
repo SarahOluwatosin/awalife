@@ -515,7 +515,7 @@ const ResourcesAdmin = () => {
             <TabsContent value="news" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Add News Item</CardTitle>
+                  <CardTitle className="whitespace-nowrap">Add News Item</CardTitle>
                   <CardDescription>Create a new news entry with image, details, and category.</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -577,7 +577,7 @@ const ResourcesAdmin = () => {
               </Card>
 
               <Card>
-                <CardHeader><CardTitle>All News</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="whitespace-nowrap">All News</CardTitle></CardHeader>
                 <CardContent>
                   {data.news.length ? (
                     <div className="rounded-lg border border-border/40 overflow-hidden">
@@ -586,7 +586,7 @@ const ResourcesAdmin = () => {
                           <TableRow>
                             <TableHead className="w-14"></TableHead>
                             <TableHead>Title</TableHead>
-                            <TableHead className="w-28">Category</TableHead>
+                            <TableHead className="w-36 whitespace-nowrap">Category</TableHead>
                             <TableHead className="w-28">Date</TableHead>
                             <TableHead className="w-32">Location</TableHead>
                             <TableHead className="w-24 text-right">Actions</TableHead>
@@ -606,7 +606,7 @@ const ResourcesAdmin = () => {
                                 <div className="max-w-xs truncate">{item.title}</div>
                                 {item.excerpt && <div className="text-xs text-muted-foreground truncate max-w-xs mt-0.5">{item.excerpt}</div>}
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="whitespace-nowrap">
                                 <span className="inline-flex px-2 py-0.5 rounded-full text-[11px] font-medium bg-primary/10 text-primary">{item.category}</span>
                               </TableCell>
                               <TableCell className="text-sm text-muted-foreground">{item.date ? new Date(item.date).toLocaleDateString() : '—'}</TableCell>
@@ -632,11 +632,11 @@ const ResourcesAdmin = () => {
             {/* ===== RESOURCES TAB ===== */}
             <TabsContent value="resources" className="space-y-6">
               <Card>
-                <CardHeader><CardTitle>Add Resource</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="whitespace-nowrap">Add Resource</CardTitle></CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Resource kind</Label>
+                      <Label>Resource category</Label>
                       <Select value={newResource.kind} onValueChange={v => setNewResource(c => ({ ...c, kind: v as ResourceKind }))}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>{RESOURCE_KIND_CONFIG.map(k => <SelectItem key={k.id} value={k.id}>{k.label}</SelectItem>)}</SelectContent>
@@ -693,7 +693,7 @@ const ResourcesAdmin = () => {
               </Card>
 
               <Card>
-                <CardHeader><CardTitle>All Resources</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="whitespace-nowrap">All Resources</CardTitle></CardHeader>
                 <CardContent>
                   {data.resources.length ? (
                     <div className="rounded-lg border border-border/40 overflow-hidden">
@@ -701,7 +701,7 @@ const ResourcesAdmin = () => {
                         <TableHeader>
                           <TableRow>
                             <TableHead>Title</TableHead>
-                            <TableHead className="w-28">Kind</TableHead>
+                            <TableHead className="w-44 whitespace-nowrap">Category</TableHead>
                             <TableHead className="w-36">Product</TableHead>
                             <TableHead className="w-20">Source</TableHead>
                             <TableHead className="w-24 text-right">Actions</TableHead>
@@ -714,7 +714,7 @@ const ResourcesAdmin = () => {
                                 <div className="max-w-xs truncate">{resource.title}</div>
                                 {resource.summary && <div className="text-xs text-muted-foreground truncate max-w-xs mt-0.5">{resource.summary}</div>}
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="whitespace-nowrap">
                                 <span className="inline-flex px-2 py-0.5 rounded-full text-[11px] font-medium bg-secondary text-foreground">{kindLabelMap[resource.kind] || resource.kind}</span>
                               </TableCell>
                               <TableCell className="text-xs text-muted-foreground truncate max-w-[140px]">{productLabelMap[resource.productId] || resource.productId}</TableCell>
@@ -742,7 +742,7 @@ const ResourcesAdmin = () => {
             {/* ===== FAQ TAB ===== */}
             <TabsContent value="faq" className="space-y-6">
               <Card>
-                <CardHeader><CardTitle>Add FAQ Item</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="whitespace-nowrap">Add FAQ Item</CardTitle></CardHeader>
                 <CardContent>
                   <Button onClick={handleAddFaq} disabled={saving}>
                     <Plus className="mr-2 h-4 w-4" /> Add FAQ Item
@@ -751,7 +751,7 @@ const ResourcesAdmin = () => {
               </Card>
 
               <Card>
-                <CardHeader><CardTitle>All FAQ Items</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="whitespace-nowrap">All FAQ Items</CardTitle></CardHeader>
                 <CardContent>
                   {data.faq.items.length ? (
                     <div className="rounded-lg border border-border/40 overflow-hidden">
@@ -808,7 +808,7 @@ const ResourcesAdmin = () => {
       {/* ===== EDIT NEWS DIALOG ===== */}
       <Dialog open={!!editingNews} onOpenChange={open => { if (!open) setEditingNews(null); }}>
         <DialogContent className="max-w-2xl">
-          <DialogHeader><DialogTitle>Edit News Item</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle className="whitespace-nowrap">Edit News Item</DialogTitle></DialogHeader>
           {editingNews && (
             <div className="grid md:grid-cols-[1fr_200px] gap-6">
               <div className="space-y-4">
@@ -854,12 +854,12 @@ const ResourcesAdmin = () => {
       {/* ===== EDIT RESOURCE DIALOG ===== */}
       <Dialog open={!!editingResource} onOpenChange={open => { if (!open) setEditingResource(null); }}>
         <DialogContent className="max-w-xl">
-          <DialogHeader><DialogTitle>Edit Resource</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle className="whitespace-nowrap">Edit Resource</DialogTitle></DialogHeader>
           {editingResource && (
             <div className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Resource kind</Label>
+                  <Label>Resource category</Label>
                   <Select value={editingResource.kind} onValueChange={v => setEditingResource(c => c ? { ...c, kind: v as ResourceKind } : c)}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>{RESOURCE_KIND_CONFIG.map(k => <SelectItem key={k.id} value={k.id}>{k.label}</SelectItem>)}</SelectContent>
@@ -913,7 +913,7 @@ const ResourcesAdmin = () => {
       {/* ===== EDIT FAQ DIALOG ===== */}
       <Dialog open={!!editingFaq} onOpenChange={open => { if (!open) setEditingFaq(null); }}>
         <DialogContent className="max-w-lg">
-          <DialogHeader><DialogTitle>Edit FAQ Item</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle className="whitespace-nowrap">Edit FAQ Item</DialogTitle></DialogHeader>
           {editingFaq && (
             <div className="space-y-4">
               <div className="space-y-2"><Label>Question</Label><Input value={editingFaq.question} onChange={e => setEditingFaq(c => c ? { ...c, question: e.target.value } : c)} /></div>

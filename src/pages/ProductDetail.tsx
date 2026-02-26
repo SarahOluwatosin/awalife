@@ -297,12 +297,12 @@ const ProductDetail = () => {
       {product.capabilities && !isMicroscope && (
         <motion.section className="py-16 lg:py-20 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
           <div className={containerClass}>
-            <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
-              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
+            <motion.div className="text-center max-w-5xl mx-auto mb-14 w-full" variants={blurIn}>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3 whitespace-nowrap">
                 {isAIAnalyzer ? 'Key Features' : 'Capabilities'}
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                {isAIAnalyzer ? <>AI Series Morphology Analyzer from <span className="gradient-text">Sample to Diagnosis</span>.</> : <>What It <span className="gradient-text">Can Do</span></>}
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground lg:whitespace-nowrap w-full">
+                {isAIAnalyzer ? <>AI Series Morphology Analyzer from <span className="gradient-text">Sample to Diagnosis</span></> : <>What It <span className="gradient-text">Can Do</span></>}
               </h2>
             </motion.div>
             
@@ -423,7 +423,7 @@ const ProductDetail = () => {
                   src={images.dm03Microscope}
                   alt="DM-03 Microscope hardware"
                   data-override-id="dm03-hardware"
-                  className="w-full h-full object-cover rounded-xl"
+                  className="w-full h-auto max-h-[420px] object-contain rounded-xl"
                 />
               </motion.div>
               <motion.div className="max-w-xl" variants={fadeInRight}>

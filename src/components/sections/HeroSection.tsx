@@ -83,7 +83,7 @@ const HeroSection = () => {
   const imageY = useTransform(scrollY, [0, 600], [0, 90]);
 
   const metrics = [
-    { value: 15, suffix: 'M+', label: 'Images Used for AI Model Training' },
+    { value: 15, suffix: 'M+', label: 'Images for AI Model Training' },
     { value: 2.4, suffix: 'M+', label: 'Reports Generated', decimals: 1 },
     { value: 8000, suffix: '+', label: 'Installations Worldwide' },
   ];

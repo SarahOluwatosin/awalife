@@ -56,7 +56,7 @@ const BloodAnalysis = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Blood Analysis</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Standardized Blood Smear Review - <span className="gradient-text">Images and Counts</span> in One Workflow.</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Standardized Blood Smear Review - <span className="gradient-text">Images and Counts</span> in One Workflow</h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife delivers a clinic-ready blood smear workflow with AI-assisted recognition and counting. Results are reported with review-ready images and quantitative outputs, enabling consistent decisions across teams and sites.</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
@@ -145,7 +145,7 @@ const BloodAnalysis = () => {
           {(() => {
             const bloodFaqs = [
               { question: 'Which species are supported for blood analysis?', answer: 'Companion animals: Dog, Cat. Small mammals: Rabbit, Chinchilla, Hamster, Rat, Mouse, Ferret, Guinea Pig. Large animals: Alpaca, Camel, Horse, Pig, Cattle, Sheep. Avian: Pigeon, Parrot. Reptiles: Turtle, Snake, Lizard.' },
-              { question: 'What advanced parameters are available compared to a traditional 5-part differential?', answer: '9-part WBC differential, including band neutrophils, segmented neutrophils, hypersegmented neutrophils, large lymphocytes, and atypical leukocytes. Estimated platelet count and large platelet count (may interfere with CBC analyzers). 7-part RBC differential, including reticulocytes, nucleated RBCs, spherocytes, ghost RBCs, Heinz bodies, acanthocytes, and agglutinated RBCs.' },
+              { question: 'What advanced parameters are available beyond a traditional 5-part differential?', answer: '9-part WBC differential, including band neutrophils, segmented neutrophils, hypersegmented neutrophils, large lymphocytes, and atypical leukocytes. Estimated platelet count and large platelet count (may interfere with CBC analyzers). 7-part RBC differential, including reticulocytes, nucleated RBCs, spherocytes, ghost RBCs, Heinz bodies, acanthocytes, and agglutinated RBCs.' },
               { question: 'How do I choose the sample volume for anemic animals?', answer: 'The default volume is 10 µL. If anemia is obvious (e.g., pale mucous membranes) or the sample looks diluted, select 40 µL.' },
               { question: 'Can blood parasites be detected?', answer: 'Coming soon: Heartworm (Dirofilaria immitis) and Hepatozoon.' },
             ];

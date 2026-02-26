@@ -55,7 +55,7 @@ const WhyUsSection = () => (
       {/* Section header */}
       <ScrollReveal className="max-w-4xl mx-auto text-center mb-16">
         <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-          Platform Growth
+          WHY AWALIFE
         </span>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
           An <span className="gradient-text font-bold">Expandable</span> AI Morphology <span className="gradient-text font-bold">Platform</span> Grows with New Samples and Applications
@@ -63,7 +63,7 @@ const WhyUsSection = () => (
       </ScrollReveal>
 
       {/* Sticky stacking cards — each animates individually as it enters the viewport */}
-      <div className="space-y-8 pb-32">
+      <div className="space-y-8 pb-16">
         {features.map((feature, i) => (
           <motion.div
             key={feature.title}
