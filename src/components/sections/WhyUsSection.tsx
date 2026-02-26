@@ -49,7 +49,7 @@ const features = [
 ];
 
 const WhyUsSection = () => (
-<section className="py-24 relative">
+<section className="pt-24 pb-8 relative">
     <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
 
       {/* Section header */}
