@@ -28,7 +28,7 @@ const products = [
 ];
 
 const ProductsSection = () => (
-  <section id="products" className="relative py-24 overflow-hidden">
+  <section id="products" className="relative pt-0 pb-24 overflow-hidden">
     <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
 
       {/* Section header — single fade-up */}
