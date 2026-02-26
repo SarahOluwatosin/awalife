@@ -352,7 +352,7 @@ const ResourcesAdmin = () => {
 
   // News form
   const [newNews, setNewNews] = useState<Omit<NewsItem, 'id'>>({
-    title: '', excerpt: '', content: '', date: new Date().toISOString().slice(0, 10), category: 'Exhibition', location: '', imageUrl: '',
+    title: '', excerpt: '', content: '', date: new Date().toISOString().slice(0, 10), category: 'Company News', location: '', imageUrl: '',
   });
 
   // Edit dialogs
@@ -431,7 +431,7 @@ const ResourcesAdmin = () => {
     if (!newNews.title.trim()) return;
     setSaving(true);
     await addNews({ ...newNews, title: newNews.title.trim(), excerpt: newNews.excerpt.trim() });
-    setNewNews({ title: '', excerpt: '', content: '', date: new Date().toISOString().slice(0, 10), category: 'Exhibition', location: '', imageUrl: '' });
+    setNewNews({ title: '', excerpt: '', content: '', date: new Date().toISOString().slice(0, 10), category: 'Company News', location: '', imageUrl: '' });
     setSaving(false);
     toast({ title: 'News item added' });
   };
