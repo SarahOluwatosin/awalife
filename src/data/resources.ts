@@ -104,6 +104,11 @@ export type NewsItem = {
   category: NewsCategory;
   location: string;
   imageUrl: string;
+  status: 'published' | 'draft';
+  slug: string;
+  metaTitle: string;
+  metaDesc: string;
+  sortOrder: number;
 };
 
 export type ResourcesCMSData = {
@@ -165,6 +170,11 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       category: 'Events',
       location: 'Seoul, South Korea',
       imageUrl: '',
+      status: 'published' as const,
+      slug: '',
+      metaTitle: '',
+      metaDesc: '',
+      sortOrder: 0,
     },
     {
       id: 'news-2',
@@ -175,6 +185,11 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       category: 'Events',
       location: 'Bangkok, Thailand',
       imageUrl: '',
+      status: 'published' as const,
+      slug: '',
+      metaTitle: '',
+      metaDesc: '',
+      sortOrder: 0,
     },
     {
       id: 'news-3',
@@ -185,6 +200,11 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       category: 'Events',
       location: 'Singapore',
       imageUrl: '',
+      status: 'published' as const,
+      slug: '',
+      metaTitle: '',
+      metaDesc: '',
+      sortOrder: 0,
     },
     {
       id: 'news-4',
@@ -195,6 +215,11 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       category: 'Product Updates',
       location: 'Shenzhen, China',
       imageUrl: '',
+      status: 'published' as const,
+      slug: '',
+      metaTitle: '',
+      metaDesc: '',
+      sortOrder: 0,
     },
     {
       id: 'news-5',
@@ -205,6 +230,11 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       category: 'Company News',
       location: 'Europe',
       imageUrl: '',
+      status: 'published' as const,
+      slug: '',
+      metaTitle: '',
+      metaDesc: '',
+      sortOrder: 0,
     },
     {
       id: 'news-6',
@@ -215,6 +245,11 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       category: 'Company News',
       location: 'Shenzhen, China',
       imageUrl: '',
+      status: 'published' as const,
+      slug: '',
+      metaTitle: '',
+      metaDesc: '',
+      sortOrder: 0,
     },
   ],
 });

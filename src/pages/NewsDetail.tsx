@@ -86,9 +86,10 @@ const NewsDetail = () => {
 
             {/* Full article content */}
             {item.content ? (
-              <div className="prose prose-lg max-w-none text-foreground leading-relaxed whitespace-pre-wrap">
-                {item.content}
-              </div>
+              <div
+                className="prose prose-lg max-w-none text-foreground leading-relaxed prose-headings:text-foreground prose-a:text-primary prose-strong:text-foreground prose-li:text-foreground"
+                dangerouslySetInnerHTML={{ __html: item.content }}
+              />
             ) : (
               <div className="rounded-xl border border-dashed border-border/40 bg-secondary/5 py-12 text-center">
                 <p className="text-muted-foreground">Full article content has not been added yet.</p>

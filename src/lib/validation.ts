@@ -3,11 +3,16 @@ import { z } from 'zod';
 export const NewsItemSchema = z.object({
   title: z.string().trim().min(1, 'Title is required').max(200, 'Title must be under 200 characters'),
   excerpt: z.string().trim().max(500, 'Excerpt must be under 500 characters'),
-  content: z.string().trim().max(50000, 'Content must be under 50,000 characters'),
+  content: z.string().max(200000, 'Content must be under 200,000 characters'),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format'),
   category: z.string().min(1).max(50),
   location: z.string().trim().max(100, 'Location must be under 100 characters'),
   imageUrl: z.string().max(2048, 'Image URL too long'),
+  status: z.enum(['published', 'draft']).default('published'),
+  slug: z.string().trim().max(200, 'Slug too long'),
+  metaTitle: z.string().trim().max(200, 'Meta title too long'),
+  metaDesc: z.string().trim().max(500, 'Meta description too long'),
+  sortOrder: z.number().int().default(0),
 });
 
 export const ResourceItemSchema = z.object({

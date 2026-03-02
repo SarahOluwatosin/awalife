@@ -49,6 +49,8 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
       const news: NewsItem[] = (newsRaw as any[]).map(r => ({
         id: r.id, title: r.title, excerpt: r.excerpt, content: r.content,
         date: r.date, category: r.category, location: r.location, imageUrl: r.image_url,
+        status: r.status ?? 'published', slug: r.slug ?? '', metaTitle: r.meta_title ?? '',
+        metaDesc: r.meta_desc ?? '', sortOrder: r.sort_order ?? 0,
       }));
 
       const resources: ResourceItem[] = (resourcesRaw as any[]).map(r => ({
@@ -82,6 +84,8 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
     await dbInsert('news_articles', {
       title: validated.title, excerpt: validated.excerpt, content: validated.content,
       date: validated.date, category: validated.category, location: validated.location, image_url: validated.imageUrl,
+      status: validated.status, slug: validated.slug || null,
+      meta_title: validated.metaTitle, meta_desc: validated.metaDesc, sort_order: validated.sortOrder,
     }, token);
     await fetchAll();
   };
@@ -92,6 +96,8 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
     await dbUpdate('news_articles', item.id, {
       title: validated.title, excerpt: validated.excerpt, content: validated.content,
       date: validated.date, category: validated.category, location: validated.location, image_url: validated.imageUrl,
+      status: validated.status, slug: validated.slug || null,
+      meta_title: validated.metaTitle, meta_desc: validated.metaDesc, sort_order: validated.sortOrder,
     }, token);
     await fetchAll();
   };

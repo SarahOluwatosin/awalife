@@ -8,6 +8,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ResourcesCMSProvider } from "@/contexts/ResourcesCMSContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { MediaOverrideProvider } from "@/contexts/MediaOverrideContext";
+import { PageContentProvider } from "@/contexts/PageContentContext";
 import Index from "./pages/Index";
 import Company from "./pages/About";
 import CompanyNews from "./pages/CompanyNews";
@@ -65,15 +66,17 @@ const App = () => (
     <LanguageProvider>
       <AuthProvider>
         <MediaOverrideProvider>
-          <ResourcesCMSProvider>
-            <TooltipProvider>
-              <Toaster />
-              <Sonner />
-              <BrowserRouter>
-                <AnimatedRoutes />
-              </BrowserRouter>
-            </TooltipProvider>
-          </ResourcesCMSProvider>
+          <PageContentProvider>
+            <ResourcesCMSProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <AnimatedRoutes />
+                </BrowserRouter>
+              </TooltipProvider>
+            </ResourcesCMSProvider>
+          </PageContentProvider>
         </MediaOverrideProvider>
       </AuthProvider>
     </LanguageProvider>

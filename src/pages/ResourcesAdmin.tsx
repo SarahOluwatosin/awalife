@@ -11,9 +11,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Progress } from '@/components/ui/progress';
-import { Trash2, Plus, Pencil, FileText, Upload, X, Image as ImageIcon, LogOut, RefreshCw, Video } from 'lucide-react';
+import { Trash2, Plus, Pencil, FileText, Upload, X, Image as ImageIcon, LogOut, RefreshCw, Video, Globe } from 'lucide-react';
 import SiteVideosManager from '@/components/admin/SiteVideosManager';
 import CarouselImagesManager from '@/components/admin/CarouselImagesManager';
+import RichTextEditor from '@/components/admin/RichTextEditor';
+import PageContentManager from '@/components/admin/PageContentManager';
 import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -352,7 +354,9 @@ const ResourcesAdmin = () => {
 
   // News form
   const [newNews, setNewNews] = useState<Omit<NewsItem, 'id'>>({
-    title: '', excerpt: '', content: '', date: new Date().toISOString().slice(0, 10), category: 'Company News', location: '', imageUrl: '',
+    title: '', excerpt: '', content: '', date: new Date().toISOString().slice(0, 10),
+    category: 'Company News', location: '', imageUrl: '',
+    status: 'published', slug: '', metaTitle: '', metaDesc: '', sortOrder: 0,
   });
 
   // Edit dialogs
@@ -431,7 +435,7 @@ const ResourcesAdmin = () => {
     if (!newNews.title.trim()) return;
     setSaving(true);
     await addNews({ ...newNews, title: newNews.title.trim(), excerpt: newNews.excerpt.trim() });
-    setNewNews({ title: '', excerpt: '', content: '', date: new Date().toISOString().slice(0, 10), category: 'Company News', location: '', imageUrl: '' });
+    setNewNews({ title: '', excerpt: '', content: '', date: new Date().toISOString().slice(0, 10), category: 'Company News', location: '', imageUrl: '', status: 'published', slug: '', metaTitle: '', metaDesc: '', sortOrder: 0 });
     setSaving(false);
     toast({ title: 'News item added' });
   };
@@ -506,6 +510,7 @@ const ResourcesAdmin = () => {
               <TabsTrigger value="news">News ({data.news.length})</TabsTrigger>
               <TabsTrigger value="resources">Resources ({data.resources.length})</TabsTrigger>
               <TabsTrigger value="faq">FAQ ({data.faq.items.length})</TabsTrigger>
+              <TabsTrigger value="page-content">Page Text</TabsTrigger>
               <TabsTrigger value="images">Site Images</TabsTrigger>
               <TabsTrigger value="videos">Videos</TabsTrigger>
               <TabsTrigger value="carousel">Carousel</TabsTrigger>
@@ -527,11 +532,11 @@ const ResourcesAdmin = () => {
                       </div>
                       <div className="space-y-2">
                         <Label>Excerpt</Label>
-                        <Textarea value={newNews.excerpt} onChange={e => setNewNews(c => ({ ...c, excerpt: e.target.value }))} rows={2} placeholder="Brief description..." />
+                        <Textarea value={newNews.excerpt} onChange={e => setNewNews(c => ({ ...c, excerpt: e.target.value }))} rows={2} placeholder="Brief description (shown in news cards)..." />
                       </div>
                       <div className="space-y-2">
                         <Label>Full Article Content</Label>
-                        <Textarea value={newNews.content} onChange={e => setNewNews(c => ({ ...c, content: e.target.value }))} rows={8} placeholder="Write the full article content here..." />
+                        <RichTextEditor value={newNews.content} onChange={html => setNewNews(c => ({ ...c, content: html }))} />
                       </div>
                       <div className="grid grid-cols-3 gap-4">
                         <div className="space-y-2">
@@ -550,6 +555,38 @@ const ResourcesAdmin = () => {
                           <Input value={newNews.location} onChange={e => setNewNews(c => ({ ...c, location: e.target.value }))} placeholder="e.g. Seoul, South Korea" />
                         </div>
                       </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label>Status</Label>
+                          <Select value={newNews.status} onValueChange={v => setNewNews(c => ({ ...c, status: v as 'published' | 'draft' }))}>
+                            <SelectTrigger><SelectValue /></SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="published">Published</SelectItem>
+                              <SelectItem value="draft">Draft</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label>URL Slug <span className="text-muted-foreground text-xs">(optional)</span></Label>
+                          <Input value={newNews.slug} onChange={e => setNewNews(c => ({ ...c, slug: e.target.value }))} placeholder="e.g. ksfm-conference-2025" />
+                        </div>
+                      </div>
+                      <details className="group">
+                        <summary className="flex items-center gap-2 cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors select-none">
+                          <Globe className="h-3.5 w-3.5" />
+                          SEO fields <span className="text-xs">(optional)</span>
+                        </summary>
+                        <div className="mt-3 space-y-3 pl-5 border-l border-border/40">
+                          <div className="space-y-1.5">
+                            <Label className="text-xs">Meta Title</Label>
+                            <Input value={newNews.metaTitle} onChange={e => setNewNews(c => ({ ...c, metaTitle: e.target.value }))} placeholder="SEO title (defaults to article title)" />
+                          </div>
+                          <div className="space-y-1.5">
+                            <Label className="text-xs">Meta Description</Label>
+                            <Textarea value={newNews.metaDesc} onChange={e => setNewNews(c => ({ ...c, metaDesc: e.target.value }))} rows={2} placeholder="SEO description (defaults to excerpt)" />
+                          </div>
+                        </div>
+                      </details>
                       <Button onClick={handleAddNews} disabled={saving || !newNews.title.trim()} className="mt-2">
                         <Plus className="mr-2 h-4 w-4" /> Add News Item
                       </Button>
@@ -586,6 +623,7 @@ const ResourcesAdmin = () => {
                           <TableRow>
                             <TableHead className="w-14"></TableHead>
                             <TableHead>Title</TableHead>
+                            <TableHead className="w-24 whitespace-nowrap">Status</TableHead>
                             <TableHead className="w-36 whitespace-nowrap">Category</TableHead>
                             <TableHead className="w-28">Date</TableHead>
                             <TableHead className="w-32">Location</TableHead>
@@ -605,6 +643,11 @@ const ResourcesAdmin = () => {
                               <TableCell className="font-medium">
                                 <div className="max-w-xs truncate">{item.title}</div>
                                 {item.excerpt && <div className="text-xs text-muted-foreground truncate max-w-xs mt-0.5">{item.excerpt}</div>}
+                              </TableCell>
+                              <TableCell>
+                                <span className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-medium ${item.status === 'draft' ? 'bg-amber-500/10 text-amber-600' : 'bg-green-500/10 text-green-600'}`}>
+                                  {item.status === 'draft' ? 'Draft' : 'Published'}
+                                </span>
                               </TableCell>
                               <TableCell className="whitespace-nowrap">
                                 <span className="inline-flex px-2 py-0.5 rounded-full text-[11px] font-medium bg-primary/10 text-primary">{item.category}</span>
@@ -786,6 +829,11 @@ const ResourcesAdmin = () => {
               </Card>
             </TabsContent>
 
+            {/* ===== PAGE CONTENT TAB ===== */}
+            <TabsContent value="page-content" className="space-y-6">
+              <PageContentManager />
+            </TabsContent>
+
             {/* ===== SITE IMAGES TAB ===== */}
             <TabsContent value="images" className="space-y-6">
               <SiteImagesManager />
@@ -807,41 +855,76 @@ const ResourcesAdmin = () => {
 
       {/* ===== EDIT NEWS DIALOG ===== */}
       <Dialog open={!!editingNews} onOpenChange={open => { if (!open) setEditingNews(null); }}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader><DialogTitle className="whitespace-nowrap">Edit News Item</DialogTitle></DialogHeader>
           {editingNews && (
-            <div className="grid md:grid-cols-[1fr_200px] gap-6">
-              <div className="space-y-4">
-                <div className="space-y-2"><Label>Title</Label><Input value={editingNews.title} onChange={e => setEditingNews(c => c ? { ...c, title: e.target.value } : c)} /></div>
-                <div className="space-y-2"><Label>Excerpt</Label><Textarea value={editingNews.excerpt} onChange={e => setEditingNews(c => c ? { ...c, excerpt: e.target.value } : c)} rows={2} /></div>
-                <div className="space-y-2"><Label>Full Article Content</Label><Textarea value={editingNews.content || ''} onChange={e => setEditingNews(c => c ? { ...c, content: e.target.value } : c)} rows={8} /></div>
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label>Category</Label>
-                    <Select value={editingNews.category} onValueChange={v => setEditingNews(c => c ? { ...c, category: v as NewsCategory } : c)}>
-                      <SelectTrigger><SelectValue /></SelectTrigger>
-                      <SelectContent>{NEWS_CATEGORIES.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}</SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2"><Label>Date</Label><Input type="date" value={editingNews.date} onChange={e => setEditingNews(c => c ? { ...c, date: e.target.value } : c)} /></div>
-                  <div className="space-y-2"><Label>Location</Label><Input value={editingNews.location} onChange={e => setEditingNews(c => c ? { ...c, location: e.target.value } : c)} /></div>
+            <div className="space-y-5">
+              <div className="grid md:grid-cols-[1fr_200px] gap-6">
+                <div className="space-y-4">
+                  <div className="space-y-2"><Label>Title</Label><Input value={editingNews.title} onChange={e => setEditingNews(c => c ? { ...c, title: e.target.value } : c)} /></div>
+                  <div className="space-y-2"><Label>Excerpt</Label><Textarea value={editingNews.excerpt} onChange={e => setEditingNews(c => c ? { ...c, excerpt: e.target.value } : c)} rows={2} /></div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Cover Image</Label>
+                  {editingNews.imageUrl ? (
+                    <div className="relative rounded-lg overflow-hidden border border-border aspect-[4/3]">
+                      <img src={editingNews.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                      <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-7 w-7" onClick={() => setEditingNews(c => c ? { ...c, imageUrl: '' } : c)}><X className="h-3.5 w-3.5" /></Button>
+                    </div>
+                  ) : (
+                    <label className="flex flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed border-border aspect-[4/3] cursor-pointer hover:border-primary/50 hover:bg-accent/50 transition-colors">
+                      <ImageIcon className="h-6 w-6 text-muted-foreground" />
+                      <span className="text-xs text-muted-foreground font-medium">Upload image</span>
+                      <input type="file" accept="image/*" className="hidden" onChange={e => { const f = e.target.files?.[0]; if (f) void handleNewsImageUpload(f, 'edit'); }} />
+                    </label>
+                  )}
                 </div>
               </div>
               <div className="space-y-2">
-                <Label>Cover Image</Label>
-                {editingNews.imageUrl ? (
-                  <div className="relative rounded-lg overflow-hidden border border-border aspect-[4/3]">
-                    <img src={editingNews.imageUrl} alt="Preview" className="w-full h-full object-cover" />
-                    <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-7 w-7" onClick={() => setEditingNews(c => c ? { ...c, imageUrl: '' } : c)}><X className="h-3.5 w-3.5" /></Button>
-                  </div>
-                ) : (
-                  <label className="flex flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed border-border aspect-[4/3] cursor-pointer hover:border-primary/50 hover:bg-accent/50 transition-colors">
-                    <ImageIcon className="h-6 w-6 text-muted-foreground" />
-                    <span className="text-xs text-muted-foreground font-medium">Upload image</span>
-                    <input type="file" accept="image/*" className="hidden" onChange={e => { const f = e.target.files?.[0]; if (f) void handleNewsImageUpload(f, 'edit'); }} />
-                  </label>
-                )}
+                <Label>Full Article Content</Label>
+                <RichTextEditor value={editingNews.content || ''} onChange={html => setEditingNews(c => c ? { ...c, content: html } : c)} />
               </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="space-y-2">
+                  <Label>Category</Label>
+                  <Select value={editingNews.category} onValueChange={v => setEditingNews(c => c ? { ...c, category: v as NewsCategory } : c)}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>{NEWS_CATEGORIES.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}</SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Status</Label>
+                  <Select value={editingNews.status ?? 'published'} onValueChange={v => setEditingNews(c => c ? { ...c, status: v as 'published' | 'draft' } : c)}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="published">Published</SelectItem>
+                      <SelectItem value="draft">Draft</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2"><Label>Date</Label><Input type="date" value={editingNews.date} onChange={e => setEditingNews(c => c ? { ...c, date: e.target.value } : c)} /></div>
+                <div className="space-y-2"><Label>Location</Label><Input value={editingNews.location} onChange={e => setEditingNews(c => c ? { ...c, location: e.target.value } : c)} /></div>
+              </div>
+              <div className="space-y-2">
+                <Label>URL Slug <span className="text-muted-foreground text-xs">(optional)</span></Label>
+                <Input value={editingNews.slug ?? ''} onChange={e => setEditingNews(c => c ? { ...c, slug: e.target.value } : c)} placeholder="e.g. ksfm-conference-2025" />
+              </div>
+              <details className="group">
+                <summary className="flex items-center gap-2 cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors select-none">
+                  <Globe className="h-3.5 w-3.5" />
+                  SEO fields <span className="text-xs">(optional)</span>
+                </summary>
+                <div className="mt-3 space-y-3 pl-5 border-l border-border/40">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs">Meta Title</Label>
+                    <Input value={editingNews.metaTitle ?? ''} onChange={e => setEditingNews(c => c ? { ...c, metaTitle: e.target.value } : c)} placeholder="SEO title (defaults to article title)" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs">Meta Description</Label>
+                    <Textarea value={editingNews.metaDesc ?? ''} onChange={e => setEditingNews(c => c ? { ...c, metaDesc: e.target.value } : c)} rows={2} placeholder="SEO description (defaults to excerpt)" />
+                  </div>
+                </div>
+              </details>
             </div>
           )}
           <DialogFooter>
