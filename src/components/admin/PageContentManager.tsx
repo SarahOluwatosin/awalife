@@ -63,6 +63,18 @@ const PageContentManager = () => {
     return (order.indexOf(a) ?? 99) - (order.indexOf(b) ?? 99);
   });
 
+  if (!pages.length) {
+    return (
+      <div className="rounded-xl border border-dashed border-border/40 bg-secondary/5 py-16 text-center">
+        <p className="text-muted-foreground font-medium mb-2">No page content found</p>
+        <p className="text-sm text-muted-foreground">
+          The <code className="bg-muted px-1 py-0.5 rounded text-xs">page_content</code> table hasn't been created yet.
+          Run the Supabase migration first, then refresh this page.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {pages.map(page => (
