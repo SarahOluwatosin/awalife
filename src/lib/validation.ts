@@ -24,6 +24,7 @@ export const ResourceItemSchema = z.object({
   mediaUrl: z.string().max(2048, 'Media URL too long'),
   mediaName: z.string().max(200, 'File name too long'),
   mediaMime: z.string().max(100, 'MIME type too long'),
+  status: z.enum(['published', 'draft']).default('published'),
 });
 
 export const FaqItemSchema = z.object({

@@ -57,6 +57,7 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
         id: r.id, title: r.title, summary: r.summary,
         kind: r.kind, productId: r.product_id, mediaType: r.media_type,
         mediaUrl: r.media_url, mediaName: r.media_name, mediaMime: r.media_mime,
+        status: r.status ?? 'published',
       }));
 
       const faqItems: ResourceFAQItem[] = (faqRaw as any[]).map(r => ({
@@ -115,6 +116,7 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
       title: validated.title, summary: validated.summary, kind: validated.kind,
       product_id: validated.productId, media_type: validated.mediaType,
       media_url: validated.mediaUrl, media_name: validated.mediaName, media_mime: validated.mediaMime,
+      status: validated.status,
     }, token);
     await fetchAll();
   };
@@ -126,6 +128,7 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
       title: validated.title, summary: validated.summary, kind: validated.kind,
       product_id: validated.productId, media_type: validated.mediaType,
       media_url: validated.mediaUrl, media_name: validated.mediaName, media_mime: validated.mediaMime,
+      status: validated.status,
     }, token);
     await fetchAll();
   };

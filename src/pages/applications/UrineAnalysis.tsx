@@ -11,9 +11,12 @@ import { images } from '@/lib/images';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { sectionVariants, fadeInLeft, fadeInRight, viewportOnce, viewportOnceSmall } from '@/lib/animations';
 import GsapReveal from '@/components/animations/GsapReveal';
+import { usePageContent } from '@/contexts/PageContentContext';
 
 const UrineAnalysis = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  const { getContent } = usePageContent();
+  const c = (section: string, key: string, fb: string) => getContent('urine', section, key, fb);
   const bodyTextClass = 'text-lg';
   const cardTextClass = 'text-base';
 
@@ -25,13 +28,18 @@ const UrineAnalysis = () => {
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
-  const sedimentCategories = [
-    { title: 'Crystal', items: ['MAP (Struvite Crystal)', 'COM (Calcium Oxalate Monohydrate Crystal)', 'COD (Calcium Oxalate Dihydrate Crystal)', 'CAP (Calcium Phosphate Crystal)', 'UAC (Uric Acid Crystal)', 'CYS (Cystine Crystal)', 'BIL (Bilirubin Crystal)', 'AMU (Ammonium Urate Crystal)'] },
-    { title: 'Cells', items: ['RBC', 'WBC', 'RTE (Renal Tubular Epithelial Cell)', 'SEC (Squamous Epithelial Cell)', 'TEC (Transitional Epithelial Cell)', 'SPE (Sperm)'] },
-    { title: 'Casts', items: ['HYA (Hyaline Cast)', 'CEC (Cellular Cast)', 'GRA (Granular Cast)', 'WAX (Waxy Cast)'] },
-    { title: 'Pathogen', items: ['COC (Cocci)', 'BAC (Rods)', 'YEA (Yeast)'] },
-    { title: 'Others', items: ['FAT (Lipid Droplet)', 'MUH (Mucus Filament)'] },
+  const URINE_CAT_FALLBACKS = [
+    { title: 'Crystal',  items: 'MAP (Struvite Crystal)\nCOM (Calcium Oxalate Monohydrate Crystal)\nCOD (Calcium Oxalate Dihydrate Crystal)\nCAP (Calcium Phosphate Crystal)\nUAC (Uric Acid Crystal)\nCYS (Cystine Crystal)\nBIL (Bilirubin Crystal)\nAMU (Ammonium Urate Crystal)' },
+    { title: 'Cells',    items: 'RBC\nWBC\nRTE (Renal Tubular Epithelial Cell)\nSEC (Squamous Epithelial Cell)\nTEC (Transitional Epithelial Cell)\nSPE (Sperm)' },
+    { title: 'Casts',    items: 'HYA (Hyaline Cast)\nCEC (Cellular Cast)\nGRA (Granular Cast)\nWAX (Waxy Cast)' },
+    { title: 'Pathogen', items: 'COC (Cocci)\nBAC (Rods)\nYEA (Yeast)' },
+    { title: 'Others',   items: 'FAT (Lipid Droplet)\nMUH (Mucus Filament)' },
   ];
+
+  const sedimentCategories = URINE_CAT_FALLBACKS.map((fb, i) => ({
+    title: c('categories', `cat_${i + 1}_title`, fb.title),
+    items: c('categories', `cat_${i + 1}_items`, fb.items).split('\n').filter(Boolean),
+  }));
 
   const fallbackImages = [
     { url: images.speciesCanineFeline, label: 'Canine & Feline' },
@@ -42,18 +50,18 @@ const UrineAnalysis = () => {
 
   return (
     <Layout>
-      <PageHero title="Urine Sediment Analysis" subtitle="Comprehensive results. Expedited clinical decisions." breadcrumb={[{ label: 'Applications', path: '/applications' }, { label: 'Urine Analysis', path: '/applications/urine' }]} />
+      <PageHero title={c('hero', 'title', 'Urine Sediment Analysis')} subtitle={c('hero', 'subtitle', 'Comprehensive results. Expedited clinical decisions.')} breadcrumb={[{ label: 'Applications', path: '/applications' }, { label: 'Urine Analysis', path: '/applications/urine' }]} />
 
       <motion.section ref={imgRef} className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
-              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Urine Analysis</span>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('overview', 'badge', 'Urine Analysis')}</span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Standardized Urine Sediment Review - <span className="gradient-text">Images and Counts</span> in One Workflow</h2>
-              <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife brings a repeatable, clinic-ready workflow for urine formed elements. From sample processing to imaging and AI-assisted recognition, results are delivered as review-ready reports with images and quantified outputs, helping teams work faster and more consistently.</p>
+              <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('overview', 'body', 'Awalife brings a repeatable, clinic-ready workflow for urine formed elements. From sample processing to imaging and AI-assisted recognition, results are delivered as review-ready reports with images and quantified outputs, helping teams work faster and more consistently.')}</p>
               <div className="flex flex-wrap gap-4">
-                <Button className="btn-gradient" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
-                <Button variant="outline" size="lg" asChild><Link to="/contact">See it in action<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
+                <Button className="btn-gradient" size="lg" asChild><Link to="/contact">{c('overview', 'cta_primary', 'Contact us')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
+                <Button variant="outline" size="lg" asChild><Link to="/contact">{c('overview', 'cta_secondary', 'See it in action')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
               </div>
             </motion.div>
             <motion.div className="relative" variants={fadeInRight} style={{ y: imgY }}>
@@ -68,9 +76,9 @@ const UrineAnalysis = () => {
       <motion.section className="py-16 lg:py-20 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">AI-Powered Analysis</span>
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('classification', 'badge', 'AI-Powered Analysis')}</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Make Urine Sediment <span className="gradient-text">Consistent</span> - across Users and Sites</h2>
-            <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Powered by our latest AI model, continuously improving with regular updates.</p>
+            <p className={`${bodyTextClass} text-muted-foreground mt-3`}>{c('classification', 'subtitle', 'Powered by our latest AI model, continuously improving with regular updates.')}</p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
                 <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013094726-jpuaxn.pdf" target="_blank" rel="noopener noreferrer" download><Download className="mr-2 w-4 h-4" />Download the sample report</a>
@@ -113,13 +121,17 @@ const UrineAnalysis = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="space-y-8">
             <motion.div className="text-center max-w-4xl mx-auto" variants={fadeInLeft}>
-              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">How It Works</span>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">From Sample to Report - in <span className="gradient-text">Under 10 minutes</span></h3>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('how_it_works', 'badge', 'How It Works')}</span>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">{c('how_it_works', 'title', 'From Sample to Report - in Under 10 minutes')}</h3>
               <ul className={`grid md:grid-cols-2 gap-x-8 gap-y-3 ${bodyTextClass} text-muted-foreground text-left`}>
-                <li className="flex items-start gap-2"><span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary flex-shrink-0"><Check className="h-3 w-3" /></span><span>Focus particles help the system rapidly lock focus on formed elements, minimizing manual adjustments.</span></li>
-                <li className="flex items-start gap-2"><span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary flex-shrink-0"><Check className="h-3 w-3" /></span><span>Centrifugation is optional for routine samples.</span></li>
-                <li className="flex items-start gap-2"><span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary flex-shrink-0"><Check className="h-3 w-3" /></span><span>For very dilute/clear urine, centrifugation is recommended to concentrate formed elements.</span></li>
-                <li className="flex items-start gap-2"><span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary flex-shrink-0"><Check className="h-3 w-3" /></span><span>For very turbid samples or hematuria, dilution is recommended to improve imaging and recognition.</span></li>
+                {[
+                  c('how_it_works', 'bullet_1', 'Focus particles help the system rapidly lock focus on formed elements, minimizing manual adjustments.'),
+                  c('how_it_works', 'bullet_2', 'Centrifugation is optional for routine samples.'),
+                  c('how_it_works', 'bullet_3', 'For very dilute/clear urine, centrifugation is recommended to concentrate formed elements.'),
+                  c('how_it_works', 'bullet_4', 'For very turbid samples or hematuria, dilution is recommended to improve imaging and recognition.'),
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2"><span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary flex-shrink-0"><Check className="h-3 w-3" /></span><span>{item}</span></li>
+                ))}
               </ul>
               <p className={`${bodyTextClass} italic text-muted-foreground mt-6`}>*Workflow recommendations may vary by sample condition and clinical protocols</p>
             </motion.div>
@@ -135,9 +147,9 @@ const UrineAnalysis = () => {
       <motion.section className="py-16 lg:py-20 bg-secondary/20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Clinical Images</span>
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('clinical_images', 'badge', 'Clinical Images')}</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground"><span className="gradient-text">True-to-life Images</span>, Ready for Review</h2>
-            <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Review your report and verify the images with confidence - and tap into Awalife's clinical specialists whenever needed.</p>
+            <p className={`${bodyTextClass} text-muted-foreground mt-3`}>{c('clinical_images', 'subtitle', "Review your report and verify the images with confidence - and tap into Awalife's clinical specialists whenever needed.")}</p>
           </div>
           <ApplicationImageCarousel pageKey="urine" fallbackImages={fallbackImages} />
         </div>
@@ -146,15 +158,15 @@ const UrineAnalysis = () => {
       <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">FAQ</span>
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('faq', 'badge', 'FAQ')}</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
           </div>
           {(() => {
             const urineFaqs = [
-              { question: 'Which species are supported for urine analysis?', answer: 'Validated for dogs and cats.' },
-              { question: 'What parameters can urine analysis detect?', answer: '23 parameters, including:\n\nCrystal: Struvite, Calcium oxalate monohydrate, Calcium oxalate dihydrate, Calcium phosphate, Uric acid, Cystine, Bilirubin, Ammonium urate\n\nCast: Hyaline cast, Cellular cast, Granular cast, Waxy cast\n\nCell: RBC, WBC, Sperm, Renal tubular epithelial cell, Transitional epithelial cell, Squamous epithelial cell\n\nMicroorganism: Cocci, Rods, Yeast\n\nOthers: Lipid droplets, Mucus' },
-              { question: 'Is the workflow easy to use?', answer: 'Yes. Most samples do not require centrifugation. For very clear samples, centrifugation may be considered using the turbidity reference card as guidance.' },
-              { question: 'What are the limitations for certain urine samples?', answer: 'Severe hematuria may obscure other components and reduce AI accuracy. Dilution may help, but accuracy is not guaranteed. Microscopic examination is recommended.' },
+              { question: c('faq', 'q1', 'Which species are supported for urine analysis?'), answer: c('faq', 'a1', 'Validated for dogs and cats.') },
+              { question: c('faq', 'q2', 'What parameters can urine analysis detect?'), answer: c('faq', 'a2', '23 parameters, including:\n\nCrystal: Struvite, Calcium oxalate monohydrate, Calcium oxalate dihydrate, Calcium phosphate, Uric acid, Cystine, Bilirubin, Ammonium urate\n\nCast: Hyaline cast, Cellular cast, Granular cast, Waxy cast\n\nCell: RBC, WBC, Sperm, Renal tubular epithelial cell, Transitional epithelial cell, Squamous epithelial cell\n\nMicroorganism: Cocci, Rods, Yeast\n\nOthers: Lipid droplets, Mucus') },
+              { question: c('faq', 'q3', 'Is the workflow easy to use?'), answer: c('faq', 'a3', 'Yes. Most samples do not require centrifugation. For very clear samples, centrifugation may be considered using the turbidity reference card as guidance.') },
+              { question: c('faq', 'q4', 'What are the limitations for certain urine samples?'), answer: c('faq', 'a4', 'Severe hematuria may obscure other components and reduce AI accuracy. Dilution may help, but accuracy is not guaranteed. Microscopic examination is recommended.') },
             ];
             const mid = Math.ceil(urineFaqs.length / 2);
             return (
@@ -183,8 +195,8 @@ const UrineAnalysis = () => {
 
       <motion.section className="py-20 lg:py-28 bg-white" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in <span className="gradient-text">Our Products</span>?</h2>
-          <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('cta', 'title', 'Interested in Our Products?')}</h2>
+          <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>{c('cta', 'body', "Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.")}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>
           </div>

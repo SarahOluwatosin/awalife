@@ -11,9 +11,12 @@ import { images } from '@/lib/images';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { sectionVariants, fadeInLeft, fadeInRight, viewportOnce, viewportOnceSmall } from '@/lib/animations';
 import GsapReveal from '@/components/animations/GsapReveal';
+import { usePageContent } from '@/contexts/PageContentContext';
 
 const FecesAnalysis = () => {
   useEffect(() => {window.scrollTo(0, 0);}, []);
+  const { getContent } = usePageContent();
+  const c = (section: string, key: string, fb: string) => getContent('feces', section, key, fb);
   const bodyTextClass = 'text-lg';
   const cardTextClass = 'text-base';
 
@@ -35,28 +38,34 @@ const FecesAnalysis = () => {
   { url: images.heroDiagnosticLab, label: 'Diagnostic Lab' }];
 
 
-  const samplingCategories = [
-  { title: 'Intestinal Protozoa', items: ['TRI (Trichomonas)', 'GIA (Giardia)', 'GIT (Giardia Trophozoite)', 'GIC (Giardia Cyst)', 'COC (Coccidia)'] },
-  { title: 'Pathogen', items: ['COS (Cocci)', 'BAC (Bacillus)', 'SPR (Spirochetes)', 'HEL (Helicobacter)', 'YEA (Yeast)'] },
-  { title: 'Parasite', items: ['ASC (Roundworm)', 'HOO (Hookworm)', 'TAP (Tapeworm)', 'SPI (Spirometra)', 'WHP (Whipworm)'] },
-  { title: 'Cells', items: ['RBC', 'WBC', 'EPC (Epithelial Cell)'] },
-  { title: 'Digestive Function', items: ['STA (Starch Granule)', 'FAT (Lipid Droplet)', 'PLN (Plant Fiber)', 'MUS (Muscle Fiber)'] }];
+  const FECES_CAT_FALLBACKS = [
+    { title: 'Intestinal Protozoa', items: 'TRI (Trichomonas)\nGIA (Giardia)\nGIT (Giardia Trophozoite)\nGIC (Giardia Cyst)\nCOC (Coccidia)' },
+    { title: 'Pathogen',            items: 'COS (Cocci)\nBAC (Bacillus)\nSPR (Spirochetes)\nHEL (Helicobacter)\nYEA (Yeast)' },
+    { title: 'Parasite',            items: 'ASC (Roundworm)\nHOO (Hookworm)\nTAP (Tapeworm)\nSPI (Spirometra)\nWHP (Whipworm)' },
+    { title: 'Cells',               items: 'RBC\nWBC\nEPC (Epithelial Cell)' },
+    { title: 'Digestive Function',  items: 'STA (Starch Granule)\nFAT (Lipid Droplet)\nPLN (Plant Fiber)\nMUS (Muscle Fiber)' },
+  ];
+
+  const samplingCategories = FECES_CAT_FALLBACKS.map((fb, i) => ({
+    title: c('categories', `cat_${i + 1}_title`, fb.title),
+    items: c('categories', `cat_${i + 1}_items`, fb.items).split('\n').filter(Boolean),
+  }));
 
 
   return (
     <Layout>
-      <PageHero title="Feces Analysis" subtitle="From repetitive inefficiency to simple efficiency" breadcrumb={[{ label: 'Applications', path: '/applications' }, { label: 'Feces Analysis', path: '/applications/feces' }]} />
+      <PageHero title={c('hero', 'title', 'Feces Analysis')} subtitle={c('hero', 'subtitle', 'From repetitive inefficiency to simple efficiency')} breadcrumb={[{ label: 'Applications', path: '/applications' }, { label: 'Feces Analysis', path: '/applications/feces' }]} />
 
       <motion.section ref={imgRef1} className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
-              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Fecal Analysis</span>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('overview', 'badge', 'Fecal Analysis')}</span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Slide-free Fecal Analysis - <span className="gradient-text">Results within 30 Minutes</span></h2>
-              <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife streamlines fecal screening with a slide-free workflow and two sampling options, delivering review-ready images and actionable findings in under 30 minutes - designed for consistent interpretation and documentation.</p>
+              <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('overview', 'body', 'Awalife streamlines fecal screening with a slide-free workflow and two sampling options, delivering review-ready images and actionable findings in under 30 minutes - designed for consistent interpretation and documentation.')}</p>
               <div className="flex flex-wrap gap-4">
-                <Button className="btn-gradient" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
-                <Button variant="outline" size="lg" asChild><Link to="/contact">See it in action<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
+                <Button className="btn-gradient" size="lg" asChild><Link to="/contact">{c('overview', 'cta_primary', 'Contact us')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
+                <Button variant="outline" size="lg" asChild><Link to="/contact">{c('overview', 'cta_secondary', 'See it in action')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
               </div>
             </motion.div>
             <motion.div className="relative" variants={fadeInRight} style={{ y: py1 }}>
@@ -71,9 +80,9 @@ const FecesAnalysis = () => {
       <motion.section className="py-16 lg:py-20 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">AI-Powered Analysis</span>
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('classification', 'badge', 'AI-Powered Analysis')}</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">No Slides, <span className="gradient-text">Two Sampling Options</span></h2>
-            <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Powered by our latest AI model, continuously improving with regular updates.</p>
+            <p className={`${bodyTextClass} text-muted-foreground mt-3`}>{c('classification', 'subtitle', 'Powered by our latest AI model, continuously improving with regular updates.')}</p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
                 <a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013179540-cxqmcu.pdf" target="_blank" rel="noopener noreferrer" download><Download className="mr-2 w-4 h-4" />Download the sample report</a>
@@ -121,13 +130,13 @@ const FecesAnalysis = () => {
               </div>
             </motion.div>
             <motion.div variants={fadeInRight}>
-              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">How It Works</span>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6"><span className="gradient-text">Direct</span> Sampling</h3>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('direct_sampling', 'badge', 'How It Works')}</span>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6">{c('direct_sampling', 'title', 'Direct Sampling')}</h3>
               <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground`}>
                 {[
-                  'Broader coverage with more reportable parameters/findings.',
-                  'Best for: Routine screening and fast workflow.',
-                  'Recommended when: You want a quick, comprehensive review with minimal preparation.',
+                  c('direct_sampling', 'bullet_1', 'Broader coverage with more reportable parameters/findings.'),
+                  c('direct_sampling', 'bullet_2', 'Best for: Routine screening and fast workflow.'),
+                  c('direct_sampling', 'bullet_3', 'Recommended when: You want a quick, comprehensive review with minimal preparation.'),
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary">
@@ -146,14 +155,14 @@ const FecesAnalysis = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div variants={fadeInLeft}>
-              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">How It Works</span>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6"><span className="gradient-text">Flotation</span> Sampling (Centrifugal Flotation)</h3>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('flotation', 'badge', 'How It Works')}</span>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6">{c('flotation', 'title', 'Flotation Sampling (Centrifugal Flotation)')}</h3>
               <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground`}>
                 {[
-                  'Uses a horizontal centrifuge to concentrate eggs/cysts.',
-                  'Best for: Targeted parasite enrichment and low-burden/intermittent shedding cases.',
-                  'Key advantage: Improved recovery of common parasites, especially: Roundworm eggs, Hookworm eggs, Tapeworm eggs, Whipworm eggs, Coccidia oocysts, Giardia cysts.',
-                  'Recommended when: The sample is low concentration, or parasite enrichment is clinically important.',
+                  c('flotation', 'bullet_1', 'Uses a horizontal centrifuge to concentrate eggs/cysts.'),
+                  c('flotation', 'bullet_2', 'Best for: Targeted parasite enrichment and low-burden/intermittent shedding cases.'),
+                  c('flotation', 'bullet_3', 'Key advantage: Improved recovery of common parasites, especially: Roundworm eggs, Hookworm eggs, Tapeworm eggs, Whipworm eggs, Coccidia oocysts, Giardia cysts.'),
+                  c('flotation', 'bullet_4', 'Recommended when: The sample is low concentration, or parasite enrichment is clinically important.'),
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary">
@@ -176,9 +185,9 @@ const FecesAnalysis = () => {
       <motion.section className="py-16 lg:py-20 bg-white" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Clinical Images</span>
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('clinical_images', 'badge', 'Clinical Images')}</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground"><span className="gradient-text">True-to-life Images</span>, Ready for Review</h2>
-            <p className={`${bodyTextClass} text-muted-foreground mt-3`}>Review your report and verify the images with confidence - and tap into Awalife's clinical specialists whenever needed.</p>
+            <p className={`${bodyTextClass} text-muted-foreground mt-3`}>{c('clinical_images', 'subtitle', "Review your report and verify the images with confidence - and tap into Awalife's clinical specialists whenever needed.")}</p>
           </div>
           <ApplicationImageCarousel pageKey="feces" fallbackImages={fallbackImages} />
         </div>
@@ -187,16 +196,16 @@ const FecesAnalysis = () => {
       <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">FAQ</span>
+            <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('faq', 'badge', 'FAQ')}</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
           </div>
           {(() => {
             const fecesFaqs = [
-              { question: 'Which species are supported for fecal analysis?', answer: 'Validated for dogs and cats.' },
-              { question: 'What sample types are supported?', answer: 'Fresh stool, lavage fluid, or anal swab (not recommended).' },
-              { question: 'What can the flotation method detect?', answer: '7 parasite parameters, including:\n\nEggs: Roundworm, Hookworm, Whipworm, Spirometra, Dipylidium caninum\n\nProtozoa: Giardia cyst, Isospora (coccidia)' },
-              { question: 'What can the direct method detect?', answer: '33 parameters, including:\n\nParasites: Roundworm, Hookworm, Whipworm, Spirometra, Dipylidium caninum, Alaria alata\n\nProtozoa: Trichomonas, Giardia trophozoite, Giardia cyst, Isospora (coccidia)\n\nMicroorganisms: Cocci, rods, cocci/rods ratio, curved rods, spore-forming rods, spirochetes, spiral-shaped rods, yeast\n\nCells: RBC, WBC, epithelial cells\n\nDigestive contents: Starch granules, muscle fibers, plant fibers, lipid droplets' },
-              { question: 'What is the difference between flotation and direct methods?', answer: 'Flotation: Higher sensitivity for parasite eggs/cysts, especially at low egg counts\n\nDirect: Faster and simpler; also evaluates flora, digestion, and cells for quick screening' },
+              { question: c('faq', 'q1', 'Which species are supported for fecal analysis?'), answer: c('faq', 'a1', 'Validated for dogs and cats.') },
+              { question: c('faq', 'q2', 'What sample types are supported?'), answer: c('faq', 'a2', 'Fresh stool, lavage fluid, or anal swab (not recommended).') },
+              { question: c('faq', 'q3', 'What can the flotation method detect?'), answer: c('faq', 'a3', '7 parasite parameters, including:\n\nEggs: Roundworm, Hookworm, Whipworm, Spirometra, Dipylidium caninum\n\nProtozoa: Giardia cyst, Isospora (coccidia)') },
+              { question: c('faq', 'q4', 'What can the direct method detect?'), answer: c('faq', 'a4', '33 parameters, including:\n\nParasites: Roundworm, Hookworm, Whipworm, Spirometra, Dipylidium caninum, Alaria alata\n\nProtozoa: Trichomonas, Giardia trophozoite, Giardia cyst, Isospora (coccidia)\n\nMicroorganisms: Cocci, rods, cocci/rods ratio, curved rods, spore-forming rods, spirochetes, spiral-shaped rods, yeast\n\nCells: RBC, WBC, epithelial cells\n\nDigestive contents: Starch granules, muscle fibers, plant fibers, lipid droplets') },
+              { question: c('faq', 'q5', 'What is the difference between flotation and direct methods?'), answer: c('faq', 'a5', 'Flotation: Higher sensitivity for parasite eggs/cysts, especially at low egg counts\n\nDirect: Faster and simpler; also evaluates flora, digestion, and cells for quick screening') },
             ];
             const mid = Math.ceil(fecesFaqs.length / 2);
             return (
@@ -225,8 +234,8 @@ const FecesAnalysis = () => {
 
       <motion.section className="py-20 lg:py-28 bg-secondary/20" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in <span className="gradient-text">Our Products</span>?</h2>
-          <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('cta', 'title', 'Interested in Our Products?')}</h2>
+          <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>{c('cta', 'body', "Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.")}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>
           </div>

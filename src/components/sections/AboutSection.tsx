@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Cpu, TestTubes, Zap, Globe } from 'lucide-react';
+import { usePageContent } from '@/contexts/PageContentContext';
 
 const AboutSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const { getContent } = usePageContent();
+  const c = (key: string, fb: string) => getContent('home', 'about_section', key, fb);
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -13,27 +16,13 @@ const AboutSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  const featureIcons = [Cpu, TestTubes, Zap, Globe];
+
   const features = [
-    { 
-      icon: Cpu, 
-      title: 'AI-Powered Innovation', 
-      desc: 'Integrates cell morphology, biochemistry, microfluidics, optics, and AI technologies.' 
-    },
-    { 
-      icon: TestTubes,
-      title: 'Multi-Sample Testing', 
-      desc: 'Analyzes blood, feces, urine, and abdominal fluid samples automatically.' 
-    },
-    { 
-      icon: Zap, 
-      title: 'Fully Automated', 
-      desc: 'Simple sample preparation delivers "sample in, result out" workflow.' 
-    },
-    { 
-      icon: Globe, 
-      title: 'Multi-Species Support', 
-      desc: 'Supports companion animals, small mammals, and exotic pets.' 
-    },
+    { title: c('card_1_title', 'AI-Powered Innovation'),    desc: c('card_1_desc', 'Integrates cell morphology, biochemistry, microfluidics, optics, and AI technologies.') },
+    { title: c('card_2_title', 'Multi-Sample Testing'),     desc: c('card_2_desc', 'Analyzes blood, feces, urine, and abdominal fluid samples automatically.') },
+    { title: c('card_3_title', 'Fully Automated'),          desc: c('card_3_desc', 'Simple sample preparation delivers "sample in, result out" workflow.') },
+    { title: c('card_4_title', 'Multi-Species Support'),    desc: c('card_4_desc', 'Supports companion animals, small mammals, and exotic pets.') },
   ];
 
   return (
@@ -43,30 +32,30 @@ const AboutSection = () => {
           {/* Left Column */}
           <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-              About Awalife
+              {c('badge', 'About Awalife')}
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-              World's First AI-Powered{' '}
-              <span className="text-primary">Morphological POCT Platform</span>
+              {c('title', "World's First AI-Powered")}{' '}
+              <span className="text-primary">{c('title_highlight', 'Morphological POCT Platform')}</span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-              Awalife becomes the first to enable intelligent morphological analysis of various pet samples—advancing the application and standardization of AI technology in pet diagnostic scenarios.
+              {c('body_1', 'Awalife becomes the first to enable intelligent morphological analysis of various pet samples—advancing the application and standardization of AI technology in pet diagnostic scenarios.')}
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              The best part of our technology is spending less time with it. Save time and streamline your practice with our in-house analyzers.
+              {c('body_2', 'The best part of our technology is spending less time with it. Save time and streamline your practice with our in-house analyzers.')}
             </p>
           </div>
 
           {/* Right Column - Features Grid */}
           <div className="grid grid-cols-2 gap-6">
             {features.map((feature, i) => (
-              <div 
-                key={feature.title} 
-                className={`p-6 rounded-2xl bg-secondary/30 border border-border/30 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} 
+              <div
+                key={i}
+                className={`p-6 rounded-2xl bg-secondary/30 border border-border/30 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
                 style={{ transitionDelay: `${0.2 + i * 0.1}s` }}
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                  <feature.icon className="w-6 h-6 text-primary" />
+                  {(() => { const Icon = featureIcons[i]; return <Icon className="w-6 h-6 text-primary" />; })()}
                 </div>
                 <h3 className="text-base font-semibold text-foreground mb-2">{feature.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{feature.desc}</p>

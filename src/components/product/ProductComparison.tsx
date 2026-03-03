@@ -27,13 +27,13 @@ const ProductComparison = ({ variant = 'full' }: ProductComparisonProps) => {
   
   const products: ComparisonProduct[] = variant === 'ai-analyzer'
     ? [
-      { id: 'ai-100vet-elite', name: 'AI-100Vet Elite', shortName: 'AI-100Vet Elite', flagship: true },
       { id: 'ai-100vet', name: 'AI-100Vet', shortName: 'AI-100Vet' },
+      { id: 'ai-100vet-elite', name: 'AI-100Vet Elite', shortName: 'AI-100Vet Elite', flagship: true },
       { id: 'ai-80vet', name: 'AI-80Vet', shortName: 'AI-80Vet' },
     ]
     : [
-      { id: 'ai-100vet-elite', name: 'AI-100Vet Elite', shortName: 'Elite', flagship: true },
       { id: 'ai-100vet', name: 'AI-100Vet', shortName: 'AI-100' },
+      { id: 'ai-100vet-elite', name: 'AI-100Vet Elite', shortName: 'Elite', flagship: true },
       { id: 'ai-80vet', name: 'AI-80Vet', shortName: 'AI-80' },
       { id: 'microscope', name: 'Digital Microscope', shortName: 'Microscope' },
     ];

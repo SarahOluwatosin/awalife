@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { usePageContent } from '@/contexts/PageContentContext';
 import { Mail, Linkedin, Facebook, Instagram, ArrowRight, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +11,8 @@ import contactIllustration from '@/assets/contact-illustration.png';
 
 const Contact = () => {
   useEffect(() => {window.scrollTo(0, 0);}, []);
+  const { getContent } = usePageContent();
+  const c = (section: string, key: string, fb: string) => getContent('contact', section, key, fb);
 
   const contactChips = [
   { label: 'Email', icon: Mail, href: 'mailto:info@awalife.com.cn', display: 'info@awalife.com.cn' },
@@ -26,11 +29,11 @@ const Contact = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left: Text and Contact Icons */}
             <motion.div variants={fadeInLeft}>
-              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">Get in Touch</span>
+              <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('hero', 'badge', 'Get in Touch')}</span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"><span className="gradient-text">Contact</span> Us</h1>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">If you're interested in learning more about Awalife's products or exploring potential business opportunities, feel free to reach out and we'll respond as soon as possible.</p>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">{c('hero', 'description', "If you're interested in learning more about Awalife's products or exploring potential business opportunities, feel free to reach out and we'll respond as soon as possible.")}</p>
 
-              <p className="text-sm text-muted-foreground mb-6">Our dedicated customer support team is always ready to assist you:</p>
+              <p className="text-sm text-muted-foreground mb-6">{c('hero', 'support_text', 'Our dedicated customer support team is always ready to assist you:')}</p>
 
               {/* Contact Icons Row */}
               <div className="flex flex-wrap gap-4">
@@ -69,7 +72,7 @@ const Contact = () => {
           <div className="w-full">
             <motion.div variants={fadeInLeft} className="text-left mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4"><span className="gradient-text">Interested in</span> Our Products?</h2>
-              <p className="text-lg text-muted-foreground">Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
+              <p className="text-lg text-muted-foreground">{c('form', 'subtitle', "Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.")}</p>
             </motion.div>
 
             <motion.div variants={fadeInRight} className="rounded-2xl border border-border/30 bg-background p-8 lg:p-10 w-full">

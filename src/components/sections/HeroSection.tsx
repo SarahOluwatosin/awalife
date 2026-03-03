@@ -6,6 +6,7 @@ import { images } from '@/lib/images';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Starfield from '@/components/animations/Starfield';
 import FloatingParticles from '@/components/animations/FloatingParticles';
+import { usePageContent } from '@/contexts/PageContentContext';
 
 
 const ease = [0.16, 1, 0.3, 1] as const; // checkout.com-style smooth ease
@@ -81,6 +82,7 @@ const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
   const imageY = useTransform(scrollY, [0, 600], [0, 90]);
+  const { getContent } = usePageContent();
 
   const metrics = [
     { value: 15, suffix: 'M+', label: 'Images for AI Model Training' },
@@ -106,7 +108,7 @@ const HeroSection = () => {
           >
             <motion.div variants={fadeUp()} className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
               <span className="text-[11px] sm:text-sm text-foreground/80 tracking-[0.02em] whitespace-nowrap">
-                Pioneering AI-Powered Morpology Diagnostics
+                {getContent('home', 'hero', 'badge', 'Pioneering AI-Powered Veterinary Morphology Diagnostics')}
               </span>
             </motion.div>
 
@@ -156,19 +158,19 @@ const HeroSection = () => {
             </motion.h1>
 
             <motion.p variants={fadeUp(0.1)} className="text-lg md:text-xl text-muted-foreground max-w-prose mb-8 leading-relaxed">
-              We turn cellular morphology into visible, quantifiable, and review-ready evidence, helping veterinarians diagnose with greater depth and confidence.
+              {getContent('home', 'hero', 'subtitle', 'We turn cellular morphology into visible, quantifiable, and review-ready evidence, helping veterinarians diagnose with greater depth and confidence.')}
             </motion.p>
 
             <motion.div variants={fadeUp(0.15)} className="flex flex-wrap gap-4">
               <Button size="lg" className="btn-gradient group px-8" asChild>
                 <Link to="/contact">
-                  Contact us
+                  {getContent('home', 'hero', 'cta_primary', 'Contact us')}
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" className="border-border/50 px-8 group" asChild>
                 <Link to="/products">
-                  Explore products
+                  {getContent('home', 'hero', 'cta_secondary', 'Explore products')}
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>

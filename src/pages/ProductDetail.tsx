@@ -9,6 +9,7 @@ import PageHero from '@/components/shared/PageHero';
 import ProductGallery from '@/components/product/ProductGallery';
 import ProductComparison from '@/components/product/ProductComparison';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { usePageContent } from '@/contexts/PageContentContext';
 import { images } from '@/lib/images';
 import { motion } from 'framer-motion';
 import { sectionVariants, staggerContainer, staggerContainerFast, cardVariants, cardSlideUp, fadeInLeft, fadeInRight, blurIn, popIn, viewportOnce, viewportOnceSmall, viewportOnceTiny } from '@/lib/animations';
@@ -16,6 +17,7 @@ import { sectionVariants, staggerContainer, staggerContainerFast, cardVariants, 
 const ProductDetail = () => {
   const { productId } = useParams();
   const { t } = useLanguage();
+  const { getContent } = usePageContent();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -181,6 +183,26 @@ const ProductDetail = () => {
   const isMicroscope = productId === 'dm-03' || productId === 'microscope';
   const longParagraphClass = 'text-lg';
   const detailParagraphClass = 'text-base';
+  const workflowSteps = [
+    {
+      label: getContent('ai-analyzer', 'workflow', 'step_1_label', 'Load and prepare'),
+      desc: getContent('ai-analyzer', 'workflow', 'step_1_desc', 'Simple sample prep with guided steps for blood, urine, feces, and effusion samples.'),
+      gif: getContent('ai-analyzer', 'workflow', 'step_1_gif', images.heroDiagnosticLab),
+      gifAlt: getContent('ai-analyzer', 'workflow', 'step_1_gif_alt', 'Load and prepare workflow animation'),
+    },
+    {
+      label: getContent('ai-analyzer', 'workflow', 'step_2_label', 'AI morphological scan'),
+      desc: getContent('ai-analyzer', 'workflow', 'step_2_desc', 'High-resolution imaging and AI recognition identify cells and elements in minutes.'),
+      gif: getContent('ai-analyzer', 'workflow', 'step_2_gif', images.ai100vet),
+      gifAlt: getContent('ai-analyzer', 'workflow', 'step_2_gif_alt', 'AI morphological scan animation'),
+    },
+    {
+      label: getContent('ai-analyzer', 'workflow', 'step_3_label', 'Standardized report'),
+      desc: getContent('ai-analyzer', 'workflow', 'step_3_desc', 'Multi-parameter results with references, annotations, and share-ready outputs.'),
+      gif: getContent('ai-analyzer', 'workflow', 'step_3_gif', images.heroMedtech),
+      gifAlt: getContent('ai-analyzer', 'workflow', 'step_3_gif_alt', 'Standardized report animation'),
+    },
+  ];
 
   const otherProducts = Object.entries(productData)
     .filter(([key]) => key !== productId)
@@ -200,7 +222,7 @@ const ProductDetail = () => {
 
   return (
     <Layout>
-      <PageHero title={product.name} subtitle={product.tagline || ''} />
+      <PageHero title={getContent(productId || '', 'hero', 'name', product.name)} subtitle={getContent(productId || '', 'hero', 'tagline', product.tagline || '')} />
 
       {/* Product Hero */}
       <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnceTiny} variants={sectionVariants}>
@@ -232,7 +254,7 @@ const ProductDetail = () => {
               </h1>
               
               <p className={`${longParagraphClass} text-muted-foreground leading-relaxed mb-10`}>
-                {product.description}
+                {getContent(productId || '', 'overview', 'description', product.description)}
               </p>
 
               {/* Features Grid */}
@@ -322,8 +344,8 @@ const ProductDetail = () => {
                     <motion.div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300" variants={popIn}>
                       <cap.icon className="w-5 h-5 text-primary" />
                     </motion.div>
-                    <h3 className="text-lg font-semibold text-foreground mb-3">{cap.title}</h3>
-                    <p className={`${detailParagraphClass} text-muted-foreground leading-relaxed`}>{cap.desc}</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-3">{getContent(productId || '', 'capabilities', `cap_${index + 1}_title`, cap.title)}</h3>
+                    <p className={`${detailParagraphClass} text-muted-foreground leading-relaxed`}>{getContent(productId || '', 'capabilities', `cap_${index + 1}_desc`, cap.desc)}</p>
                   </div>
                 </motion.div>
               ))}
@@ -350,11 +372,7 @@ const ProductDetail = () => {
             <div className="relative mt-10">
               <div className="hidden md:block absolute left-0 right-0 top-6 h-px bg-border/60" />
               <motion.div className="grid md:grid-cols-3 gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
-                {[
-                  { label: 'Load and prepare', desc: 'Simple sample prep with guided steps for blood, urine, feces, and effusion samples.' },
-                  { label: 'AI morphological scan', desc: 'High-resolution imaging and AI recognition identify cells and elements in minutes.' },
-                  { label: 'Standardized report', desc: 'Multi-parameter results with references, annotations, and share-ready outputs.' },
-                ].map((step, index) => (
+                {workflowSteps.map((step, index) => (
                   <motion.div key={step.label} className="relative" variants={cardSlideUp}>
                     <div className="flex md:flex-col items-start md:items-center gap-4">
                       <motion.div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 border border-primary/30 text-primary font-semibold" variants={popIn}>
@@ -363,6 +381,16 @@ const ProductDetail = () => {
                       <div className="rounded-2xl border border-border/50 bg-card shadow-sm p-6 text-left md:text-center">
                         <h3 className="font-semibold text-foreground">{step.label}</h3>
                         <p className={`${longParagraphClass} text-muted-foreground leading-relaxed mt-3`}>{step.desc}</p>
+                        <div className="mt-6 overflow-hidden rounded-xl border border-border/50 bg-secondary/20">
+                          <img
+                            src={step.gif}
+                            alt={step.gifAlt}
+                            data-override-id={`ai-analyzer-workflow-step-${index + 1}`}
+                            className="w-full h-full object-cover aspect-video"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -389,14 +417,14 @@ const ProductDetail = () => {
               </div>
               <motion.div className="flex flex-nowrap justify-center items-center gap-4 text-base font-medium text-muted-foreground overflow-x-auto pb-2" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   {[
-                    { label: 'Urine', icon: FlaskConical },
-                    { label: 'Fecal', icon: Bug },
-                    { label: 'Ear Canal', icon: Stethoscope },
-                    { label: 'Blood', icon: Droplets },
-                    { label: 'Skin', icon: Layers },
-                    { label: 'Tissue', icon: Microscope },
-                    { label: 'Serous Cavity', icon: Beaker },
-                    { label: 'Effusion', icon: TestTubes },
+                    { label: getContent('dm-03', 'sample_types', 'label_1', 'Urine'),         icon: FlaskConical },
+                    { label: getContent('dm-03', 'sample_types', 'label_2', 'Fecal'),         icon: Bug },
+                    { label: getContent('dm-03', 'sample_types', 'label_3', 'Ear Canal'),     icon: Stethoscope },
+                    { label: getContent('dm-03', 'sample_types', 'label_4', 'Blood'),         icon: Droplets },
+                    { label: getContent('dm-03', 'sample_types', 'label_5', 'Skin'),          icon: Layers },
+                    { label: getContent('dm-03', 'sample_types', 'label_6', 'Tissue'),        icon: Microscope },
+                    { label: getContent('dm-03', 'sample_types', 'label_7', 'Serous Cavity'), icon: Beaker },
+                    { label: getContent('dm-03', 'sample_types', 'label_8', 'Effusion'),      icon: TestTubes },
                   ].map((item) => (
                     <motion.span
                       key={item.label}
@@ -434,20 +462,20 @@ const ProductDetail = () => {
                 <motion.div className="space-y-5" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   {[
                     {
-                      title: 'Infinity Optical System',
-                      desc: 'It delivers clear, high-quality imaging with minimal chromatic aberration, ensuring accurate and detailed observation.',
+                      title: getContent('dm-03', 'hardware', 'feat_1_title', 'Infinity Optical System'),
+                      desc:  getContent('dm-03', 'hardware', 'feat_1_desc',  'It delivers clear, high-quality imaging with minimal chromatic aberration, ensuring accurate and detailed observation.'),
                     },
                     {
-                      title: 'High-Brightness LED Light Source',
-                      desc: 'It provides a uniform cold light illumination, ensuring clear visibility while offering an extended lifespan.',
+                      title: getContent('dm-03', 'hardware', 'feat_2_title', 'High-Brightness LED Light Source'),
+                      desc:  getContent('dm-03', 'hardware', 'feat_2_desc',  'It provides a uniform cold light illumination, ensuring clear visibility while offering an extended lifespan.'),
                     },
                     {
-                      title: '4K HD Camera',
-                      desc: 'It delivers ultra-high-definition imaging and supports efficient digital management for precise observation and record-keeping.',
+                      title: getContent('dm-03', 'hardware', 'feat_3_title', '4K HD Camera'),
+                      desc:  getContent('dm-03', 'hardware', 'feat_3_desc',  'It delivers ultra-high-definition imaging and supports efficient digital management for precise observation and record-keeping.'),
                     },
                     {
-                      title: 'Swivel Eyepiece Tube',
-                      desc: 'It provides comfortable viewing, helping to reduce eye strain during extended use.',
+                      title: getContent('dm-03', 'hardware', 'feat_4_title', 'Swivel Eyepiece Tube'),
+                      desc:  getContent('dm-03', 'hardware', 'feat_4_desc',  'It provides comfortable viewing, helping to reduce eye strain during extended use.'),
                     },
                   ].map((item) => (
                     <motion.div key={item.title} className="border-b border-border/40 pb-4 last:border-0 last:pb-0" variants={cardVariants}>
@@ -517,11 +545,11 @@ const ProductDetail = () => {
                 </p>
                 <ul className="space-y-3 text-base text-muted-foreground">
                   {[
-                    'Compatible with Leica and Olympus microscopes (models as applicable)',
-                    'Plug-and-play connection to PC',
-                    'Unlock user friendly software: capture, measure, annotate, count, report',
-                    'Standardize documentation across users and sites',
-                    'Built-in teaching image library for onboarding',
+                    getContent('dm-03', 'image_hub', 'bullet_1', 'Compatible with Leica and Olympus microscopes (models as applicable)'),
+                    getContent('dm-03', 'image_hub', 'bullet_2', 'Plug-and-play connection to PC'),
+                    getContent('dm-03', 'image_hub', 'bullet_3', 'Unlock user friendly software: capture, measure, annotate, count, report'),
+                    getContent('dm-03', 'image_hub', 'bullet_4', 'Standardize documentation across users and sites'),
+                    getContent('dm-03', 'image_hub', 'bullet_5', 'Built-in teaching image library for onboarding'),
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary">
@@ -709,27 +737,27 @@ const ProductDetail = () => {
           <div className={containerClass}>
             <div className="text-center max-w-3xl mx-auto mb-12">
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                FAQ
+                {getContent('ai-analyzer', 'faq', 'badge', 'FAQ')}
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
             </div>
             {(() => {
               const aiAnalyzerFaqs = [
                 {
-                  question: 'What sample types can the AI Series Morphology Analyzer process?',
-                  answer: 'It supports blood, urine, feces, and body fluid samples with standardized preparation and analysis steps.',
+                  question: getContent('ai-analyzer', 'faq', 'q1', 'What sample types can the AI Series Morphology Analyzer process?'),
+                  answer:   getContent('ai-analyzer', 'faq', 'a1', 'It supports blood, urine, feces, and body fluid samples with standardized preparation and analysis steps.'),
                 },
                 {
-                  question: 'How long does a typical analysis take?',
-                  answer: 'Most workflows complete within minutes, depending on sample type and required parameters.',
+                  question: getContent('ai-analyzer', 'faq', 'q2', 'How long does a typical analysis take?'),
+                  answer:   getContent('ai-analyzer', 'faq', 'a2', 'Most workflows complete within minutes, depending on sample type and required parameters.'),
                 },
                 {
-                  question: 'Does the system support multi-species diagnostics?',
-                  answer: 'Yes. It is designed for companion animals and supports a broad range of exotic species and livestock.',
+                  question: getContent('ai-analyzer', 'faq', 'q3', 'Does the system support multi-species diagnostics?'),
+                  answer:   getContent('ai-analyzer', 'faq', 'a3', 'Yes. It is designed for companion animals and supports a broad range of exotic species and livestock.'),
                 },
                 {
-                  question: 'Can reports be integrated with LIS systems?',
-                  answer: 'Yes. The platform supports LIS integration for efficient data exchange and reporting.',
+                  question: getContent('ai-analyzer', 'faq', 'q4', 'Can reports be integrated with LIS systems?'),
+                  answer:   getContent('ai-analyzer', 'faq', 'a4', 'Yes. The platform supports LIS integration for efficient data exchange and reporting.'),
                 },
               ];
               const mid = Math.ceil(aiAnalyzerFaqs.length / 2);
@@ -765,31 +793,31 @@ const ProductDetail = () => {
           <div className={containerClass}>
             <div className="text-center max-w-3xl mx-auto mb-12">
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                FAQ
+                {getContent('dm-03', 'faq', 'badge', 'FAQ')}
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
             </div>
             {(() => {
               const microscopeFaqs = [
                 {
-                  question: 'What is the DM-03 Microscope Workstation?',
-                  answer: 'DM-03 Microscope Workstation is a microscope workstation equipped with a 4K camera and an intelligent system for one-click capture, reporting, annotation, counting, and measurement.',
+                  question: getContent('dm-03', 'faq', 'q1', 'What is the DM-03 Microscope Workstation?'),
+                  answer:   getContent('dm-03', 'faq', 'a1', 'DM-03 Microscope Workstation is a microscope workstation equipped with a 4K camera and an intelligent system for one-click capture, reporting, annotation, counting, and measurement.'),
                 },
                 {
-                  question: 'What are the key benefits of the DM-03 Microscope Workstation?',
-                  answer: 'Faster documentation, automated reports, a built-in reference library (542+ canine/feline images), SOP support, and improved communication, training, and collaboration.',
+                  question: getContent('dm-03', 'faq', 'q2', 'What are the key benefits of the DM-03 Microscope Workstation?'),
+                  answer:   getContent('dm-03', 'faq', 'a2', 'Faster documentation, automated reports, a built-in reference library (542+ canine/feline images), SOP support, and improved communication, training, and collaboration.'),
                 },
                 {
-                  question: 'Can I buy only the camera module?',
-                  answer: 'Yes. If you have an infinity optical microscope, the camera module can be customized and supplied separately.',
+                  question: getContent('dm-03', 'faq', 'q3', 'Can I buy only the camera module?'),
+                  answer:   getContent('dm-03', 'faq', 'a3', 'Yes. If you have an infinity optical microscope, the camera module can be customized and supplied separately.'),
                 },
                 {
-                  question: 'What tools are included?',
-                  answer: 'Cell counting, multi-shape annotation, real-time measurement with a digital scale, customizable templates, and multi-account management.',
+                  question: getContent('dm-03', 'faq', 'q4', 'What tools are included?'),
+                  answer:   getContent('dm-03', 'faq', 'a4', 'Cell counting, multi-shape annotation, real-time measurement with a digital scale, customizable templates, and multi-account management.'),
                 },
                 {
-                  question: 'Can I upload my own SOPs or reference images?',
-                  answer: 'Yes. DM-03 Microscope Workstation supports personalized uploads of reference images, videos, and SOPs.',
+                  question: getContent('dm-03', 'faq', 'q5', 'Can I upload my own SOPs or reference images?'),
+                  answer:   getContent('dm-03', 'faq', 'a5', 'Yes. DM-03 Microscope Workstation supports personalized uploads of reference images, videos, and SOPs.'),
                 },
               ];
               const mid = Math.ceil(microscopeFaqs.length / 2);

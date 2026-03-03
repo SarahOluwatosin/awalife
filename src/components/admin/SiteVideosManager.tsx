@@ -1,9 +1,8 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Trash2, Plus, Pencil, Upload, X, Video, Link, Play, HardDrive } from 'lucide-react';
@@ -12,8 +11,6 @@ import { uploadToStorage } from '@/lib/storage';
 import { validateVideoFile, validateVideoUrl } from '@/lib/validation';
 import { dbSelect, dbInsert, dbUpdate, dbDelete } from '@/lib/db';
 import { supabase } from '@/integrations/supabase/client';
-
-const PAGE_CATEGORIES = ['Home', 'Products', 'Applications', 'About', 'Contact', 'Uncategorized'];
 
 type SiteVideo = {
   id: string;
@@ -52,7 +49,6 @@ const SiteVideosManager = () => {
   // Add dialog
   const [addOpen, setAddOpen] = useState(false);
   const [newLabel, setNewLabel] = useState('');
-  const [newCategory, setNewCategory] = useState('Home');
   const [newVideoType, setNewVideoType] = useState<'embed' | 'upload'>('embed');
   const [newVideoUrl, setNewVideoUrl] = useState('');
   const [newFile, setNewFile] = useState<File | null>(null);
@@ -61,12 +57,11 @@ const SiteVideosManager = () => {
   // Edit dialog
   const [editing, setEditing] = useState<SiteVideo | null>(null);
   const [editLabel, setEditLabel] = useState('');
-  const [editCategory, setEditCategory] = useState('');
   const [editVideoUrl, setEditVideoUrl] = useState('');
 
   const fetchVideos = useCallback(async () => {
     try {
-      const rows = await dbSelect<SiteVideo>('site_videos', 'order=category.asc,label.asc');
+      const rows = await dbSelect<SiteVideo>('site_videos', 'order=label.asc');
       setVideos(rows);
       // Also scan storage for unmanaged video files
       const videoExtensions = ['mp4', 'webm', 'ogg', 'mov'];
@@ -132,7 +127,7 @@ const SiteVideosManager = () => {
       await dbInsert('site_videos', {
         key: safeKey,
         label: newLabel.trim(),
-        category: newCategory,
+        category: 'Uncategorized',
         video_type: newVideoType,
         video_url: videoUrl,
         file_name: fileName,
@@ -141,7 +136,6 @@ const SiteVideosManager = () => {
 
       setAddOpen(false);
       setNewLabel('');
-      setNewCategory('Home');
       setNewVideoType('embed');
       setNewVideoUrl('');
       setNewFile(null);
@@ -160,10 +154,9 @@ const SiteVideosManager = () => {
     setSaving(true);
     try {
       const token = await getToken();
-      const updates: Record<string, string> = { label: editLabel.trim(), category: editCategory };
+      const updates: Record<string, string> = { label: editLabel.trim() };
       if (editing.video_type === 'embed' && editVideoUrl !== editing.video_url) {
         updates.video_url = editVideoUrl.trim();
-        // Update YouTube thumbnail
         const ytMatch = editVideoUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
         if (ytMatch) updates.thumbnail_url = `https://img.youtube.com/vi/${ytMatch[1]}/mqdefault.jpg`;
       }
@@ -195,13 +188,10 @@ const SiteVideosManager = () => {
   const openEdit = (video: SiteVideo) => {
     setEditing(video);
     setEditLabel(video.label);
-    setEditCategory(video.category);
     setEditVideoUrl(video.video_url);
   };
 
   if (loading) return <p className="text-center text-muted-foreground py-8">Loading videos...</p>;
-
-  const categories = [...new Set(videos.map(v => v.category))].sort();
 
   return (
     <>
@@ -209,126 +199,109 @@ const SiteVideosManager = () => {
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Site Videos</CardTitle>
-            <CardDescription>Manage video embeds and uploaded videos for the website.</CardDescription>
+            <CardDescription>All video embeds and uploaded videos for the website.</CardDescription>
           </div>
           <Button size="sm" onClick={() => setAddOpen(true)}>
             <Plus className="mr-2 h-4 w-4" /> Add Video
           </Button>
         </CardHeader>
-      </Card>
-
-      {/* Unmanaged storage videos */}
-      {storageVideos.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2"><HardDrive className="h-4 w-4" /> Unmanaged Storage Videos</CardTitle>
-            <CardDescription>These video files exist in storage but aren't tracked in the database yet.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {storageVideos.map(vid => (
-                <div key={vid.url} className="space-y-2">
-                  <div className="relative aspect-video rounded-lg border border-dashed border-border overflow-hidden bg-muted">
-                    <video src={vid.url} className="w-full h-full object-cover" muted preload="metadata" />
-                    <span className="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-background/80 text-foreground">
-                      <HardDrive className="h-2.5 w-2.5" /> {vid.folder}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs font-medium text-foreground truncate flex-1">{vid.name}</span>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="text-xs h-7"
-                      disabled={saving}
-                      onClick={async () => {
-                        setSaving(true);
-                        try {
-                          const safeKey = vid.name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
-                          const label = vid.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-                          const token = await getToken();
-                          await dbInsert('site_videos', {
-                            key: safeKey,
-                            label,
-                            category: 'Uncategorized',
-                            video_type: 'upload',
-                            video_url: vid.url,
-                            file_name: vid.name,
-                            thumbnail_url: '',
-                          }, token);
-                          await fetchVideos();
-                          toast({ title: `"${label}" added to library` });
-                        } catch {
-                          toast({ title: 'Failed to add video', variant: 'destructive' });
-                        } finally {
-                          setSaving(false);
-                        }
-                      }}
-                    >
-                      <Plus className="h-3 w-3 mr-1" /> Add to Library
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {videos.length === 0 && storageVideos.length === 0 ? (
-        <Card>
-          <CardContent className="py-8">
-            <p className="text-muted-foreground text-center">No videos found. Click "Add Video" to get started.</p>
-          </CardContent>
-        </Card>
-      ) : categories.map(category => (
-        <Card key={category}>
-          <CardHeader>
-            <CardTitle className="text-lg">{category}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {videos.filter(v => v.category === category).map(video => (
-                <div key={video.id} className="space-y-2">
-                  <div className="relative aspect-video rounded-lg border border-border overflow-hidden bg-muted">
-                    {video.video_type === 'embed' ? (
-                      video.thumbnail_url ? (
-                        <div className="relative w-full h-full">
-                          <img src={video.thumbnail_url} alt={video.label} className="w-full h-full object-cover" />
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="bg-background/80 rounded-full p-2">
-                              <Play className="h-6 w-6 text-foreground" />
+        <CardContent>
+          {videos.length === 0 && storageVideos.length === 0 ? (
+            <p className="text-muted-foreground text-center py-4 text-sm">No videos found. Click "Add Video" to get started.</p>
+          ) : (
+            <div className="space-y-6">
+              {/* Managed videos */}
+              {videos.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {videos.map(video => (
+                    <div key={video.id} className="space-y-2">
+                      <div className="relative aspect-video rounded-lg border border-border overflow-hidden bg-muted">
+                        {video.video_type === 'embed' ? (
+                          video.thumbnail_url ? (
+                            <div className="relative w-full h-full">
+                              <img src={video.thumbnail_url} alt={video.label} className="w-full h-full object-cover" />
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="bg-background/80 rounded-full p-2">
+                                  <Play className="h-6 w-6 text-foreground" />
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Video className="h-8 w-8 text-muted-foreground" />
-                        </div>
-                      )
-                    ) : (
-                      <video src={video.video_url} className="w-full h-full object-cover" muted preload="metadata" />
-                    )}
-                    <span className="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-background/80 text-foreground">
-                      {video.video_type === 'embed' ? <><Link className="h-2.5 w-2.5" /> Embed</> : <><Upload className="h-2.5 w-2.5" /> Upload</>}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs font-medium text-foreground truncate flex-1">{video.label}</span>
-                    <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={() => openEdit(video)}>
-                      <Pencil className="h-3 w-3" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0 text-destructive hover:text-destructive" disabled={saving} onClick={() => handleDelete(video)}>
-                      <Trash2 className="h-3 w-3" />
-                    </Button>
-                  </div>
-                  <p className="text-[10px] text-muted-foreground truncate">{video.video_url}</p>
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <Video className="h-8 w-8 text-muted-foreground" />
+                            </div>
+                          )
+                        ) : (
+                          <video src={video.video_url} className="w-full h-full object-cover" muted preload="metadata" />
+                        )}
+                        <span className="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-background/80 text-foreground">
+                          {video.video_type === 'embed' ? <><Link className="h-2.5 w-2.5" /> Embed</> : <><Upload className="h-2.5 w-2.5" /> Upload</>}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="text-xs font-medium text-foreground truncate flex-1">{video.label}</span>
+                        <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={() => openEdit(video)}>
+                          <Pencil className="h-3 w-3" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0 text-destructive hover:text-destructive" disabled={saving} onClick={() => handleDelete(video)}>
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
+
+              {/* Unmanaged storage videos */}
+              {storageVideos.length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                    <HardDrive className="h-3.5 w-3.5" /> Untracked storage files
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {storageVideos.map(vid => (
+                      <div key={vid.url} className="space-y-2">
+                        <div className="relative aspect-video rounded-lg border border-dashed border-border overflow-hidden bg-muted">
+                          <video src={vid.url} className="w-full h-full object-cover" muted preload="metadata" />
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs font-medium text-foreground truncate flex-1">{vid.name}</span>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="text-xs h-7 shrink-0"
+                            disabled={saving}
+                            onClick={async () => {
+                              setSaving(true);
+                              try {
+                                const safeKey = vid.name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                                const label = vid.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                                const token = await getToken();
+                                await dbInsert('site_videos', {
+                                  key: safeKey, label, category: 'Uncategorized',
+                                  video_type: 'upload', video_url: vid.url, file_name: vid.name, thumbnail_url: '',
+                                }, token);
+                                await fetchVideos();
+                                toast({ title: `"${label}" added to library` });
+                              } catch {
+                                toast({ title: 'Failed to add video', variant: 'destructive' });
+                              } finally {
+                                setSaving(false);
+                              }
+                            }}
+                          >
+                            <Plus className="h-3 w-3 mr-1" /> Add to Library
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          </CardContent>
-        </Card>
-      ))}
+          )}
+        </CardContent>
+      </Card>
 
       {/* Add Video Dialog */}
       <Dialog open={addOpen} onOpenChange={setAddOpen}>
@@ -338,15 +311,6 @@ const SiteVideosManager = () => {
             <div className="space-y-2">
               <Label>Label *</Label>
               <Input value={newLabel} onChange={e => setNewLabel(e.target.value)} placeholder="e.g. Product Demo Video" />
-            </div>
-            <div className="space-y-2">
-              <Label>Page Category</Label>
-              <Select value={newCategory} onValueChange={setNewCategory}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {PAGE_CATEGORIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                </SelectContent>
-              </Select>
             </div>
             <div className="space-y-2">
               <Label>Video Source</Label>
@@ -413,15 +377,6 @@ const SiteVideosManager = () => {
               <div className="space-y-2">
                 <Label>Label</Label>
                 <Input value={editLabel} onChange={e => setEditLabel(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label>Page Category</Label>
-                <Select value={editCategory} onValueChange={setEditCategory}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {PAGE_CATEGORIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                  </SelectContent>
-                </Select>
               </div>
               {editing.video_type === 'embed' && (
                 <div className="space-y-2">

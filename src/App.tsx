@@ -21,8 +21,12 @@ import UrineAnalysis from "./pages/applications/UrineAnalysis";
 import PleuralEffusion from "./pages/applications/PleuralEffusion";
 import ExoticAnimals from "./pages/applications/ExoticAnimals";
 import Resources from "./pages/News";
-import ResourcesAdmin from "./pages/ResourcesAdmin";
 import AdminLogin from "./pages/AdminLogin";
+import Dashboard from "./pages/admin/Dashboard";
+import AdminNews from "./pages/admin/AdminNews";
+import AdminResources from "./pages/admin/AdminResources";
+import AdminMedia from "./pages/admin/AdminMedia";
+import AdminPageText from "./pages/admin/AdminPageText";
 
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
@@ -52,7 +56,12 @@ const AnimatedRoutes = () => {
           <Route path="/applications/exotic-animals" element={<PageTransition><ExoticAnimals /></PageTransition>} />
           <Route path="/resources" element={<PageTransition><Resources /></PageTransition>} />
           <Route path="/admin/login" element={<PageTransition><AdminLogin /></PageTransition>} />
-          <Route path="/admin/resources" element={<PageTransition><ResourcesAdmin /></PageTransition>} />
+          <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/news" element={<AdminNews />} />
+          <Route path="/admin/resources" element={<AdminResources />} />
+          <Route path="/admin/media" element={<AdminMedia />} />
+          <Route path="/admin/content" element={<AdminPageText />} />
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>

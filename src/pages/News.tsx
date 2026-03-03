@@ -46,14 +46,6 @@ const News = () => {
     return /youtube\.com|youtu\.be|vimeo\.com/i.test(url) || /\.(mp4|webm|ogg)(\?|$)/i.test(url);
   };
 
-  const getVideoEmbedUrl = (url: string): string | null => {
-    const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-    if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
-    const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
-    if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
-    return null;
-  };
-
   const ctaLink = data.cta.buttonUrl?.trim() || '/contact';
 
   const productLabelMap = RESOURCE_PRODUCT_OPTIONS.reduce<Record<string, string>>((acc, product) => {
@@ -115,7 +107,6 @@ const News = () => {
     const mediaUrl = item.mediaUrl?.trim();
     const hasMedia = Boolean(mediaUrl);
     const isVideo = item.mediaType === 'link' && isVideoLink(mediaUrl);
-    const embedUrl = isVideo ? getVideoEmbedUrl(mediaUrl) : null;
     const actionLabel = item.mediaType === 'link' ? 'View resource' : 'Download';
     const ActionIcon = item.mediaType === 'link' ? ArrowRight : Download;
     const badge = getMediaBadge(item);
@@ -125,82 +116,77 @@ const News = () => {
         key={item.id}
         className="group relative flex h-full flex-col rounded-2xl bg-card border border-border/20 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300">
 
-        {/* Accent gradient top */}
-
-        {/* Video embed preview */}
-        {embedUrl &&
-        <div className="relative w-full aspect-video bg-muted/30">
-            <iframe
-            src={embedUrl}
-            className="w-full h-full"
-            style={{ border: 'none' }}
-            allowFullScreen
-            allow="autoplay; encrypted-media"
-            title={item.title}
-            loading="lazy" />
-
-          </div>
-        }
-
-        <div className="flex flex-col flex-1 p-6">
-          {/* Badges */}
-          <div className="flex flex-wrap items-center justify-start gap-2 mb-4">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] uppercase tracking-wider font-semibold bg-primary/8 text-primary border border-primary/10">
-              {productLabel}
-            </span>
-            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-secondary text-muted-foreground border border-border/30">
-              {badge}
-            </span>
+        <div className="flex flex-col md:flex-row gap-5 p-5 h-full">
+          <div className="relative w-full md:w-36 lg:w-40 md:flex-shrink-0 aspect-[16/10] md:aspect-[3/4] rounded-xl bg-gradient-to-br from-secondary/80 via-white to-secondary/40 border border-border/30 overflow-hidden">
+            <div className="absolute inset-0">
+              <div className="absolute -top-10 -right-8 h-32 w-32 rounded-full bg-primary/10" />
+              <div className="absolute -bottom-12 -left-10 h-40 w-40 rounded-full bg-primary/10" />
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative h-20 w-20 md:h-24 md:w-24 rounded-full border-[8px] md:border-[10px] border-primary/70" />
+            </div>
           </div>
 
-          {/* Title */}
-          <h3 className="text-lg font-bold text-foreground leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2 min-h-[3.5rem]">
-            {item.title}
-          </h3>
+          <div className="flex flex-col flex-1">
+            {/* Badges */}
+            <div className="flex flex-wrap items-center justify-start gap-2 mb-3">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] uppercase tracking-wider font-semibold bg-primary/8 text-primary border border-primary/10">
+                {productLabel}
+              </span>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-secondary text-muted-foreground border border-border/30">
+                {badge}
+              </span>
+            </div>
 
-          {/* Summary */}
-          {item.summary &&
-          <p className="text-sm text-muted-foreground leading-relaxed mb-6 line-clamp-3 flex-1">
-              {item.summary}
-            </p>
-          }
+            {/* Title */}
+            <h3 className="text-lg font-bold text-foreground leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2 min-h-[2.8rem]">
+              {item.title}
+            </h3>
 
-          {/* Action */}
-          <div className="mt-auto pt-2">
-            {hasMedia ?
-            <div className="flex flex-wrap gap-2">
-                {isVideo &&
-              <Button variant="default" size="sm" className="h-10 px-5 rounded-full transition-all" asChild>
-                    <a href={mediaUrl} target="_blank" rel="noreferrer">
-                      <Play className="mr-2 h-4 w-4" />
-                      Watch video
-                    </a>
-                  </Button>
-              }
-                {!isVideo &&
-              <Button variant="outline" size="sm" className="h-10 px-5 rounded-full border-border/40 text-primary transition-all" asChild>
-                    {item.mediaType === 'upload' ?
-                <a href={mediaUrl} download={item.mediaName || 'resource'}>
-                        <ActionIcon className="mr-2 h-4 w-4" />
-                        {actionLabel}
-                      </a> :
-                isExternalLink(mediaUrl) ?
-                <a href={mediaUrl} target="_blank" rel="noreferrer">
-                        <ActionIcon className="mr-2 h-4 w-4" />
-                        {actionLabel}
-                      </a> :
-
-                <Link to={mediaUrl}>
-                        <ActionIcon className="mr-2 h-4 w-4" />
-                        {actionLabel}
-                      </Link>
-                }
-                  </Button>
-              }
-              </div> :
-
-            <p className="text-xs text-muted-foreground/50 italic">No file or link attached</p>
+            {/* Summary */}
+            {item.summary &&
+            <p className="text-sm text-muted-foreground leading-relaxed mb-5 line-clamp-2">
+                {item.summary}
+              </p>
             }
+
+            {/* Action */}
+            <div className="mt-auto pt-1">
+              {hasMedia ?
+              <div className="flex flex-wrap gap-2">
+                  {isVideo &&
+                <Button variant="default" size="sm" className="btn-gradient h-9 px-4 py-2 rounded-full transition-all" asChild>
+                      <a href={mediaUrl} target="_blank" rel="noreferrer">
+                        <Play className="mr-2 h-4 w-4" />
+                        Watch video
+                      </a>
+                    </Button>
+                }
+                  {!isVideo &&
+                <Button variant="default" size="sm" className="btn-gradient h-9 px-4 py-2 rounded-full transition-all" asChild>
+                      {item.mediaType === 'upload' ?
+                  <a href={mediaUrl} download={item.mediaName || 'resource'}>
+                          <ActionIcon className="mr-2 h-4 w-4" />
+                          {actionLabel}
+                        </a> :
+                  isExternalLink(mediaUrl) ?
+                  <a href={mediaUrl} target="_blank" rel="noreferrer">
+                          <ActionIcon className="mr-2 h-4 w-4" />
+                          {actionLabel}
+                        </a> :
+
+                  <Link to={mediaUrl}>
+                          <ActionIcon className="mr-2 h-4 w-4" />
+                          {actionLabel}
+                        </Link>
+                  }
+                    </Button>
+                }
+                </div> :
+
+              <p className="text-xs text-muted-foreground/50 italic">No file or link attached</p>
+              }
+            </div>
           </div>
         </div>
       </div>);
@@ -241,7 +227,7 @@ const News = () => {
       {/* Hero */}
       <motion.section className="pt-32 pb-16 lg:pt-36 lg:pb-20" initial="hidden" animate="visible" variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={blurIn}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 Explore resources 
@@ -282,7 +268,7 @@ const News = () => {
             <TabsList className="flex flex-wrap justify-start gap-3 bg-transparent p-0 mb-10">
               <TabsTrigger
                 value="all"
-                className="rounded-full px-6 py-2 text-sm font-semibold border border-border/40 bg-card/40 text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary/60 shadow-sm transition-colors"
+                className="resource-tab rounded-full px-6 py-2 text-sm font-semibold border border-border/40 bg-card/40 text-muted-foreground shadow-sm transition-colors"
               >
                 All
               </TabsTrigger>
@@ -290,7 +276,7 @@ const News = () => {
                 <TabsTrigger
                   key={section.id}
                   value={section.id}
-                  className="rounded-full px-6 py-2 text-sm font-semibold border border-border/40 bg-card/40 text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary/60 shadow-sm transition-colors"
+                  className="resource-tab rounded-full px-6 py-2 text-sm font-semibold border border-border/40 bg-card/40 text-muted-foreground shadow-sm transition-colors"
                 >
                   {section.sectionTitle}
                 </TabsTrigger>

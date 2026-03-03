@@ -5,14 +5,17 @@ import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
 import { images } from '@/lib/images';
+import { usePageContent } from '@/contexts/PageContentContext';
 
 const CompanyNews = () => {
   useEffect(() => {window.scrollTo(0, 0);}, []);
 
   const { data } = useResourcesCMS();
+  const { getContent } = usePageContent();
+  const c = (key: string, fb: string) => getContent('news', 'hero', key, fb);
   const newsItems = data.news;
 
-  const categories = ['All', 'Company News', 'Product Updates', 'Events'];
+  const categories = ['All', 'Company News', 'Product Updates', 'Events', 'Others'];
   const [activeCategory, setActiveCategory] = useState('All');
 
   const filtered = activeCategory === 'All' ? newsItems : newsItems.filter((n) => n.category === activeCategory);
@@ -26,17 +29,16 @@ const CompanyNews = () => {
       {/* Hero */}
       <section className="pt-32 pb-16 lg:pt-36 lg:pb-20">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                Get Updates
+                {c('badge', 'Get Updates')}
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
                 <span className="gradient-text">News</span> Center
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                Explore company updates, product announcements, and industry events to stay informed on Awalife's latest
-                milestones and innovations.
+                {c('description', "Explore company updates, product announcements, and industry events to stay informed on Awalife's latest milestones and innovations.")}
               </p>
             </div>
             <div className="relative">
@@ -51,10 +53,10 @@ const CompanyNews = () => {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`news-tab px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
               activeCategory === cat ?
-              'bg-primary text-primary-foreground shadow-lg shadow-primary/25' :
-              'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground border border-border/30 hover:border-primary/30'}`
+              'news-tab-active border-transparent' :
+              'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground border-border/30 hover:border-primary/30'}`
               }>
 
                 {cat}
@@ -87,7 +89,7 @@ const CompanyNews = () => {
                         </div>
                   }
                       <div className="absolute top-5 left-5">
-                        <span className="px-4 py-1.5 bg-primary/90 text-primary-foreground text-xs font-semibold rounded-full">
+                        <span className="news-pill px-4 py-1.5 text-xs font-semibold rounded-full">
                           {item.category}
                         </span>
                       </div>

@@ -1,146 +1,460 @@
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Pencil, Check, X } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
+import { useState, useEffect } from 'react';
+import type { LucideIcon } from 'lucide-react';
+import {
+  Home, Package, FlaskConical, FolderOpen, Building2, Newspaper,
+  ChevronDown, ChevronRight, Loader2, ExternalLink, RefreshCw, Check,
+} from 'lucide-react';
 import { usePageContent } from '@/contexts/PageContentContext';
 
-const PAGE_LABELS: Record<string, string> = {
-  home: 'Home',
-  about: 'About',
-  contact: 'Contact',
-  resources: 'Resources',
-  news: 'News',
-  products: 'Products',
-  footer: 'Footer',
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+type Row = { id: string; page: string; section: string; key: string; label: string; value: string; type: string };
+
+// ─── Nav tree ─────────────────────────────────────────────────────────────────
+
+type NavLeaf  = { type: 'leaf';  key: string; label: string; icon: LucideIcon };
+type NavGroup = { type: 'group'; label: string; icon: LucideIcon; children: { key: string; label: string }[] };
+type NavItem  = NavLeaf | NavGroup;
+
+const NAV: NavItem[] = [
+  { type: 'leaf', key: 'home', label: 'Home', icon: Home },
+  {
+    type: 'group', label: 'Products', icon: Package,
+    children: [
+      { key: 'ai-analyzer', label: 'AI Analyzer' },
+      { key: 'dm-03',       label: 'DM-03 Microscope' },
+    ],
+  },
+  {
+    type: 'group', label: 'Applications', icon: FlaskConical,
+    children: [
+      { key: 'blood',   label: 'Blood Analysis' },
+      { key: 'urine',   label: 'Urine Analysis' },
+      { key: 'feces',   label: 'Feces Analysis' },
+      { key: 'pleural', label: 'Pleural Effusion' },
+      { key: 'exotic',  label: 'Exotic Animals' },
+    ],
+  },
+  { type: 'leaf', key: 'resources', label: 'Resources', icon: FolderOpen },
+  {
+    type: 'group', label: 'Company', icon: Building2,
+    children: [
+      { key: 'about',   label: 'About' },
+      { key: 'contact', label: 'Contact' },
+      { key: 'footer',  label: 'Footer' },
+    ],
+  },
+  { type: 'leaf', key: 'news', label: 'News', icon: Newspaper },
+];
+
+// ─── Page routes for live preview ─────────────────────────────────────────────
+
+const PAGE_ROUTES: Record<string, string> = {
+  home:         '/',
+  about:        '/company/about',
+  contact:      '/company/contact',
+  resources:    '/resources',
+  news:         '/company/news',
+  footer:       '/',
+  blood:        '/applications/blood',
+  urine:        '/applications/urine',
+  feces:        '/applications/feces',
+  pleural:      '/applications/pleural-effusion',
+  exotic:       '/applications/exotic-animals',
+  'ai-analyzer': '/products/ai-analyzer',
+  'dm-03':       '/products/dm-03',
 };
 
-const PageContentManager = () => {
-  const { rows, loading, updateContent } = usePageContent();
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editValue, setEditValue] = useState('');
+const PAGE_LABELS: Record<string, string> = {
+  home: 'Home', about: 'About', contact: 'Contact',
+  resources: 'Resources', news: 'News', footer: 'Footer',
+  blood: 'Blood Analysis', feces: 'Feces Analysis', urine: 'Urine Analysis',
+  pleural: 'Pleural Effusion', exotic: 'Exotic Animals',
+  'ai-analyzer': 'AI Analyzer', 'dm-03': 'DM-03 Microscope',
+};
+
+// ─── FieldEditor ──────────────────────────────────────────────────────────────
+
+const isMultiline = (row: Row) =>
+  row.value.length > 80 ||
+  row.value.includes('\n') ||
+  /body|description|desc|subtitle|support|items/.test(row.key);
+
+type FEProps = {
+  row: Row;
+  onSave: (id: string, value: string) => Promise<void>;
+  onSaved: () => void;
+};
+
+const FieldEditor = ({ row, onSave, onSaved }: FEProps) => {
+  const [value, setValue] = useState(row.value);
   const [saving, setSaving] = useState(false);
+  const [flash, setFlash] = useState(false);
 
-  const grouped = rows.reduce<Record<string, typeof rows>>((acc, row) => {
-    if (!acc[row.page]) acc[row.page] = [];
-    acc[row.page].push(row);
-    return acc;
-  }, {});
+  // Only sync when switching to a different row
+  useEffect(() => { setValue(row.value); }, [row.id]);
 
-  const startEdit = (id: string, currentValue: string) => {
-    setEditingId(id);
-    setEditValue(currentValue);
-  };
+  const dirty = value !== row.value;
+  const multiline = isMultiline(row);
 
-  const cancelEdit = () => {
-    setEditingId(null);
-    setEditValue('');
-  };
-
-  const saveEdit = async (id: string) => {
+  const save = async () => {
+    if (!dirty) return;
     setSaving(true);
     try {
-      await updateContent(id, editValue);
-      toast({ title: 'Content updated' });
-      setEditingId(null);
-      setEditValue('');
-    } catch {
-      toast({ title: 'Failed to update content', variant: 'destructive' });
+      await onSave(row.id, value);
+      setFlash(true);
+      onSaved();
+      setTimeout(() => setFlash(false), 1500);
     } finally {
       setSaving(false);
     }
   };
 
-  if (loading) {
-    return <p className="text-muted-foreground text-center py-12">Loading page content...</p>;
-  }
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') setValue(row.value);
+    if (!multiline && e.key === 'Enter') { e.preventDefault(); save(); }
+    if (multiline && e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); save(); }
+  };
 
-  const pages = Object.keys(grouped).sort((a, b) => {
-    const order = ['home', 'about', 'contact', 'resources', 'news', 'products', 'footer'];
-    return (order.indexOf(a) ?? 99) - (order.indexOf(b) ?? 99);
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between gap-2">
+        <label className="text-xs font-medium text-muted-foreground truncate flex-1">
+          {row.label || row.key}
+        </label>
+        <div className="flex items-center gap-1.5 shrink-0">
+          {flash && (
+            <span className="flex items-center gap-1 text-xs text-emerald-600 font-medium">
+              <Check className="h-3 w-3" /> Saved!
+            </span>
+          )}
+          <button
+            onClick={save}
+            disabled={!dirty || saving}
+            className={`px-2.5 py-1 text-xs font-medium rounded transition-all ${
+              flash
+                ? 'bg-emerald-500 text-white'
+                : dirty
+                  ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                  : 'bg-muted text-muted-foreground opacity-40 cursor-not-allowed'
+            }`}
+          >
+            {saving ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Save'}
+          </button>
+        </div>
+      </div>
+      {multiline ? (
+        <textarea
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          onKeyDown={onKeyDown}
+          rows={Math.max(3, value.split('\n').length + 1)}
+          className="w-full rounded border border-border bg-background px-2.5 py-2 text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-primary resize-y min-h-[72px]"
+        />
+      ) : (
+        <input
+          type="text"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          onKeyDown={onKeyDown}
+          className="w-full rounded border border-border bg-background px-2.5 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary h-9"
+        />
+      )}
+      <p className="text-[10px] text-muted-foreground/50">
+        {multiline ? 'Ctrl+Enter to save' : 'Enter to save'} · Esc to reset
+      </p>
+    </div>
+  );
+};
+
+// ─── Key ordering within sections (matches website visual order) ──────────────
+
+const FIELD_PRIORITY: Record<string, number> = {
+  badge: 0, title: 1, subtitle: 2, body: 3, description: 4, excerpt: 4,
+  label: 5, desc: 6, support: 7, items: 8,
+  cta_text: 9, cta_url: 10, button_text: 9, button_url: 10,
+  tagline: 0, address: 1, phone: 2, email: 3,
+  q: 0, a: 1,
+};
+
+const leadingNum = (key: string) => {
+  const m = key.match(/(\d+)/);
+  return m ? parseInt(m[1], 10) : 0;
+};
+
+const fieldSuffix = (key: string): string => {
+  if (/^q\d+$/.test(key)) return 'q';
+  if (/^a\d+$/.test(key)) return 'a';
+  return key.replace(/^[a-z]+_\d+_/, '');
+};
+
+const sortRowKeys = (rows: Row[]): Row[] =>
+  rows.slice().sort((a, b) => {
+    const na = leadingNum(a.key), nb = leadingNum(b.key);
+    if (na !== nb) return na - nb;
+    const pa = FIELD_PRIORITY[fieldSuffix(a.key)] ?? 50;
+    const pb = FIELD_PRIORITY[fieldSuffix(b.key)] ?? 50;
+    if (pa !== pb) return pa - pb;
+    return a.key.localeCompare(b.key);
   });
 
-  if (!pages.length) {
+// ─── Section order matching website layout ────────────────────────────────────
+
+const SECTION_ORDER: Record<string, string[]> = {
+  home:         ['hero', 'why_us', 'products', 'partners', 'cta'],
+  blood:        ['hero', 'overview', 'categories', 'classification', 'how_it_works', 'clinical_images', 'faq', 'cta'],
+  feces:        ['hero', 'overview', 'categories', 'classification', 'direct_sampling', 'flotation', 'clinical_images', 'faq', 'cta'],
+  urine:        ['hero', 'overview', 'categories', 'classification', 'how_it_works', 'clinical_images', 'faq', 'cta'],
+  exotic:       ['hero', 'overview', 'low_volume', 'species_table', 'species', 'faq', 'cta'],
+  pleural:      ['hero', 'overview', 'classification', 'clinical_images', 'faq', 'cta'],
+  'ai-analyzer':['hero', 'overview', 'capabilities', 'workflow', 'faq'],
+  'dm-03':      ['hero', 'overview', 'capabilities', 'hardware', 'image_hub', 'sample_types', 'faq'],
+  about:        ['hero', 'story', 'vision', 'principles', 'journey', 'values', 'metrics', 'global', 'cta'],
+  contact:      ['hero', 'form'],
+  footer:       ['tagline', 'address'],
+  news:         ['hero'],
+  resources:    ['hero'],
+};
+
+const sortSections = (page: string, entries: [string, Row[]][]) => {
+  const order = SECTION_ORDER[page] ?? [];
+  return entries.slice().sort(([a], [b]) => {
+    const ai = order.indexOf(a);
+    const bi = order.indexOf(b);
+    if (ai === -1 && bi === -1) return a.localeCompare(b);
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
+};
+
+// ─── PageEditor ───────────────────────────────────────────────────────────────
+// Auto-groups all DB rows for the page by section and renders a FieldEditor per row.
+
+const formatSection = (s: string) =>
+  s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+
+type PageEditorProps = {
+  page: string;
+  rows: Row[];
+  onSave: (id: string, value: string) => Promise<void>;
+  onSaved: () => void;
+};
+
+const PageEditor = ({ page, rows, onSave, onSaved }: PageEditorProps) => {
+  const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
+
+  if (rows.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-border/40 bg-secondary/5 py-16 text-center">
-        <p className="text-muted-foreground font-medium mb-2">No page content found</p>
-        <p className="text-sm text-muted-foreground">
-          The <code className="bg-muted px-1 py-0.5 rounded text-xs">page_content</code> table hasn't been created yet.
-          Run the Supabase migration first, then refresh this page.
-        </p>
+      <div className="rounded-xl border border-dashed border-border/40 py-12 text-center">
+        <p className="text-sm text-muted-foreground font-medium">No content rows in DB for this page.</p>
+        <p className="text-xs text-muted-foreground mt-1">Run the Supabase migration to seed rows, then refresh.</p>
+      </div>
+    );
+  }
+
+  // Group by section
+  const sections = new Map<string, Row[]>();
+  for (const row of rows) {
+    if (!sections.has(row.section)) sections.set(row.section, []);
+    sections.get(row.section)!.push(row);
+  }
+
+  const sorted = sortSections(page, [...sections.entries()]);
+
+  const toggle = (section: string) =>
+    setCollapsed(prev => {
+      const next = new Set(prev);
+      if (next.has(section)) next.delete(section); else next.add(section);
+      return next;
+    });
+
+  return (
+    <div className="space-y-3">
+      {sorted.map(([section, sRows]) => {
+        const isCollapsed = collapsed.has(section);
+        const sortedRows = sortRowKeys(sRows);
+        return (
+          <div key={section} className="rounded-xl border border-border/50 bg-card overflow-hidden">
+            <button
+              onClick={() => toggle(section)}
+              className="w-full flex items-center gap-2 px-4 py-2.5 border-b border-border/30 bg-muted/30 hover:bg-muted/50 transition-colors text-left"
+            >
+              {isCollapsed
+                ? <ChevronRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                : <ChevronDown className="h-3.5 w-3.5 text-muted-foreground shrink-0" />}
+              <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider flex-1">
+                {formatSection(section)}
+              </p>
+              <span className="text-[10px] text-muted-foreground/50 shrink-0">
+                {sRows.length} field{sRows.length !== 1 ? 's' : ''}
+              </span>
+            </button>
+            {!isCollapsed && (
+              <div className="p-4 space-y-4">
+                {sortedRows.map(row => (
+                  <FieldEditor key={row.id} row={row} onSave={onSave} onSaved={onSaved} />
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+// ─── Main component ───────────────────────────────────────────────────────────
+
+const PageContentManager = () => {
+  const { rows, loading, updateContent } = usePageContent();
+  const [selectedPage, setSelectedPage] = useState('home');
+  const [openGroups, setOpenGroups] = useState<Set<string>>(() => new Set(['Products', 'Applications', 'Company']));
+  const [iframeKey, setIframeKey] = useState(0);
+
+  const pageRows = rows.filter(r => r.page === selectedPage);
+  const route = PAGE_ROUTES[selectedPage] ?? '/';
+  const previewUrl = `${window.location.origin}${route}`;
+
+  const handleSave = async (id: string, value: string) => {
+    await updateContent(id, value);
+  };
+
+  const handleSaved = () => setIframeKey(k => k + 1);
+
+  const toggleGroup = (label: string) => {
+    setOpenGroups(prev => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label); else next.add(label);
+      return next;
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="flex h-full items-center justify-center text-muted-foreground gap-2">
+        <Loader2 className="h-4 w-4 animate-spin" /> Loading page content…
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {pages.map(page => (
-        <Card key={page}>
-          <CardHeader>
-            <CardTitle className="capitalize">{PAGE_LABELS[page] ?? page} Page</CardTitle>
-            <CardDescription>Editable text content for the {PAGE_LABELS[page] ?? page} page sections.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {grouped[page].map(row => {
-                const isEditing = editingId === row.id;
-                const isLong = row.value.length > 80 || row.type === 'richtext';
-                return (
-                  <div key={row.id} className="rounded-lg border border-border/30 p-4 bg-card/30">
-                    <div className="flex items-start justify-between gap-3 mb-2">
-                      <div>
-                        <Label className="text-sm font-semibold">{row.label}</Label>
-                        <p className="text-[11px] text-muted-foreground font-mono mt-0.5">{row.page}/{row.section}/{row.key}</p>
-                      </div>
-                      {!isEditing && (
-                        <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={() => startEdit(row.id, row.value)}>
-                          <Pencil className="h-3.5 w-3.5" />
-                        </Button>
-                      )}
-                    </div>
+    <div className="flex h-full">
 
-                    {isEditing ? (
-                      <div className="space-y-2">
-                        {isLong ? (
-                          <Textarea
-                            value={editValue}
-                            onChange={e => setEditValue(e.target.value)}
-                            rows={4}
-                            className="text-sm"
-                            autoFocus
-                          />
-                        ) : (
-                          <Input
-                            value={editValue}
-                            onChange={e => setEditValue(e.target.value)}
-                            className="text-sm"
-                            autoFocus
-                          />
-                        )}
-                        <div className="flex gap-2">
-                          <Button size="sm" onClick={() => saveEdit(row.id)} disabled={saving}>
-                            <Check className="mr-1.5 h-3.5 w-3.5" /> Save
-                          </Button>
-                          <Button variant="ghost" size="sm" onClick={cancelEdit} disabled={saving}>
-                            <X className="mr-1.5 h-3.5 w-3.5" /> Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">
-                        {row.value || <span className="text-muted-foreground italic">No value set</span>}
-                      </p>
-                    )}
+      {/* ── Left: page nav ──────────────────────────────────────────────────── */}
+      <div className="w-52 shrink-0 border-r border-border/50 bg-muted/10 overflow-y-auto">
+        <div className="px-3 py-4 space-y-0.5">
+          <p className="px-2 pb-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60">
+            Pages
+          </p>
+
+          {NAV.map(item => {
+            if (item.type === 'leaf') {
+              const { key, label, icon: Icon } = item as NavLeaf;
+              const active = selectedPage === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setSelectedPage(key)}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    active
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-foreground/70 hover:bg-accent hover:text-accent-foreground'
+                  }`}
+                >
+                  <Icon className="h-3.5 w-3.5 shrink-0" />
+                  {label}
+                </button>
+              );
+            }
+
+            const group = item as NavGroup;
+            const isOpen = openGroups.has(group.label);
+            const hasActive = group.children.some(c => c.key === selectedPage);
+            const Icon = group.icon;
+
+            return (
+              <div key={group.label}>
+                <button
+                  onClick={() => toggleGroup(group.label)}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    hasActive && !isOpen ? 'text-primary' : 'text-foreground/70 hover:bg-accent hover:text-accent-foreground'
+                  }`}
+                >
+                  <Icon className="h-3.5 w-3.5 shrink-0" />
+                  <span className="flex-1 text-left">{group.label}</span>
+                  {isOpen
+                    ? <ChevronDown className="h-3.5 w-3.5 shrink-0 opacity-50" />
+                    : <ChevronRight className="h-3.5 w-3.5 shrink-0 opacity-50" />}
+                </button>
+
+                {isOpen && (
+                  <div className="ml-3 pl-3 border-l border-border/40 mt-0.5 mb-1 space-y-0.5">
+                    {group.children.map(child => {
+                      const active = selectedPage === child.key;
+                      return (
+                        <button
+                          key={child.key}
+                          onClick={() => setSelectedPage(child.key)}
+                          className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition-colors ${
+                            active
+                              ? 'bg-primary text-primary-foreground font-medium'
+                              : 'text-foreground/60 hover:bg-accent hover:text-accent-foreground'
+                          }`}
+                        >
+                          {child.label}
+                        </button>
+                      );
+                    })}
                   </div>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── Center: auto-generated edit form ────────────────────────────────── */}
+      <div className="w-[380px] shrink-0 border-r border-border/50 overflow-y-auto">
+        <div className="px-5 py-5 space-y-5">
+          <div>
+            <h2 className="text-base font-semibold text-foreground">{PAGE_LABELS[selectedPage] ?? selectedPage}</h2>
+            <p className="text-xs text-muted-foreground mt-0.5">{pageRows.length} field{pageRows.length !== 1 ? 's' : ''} · Enter to save · Esc to reset</p>
+          </div>
+          <PageEditor page={selectedPage} rows={pageRows} onSave={handleSave} onSaved={handleSaved} />
+        </div>
+      </div>
+
+      {/* ── Right: live iframe preview ───────────────────────────────────────── */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Toolbar */}
+        <div className="shrink-0 flex items-center gap-2 px-3 py-2 border-b border-border/50 bg-muted/10">
+          <span className="flex-1 truncate text-xs text-muted-foreground font-mono">{previewUrl}</span>
+          <a
+            href={previewUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground border border-border rounded hover:text-foreground transition-colors"
+          >
+            <ExternalLink className="h-3 w-3" /> Open
+          </a>
+          <button
+            onClick={() => setIframeKey(k => k + 1)}
+            className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground border border-border rounded hover:text-foreground transition-colors"
+          >
+            <RefreshCw className="h-3 w-3" /> Reload
+          </button>
+        </div>
+        {/* iframe */}
+        <div className="flex-1 overflow-hidden">
+          <iframe
+            key={iframeKey}
+            src={previewUrl}
+            className="w-full h-full border-0"
+            title="Page preview"
+          />
+        </div>
+      </div>
     </div>
   );
 };

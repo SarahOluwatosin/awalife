@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ArrowRight, Droplets, Bug, Microscope, MonitorSmartphone, FlaskConical, Stethoscope, Building2, Newspaper } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight, Droplets, Bug, Microscope, Cpu, FlaskConical, TestTubes, PawPrint, Building2, Newspaper } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -37,16 +37,16 @@ const Header = () => {
   }, []);
 
   const productItems = [
-    { label: 'AI Morphological Analyzer', path: '/products/ai-analyzer', icon: Microscope },
-    { label: 'DM-03 Microscope Workstation', path: '/products/dm-03', icon: MonitorSmartphone },
+    { label: 'AI Morphology Analyzer', path: '/products/ai-analyzer', icon: Cpu },
+    { label: 'DM-03 Microscope Workstation', path: '/products/dm-03', icon: Microscope },
   ];
 
   const applicationItems = [
     { label: 'Blood', path: '/applications/blood', icon: Droplets },
     { label: 'Urine', path: '/applications/urine', icon: FlaskConical },
     { label: 'Feces', path: '/applications/feces', icon: Bug },
-    { label: 'Pleural Effusion', path: '/applications/pleural-effusion', icon: Stethoscope },
-    { label: 'Exotic Animals', path: '/applications/exotic-animals', icon: Stethoscope },
+    { label: 'Fluid', path: '/applications/pleural-effusion', icon: TestTubes },
+    { label: 'Exotic Animals', path: '/applications/exotic-animals', icon: PawPrint },
   ];
 
   const companyItems = [

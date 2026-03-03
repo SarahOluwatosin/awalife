@@ -190,27 +190,31 @@ const AdminImageOverlay = () => {
     });
   };
 
-  const syncSiteImageRecord = async (storagePath: string) => {
-    // Normalize to basename only (consistent with existing records)
-    const baseName = storagePath.includes('/') ? storagePath.split('/').pop()! : storagePath;
-    // Search by basename only — all existing records use basename format
+  // storagePath = the data-override-id (e.g. "blood-overview")
+  // mediaUrl    = the actual uploaded/selected public URL (used to derive file_name)
+  const syncSiteImageRecord = async (storagePath: string, mediaUrl: string) => {
+    // Extract the path relative to the media bucket from the public URL
+    const marker = '/storage/v1/object/public/media/';
+    const idx = mediaUrl.indexOf(marker);
+    const filePath = idx !== -1
+      ? mediaUrl.substring(idx + marker.length).split('?')[0]
+      : storagePath;
+    const baseName = filePath.split('/').pop() || storagePath;
+
+    // Look for an existing record keyed to this override ID
     const { data: existing } = await supabase.from('site_images').select('id')
-      .eq('file_name', baseName)
+      .eq('key', storagePath)
       .maybeSingle();
     if (existing) {
-      await supabase.from('site_images').update({ updated_at: new Date().toISOString() }).eq('id', existing.id);
+      await supabase.from('site_images').update({ file_name: filePath, updated_at: new Date().toISOString() }).eq('id', existing.id);
     } else {
-      // Also check full path to avoid creating duplicates
-      const { data: fullPathMatch } = await supabase.from('site_images').select('id')
-        .eq('file_name', storagePath)
-        .maybeSingle();
-      if (fullPathMatch) {
-        // Fix the record to use basename format and update timestamp
-        await supabase.from('site_images').update({ file_name: baseName, updated_at: new Date().toISOString() }).eq('id', fullPathMatch.id);
-      } else {
-        const label = baseName.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-        await supabase.from('site_images').insert({ key: baseName.replace(/\.[^.]+$/, '').replace(/[-_ ]/g, ''), label, file_name: baseName, category: 'Uncategorized' });
-      }
+      const label = baseName.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      await supabase.from('site_images').insert({
+        key: storagePath,
+        label,
+        file_name: filePath,
+        category: 'Uncategorized',
+      });
     }
   };
 
@@ -266,7 +270,7 @@ const AdminImageOverlay = () => {
         thumbnail_url: '',
       }, { onConflict: 'storage_path' });
 
-      await syncSiteImageRecord(activePath);
+      await syncSiteImageRecord(activePath, newUrl);
       await refreshOverrides();
       // Update with final URL
       refreshAllMatching(activePath, newUrl);
@@ -298,7 +302,7 @@ const AdminImageOverlay = () => {
         thumbnail_url: '',
       }, { onConflict: 'storage_path' });
 
-      await syncSiteImageRecord(activePath);
+      await syncSiteImageRecord(activePath, imageUrl);
       await refreshOverrides();
       toast({ title: `Replaced with "${img.label}"` });
       setDialogOpen(false);

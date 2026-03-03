@@ -1,16 +1,18 @@
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Linkedin, Instagram, Facebook, Lock } from 'lucide-react';
 import { images } from '@/lib/images';
+import { usePageContent } from '@/contexts/PageContentContext';
 
 const Footer = () => {
+  const { getContent } = usePageContent();
   const footerLinks = {
     quickLinks: [
-      { label: 'AI Morphological Analyzer', path: '/products/ai-analyzer' },
+      { label: 'AI Morphology Analyzer', path: '/products/ai-analyzer' },
       { label: 'DM-03 Microscope Workstation', path: '/products/dm-03' },
       { label: 'Blood Analysis', path: '/applications/blood' },
       { label: 'Urine Analysis', path: '/applications/urine' },
       { label: 'Feces Analysis', path: '/applications/feces' },
-      { label: 'Pleural Effusion', path: '/applications/pleural-effusion' },
+      { label: 'Fluid', path: '/applications/pleural-effusion' },
       { label: 'Exotic Animals', path: '/applications/exotic-animals' },
     ],
     company: [
@@ -33,7 +35,7 @@ const Footer = () => {
               <img src={images.awalifeLogo} alt="Awalife" className="h-10 w-auto" />
             </Link>
             <p className="text-muted-foreground mb-6 max-w-sm">
-              Awalife is a dedicated innovator in AI-powered visible morphology, building veterinary diagnostics solutions that turn what clinicians see into review-ready reports with images and counts.
+              {getContent('footer', 'tagline', 'text', 'Awalife is a dedicated innovator in AI-powered visible morphology, building veterinary diagnostics solutions that turn what clinicians see into review-ready reports with images and counts.')}
             </p>
             <div className="flex gap-4 mt-8">
               {[
@@ -93,11 +95,11 @@ const Footer = () => {
             <h4 className="font-semibold text-foreground mb-5">Contact</h4>
             <div className="space-y-5 text-sm">
               <a
-                href="tel:+8613332902078"
+                href="tel:0755-27206973"
                 className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
               >
                 <Phone className="w-4 h-4 text-primary" />
-                (86) 13332902078
+                0755-27206973
               </a>
               <a
                 href="mailto:info@awalife.com.cn"

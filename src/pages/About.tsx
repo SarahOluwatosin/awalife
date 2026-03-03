@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Award, Globe, Microscope, ShieldCheck, Sparkles, Target, TrendingUp, Cpu, Zap, Users, Lightbulb, Heart, BookOpen, Eye, Rocket, HandHeart, GraduationCap } from 'lucide-react';
+import { usePageContent } from '@/contexts/PageContentContext';
+import { ArrowRight, ShieldCheck, Zap, Lightbulb, Heart, Eye, Rocket, HandHeart, GraduationCap } from 'lucide-react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
@@ -49,7 +50,7 @@ const MetricItem = ({ value, suffix, label, delay, decimals = 0 }: {value: numbe
 };
 
 /* ── Timeline Node ── */
-const TimelineNode = ({ entry, index, total }: { entry: { year: string; icon: any; items: string[]; highlight?: string }; index: number; total: number }) => {
+const TimelineNode = ({ entry, index, total }: { entry: { year: string; icon?: any; items: string[]; highlight?: string }; index: number; total: number }) => {
   const isLeft = index % 2 === 0;
   const Icon = entry.icon;
   const [isHovered, setIsHovered] = useState(false);
@@ -63,16 +64,25 @@ const TimelineNode = ({ entry, index, total }: { entry: { year: string; icon: an
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.06 * index }}
     >
       {/* Mobile node */}
-      <div className="absolute left-0 top-0 md:hidden flex flex-col items-center">
+      <div className="absolute left-[18px] top-3 -translate-x-1/2 md:hidden flex flex-col items-center">
+        {Icon ?
         <motion.div
-          className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary bg-background shadow-lg"
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.1 }}
-        >
-          <Icon className="h-4 w-4 text-primary" />
-        </motion.div>
+            className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary bg-background shadow-lg"
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.1 }}
+          >
+            <Icon className="h-4 w-4 text-primary" />
+          </motion.div> :
+        <motion.div
+            className="relative z-10 h-3 w-3 rounded-full bg-primary"
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.1 }}
+          />
+        }
       </div>
 
       {/* Card */}
@@ -156,18 +166,26 @@ const TimelineNode = ({ entry, index, total }: { entry: { year: string; icon: an
 
       {/* Center icon node (desktop) */}
       <div className="hidden md:flex w-20 shrink-0 flex-col items-center pt-1">
+        {Icon ?
         <motion.div
-          className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary/50 bg-background shadow-xl"
-          initial={{ scale: 0, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ type: 'spring', stiffness: 280, damping: 18, delay: 0.2 }}
-          whileHover={{ scale: 1.15, borderColor: 'hsl(var(--primary))' }}
-        >
-          <Icon className="h-5 w-5 text-primary" />
-          {/* Glow */}
-          <div className="absolute inset-0 rounded-full bg-primary/10 blur-md" />
-        </motion.div>
+            className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary/50 bg-background shadow-xl"
+            initial={{ scale: 0, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: 'spring', stiffness: 280, damping: 18, delay: 0.2 }}
+            whileHover={{ scale: 1.15, borderColor: 'hsl(var(--primary))' }}
+          >
+            <Icon className="h-5 w-5 text-primary" />
+            <div className="absolute inset-0 rounded-full bg-primary/10 blur-md" />
+          </motion.div> :
+        <motion.div
+            className="relative z-10 h-3.5 w-3.5 rounded-full bg-primary"
+            initial={{ scale: 0, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: 'spring', stiffness: 280, damping: 18, delay: 0.2 }}
+          />
+        }
 
         {/* Year label under node */}
         <motion.span
@@ -190,6 +208,8 @@ const TimelineNode = ({ entry, index, total }: { entry: { year: string; icon: an
 const About = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   const bodyTextClass = 'text-lg';
+  const { getContent } = usePageContent();
+  const c = (section: string, key: string, fb: string) => getContent('about', section, key, fb);
   const timelineRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: timelineProgress } = useScroll({
     target: timelineRef,
@@ -199,48 +219,48 @@ const About = () => {
   const timelineGlow = useTransform(timelineProgress, [0, 1], [0.2, 1]);
 
   const metrics = [
-    { rawValue: 15, suffix: 'M+', label: 'Images for AI Model Training', decimals: 0 },
-    { rawValue: 2.4, suffix: 'M+', label: 'Reports Generated', decimals: 1 },
-    { rawValue: 8000, suffix: '+', label: 'Installations Worldwide', decimals: 0 },
+    { rawValue: 15,   suffix: 'M+', label: c('metrics', 'label_1', 'Images for AI Model Training'), decimals: 0 },
+    { rawValue: 2.4,  suffix: 'M+', label: c('metrics', 'label_2', 'Reports Generated'), decimals: 1 },
+    { rawValue: 8000, suffix: '+',  label: c('metrics', 'label_3', 'Installations Worldwide'), decimals: 0 },
   ];
 
   const timeline = [
-    { year: '2020', icon: Sparkles, highlight: 'Founded', items: ['Jul 7 — Awalife established.'] },
-    { year: '2021', icon: Microscope, highlight: 'First Product', items: ['Apr — Successful development of the first Morphology Analyzer.', 'Aug — Microscope Workstation launched in China.'] },
-    { year: '2022', icon: Target, highlight: 'Funded', items: ['Feb — Secured Angel funding.', 'Aug — First AI-100Vet Morphology Analyzer installed in China.'] },
-    { year: '2023', icon: TrendingUp, highlight: 'Rapid Growth', items: ['Apr — Fecal Morphology Detection launched; monthly sales surpassed RMB 1M.', 'Dec — Secured Series A funding.'] },
-    { year: '2024', icon: Globe, highlight: 'Global Expansion', items: ['Apr — First international AI-100Vet installed in Malaysia.', 'May — Effusion Analysis launched.', 'Nov — Blood Morphology for exotic animals launched.', 'Dec — Global monthly sales exceeded RMB 10M. Recognized as a Shenzhen Specialized and Sophisticated SME.'] },
-    { year: '2025', icon: Award, highlight: 'Industry Leader', items: ['Jan — Global installations reached 3,000 units.', 'Apr — New products launched: DM-03 Microscope Workstation, AI-80Vet, AI-100Vet Elite, JH-01 Thermo Mixer.', 'Oct — Global installations reached 7,000 units.', 'Dec — Recognized as a Guangdong Provincial High-Quality & High-Tech Product. The Awalife-led industry standard for Formed Element Analyzers was officially published by the CVMA.'] },
+    { year: '2020', icon: null, highlight: 'Founded', items: ['Jul 7 — Awalife established.'] },
+    { year: '2021', icon: null, highlight: 'First Product', items: ['Apr — Successful development of the first Morphology Analyzer.', 'Aug — Microscope Workstation launched in China.'] },
+    { year: '2022', icon: null, highlight: 'Funded', items: ['Feb — Secured Angel funding.', 'Aug — First AI-100Vet Morphology Analyzer installed in China.'] },
+    { year: '2023', icon: null, highlight: 'Rapid Growth', items: ['Apr — Fecal Morphology Detection launched; monthly sales surpassed RMB 1M.', 'Dec — Secured Series A funding.'] },
+    { year: '2024', icon: null, highlight: 'Global Expansion', items: ['Apr — First international AI-100Vet installed in Malaysia.', 'May — Effusion Analysis launched.', 'Nov — Blood Morphology for exotic animals launched.', 'Dec — Global monthly sales exceeded RMB 10M. Recognized as a Shenzhen Specialized and Sophisticated SME.'] },
+    { year: '2025', icon: null, highlight: 'Industry Leader', items: ['Jan — Global installations reached 3,000 units.', 'Apr — New products launched: DM-03 Microscope Workstation, AI-80Vet, AI-100Vet Elite, JH-01 Thermo Mixer.', 'Oct — Global installations reached 7,000 units.', 'Dec — Recognized as a Guangdong Provincial High-Quality & High-Tech Product. The Awalife-led industry standard for Formed Element Analyzers was officially published by the CVMA.'] },
     { year: '2026 and Beyond', icon: Rocket, highlight: 'Future', items: ['Continued global growth with continuous innovation and new applications in development.'] },
   ];
 
   const visionItems = [
-    { text: 'Future-proof Veterinary Diagnostic Tools', icon: Eye, desc: 'Shaping the next generation of veterinary diagnostics through forward-thinking technology.' },
-    { text: 'Delivering Innovation to Empower Our Customers', icon: Zap, desc: 'Continuous R&D to provide cutting-edge solutions that drive clinical excellence.' },
-    { text: 'Creating Shared Value with Our Customers', icon: HandHeart, desc: 'Building partnerships where mutual growth leads to better outcomes for all.' },
+    { text: c('vision', 'item_1_title', 'Future-proof Veterinary Diagnostic Tools'),         icon: Eye,       desc: c('vision', 'item_1_desc', 'Shaping the next generation of veterinary diagnostics through forward-thinking technology.') },
+    { text: c('vision', 'item_2_title', 'Delivering Innovation to Empower Our Customers'),   icon: Zap,       desc: c('vision', 'item_2_desc', 'Continuous R&D to provide cutting-edge solutions that drive clinical excellence.') },
+    { text: c('vision', 'item_3_title', 'Creating Shared Value with Our Customers'),         icon: HandHeart, desc: c('vision', 'item_3_desc', 'Building partnerships where mutual growth leads to better outcomes for all.') },
   ];
 
   const coreValues = [
-    { text: 'Integrity with Humility', icon: ShieldCheck, desc: 'Honest and grounded in everything we do.' },
-    { text: 'Practical Innovation', icon: Lightbulb, desc: 'Real-world solutions, not just ideas.' },
-    { text: 'Serving Clients, Growing Together', icon: Heart, desc: 'Success shared across our community.' },
-    { text: 'Lifelong Learning and Ethical Excellence', icon: GraduationCap, desc: 'Always evolving with integrity.' },
+    { text: c('values', 'item_1_title', 'Integrity with Humility'),                    icon: ShieldCheck,  desc: c('values', 'item_1_desc', 'Honest and grounded in everything we do.') },
+    { text: c('values', 'item_2_title', 'Practical Innovation'),                       icon: Lightbulb,    desc: c('values', 'item_2_desc', 'Real-world solutions, not just ideas.') },
+    { text: c('values', 'item_3_title', 'Serving Clients, Growing Together'),          icon: Heart,        desc: c('values', 'item_3_desc', 'Success shared across our community.') },
+    { text: c('values', 'item_4_title', 'Lifelong Learning and Ethical Excellence'),   icon: GraduationCap, desc: c('values', 'item_4_desc', 'Always evolving with integrity.') },
   ];
 
 
   return (
     <Layout>
-      <PageHero title="About Awalife" subtitle="Pioneering AI-powered morphology diagnostics" breadcrumb={[{ label: 'Company', path: '/company/about' }]} />
+      <PageHero title={c('hero', 'title', 'About Awalife')} subtitle={c('hero', 'subtitle', 'Pioneering AI-powered morphology diagnostics')} breadcrumb={[{ label: 'Company', path: '/company/about' }]} />
 
       <motion.section className="py-20 lg:py-28" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                Our Story
+                {c('story', 'badge', 'Our Story')}
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Pioneering <span className="gradient-text">AI-Powered Morphology</span> Diagnostics</h2>
-              <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>Awalife is a dedicated innovator in AI-powered morphology for veterinary diagnostics, with a long-term focus on formed element analysis. By pairing high-quality microscopy imaging with AI-assisted morphology recognition, we help clinics standardize workflows and document findings with clarity—through review-ready reports with images and counts across blood, urine, feces, and body fluids. We continue to expand this platform through ongoing innovation and updates.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('story', 'title', 'Pioneering')} <span className="gradient-text">AI-Powered Morphology</span> Diagnostics</h2>
+              <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('story', 'body', 'Awalife is a dedicated innovator in AI-powered morphology for veterinary diagnostics, with a long-term focus on formed element analysis. By pairing high-quality microscopy imaging with AI-assisted morphology recognition, we help clinics standardize workflows and document findings with clarity—through review-ready reports with images and counts across blood, urine, feces, and body fluids. We continue to expand this platform through ongoing innovation and updates.')}</p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 mt-10">
                 {metrics.map((metric, i) => <MetricItem key={metric.label} value={metric.rawValue} suffix={metric.suffix} label={metric.label} delay={i * 100} decimals={metric.decimals} />)}
               </div>
@@ -263,13 +283,13 @@ const About = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
           <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-20">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-              Our Journey
+              {c('journey', 'badge', 'Our Journey')}
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Key Moments That <span className="gradient-text">Shaped Awalife</span></h2>
-            <p className="text-muted-foreground">From a bold idea in 2020 to a global presence — every milestone reflects our commitment to innovation.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{c('journey', 'title', 'Key Moments That')} <span className="gradient-text">Shaped Awalife</span></h2>
+            <p className="text-muted-foreground">{c('journey', 'desc', 'From a bold idea in 2020 to a global presence — every milestone reflects our commitment to innovation.')}</p>
           </GsapReveal>
 
-          <div ref={timelineRef} className="relative max-w-5xl mx-auto">
+          <div ref={timelineRef} className="relative w-full">
             {/* Scroll-fill vertical line */}
             <div className="pointer-events-none absolute inset-y-0 left-[18px] md:left-1/2 md:-translate-x-px">
               <div className="absolute left-0 top-0 h-full w-px bg-border/30" />
@@ -302,10 +322,10 @@ const About = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative">
           <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-20">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-              Our Principles
+              {c('principles', 'badge', 'Our Principles')}
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Our Vision and <span className="gradient-text">Core Values</span></h2>
-            <p className="text-muted-foreground">The guiding principles that drive every decision, product, and partnership at Awalife.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{c('principles', 'title', 'Our Vision and')} <span className="gradient-text">Core Values</span></h2>
+            <p className="text-muted-foreground">{c('principles', 'desc', 'The guiding principles that drive every decision, product, and partnership at Awalife.')}</p>
           </GsapReveal>
 
           {/* ── Vision ── */}
@@ -446,10 +466,10 @@ const About = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-4xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-              Global Reach
+              {c('global', 'badge', 'Global Reach')}
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground lg:whitespace-nowrap">Scaling <span className="text-primary">Globally</span> Through Partners Who Deliver <span className="gradient-text">Locally</span></h2>
-            <p className={`${bodyTextClass} text-muted-foreground mt-4`}>From product design to service processes, Awalife is built for international deployment. With standardized workflows, review-ready outputs, and a platform that keeps expanding across sample types, we help teams deliver consistent clinical value across regions and practice settings.</p>
+            <p className={`${bodyTextClass} text-muted-foreground mt-4`}>{c('global', 'body', 'From product design to service processes, Awalife is built for international deployment. With standardized workflows, review-ready outputs, and a platform that keeps expanding across sample types, we help teams deliver consistent clinical value across regions and practice settings.')}</p>
           </div>
           <div className="relative">
             <div className="rounded-2xl overflow-hidden">
@@ -461,8 +481,8 @@ const About = () => {
 
       <motion.section className="py-20 lg:py-28 bg-white" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Interested in <span className="gradient-text">Our Products</span>?</h2>
-          <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('cta', 'title', 'Interested in Our Products?')}</h2>
+          <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>{c('cta', 'body', "Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.")}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>
           </div>

@@ -40,9 +40,9 @@ export type ResourceKind = (typeof RESOURCE_KIND_CONFIG)[number]['id'];
 export const RESOURCE_PRODUCT_OPTIONS = [
   { id: 'all', label: 'All Products' },
   { id: 'ai-analyzer', label: 'AI Series Morphology Analyzer' },
-  { id: 'ai-100vet-elite', label: 'AI-100Vet Elite Morphological Analyzer' },
-  { id: 'ai-100vet', label: 'AI-100Vet Morphological Analyzer' },
-  { id: 'ai-80vet', label: 'AI-80Vet Morphological Analyzer' },
+  { id: 'ai-100vet-elite', label: 'AI-100Vet Elite Morphology Analyzer' },
+  { id: 'ai-100vet', label: 'AI-100Vet Morphology Analyzer' },
+  { id: 'ai-80vet', label: 'AI-80Vet Morphology Analyzer' },
   { id: 'dm-03', label: 'DM-03 Microscope Workstation' },
 ] as const;
 
@@ -60,6 +60,7 @@ export type ResourceItem = {
   mediaUrl: string;
   mediaName: string;
   mediaMime: string;
+  status: 'published' | 'draft';
 };
 
 export type ResourceFAQItem = {
@@ -91,6 +92,7 @@ export const NEWS_CATEGORIES = [
   'Company News',
   'Product Updates',
   'Events',
+  'Others',
 ] as const;
 
 export type NewsCategory = (typeof NEWS_CATEGORIES)[number];
