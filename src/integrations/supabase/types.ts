@@ -81,6 +81,11 @@ export type Database = {
           id: string
           image_url: string
           location: string
+          meta_desc: string
+          meta_title: string
+          slug: string | null
+          sort_order: number
+          status: string
           title: string
           updated_at: string
         }
@@ -93,6 +98,11 @@ export type Database = {
           id?: string
           image_url?: string
           location?: string
+          meta_desc?: string
+          meta_title?: string
+          slug?: string | null
+          sort_order?: number
+          status?: string
           title: string
           updated_at?: string
         }
@@ -105,8 +115,49 @@ export type Database = {
           id?: string
           image_url?: string
           location?: string
+          meta_desc?: string
+          meta_title?: string
+          slug?: string | null
+          sort_order?: number
+          status?: string
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      page_content: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          label: string
+          page: string
+          section: string
+          type: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          label?: string
+          page: string
+          section: string
+          type?: string
+          updated_at?: string
+          value?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          label?: string
+          page?: string
+          section?: string
+          type?: string
+          updated_at?: string
+          value?: string
         }
         Relationships: []
       }
