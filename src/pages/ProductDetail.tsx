@@ -237,19 +237,19 @@ const ProductDetail = () => {
             <motion.div className={`lg:py-6 ${(isAIAnalyzer || isMicroscope) ? 'lg:order-1' : ''} ${isMicroscope ? 'max-w-lg' : ''}`} variants={fadeInLeft}>
               {isAIAnalyzer && (
                 <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-4">
-                  Product Overview
+                  {getContent('ai-analyzer', 'hero', 'badge', 'Product Overview')}
                 </span>
               )}
               {isMicroscope && (
                 <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-4">
-                  Digital Microscope
+                  {getContent('dm-03', 'hero', 'badge', 'Digital Microscope')}
                 </span>
               )}
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
                 {isMicroscope
-                  ? <>Smarter Imaging, <span className="gradient-text">Effortless Operation</span></>
+                  ? <>{getContent('dm-03', 'hero', 'title', 'Smarter Imaging,')} <span className="gradient-text">{getContent('dm-03', 'hero', 'title_highlight', 'Effortless Operation')}</span></>
                   : isAIAnalyzer
-                    ? <>AI Series <span className="gradient-text">Morphology Analyzer</span></>
+                    ? <>{getContent('ai-analyzer', 'hero', 'title', 'AI Series')} <span className="gradient-text">{getContent('ai-analyzer', 'hero', 'title_highlight', 'Morphology Analyzer')}</span></>
                     : product.name}
               </h1>
               
@@ -284,13 +284,13 @@ const ProductDetail = () => {
                   <>
                     <Button className="btn-gradient group" size="lg" asChild>
                       <Link to="/contact">
-                        Contact us
+                        {getContent(productId || '', 'hero', 'cta_primary', 'Contact us')}
                         <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
                     <Button variant="outline" size="lg" className="border-border/50" asChild>
                       <Link to="/contact">
-                        <Download className="mr-2 w-4 h-4" />Download brochure
+                        <Download className="mr-2 w-4 h-4" />{getContent(productId || '', 'hero', 'cta_secondary', 'Download brochure')}
                       </Link>
                     </Button>
                   </>
@@ -321,10 +321,12 @@ const ProductDetail = () => {
           <div className={containerClass}>
             <motion.div className="text-center max-w-5xl mx-auto mb-14 w-full" variants={blurIn}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3 whitespace-nowrap">
-                {isAIAnalyzer ? 'Key Features' : 'Capabilities'}
+                {getContent(productId || '', 'capabilities', 'badge', isAIAnalyzer ? 'Key Features' : 'Capabilities')}
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground lg:whitespace-nowrap w-full">
-                {isAIAnalyzer ? <>AI Series Morphology Analyzer from <span className="gradient-text">Sample to Diagnosis</span></> : <>What It <span className="gradient-text">Can Do</span></>}
+                {isAIAnalyzer
+                  ? <>{getContent('ai-analyzer', 'capabilities', 'title', 'AI Series Morphology Analyzer from')} <span className="gradient-text">{getContent('ai-analyzer', 'capabilities', 'title_highlight', 'Sample to Diagnosis')}</span></>
+                  : <>What It <span className="gradient-text">{getContent(productId || '', 'capabilities', 'title_highlight', 'Can Do')}</span></>}
               </h2>
             </motion.div>
             
@@ -360,13 +362,13 @@ const ProductDetail = () => {
           <div className={containerClass}>
             <motion.div className="text-center max-w-3xl mx-auto mb-12" variants={blurIn}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                Workflow
+                {getContent('ai-analyzer', 'workflow', 'badge', 'Workflow')}
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                From Sample to Insight, <span className="gradient-text">One Workflow</span> for Multiple Sample Types
+                {getContent('ai-analyzer', 'workflow', 'title', 'From Sample to Insight,')} <span className="gradient-text">{getContent('ai-analyzer', 'workflow', 'title_highlight', 'One Workflow')}</span> {getContent('ai-analyzer', 'workflow', 'title_suffix', 'for Multiple Sample Types')}
               </h2>
               <p className={`${longParagraphClass} text-muted-foreground`}>
-                Awalife's workflow supports consistent results across blood, urine, feces, and pleural fluid analysis.
+                {getContent('ai-analyzer', 'workflow', 'body', "Awalife's workflow supports consistent results across blood, urine, feces, and pleural fluid analysis.")}
               </p>
             </motion.div>
             <div className="relative mt-10">
@@ -408,11 +410,11 @@ const ProductDetail = () => {
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-8">
                 <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                  Sample Types
+                  {getContent('dm-03', 'sample_types', 'badge', 'Sample Types')}
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight"><span className="gradient-text">Samples</span> Supported</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight"><span className="gradient-text">{getContent('dm-03', 'sample_types', 'title_highlight', 'Samples')}</span> {getContent('dm-03', 'sample_types', 'title_suffix', 'Supported')}</h2>
                 <p className="text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                  Common veterinary sample types that can be captured and documented with the workstation.
+                  {getContent('dm-03', 'sample_types', 'subtitle', 'Common veterinary sample types that can be captured and documented with the workstation.')}
                 </p>
               </div>
               <motion.div className="flex flex-nowrap justify-center items-center gap-4 text-base font-medium text-muted-foreground overflow-x-auto pb-2" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
@@ -456,9 +458,9 @@ const ProductDetail = () => {
               </motion.div>
               <motion.div className="max-w-xl" variants={fadeInRight}>
                 <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                  Hardware
+                  {getContent('dm-03', 'hardware', 'badge', 'Hardware')}
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight"><span className="gradient-text">High-performance</span> Hardware</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight"><span className="gradient-text">{getContent('dm-03', 'hardware', 'title', 'High-performance')}</span> {getContent('dm-03', 'hardware', 'title_suffix', 'Hardware')}</h2>
                 <motion.div className="space-y-5" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   {[
                     {
@@ -496,13 +498,13 @@ const ProductDetail = () => {
           <div className={containerClass}>
             <motion.div className="flex flex-col items-center text-center" variants={blurIn}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                Software
+                {getContent('dm-03', 'capabilities', 'badge', 'Software')}
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
-                <span className="gradient-text">User-friendly</span> <span className="gradient-text">Software</span> Built for Veterinary Workflows
+                <span className="gradient-text">{getContent('dm-03', 'capabilities', 'title_highlight', 'User-friendly Software')}</span> {getContent('dm-03', 'capabilities', 'title_suffix', 'Built for Veterinary Workflows')}
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-2xl">
-                It integrates tools for cell counting, scale bars, annotations, and one-click report generation, with an embedded teaching image library for faster training.
+                {getContent('dm-03', 'capabilities', 'body', 'It integrates tools for cell counting, scale bars, annotations, and one-click report generation, with an embedded teaching image library for faster training.')}
               </p>
             </motion.div>
             <div className="w-full rounded-xl overflow-hidden">
@@ -532,16 +534,16 @@ const ProductDetail = () => {
               </motion.div>
               <motion.div className="max-w-xl" variants={fadeInRight}>
                 <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                  Upgrade Option
+                  {getContent('dm-03', 'image_hub', 'badge', 'Upgrade Option')}
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
-                  Already Have a Microscope?
+                  {getContent('dm-03', 'image_hub', 'title', 'Already Have a Microscope?')}
                 </h2>
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 leading-tight">
-                  <span className="gradient-text">Upgrade it with Awalife Microscope Image Hub.</span>
+                  <span className="gradient-text">{getContent('dm-03', 'image_hub', 'title_highlight', 'Upgrade it with Awalife Microscope Image Hub.')}</span>
                 </h2>
                 <p className="text-base text-muted-foreground leading-relaxed mb-6">
-                  Keep your Leica or Olympus microscope and unlock the same Awalife software workflow—capture, measure, annotate, count, and report on a PC.
+                  {getContent('dm-03', 'image_hub', 'body', 'Keep your Leica or Olympus microscope and unlock the same Awalife software workflow—capture, measure, annotate, count, and report on a PC.')}
                 </p>
                 <ul className="space-y-3 text-base text-muted-foreground">
                   {[
@@ -739,7 +741,7 @@ const ProductDetail = () => {
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 {getContent('ai-analyzer', 'faq', 'badge', 'FAQ')}
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">{getContent('ai-analyzer', 'faq', 'title', 'Frequently Asked')} <span className="gradient-text">{getContent('ai-analyzer', 'faq', 'title_highlight', 'Questions')}</span></h2>
             </div>
             {(() => {
               const aiAnalyzerFaqs = [
@@ -795,7 +797,7 @@ const ProductDetail = () => {
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 {getContent('dm-03', 'faq', 'badge', 'FAQ')}
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">{getContent('dm-03', 'faq', 'title', 'Frequently Asked')} <span className="gradient-text">{getContent('dm-03', 'faq', 'title_highlight', 'Questions')}</span></h2>
             </div>
             {(() => {
               const microscopeFaqs = [
@@ -853,15 +855,15 @@ const ProductDetail = () => {
         <div className={`${containerClass} text-center`}>
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              Interested in <span className="gradient-text">Our Products</span>?
+              {getContent(productId || '', 'cta', 'title', 'Interested in')} <span className="gradient-text">{getContent(productId || '', 'cta', 'title_highlight', 'Our Products')}</span>{getContent(productId || '', 'cta', 'title_suffix', '?')}
             </h2>
             <p className={`${longParagraphClass} text-muted-foreground mb-10`}>
-              Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.
+              {getContent(productId || '', 'cta', 'body', "Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.")}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button className="btn-gradient group" size="lg" asChild>
                 <Link to="/contact">
-                  Contact us
+                  {getContent(productId || '', 'cta', 'cta_text', 'Contact us')}
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>

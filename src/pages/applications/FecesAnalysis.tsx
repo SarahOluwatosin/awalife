@@ -61,7 +61,7 @@ const FecesAnalysis = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('overview', 'badge', 'Fecal Analysis')}</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Slide-free Fecal Analysis - <span className="gradient-text">Results within 30 Minutes</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('overview', 'title', 'Slide-free Fecal Analysis')} - <span className="gradient-text">{c('overview', 'title_highlight', 'Results within 30 Minutes')}</span></h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('overview', 'body', 'Awalife streamlines fecal screening with a slide-free workflow and two sampling options, delivering review-ready images and actionable findings in under 30 minutes - designed for consistent interpretation and documentation.')}</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">{c('overview', 'cta_primary', 'Contact us')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
@@ -81,7 +81,7 @@ const FecesAnalysis = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('classification', 'badge', 'AI-Powered Analysis')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">No Slides, <span className="gradient-text">Two Sampling Options</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('classification', 'title', 'No Slides,')} <span className="gradient-text">{c('classification', 'title_highlight', 'Two Sampling Options')}</span></h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>{c('classification', 'subtitle', 'Powered by our latest AI model, continuously improving with regular updates.')}</p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
@@ -186,7 +186,7 @@ const FecesAnalysis = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('clinical_images', 'badge', 'Clinical Images')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground"><span className="gradient-text">True-to-life Images</span>, Ready for Review</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground"><span className="gradient-text">{c('clinical_images', 'title_highlight', 'True-to-life Images')}</span>, Ready for Review</h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>{c('clinical_images', 'subtitle', "Review your report and verify the images with confidence - and tap into Awalife's clinical specialists whenever needed.")}</p>
           </div>
           <ApplicationImageCarousel pageKey="feces" fallbackImages={fallbackImages} />
@@ -197,7 +197,7 @@ const FecesAnalysis = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('faq', 'badge', 'FAQ')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('faq', 'title', 'Frequently Asked')} <span className="gradient-text">{c('faq', 'title_highlight', 'Questions')}</span></h2>
           </div>
           {(() => {
             const fecesFaqs = [

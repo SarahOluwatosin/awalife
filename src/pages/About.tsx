@@ -224,15 +224,26 @@ const About = () => {
     { rawValue: 8000, suffix: '+',  label: c('metrics', 'label_3', 'Installations Worldwide'), decimals: 0 },
   ];
 
-  const timeline = [
-    { year: '2020', icon: null, highlight: 'Founded', items: ['Jul 7 — Awalife established.'] },
-    { year: '2021', icon: null, highlight: 'First Product', items: ['Apr — Successful development of the first Morphology Analyzer.', 'Aug — Microscope Workstation launched in China.'] },
-    { year: '2022', icon: null, highlight: 'Funded', items: ['Feb — Secured Angel funding.', 'Aug — First AI-100Vet Morphology Analyzer installed in China.'] },
-    { year: '2023', icon: null, highlight: 'Rapid Growth', items: ['Apr — Fecal Morphology Detection launched; monthly sales surpassed RMB 1M.', 'Dec — Secured Series A funding.'] },
-    { year: '2024', icon: null, highlight: 'Global Expansion', items: ['Apr — First international AI-100Vet installed in Malaysia.', 'May — Effusion Analysis launched.', 'Nov — Blood Morphology for exotic animals launched.', 'Dec — Global monthly sales exceeded RMB 10M. Recognized as a Shenzhen Specialized and Sophisticated SME.'] },
-    { year: '2025', icon: null, highlight: 'Industry Leader', items: ['Jan — Global installations reached 3,000 units.', 'Apr — New products launched: DM-03 Microscope Workstation, AI-80Vet, AI-100Vet Elite, JH-01 Thermo Mixer.', 'Oct — Global installations reached 7,000 units.', 'Dec — Recognized as a Guangdong Provincial High-Quality & High-Tech Product. The Awalife-led industry standard for Formed Element Analyzers was officially published by the CVMA.'] },
-    { year: '2026 and Beyond', icon: Rocket, highlight: 'Future', items: ['Continued global growth with continuous innovation and new applications in development.'] },
+  const TIMELINE_FALLBACKS = [
+    { year: '2020', highlight: 'Founded',          items: 'Jul 7 — Awalife established.' },
+    { year: '2021', highlight: 'First Product',     items: 'Apr — Successful development of the first Morphology Analyzer.\nAug — Microscope Workstation launched in China.' },
+    { year: '2022', highlight: 'Funded',            items: 'Feb — Secured Angel funding.\nAug — First AI-100Vet Morphology Analyzer installed in China.' },
+    { year: '2023', highlight: 'Rapid Growth',      items: 'Apr — Fecal Morphology Detection launched; monthly sales surpassed RMB 1M.\nDec — Secured Series A funding.' },
+    { year: '2024', highlight: 'Global Expansion',  items: 'Apr — First international AI-100Vet installed in Malaysia.\nMay — Effusion Analysis launched.\nNov — Blood Morphology for exotic animals launched.\nDec — Global monthly sales exceeded RMB 10M. Recognized as a Shenzhen Specialized and Sophisticated SME.' },
+    { year: '2025', highlight: 'Industry Leader',   items: 'Jan — Global installations reached 3,000 units.\nApr — New products launched: DM-03 Microscope Workstation, AI-80Vet, AI-100Vet Elite, JH-01 Thermo Mixer.\nOct — Global installations reached 7,000 units.\nDec — Recognized as a Guangdong Provincial High-Quality & High-Tech Product. The Awalife-led industry standard for Formed Element Analyzers was officially published by the CVMA.' },
+    { year: '2026 and Beyond', highlight: 'Future', items: 'Continued global growth with continuous innovation and new applications in development.' },
   ];
+  const yearCount = parseInt(c('journey', 'year_count', String(TIMELINE_FALLBACKS.length)), 10);
+  const timeline = Array.from({ length: Math.max(yearCount, 1) }, (_, i) => {
+    const n = i + 1;
+    const fb = TIMELINE_FALLBACKS[i] ?? { year: '', highlight: '', items: '' };
+    return {
+      year:      c('journey', `year_${n}`,           fb.year),
+      highlight: c('journey', `year_${n}_highlight`, fb.highlight),
+      items:     c('journey', `year_${n}_items`,     fb.items).split('\n').filter(Boolean),
+      icon:      n === yearCount ? Rocket : null,
+    };
+  }).filter(e => e.year);
 
   const visionItems = [
     { text: c('vision', 'item_1_title', 'Future-proof Veterinary Diagnostic Tools'),         icon: Eye,       desc: c('vision', 'item_1_desc', 'Shaping the next generation of veterinary diagnostics through forward-thinking technology.') },
@@ -259,7 +270,7 @@ const About = () => {
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 {c('story', 'badge', 'Our Story')}
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('story', 'title', 'Pioneering')} <span className="gradient-text">AI-Powered Morphology</span> Diagnostics</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('story', 'title', 'Pioneering')} <span className="gradient-text">{c('story', 'title_highlight', 'AI-Powered Morphology')}</span> {c('story', 'title_suffix', 'Diagnostics')}</h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('story', 'body', 'Awalife is a dedicated innovator in AI-powered morphology for veterinary diagnostics, with a long-term focus on formed element analysis. By pairing high-quality microscopy imaging with AI-assisted morphology recognition, we help clinics standardize workflows and document findings with clarity—through review-ready reports with images and counts across blood, urine, feces, and body fluids. We continue to expand this platform through ongoing innovation and updates.')}</p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 mt-10">
                 {metrics.map((metric, i) => <MetricItem key={metric.label} value={metric.rawValue} suffix={metric.suffix} label={metric.label} delay={i * 100} decimals={metric.decimals} />)}
@@ -285,7 +296,7 @@ const About = () => {
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               {c('journey', 'badge', 'Our Journey')}
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{c('journey', 'title', 'Key Moments That')} <span className="gradient-text">Shaped Awalife</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{c('journey', 'title', 'Key Moments That')} <span className="gradient-text">{c('journey', 'title_highlight', 'Shaped Awalife')}</span></h2>
             <p className="text-muted-foreground">{c('journey', 'desc', 'From a bold idea in 2020 to a global presence — every milestone reflects our commitment to innovation.')}</p>
           </GsapReveal>
 
@@ -324,7 +335,7 @@ const About = () => {
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               {c('principles', 'badge', 'Our Principles')}
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{c('principles', 'title', 'Our Vision and')} <span className="gradient-text">Core Values</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{c('principles', 'title', 'Our Vision and')} <span className="gradient-text">{c('principles', 'title_highlight', 'Core Values')}</span></h2>
             <p className="text-muted-foreground">{c('principles', 'desc', 'The guiding principles that drive every decision, product, and partnership at Awalife.')}</p>
           </GsapReveal>
 
@@ -339,7 +350,7 @@ const About = () => {
             >
               <div className="h-px flex-1 bg-gradient-to-r from-primary/40 to-transparent" />
               <span className="text-xs font-bold tracking-widest uppercase text-primary">
-                Vision
+                {c('vision', 'label', 'Vision')}
               </span>
               <div className="h-px flex-1 bg-gradient-to-l from-primary/40 to-transparent" />
             </motion.div>
@@ -410,7 +421,7 @@ const About = () => {
             >
               <div className="h-px flex-1 bg-gradient-to-r from-primary/40 to-transparent" />
               <span className="text-xs font-bold tracking-widest uppercase text-primary">
-                Core Values
+                {c('values', 'label', 'Core Values')}
               </span>
               <div className="h-px flex-1 bg-gradient-to-l from-primary/40 to-transparent" />
             </motion.div>
@@ -468,7 +479,7 @@ const About = () => {
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               {c('global', 'badge', 'Global Reach')}
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground lg:whitespace-nowrap">Scaling <span className="text-primary">Globally</span> Through Partners Who Deliver <span className="gradient-text">Locally</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground lg:whitespace-nowrap">{c('global', 'title', 'Scaling')} <span className="text-primary">{c('global', 'title_highlight', 'Globally')}</span> {c('global', 'title_suffix', 'Through Partners Who Deliver')} <span className="gradient-text">{c('global', 'title_highlight2', 'Locally')}</span></h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-4`}>{c('global', 'body', 'From product design to service processes, Awalife is built for international deployment. With standardized workflows, review-ready outputs, and a platform that keeps expanding across sample types, we help teams deliver consistent clinical value across regions and practice settings.')}</p>
           </div>
           <div className="relative">

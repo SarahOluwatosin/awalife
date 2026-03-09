@@ -84,10 +84,30 @@ const HeroSection = () => {
   const imageY = useTransform(scrollY, [0, 600], [0, 90]);
   const { getContent } = usePageContent();
 
+  const c = (key: string, fb: string) => getContent('home', 'hero', key, fb);
+
+  const titleLine1 = c('title_line1', "Morphology Isn't a Feature for Us,");
+  const titleLine2 = c('title_line2', "It's the Foundation");
+
   const metrics = [
-    { value: 15, suffix: 'M+', label: 'Images for AI Model Training' },
-    { value: 2.4, suffix: 'M+', label: 'Reports Generated', decimals: 1 },
-    { value: 8000, suffix: '+', label: 'Installations Worldwide' },
+    {
+      value: parseFloat(c('metric_1_value', '15')),
+      suffix: c('metric_1_suffix', 'M+'),
+      label: c('metric_1_label', 'Images for AI Model Training'),
+      decimals: parseInt(c('metric_1_decimals', '0'), 10),
+    },
+    {
+      value: parseFloat(c('metric_2_value', '2.4')),
+      suffix: c('metric_2_suffix', 'M+'),
+      label: c('metric_2_label', 'Reports Generated'),
+      decimals: parseInt(c('metric_2_decimals', '1'), 10),
+    },
+    {
+      value: parseFloat(c('metric_3_value', '8000')),
+      suffix: c('metric_3_suffix', '+'),
+      label: c('metric_3_label', 'Installations Worldwide'),
+      decimals: parseInt(c('metric_3_decimals', '0'), 10),
+    },
   ];
 
   return (
@@ -127,7 +147,7 @@ const HeroSection = () => {
               }}
             >
               <span className="text-foreground inline-block">
-                {["Morphology", "Isn't", "a", "Feature", "for", "Us,"].map((word, i) => (
+                {titleLine1.split(' ').map((word, i) => (
                   <motion.span
                     key={i}
                     className="inline-block mr-[0.25em]"
@@ -142,7 +162,7 @@ const HeroSection = () => {
               </span>
               <br />
               <span className="gradient-text inline-block">
-                {["It's", "the", "Foundation"].map((word, i) => (
+                {titleLine2.split(' ').map((word, i) => (
                   <motion.span
                     key={i}
                     className="inline-block mr-[0.25em]"

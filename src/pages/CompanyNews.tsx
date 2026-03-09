@@ -37,31 +37,29 @@ const CompanyNews = () => {
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
                 <span className="gradient-text">News</span> Center
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
                 {c('description', "Explore company updates, product announcements, and industry events to stay informed on Awalife's latest milestones and innovations.")}
               </p>
+              <div className="flex flex-wrap gap-3">
+                {categories.map((cat) =>
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`news-tab px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
+                  activeCategory === cat ?
+                  'news-tab-active border-transparent' :
+                  'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground border-border/30 hover:border-primary/30'}`
+                  }>
+                    {cat}
+                  </button>
+                )}
+              </div>
             </div>
             <div className="relative">
               <div className="rounded-2xl overflow-hidden">
                 <img src={images.heroDiagnosticLab} alt="News cover" data-override-id="news-hero" className="w-full h-full max-h-[400px] object-cover rounded-3xl" loading="eager" decoding="async" />
               </div>
             </div>
-          </div>
-
-          <div className="flex flex-wrap gap-3 mt-12">
-            {categories.map((cat) =>
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`news-tab px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
-              activeCategory === cat ?
-              'news-tab-active border-transparent' :
-              'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground border-border/30 hover:border-primary/30'}`
-              }>
-
-                {cat}
-              </button>
-            )}
           </div>
         </div>
       </section>

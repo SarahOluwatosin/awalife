@@ -12,7 +12,7 @@ const Footer = () => {
       { label: 'Blood Analysis', path: '/applications/blood' },
       { label: 'Urine Analysis', path: '/applications/urine' },
       { label: 'Feces Analysis', path: '/applications/feces' },
-      { label: 'Fluid', path: '/applications/pleural-effusion' },
+      { label: 'Fluid Analysis', path: '/applications/pleural-effusion' },
       { label: 'Exotic Animals', path: '/applications/exotic-animals' },
     ],
     company: [
@@ -58,7 +58,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-5">Quick Links</h4>
+            <h4 className="font-semibold text-foreground mb-5">{getContent('footer', 'nav', 'label_quicklinks', 'Quick Links')}</h4>
             <ul className="space-y-4 text-sm">
               {footerLinks.quickLinks.map((link) => (
                 <li key={link.path}>
@@ -75,7 +75,7 @@ const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-5">Company</h4>
+            <h4 className="font-semibold text-foreground mb-5">{getContent('footer', 'nav', 'label_company', 'Company')}</h4>
             <ul className="space-y-4 text-sm">
               {footerLinks.company.map((link) => (
                 <li key={link.path}>
@@ -92,26 +92,26 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold text-foreground mb-5">Contact</h4>
+            <h4 className="font-semibold text-foreground mb-5">{getContent('footer', 'nav', 'label_contact', 'Contact')}</h4>
             <div className="space-y-5 text-sm">
               <a
-                href="tel:0755-27206973"
+                href={`tel:${getContent('footer', 'address', 'phone', '0755-27206973')}`}
                 className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
               >
                 <Phone className="w-4 h-4 text-primary" />
-                0755-27206973
+                {getContent('footer', 'address', 'phone', '0755-27206973')}
               </a>
               <a
-                href="mailto:info@awalife.com.cn"
+                href={`mailto:${getContent('footer', 'address', 'email', 'info@awalife.com.cn')}`}
                 className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
               >
                 <Mail className="w-4 h-4 text-primary" />
-                info@awalife.com.cn
+                {getContent('footer', 'address', 'email', 'info@awalife.com.cn')}
               </a>
               <div className="flex items-start gap-3 text-muted-foreground">
                 <MapPin className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
                 <span className="text-sm leading-relaxed">
-                  Shenzhen, China
+                  {getContent('footer', 'address', 'location', 'Shenzhen, China')}
                 </span>
               </div>
             </div>
@@ -121,7 +121,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="mt-16 pt-10 border-t border-border flex items-center justify-between gap-4 flex-wrap">
           <p className="text-sm text-muted-foreground">
-            2026 SHENZHEN ANLV MEDICAL TECHNOLOGY CO., LTD. All rights reserved.
+            {getContent('footer', 'address', 'copyright', '2026 SHENZHEN ANLV MEDICAL TECHNOLOGY CO., LTD. All rights reserved.')}
           </p>
           <Link
             to="/admin/login"

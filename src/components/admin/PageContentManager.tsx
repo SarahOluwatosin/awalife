@@ -78,7 +78,8 @@ const PAGE_LABELS: Record<string, string> = {
 const isMultiline = (row: Row) =>
   row.value.length > 80 ||
   row.value.includes('\n') ||
-  /body|description|desc|subtitle|support|items/.test(row.key);
+  row.type === 'textarea' ||
+  /body|description|desc|subtitle|support|items|_items$/.test(row.key);
 
 type FEProps = {
   row: Row;
@@ -170,11 +171,27 @@ const FieldEditor = ({ row, onSave, onSaved }: FEProps) => {
 // ─── Key ordering within sections (matches website visual order) ──────────────
 
 const FIELD_PRIORITY: Record<string, number> = {
-  badge: 0, title: 1, subtitle: 2, body: 3, description: 4, excerpt: 4,
-  label: 5, desc: 6, support: 7, items: 8,
-  cta_text: 9, cta_url: 10, button_text: 9, button_url: 10,
-  tagline: 0, address: 1, phone: 2, email: 3,
+  badge: 0, name: 1, tagline: 1,
+  title: 2, title_highlight: 3, title_suffix: 4, title_highlight2: 5,
+  title_line1: 2, title_line2: 3,
+  subtitle: 6, description: 7, body: 8, excerpt: 8,
+  label: 9, desc: 10, support: 10, support_text: 10, items: 11,
+  // numbered suffix patterns (e.g. year_1_highlight → 'highlight')
+  highlight: 3, suffix: 4,
+  year_count: 0,
+  cta_primary: 12, cta_secondary: 13, cta_text: 12, cta_url: 13,
+  button_text: 12, button_url: 13,
+  // form labels and buttons
+  success_title: 1, success_body: 2, success_cta: 3,
+  label_name: 1, label_position: 2, label_company: 3, label_email: 4,
+  label_whatsapp: 5, label_country: 6, label_message: 7,
+  btn_submit: 12, btn_sending: 13,
+  // footer nav headers
+  label_quicklinks: 1, label_company: 2, label_contact: 3,
+  // footer address
+  phone: 1, email: 2, location: 3, copyright: 20,
   q: 0, a: 1,
+  text: 1,
 };
 
 const leadingNum = (key: string) => {
@@ -201,19 +218,19 @@ const sortRowKeys = (rows: Row[]): Row[] =>
 // ─── Section order matching website layout ────────────────────────────────────
 
 const SECTION_ORDER: Record<string, string[]> = {
-  home:         ['hero', 'why_us', 'products', 'partners', 'cta'],
-  blood:        ['hero', 'overview', 'categories', 'classification', 'how_it_works', 'clinical_images', 'faq', 'cta'],
-  feces:        ['hero', 'overview', 'categories', 'classification', 'direct_sampling', 'flotation', 'clinical_images', 'faq', 'cta'],
-  urine:        ['hero', 'overview', 'categories', 'classification', 'how_it_works', 'clinical_images', 'faq', 'cta'],
-  exotic:       ['hero', 'overview', 'low_volume', 'species_table', 'species', 'faq', 'cta'],
-  pleural:      ['hero', 'overview', 'classification', 'clinical_images', 'faq', 'cta'],
-  'ai-analyzer':['hero', 'overview', 'capabilities', 'workflow', 'faq'],
-  'dm-03':      ['hero', 'overview', 'capabilities', 'hardware', 'image_hub', 'sample_types', 'faq'],
-  about:        ['hero', 'story', 'vision', 'principles', 'journey', 'values', 'metrics', 'global', 'cta'],
-  contact:      ['hero', 'form'],
-  footer:       ['tagline', 'address'],
-  news:         ['hero'],
-  resources:    ['hero'],
+  home:          ['hero', 'why_us', 'products', 'certifications', 'partners', 'cta'],
+  blood:         ['hero', 'overview', 'classification', 'categories', 'how_it_works', 'clinical_images', 'faq', 'cta'],
+  feces:         ['hero', 'overview', 'classification', 'categories', 'direct_sampling', 'flotation', 'clinical_images', 'faq', 'cta'],
+  urine:         ['hero', 'overview', 'classification', 'categories', 'how_it_works', 'clinical_images', 'faq', 'cta'],
+  exotic:        ['hero', 'overview', 'species', 'species_table', 'low_volume', 'faq', 'cta'],
+  pleural:       ['hero', 'overview', 'classification', 'clinical_images', 'faq', 'cta'],
+  'ai-analyzer': ['hero', 'overview', 'capabilities', 'workflow', 'faq', 'cta'],
+  'dm-03':       ['hero', 'overview', 'capabilities', 'hardware', 'image_hub', 'sample_types', 'faq', 'cta'],
+  about:         ['hero', 'story', 'metrics', 'journey', 'principles', 'vision', 'values', 'global', 'cta'],
+  contact:       ['hero', 'form'],
+  footer:        ['tagline', 'nav', 'address'],
+  news:          ['hero'],
+  resources:     ['hero'],
 };
 
 const sortSections = (page: string, entries: [string, Row[]][]) => {

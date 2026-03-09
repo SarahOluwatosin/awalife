@@ -6,6 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Layout from '@/components/layout/Layout';
 import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
+import { usePageContent } from '@/contexts/PageContentContext';
 import { RESOURCE_KIND_CONFIG, RESOURCE_PRODUCT_OPTIONS } from '@/data/resources';
 import type { ResourceItem } from '@/data/resources';
 import { motion } from 'framer-motion';
@@ -17,10 +18,14 @@ const News = () => {
   }, []);
 
   const { data } = useResourcesCMS();
+  const { getContent } = usePageContent();
+  const c = (key: string, fb: string) => getContent('resources', 'hero', key, fb);
 
   const faqMidpoint = Math.ceil(data.faq.items.length / 2);
   const faqColumns = [data.faq.items.slice(0, faqMidpoint), data.faq.items.slice(faqMidpoint)];
   const [columnCount, setColumnCount] = useState(1);
+  const [activeTab, setActiveTab] = useState('all');
+  const resourcesRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const updateColumns = () => {
@@ -118,12 +123,9 @@ const News = () => {
 
         <div className="flex flex-col md:flex-row gap-5 p-5 h-full">
           <div className="relative w-full md:w-36 lg:w-40 md:flex-shrink-0 aspect-[16/10] md:aspect-[3/4] rounded-xl bg-gradient-to-br from-secondary/80 via-white to-secondary/40 border border-border/30 overflow-hidden">
-            <div className="absolute inset-0">
+            <div className="absolute inset-0 pointer-events-none">
               <div className="absolute -top-10 -right-8 h-32 w-32 rounded-full bg-primary/10" />
               <div className="absolute -bottom-12 -left-10 h-40 w-40 rounded-full bg-primary/10" />
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative h-20 w-20 md:h-24 md:w-24 rounded-full border-[8px] md:border-[10px] border-primary/70" />
             </div>
           </div>
 
@@ -230,14 +232,32 @@ const News = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={blurIn}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                Explore resources 
+                {c('badge', 'Explore resources')}
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                Welcome to <span className="gradient-text">Resource</span> Center
+                {c('title', 'Welcome to')} <span className="gradient-text">{c('title_highlight', 'Resource')}</span> {c('title_suffix', 'Center')}
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
                 {data.hero.description}
               </p>
+              <div className="flex flex-wrap gap-3">
+                {RESOURCE_KIND_CONFIG.map((section) => (
+                  <button
+                    key={section.id}
+                    onClick={() => {
+                      setActiveTab(section.id);
+                      resourcesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                    className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
+                      activeTab === section.id
+                        ? 'bg-primary text-primary-foreground border-transparent'
+                        : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground border-border/30 hover:border-primary/30'
+                    }`}
+                  >
+                    {section.sectionTitle}
+                  </button>
+                ))}
+              </div>
             </motion.div>
             <motion.div className="relative" variants={sectionVariants}>
               <div className="rounded-2xl overflow-hidden">
@@ -262,9 +282,9 @@ const News = () => {
       </motion.section>
 
       {/* Resources Tabs */}
-      <motion.section className="py-16 lg:py-20 bg-card/20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
+      <motion.section ref={resourcesRef} className="py-16 lg:py-20 bg-card/20" initial="hidden" whileInView="visible" viewport={viewportOnceSmall} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
-          <Tabs defaultValue="all" className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="flex flex-wrap justify-start gap-3 bg-transparent p-0 mb-10">
               <TabsTrigger
                 value="all"

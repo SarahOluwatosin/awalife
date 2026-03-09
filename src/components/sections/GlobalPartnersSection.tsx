@@ -16,7 +16,7 @@ const GlobalPartnersSection = () => {
             {c('badge', 'GLOBAL COVERAGE')}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight whitespace-nowrap">
-            Scaling <span className="gradient-text">Globally</span> through Partners Who Deliver&nbsp;<span className="gradient-text">Locally</span>
+            {c('title', 'Scaling')} <span className="gradient-text">{c('title_highlight', 'Globally')}</span> {c('title_suffix', 'through Partners Who Deliver')}&nbsp;<span className="gradient-text">{c('title_highlight2', 'Locally')}</span>
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed max-w-4xl mx-auto">
             {c('body', 'From product design to service processes, Awalife is built for international deployment. With standardized workflows, review-ready outputs, and a platform that keeps expanding across sample types, we help teams deliver consistent clinical value across regions and practice settings.')}

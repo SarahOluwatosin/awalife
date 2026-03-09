@@ -50,7 +50,7 @@ const WhyUsSection = () => {
           {c('badge', 'WHY AWALIFE')}
         </span>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-          An <span className="gradient-text font-bold">Expandable</span> AI Morphology <span className="gradient-text font-bold">Platform</span> Grows with New Samples and Applications
+          {c('title', 'An Expandable AI Morphology Platform Grows with New Samples and Applications')}
         </h2>
       </ScrollReveal>
 

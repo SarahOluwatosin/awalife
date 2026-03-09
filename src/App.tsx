@@ -27,6 +27,7 @@ import AdminNews from "./pages/admin/AdminNews";
 import AdminResources from "./pages/admin/AdminResources";
 import AdminMedia from "./pages/admin/AdminMedia";
 import AdminPageText from "./pages/admin/AdminPageText";
+import AdminContacts from "./pages/admin/AdminContacts";
 
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
@@ -62,6 +63,7 @@ const AnimatedRoutes = () => {
           <Route path="/admin/resources" element={<AdminResources />} />
           <Route path="/admin/media" element={<AdminMedia />} />
           <Route path="/admin/content" element={<AdminPageText />} />
+          <Route path="/admin/contacts" element={<AdminContacts />} />
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>

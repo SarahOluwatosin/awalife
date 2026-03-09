@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Navigate, Link } from 'react-router-dom';
-import { LayoutDashboard, Newspaper, FolderOpen, Images, FileText, LogOut, ExternalLink, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Newspaper, FolderOpen, Images, FileText, Mail, LogOut, ExternalLink, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import type { ReactNode } from 'react';
@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { icon: FolderOpen,      label: 'Resources',  href: '/admin/resources' },
   { icon: Images,          label: 'Media',      href: '/admin/media' },
   { icon: FileText,        label: 'Page Text',  href: '/admin/content' },
+  { icon: Mail,            label: 'Contacts',   href: '/admin/contacts' },
 ];
 
 type Props = {

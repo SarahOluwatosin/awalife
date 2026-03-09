@@ -31,7 +31,7 @@ const ExoticAnimals = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('overview', 'badge', 'Multi-Species Support')}</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Exotics, Small Mammals & <span className="gradient-text">Large Animals</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('overview', 'title', 'Exotics, Small Mammals &')} <span className="gradient-text">{c('overview', 'title_highlight', 'Large Animals')}</span></h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('overview', 'body', 'Awalife extends morphology-first, AI-assisted analysis beyond dogs and cats—supporting a wider range of species with review-ready reports that combine images and quantitative results. Capabilities may vary by species and sample type.')}</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">{c('overview', 'cta_primary', 'Contact us')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
@@ -49,7 +49,7 @@ const ExoticAnimals = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('species', 'badge', 'Species Coverage')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('species', 'title', 'Supporting Species from Small Mammals to')} <span className="gradient-text">Large Animals</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('species', 'title', 'Supporting Species from Small Mammals to')} <span className="gradient-text">{c('species', 'title_highlight', 'Large Animals')}</span></h2>
           </div>
           <motion.div className="rounded-2xl border border-border/50 bg-card shadow-sm overflow-hidden" variants={scaleIn}>
             <div className="overflow-x-auto">
@@ -64,15 +64,15 @@ const ExoticAnimals = () => {
                   </tr>
                 </thead>
                 <tbody className="text-muted-foreground">
-                  <tr className="bg-secondary/30"><td colSpan={5} className="px-5 lg:px-6 py-3 text-sm font-semibold text-foreground uppercase tracking-wider">Species Support</td></tr>
+                  <tr className="bg-secondary/30"><td colSpan={5} className="px-5 lg:px-6 py-3 text-sm font-semibold text-foreground uppercase tracking-wider">{c('species_table', 'group_species', 'Species Support')}</td></tr>
                   <tr className="border-b border-border/30 hover:bg-secondary/20 transition-colors">
-                    <td className="p-5 lg:p-6 text-sm text-muted-foreground sticky left-0 bg-card z-10">Supported species</td>
-                    <td className="p-5 lg:p-6 text-center">Dogs, Cats, Rabbits, Guinea Pigs, Ferrets, Chinchillas, Rats, Mice, Hamsters</td>
-                    <td className="p-5 lg:p-6 text-center">Parrots, Pigeons</td>
-                    <td className="p-5 lg:p-6 text-center">Turtles, Snakes, Lizards</td>
-                    <td className="p-5 lg:p-6 text-center">Horses, Alpacas, Camels, Pigs, Cattle, Sheep</td>
+                    <td className="p-5 lg:p-6 text-sm text-muted-foreground sticky left-0 bg-card z-10">{c('species_table', 'row_supported_label', 'Supported species')}</td>
+                    <td className="p-5 lg:p-6 text-center">{c('species_table', 'companion_species', 'Dogs, Cats, Rabbits, Guinea Pigs, Ferrets, Chinchillas, Rats, Mice, Hamsters')}</td>
+                    <td className="p-5 lg:p-6 text-center">{c('species_table', 'avian_species', 'Parrots, Pigeons')}</td>
+                    <td className="p-5 lg:p-6 text-center">{c('species_table', 'reptile_species', 'Turtles, Snakes, Lizards')}</td>
+                    <td className="p-5 lg:p-6 text-center">{c('species_table', 'livestock_species', 'Horses, Alpacas, Camels, Pigs, Cattle, Sheep')}</td>
                   </tr>
-                  <tr className="bg-secondary/30"><td colSpan={5} className="px-5 lg:px-6 py-3 text-sm font-semibold text-foreground uppercase tracking-wider">Sample Types</td></tr>
+                  <tr className="bg-secondary/30"><td colSpan={5} className="px-5 lg:px-6 py-3 text-sm font-semibold text-foreground uppercase tracking-wider">{c('species_table', 'group_samples', 'Sample Types')}</td></tr>
                   {[
                   { label: c('species_table', 'row_1_label', 'Blood'), values: [c('species_table', 'row_1_col1', '+'), c('species_table', 'row_1_col2', '+'), c('species_table', 'row_1_col3', '+'), c('species_table', 'row_1_col4', '+')] },
                   { label: c('species_table', 'row_2_label', 'Feces'), values: [c('species_table', 'row_2_col1', 'Dog, Cat'), c('species_table', 'row_2_col2', '/'), c('species_table', 'row_2_col3', '/'), c('species_table', 'row_2_col4', '/')] },
@@ -96,7 +96,7 @@ const ExoticAnimals = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('low_volume', 'badge', 'Low Volume Sampling')}</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('low_volume', 'title', 'Only 10 μL Blood samples Required for')} <span className="gradient-text">CBC Testing</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('low_volume', 'title', 'Only 10 μL Blood samples Required for')} <span className="gradient-text">{c('low_volume', 'title_highlight', 'CBC Testing')}</span></h2>
               <p className={`${bodyTextClass} text-muted-foreground mb-6`}>{c('low_volume', 'body', 'Especially for exotic pets, critically ill, anemic, and recovering cats and dogs.')}</p>
               <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground`}>
                 {[
@@ -123,7 +123,7 @@ const ExoticAnimals = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('faq', 'badge', 'FAQ')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('faq', 'title', 'Frequently Asked')} <span className="gradient-text">{c('faq', 'title_highlight', 'Questions')}</span></h2>
           </div>
           {(() => {
             const exoticFaqs = [

@@ -45,7 +45,7 @@ const ProductsSection = () => {
             {c('badge', 'Featured Products')}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight lg:whitespace-nowrap">
-            {c('title', 'Diagnostics Tools Built for')} <span className="gradient-text font-bold">Real-world Veterinary</span> Workflows
+            {c('title', 'Diagnostics Tools Built for')} <span className="gradient-text font-bold">{c('title_highlight', 'Real-world Veterinary')}</span> {c('title_suffix', 'Workflows')}
           </h2>
         </ScrollReveal>
 

@@ -33,7 +33,7 @@ const PleuralEffusion = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('overview', 'badge', 'Body Fluid Analysis')}</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Review-ready Morphology in a <span className="gradient-text">Standardized Workflow</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('overview', 'title', 'Review-ready Morphology in a')} <span className="gradient-text">{c('overview', 'title_highlight', 'Standardized Workflow')}</span></h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('overview', 'body', 'Awalife helps standardize pleural and abdominal effusion review by combining high-quality microscopy imaging with AI-assisted morphology recognition. Results are delivered as a review-ready report with images and structured findings, including up to 19 reportable items.')}</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">{c('overview', 'cta_primary', 'Contact us')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
@@ -53,7 +53,7 @@ const PleuralEffusion = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-5xl mx-auto">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('classification', 'badge', 'Cell Counting')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Morphology-based <span className="gradient-text">TNCC Enumeration</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('classification', 'title', 'Morphology-based')} <span className="gradient-text">{c('classification', 'title_highlight', 'TNCC Enumeration')}</span></h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>{c('classification', 'subtitle', 'In many workflows, TNCC is approximated using total WBC counts, which can overlook non-WBC formed elements and introduce variability across operators and methods. Awalife takes a morphology-first approach: it captures true-to-life microscopy images and performs morphology-based TNCC enumeration, counting nucleated cells based on what is actually present in the sample. The result is a review-ready output with image evidence, supporting more consistent TNCC reporting and clearer clinical communication for pleural and abdominal effusions.')}</p>
           </div>
         </div>
@@ -63,7 +63,7 @@ const PleuralEffusion = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-5xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('clinical_images', 'badge', 'Clinical Images')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground"><span className="gradient-text">True-to-life Images</span>, Ready for Review</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground"><span className="gradient-text">{c('clinical_images', 'title_highlight', 'True-to-life Images')}</span>, Ready for Review</h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>{c('clinical_images', 'subtitle', "Review your report and verify the images with confidence - and tap into Awalife's clinical specialists whenever needed.")}</p>
           </div>
           <ApplicationImageCarousel pageKey="pleural-effusion" fallbackImages={fallbackImages} />
@@ -74,7 +74,7 @@ const PleuralEffusion = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('faq', 'badge', 'FAQ')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('faq', 'title', 'Frequently Asked')} <span className="gradient-text">{c('faq', 'title_highlight', 'Questions')}</span></h2>
           </div>
           {(() => {
             const pleuralFaqs = [
