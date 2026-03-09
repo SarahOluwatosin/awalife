@@ -52,7 +52,7 @@ const NAV: NavItem[] = [
 const PAGE_ROUTES: Record<string, string> = {
   home:         '/',
   about:        '/company/about',
-  contact:      '/company/contact',
+  contact:      '/contact',
   resources:    '/resources',
   news:         '/company/news',
   footer:       '/',
@@ -176,37 +176,67 @@ const FIELD_PRIORITY: Record<string, number> = {
   title_line1: 2, title_line2: 3,
   subtitle: 6, description: 7, body: 8, excerpt: 8,
   label: 9, desc: 10, support: 10, support_text: 10, items: 11,
-  // numbered suffix patterns (e.g. year_1_highlight → 'highlight')
-  highlight: 3, suffix: 4,
+  // numbered group sub-fields (e.g. metric_1_value, year_1_highlight, bullet_1)
+  year: 0, value: 1, highlight: 3, suffix: 4, bullet: 9, decimals: 20,
   year_count: 0,
   cta_primary: 12, cta_secondary: 13, cta_text: 12, cta_url: 13,
   button_text: 12, button_url: 13,
-  // form labels and buttons
-  success_title: 1, success_body: 2, success_cta: 3,
-  label_name: 1, label_position: 2, label_company: 3, label_email: 4,
-  label_whatsapp: 5, label_country: 6, label_message: 7,
-  btn_submit: 12, btn_sending: 13,
-  // footer nav headers
-  label_quicklinks: 1, label_company: 2, label_contact: 3,
   // footer address
   phone: 1, email: 2, location: 3, copyright: 20,
-  q: 0, a: 1,
+  q: 20, a: 21,
   text: 1,
 };
 
+// Explicit key order for sections whose keys can't be sorted heuristically
+const SECTION_KEY_ORDER: Record<string, string[]> = {
+  'contact/form': [
+    'title_highlight', 'title_suffix', 'subtitle',
+    'label_name', 'label_position', 'label_company', 'label_email',
+    'label_whatsapp', 'label_country', 'label_message',
+    'btn_submit', 'btn_sending',
+    'success_title', 'success_body', 'success_cta',
+  ],
+  'footer/nav': ['label_quicklinks', 'label_company', 'label_contact'],
+  'exotic/species_table': [
+    'group_species',
+    'col_1', 'col_2', 'col_3', 'col_4',
+    'row_1_label', 'row_1_col1', 'row_1_col2', 'row_1_col3', 'row_1_col4',
+    'row_2_label', 'row_2_col1', 'row_2_col2', 'row_2_col3', 'row_2_col4',
+    'row_3_label', 'row_3_col1', 'row_3_col2', 'row_3_col3', 'row_3_col4',
+    'row_4_label', 'row_4_col1', 'row_4_col2', 'row_4_col3', 'row_4_col4',
+    'group_samples',
+    'row_supported_label', 'companion_species', 'avian_species', 'reptile_species', 'livestock_species',
+  ],
+};
+
 const leadingNum = (key: string) => {
-  const m = key.match(/(\d+)/);
+  // Only count digits that follow an underscore (e.g. metric_1_value → 1, year_1 → 1).
+  // Avoids treating name-suffixes like title_highlight2 or title_line1 as group numbers.
+  const m = key.match(/_(\d+)/);
   return m ? parseInt(m[1], 10) : 0;
 };
 
 const fieldSuffix = (key: string): string => {
   if (/^q\d+$/.test(key)) return 'q';
   if (/^a\d+$/.test(key)) return 'a';
+  // e.g. year_1 → 'year' (the key IS the group item, not a sub-field)
+  if (/^[a-z]+_\d+$/.test(key)) return key.replace(/_\d+$/, '');
   return key.replace(/^[a-z]+_\d+_/, '');
 };
 
-const sortRowKeys = (rows: Row[]): Row[] =>
-  rows.slice().sort((a, b) => {
+const sortRowKeys = (page: string, section: string, rows: Row[]): Row[] => {
+  const explicit = SECTION_KEY_ORDER[`${page}/${section}`];
+  if (explicit) {
+    return rows.slice().sort((a, b) => {
+      const ai = explicit.indexOf(a.key);
+      const bi = explicit.indexOf(b.key);
+      if (ai === -1 && bi === -1) return a.key.localeCompare(b.key);
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    });
+  }
+  return rows.slice().sort((a, b) => {
     const na = leadingNum(a.key), nb = leadingNum(b.key);
     if (na !== nb) return na - nb;
     const pa = FIELD_PRIORITY[fieldSuffix(a.key)] ?? 50;
@@ -214,6 +244,7 @@ const sortRowKeys = (rows: Row[]): Row[] =>
     if (pa !== pb) return pa - pb;
     return a.key.localeCompare(b.key);
   });
+};
 
 // ─── Section order matching website layout ────────────────────────────────────
 
@@ -225,7 +256,7 @@ const SECTION_ORDER: Record<string, string[]> = {
   exotic:        ['hero', 'overview', 'species', 'species_table', 'low_volume', 'faq', 'cta'],
   pleural:       ['hero', 'overview', 'classification', 'clinical_images', 'faq', 'cta'],
   'ai-analyzer': ['hero', 'overview', 'capabilities', 'workflow', 'faq', 'cta'],
-  'dm-03':       ['hero', 'overview', 'capabilities', 'hardware', 'image_hub', 'sample_types', 'faq', 'cta'],
+  'dm-03':       ['hero', 'overview', 'sample_types', 'hardware', 'capabilities', 'image_hub', 'faq', 'cta'],
   about:         ['hero', 'story', 'metrics', 'journey', 'principles', 'vision', 'values', 'global', 'cta'],
   contact:       ['hero', 'form'],
   footer:        ['tagline', 'nav', 'address'],
@@ -290,7 +321,7 @@ const PageEditor = ({ page, rows, onSave, onSaved }: PageEditorProps) => {
     <div className="space-y-3">
       {sorted.map(([section, sRows]) => {
         const isCollapsed = collapsed.has(section);
-        const sortedRows = sortRowKeys(sRows);
+        const sortedRows = sortRowKeys(page, section, sRows);
         return (
           <div key={section} className="rounded-xl border border-border/50 bg-card overflow-hidden">
             <button
