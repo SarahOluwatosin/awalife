@@ -5,21 +5,22 @@ import { usePageContent } from '@/contexts/PageContentContext';
 
 const Footer = () => {
   const { getContent } = usePageContent();
+  const n = (key: string, fb: string) => getContent('footer', 'nav', key, fb);
   const footerLinks = {
     quickLinks: [
-      { label: 'AI Morphology Analyzer', path: '/products/ai-analyzer' },
-      { label: 'DM-03 Microscope Workstation', path: '/products/dm-03' },
-      { label: 'Blood Analysis', path: '/applications/blood' },
-      { label: 'Urine Analysis', path: '/applications/urine' },
-      { label: 'Feces Analysis', path: '/applications/feces' },
-      { label: 'Fluid Analysis', path: '/applications/pleural-effusion' },
-      { label: 'Exotic Animals', path: '/applications/exotic-animals' },
+      { label: n('link_ai_analyzer', 'AI Morphology Analyzer'), path: '/products/ai-analyzer' },
+      { label: n('link_dm03', 'DM-03 Microscope Workstation'), path: '/products/dm-03' },
+      { label: n('link_blood', 'Blood Analysis'), path: '/applications/blood' },
+      { label: n('link_urine', 'Urine Analysis'), path: '/applications/urine' },
+      { label: n('link_feces', 'Feces Analysis'), path: '/applications/feces' },
+      { label: n('link_fluid', 'Fluid Analysis'), path: '/applications/pleural-effusion' },
+      { label: n('link_exotic', 'Exotic Animals'), path: '/applications/exotic-animals' },
     ],
     company: [
-      { label: 'About Awalife', path: '/company/about' },
-      { label: 'News Center', path: '/company/news' },
-      { label: 'Resources', path: '/resources' },
-      { label: 'Contact', path: '/contact' },
+      { label: n('link_about', 'About Awalife'), path: '/company/about' },
+      { label: n('link_news', 'News Center'), path: '/company/news' },
+      { label: n('link_resources', 'Resources'), path: '/resources' },
+      { label: n('link_contact', 'Contact'), path: '/contact' },
     ],
   };
 

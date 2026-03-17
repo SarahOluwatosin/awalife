@@ -112,7 +112,7 @@ const CompanyNews = () => {
                               </p>
                               <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary group/btn w-fit" asChild>
                                 <Link to={`/company/news/${item.id}`}>
-                                  Read More
+                                  {c('read_more', 'Read More')}
                                   <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                                 </Link>
                               </Button>

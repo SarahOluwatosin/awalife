@@ -91,7 +91,7 @@ const BloodAnalysis = () => {
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>{c('classification', 'subtitle', 'Powered by our latest AI model, continuously improving with regular updates.')}</p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
-                <a href={c('classification', 'sample_report_url', 'https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013016271-paiyw3.pdf')} target="_blank" rel="noopener noreferrer" download><Download className="mr-2 w-4 h-4" />Download the sample report</a>
+                <a href={c('classification', 'sample_report_url', 'https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013016271-paiyw3.pdf')} target="_blank" rel="noopener noreferrer" download><Download className="mr-2 w-4 h-4" />{c('classification', 'download_report_label', 'Download the sample report')}</a>
               </Button>
             </div>
           </GsapReveal>
