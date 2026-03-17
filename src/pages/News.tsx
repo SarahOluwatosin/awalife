@@ -240,24 +240,6 @@ const News = () => {
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
                 {data.hero.description}
               </p>
-              <div className="flex flex-wrap gap-3">
-                {RESOURCE_KIND_CONFIG.map((section) => (
-                  <button
-                    key={section.id}
-                    onClick={() => {
-                      setActiveTab(section.id);
-                      resourcesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }}
-                    className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
-                      activeTab === section.id
-                        ? 'bg-primary text-primary-foreground border-transparent'
-                        : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground border-border/30 hover:border-primary/30'
-                    }`}
-                  >
-                    {section.sectionTitle}
-                  </button>
-                ))}
-              </div>
             </motion.div>
             <motion.div className="relative" variants={sectionVariants}>
               <div className="rounded-2xl overflow-hidden">

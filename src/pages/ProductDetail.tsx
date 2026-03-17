@@ -512,7 +512,7 @@ const ProductDetail = () => {
                 src={images.digitalMicroscope}
                 alt="Microscope workstation software"
                 data-override-id="dm03-software"
-                className="w-full object-cover object-top max-h-[420px] rounded-xl"
+                className="w-full object-contain rounded-xl"
               />
             </div>
           </div>

@@ -40,7 +40,7 @@ const CompanyNews = () => {
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
                 {c('description', "Explore company updates, product announcements, and industry events to stay informed on Awalife's latest milestones and innovations.")}
               </p>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 mt-8">
                 {categories.map((cat) =>
                 <button
                   key={cat}

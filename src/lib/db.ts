@@ -41,17 +41,16 @@ export const dbSelectAuth = async <T = unknown>(table: string, token: string, pa
   return resp.json();
 };
 
-export const dbInsertPublic = async <T = unknown>(table: string, data: Record<string, unknown>): Promise<T[]> => {
+export const dbInsertPublic = async (table: string, data: Record<string, unknown>): Promise<void> => {
   const resp = await fetch(restUrl(table), {
     method: 'POST',
-    headers: headers(),
+    headers: { ...headers(), 'Prefer': 'return=minimal' },
     body: JSON.stringify(data),
   });
   if (!resp.ok) {
     const err = await resp.text();
     throw new Error(sanitizeError(resp.status, err));
   }
-  return resp.json();
 };
 
 export const dbInsert = async <T = unknown>(table: string, data: Record<string, unknown>, token: string): Promise<T[]> => {

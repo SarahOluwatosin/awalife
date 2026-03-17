@@ -67,7 +67,7 @@ const BloodAnalysis = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('overview', 'badge', 'Blood Analysis')}</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('overview', 'title', 'Standardized Blood Smear Review')} - <span className="gradient-text">{c('overview', 'title_highlight', 'Images and Counts')}</span> in One Workflow</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('overview', 'title', 'Standardized Blood Smear Review')} - <span className="gradient-text">{c('overview', 'title_highlight', 'Images and Counts')}</span> {c('overview', 'title_suffix', 'in One Workflow')}</h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('overview', 'body', 'Awalife delivers a clinic-ready blood smear workflow with AI-assisted recognition and counting. Results are reported with review-ready images and quantitative outputs, enabling consistent decisions across teams and sites.')}</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">{c('overview', 'cta_primary', 'Contact us')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
@@ -191,7 +191,7 @@ const BloodAnalysis = () => {
 
       <motion.section className="py-20 lg:py-28 bg-white" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('cta', 'title', 'Interested in Our Products?')}</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('cta', 'title', 'Interested in')} <span className="gradient-text">{c('cta', 'title_highlight', 'Our Products')}</span>?</h2>
           <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>{c('cta', 'body', "Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.")}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>
