@@ -40,13 +40,6 @@ const CompanyNews = () => {
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
                 {c('description', "Explore company updates, product announcements, and industry events to stay informed on Awalife's latest milestones and innovations.")}
               </p>
-              <TabsList className="flex flex-wrap justify-start gap-3 bg-transparent p-0 h-auto mt-8">
-                {categories.map(cat => (
-                  <TabsTrigger key={cat} value={cat} className="resource-tab rounded-full px-6 py-2 text-sm font-semibold border border-border/40 bg-card/40 text-muted-foreground shadow-sm transition-colors">
-                    {cat}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
             </div>
             <div className="relative">
               <div className="rounded-2xl overflow-hidden">
@@ -60,6 +53,13 @@ const CompanyNews = () => {
       {/* News Grid */}
       <section className="pt-8 lg:pt-12 pb-28 lg:pb-36">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+          <TabsList className="flex flex-wrap justify-start gap-3 bg-transparent p-0 h-auto mb-10">
+            {categories.map(cat => (
+              <TabsTrigger key={cat} value={cat} className="resource-tab rounded-full px-6 py-2 text-sm font-semibold border border-border/40 bg-card/40 text-muted-foreground shadow-sm transition-colors">
+                {cat}
+              </TabsTrigger>
+            ))}
+          </TabsList>
           {categories.map(cat => {
             const items = cat === 'All' ? newsItems : newsItems.filter(n => n.category === cat);
             return (
