@@ -3,8 +3,11 @@ import type { LucideIcon } from 'lucide-react';
 import {
   Home, Package, FlaskConical, FolderOpen, Building2, Newspaper,
   ChevronDown, ChevronRight, Loader2, ExternalLink, RefreshCw, Check,
+  Upload, X,
 } from 'lucide-react';
 import { usePageContent } from '@/contexts/PageContentContext';
+import { uploadToStorage } from '@/lib/storage';
+import { dbSelect } from '@/lib/db';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -91,12 +94,16 @@ const FieldEditor = ({ row, onSave, onSaved }: FEProps) => {
   const [value, setValue] = useState(row.value);
   const [saving, setSaving] = useState(false);
   const [flash, setFlash] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [resources, setResources] = useState<any[] | null>(null);
 
   // Only sync when switching to a different row
   useEffect(() => { setValue(row.value); }, [row.id]);
 
   const dirty = value !== row.value;
   const multiline = isMultiline(row);
+  const isFile = row.type === 'file';
 
   const save = async () => {
     if (!dirty) return;
@@ -144,7 +151,83 @@ const FieldEditor = ({ row, onSave, onSaved }: FEProps) => {
           </button>
         </div>
       </div>
-      {multiline ? (
+      {isFile ? (
+        <div className="space-y-2">
+          {/* URL display */}
+          <input
+            type="text"
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            placeholder="No file selected"
+            className="w-full rounded border border-border bg-background px-2.5 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary h-9 truncate"
+          />
+          {/* Action buttons */}
+          <div className="flex gap-2">
+            {/* Upload */}
+            <label className="cursor-pointer flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded border border-border hover:border-primary/50 hover:text-primary transition-colors">
+              {uploading ? <Loader2 className="h-3 w-3 animate-spin" /> : <Upload className="h-3 w-3" />}
+              {uploading ? 'Uploading…' : 'Upload'}
+              <input
+                type="file"
+                className="sr-only"
+                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.png,.jpg,.jpeg,.gif,.webp,.mp4,.webm"
+                disabled={uploading}
+                onChange={async e => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  setUploading(true);
+                  try {
+                    const url = await uploadToStorage('media', 'brochures', file);
+                    setValue(url);
+                  } catch { /* silent */ } finally {
+                    setUploading(false);
+                    e.target.value = '';
+                  }
+                }}
+              />
+            </label>
+            {/* Pick from Resources */}
+            <button
+              type="button"
+              onClick={async () => {
+                if (!resources) {
+                  const rows = await dbSelect<any>('resources', 'order=created_at.desc&media_url=neq.');
+                  setResources(rows);
+                }
+                setPickerOpen(o => !o);
+              }}
+              className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded border border-border hover:border-primary/50 hover:text-primary transition-colors"
+            >
+              <FolderOpen className="h-3 w-3" />
+              Pick from Resources
+            </button>
+            {value && (
+              <button type="button" onClick={() => setValue('')} className="ml-auto flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-destructive transition-colors" title="Clear URL">
+                <X className="h-3 w-3" /> Clear
+              </button>
+            )}
+          </div>
+          {/* Resource picker dropdown */}
+          {pickerOpen && resources && (
+            <div className="max-h-48 overflow-y-auto rounded border border-border bg-background shadow-md text-sm">
+              {resources.length === 0 && (
+                <p className="px-3 py-2 text-muted-foreground text-xs">No resources with files found.</p>
+              )}
+              {resources.map((r: any) => (
+                <button
+                  key={r.id}
+                  type="button"
+                  className="w-full text-left px-3 py-2 hover:bg-secondary/50 truncate flex items-center gap-2 transition-colors"
+                  onClick={() => { setValue(r.media_url); setPickerOpen(false); }}
+                >
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase shrink-0">{r.media_mime?.split('/').pop()?.slice(0,4) || 'file'}</span>
+                  <span className="truncate">{r.title}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      ) : multiline ? (
         <textarea
           value={value}
           onChange={e => setValue(e.target.value)}
@@ -162,7 +245,7 @@ const FieldEditor = ({ row, onSave, onSaved }: FEProps) => {
         />
       )}
       <p className="text-[10px] text-muted-foreground/50">
-        {multiline ? 'Ctrl+Enter to save' : 'Enter to save'} · Esc to reset
+        {multiline && !isFile ? 'Ctrl+Enter to save' : 'Enter to save'} · Esc to reset
       </p>
     </div>
   );
@@ -181,6 +264,7 @@ const FIELD_PRIORITY: Record<string, number> = {
   year_count: 0,
   cta_primary: 12, cta_secondary: 13, cta_text: 12, cta_url: 13,
   button_text: 12, button_url: 13,
+  brochure_url: 14, sample_report_url: 14,
   // footer address
   phone: 1, email: 2, location: 3, copyright: 20,
   q: 20, a: 21,

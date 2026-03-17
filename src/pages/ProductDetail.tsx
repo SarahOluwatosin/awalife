@@ -288,11 +288,22 @@ const ProductDetail = () => {
                         <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
-                    <Button variant="outline" size="lg" className="border-border/50" asChild>
-                      <Link to="/contact">
-                        <Download className="mr-2 w-4 h-4" />{getContent(productId || '', 'hero', 'cta_secondary', 'Download brochure')}
-                      </Link>
-                    </Button>
+                    {(() => {
+                      const brochureUrl = getContent(productId || '', 'hero', 'brochure_url', '');
+                      return brochureUrl ? (
+                        <Button variant="outline" size="lg" className="border-border/50" asChild>
+                          <a href={brochureUrl} target="_blank" rel="noopener noreferrer" download>
+                            <Download className="mr-2 w-4 h-4" />{getContent(productId || '', 'hero', 'cta_secondary', 'Download brochure')}
+                          </a>
+                        </Button>
+                      ) : (
+                        <Button variant="outline" size="lg" className="border-border/50" asChild>
+                          <Link to="/contact">
+                            <Download className="mr-2 w-4 h-4" />{getContent(productId || '', 'hero', 'cta_secondary', 'Download brochure')}
+                          </Link>
+                        </Button>
+                      );
+                    })()}
                   </>
                 ) : (
                   <>
