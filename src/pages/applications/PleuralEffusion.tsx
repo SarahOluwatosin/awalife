@@ -37,7 +37,7 @@ const PleuralEffusion = () => {
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('overview', 'body', 'Awalife helps standardize pleural and abdominal effusion review by combining high-quality microscopy imaging with AI-assisted morphology recognition. Results are delivered as a review-ready report with images and structured findings, including up to 19 reportable items.')}</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">{c('overview', 'cta_primary', 'Contact us')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
-                <Button variant="outline" size="lg" asChild><a href="https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013242151-23x4mi.pdf" target="_blank" rel="noopener noreferrer" download><Download className="mr-2 w-4 h-4" />{c('overview', 'download_report_label', 'Download the sample report')}</a></Button>
+                <Button variant="outline" size="lg" asChild><a href={c('overview', 'sample_report_url', 'https://sozcccgyuxirnesfzlfn.supabase.co/storage/v1/object/public/media/resources/1771013242151-23x4mi.pdf')} target="_blank" rel="noopener noreferrer" download><Download className="mr-2 w-4 h-4" />{c('overview', 'download_report_label', 'Download the sample report')}</a></Button>
               </div>
             </motion.div>
             <motion.div className="relative" variants={fadeInRight}>
