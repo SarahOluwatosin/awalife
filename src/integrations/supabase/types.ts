@@ -44,6 +44,42 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_submissions: {
+        Row: {
+          company: string | null
+          country: string | null
+          created_at: string | null
+          email: string
+          full_name: string
+          id: string
+          message: string | null
+          position: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          company?: string | null
+          country?: string | null
+          created_at?: string | null
+          email: string
+          full_name: string
+          id?: string
+          message?: string | null
+          position?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          company?: string | null
+          country?: string | null
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string | null
+          position?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
       faq_items: {
         Row: {
           answer: string
@@ -211,6 +247,7 @@ export type Database = {
           id: string
           key: string
           label: string
+          page_key: string
           updated_at: string
         }
         Insert: {
@@ -220,6 +257,7 @@ export type Database = {
           id?: string
           key: string
           label: string
+          page_key?: string
           updated_at?: string
         }
         Update: {
@@ -229,6 +267,7 @@ export type Database = {
           id?: string
           key?: string
           label?: string
+          page_key?: string
           updated_at?: string
         }
         Relationships: []
@@ -271,6 +310,7 @@ export type Database = {
           id: string
           key: string
           label: string
+          page_key: string
           thumbnail_url: string
           updated_at: string
           video_type: string
@@ -283,6 +323,7 @@ export type Database = {
           id?: string
           key: string
           label: string
+          page_key?: string
           thumbnail_url?: string
           updated_at?: string
           video_type?: string
@@ -295,6 +336,7 @@ export type Database = {
           id?: string
           key?: string
           label?: string
+          page_key?: string
           thumbnail_url?: string
           updated_at?: string
           video_type?: string
