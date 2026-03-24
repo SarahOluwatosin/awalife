@@ -343,7 +343,7 @@ const SECTION_ORDER: Record<string, string[]> = {
   'dm-03':       ['hero', 'overview', 'sample_types', 'hardware', 'capabilities', 'image_hub', 'faq', 'cta'],
   about:         ['hero', 'story', 'metrics', 'journey', 'principles', 'vision', 'values', 'global', 'cta'],
   contact:       ['hero', 'form'],
-  footer:        ['tagline', 'nav', 'address'],
+  footer:        ['tagline', 'social', 'nav', 'address'],
   news:          ['hero'],
   resources:     ['hero'],
 };
