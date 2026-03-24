@@ -49,7 +49,7 @@ export function useStaggerAnimation<T extends HTMLElement = HTMLDivElement>(
 
   useEffect(() => {
     if (isContainerVisible) {
-      const timeouts: NodeJS.Timeout[] = [];
+      const timeouts: ReturnType<typeof setTimeout>[] = [];
       for (let i = 0; i < itemCount; i++) {
         const timeout = setTimeout(() => {
           setVisibleItems(prev => {

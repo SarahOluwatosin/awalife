@@ -40,8 +40,8 @@ const Footer = () => {
             </p>
             <div className="flex gap-4 mt-8">
               {[
-                { icon: Linkedin, href: 'https://linkedin.com/company/awalife' },
-                { icon: Instagram, href: 'https://instagram.com/awalife_es' },
+                { icon: Linkedin, href: 'https://www.linkedin.com/company/awalife' },
+                { icon: Instagram, href: 'https://www.instagram.com/awalife_es' },
                 { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61575919264554' },
               ].map((social, i) => (
                 <a
