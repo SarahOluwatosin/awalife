@@ -627,7 +627,7 @@ const AdminImageOverlay = () => {
                     {uploading ? <Loader2 className="animate-spin" /> : <Upload className="h-4 w-4" />}
                     {uploading ? 'Uploading…' : 'Upload Video File'}
                   </Button>
-                  <p className="text-xs text-muted-foreground">MP4, WebM, OGG (max 20MB)</p>
+                  <p className="text-xs text-muted-foreground">MP4, WebM, OGG (max 200MB)</p>
                 </div>
               </TabsContent>
             )}

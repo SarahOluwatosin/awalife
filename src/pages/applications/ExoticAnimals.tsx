@@ -56,7 +56,7 @@ const ExoticAnimals = () => {
               <table className="w-full text-sm md:text-base">
                 <thead className="bg-secondary/20 border-b border-border/40">
                   <tr>
-                    <th className="p-5 lg:p-6 text-left"><span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Features</span></th>
+                    <th className="p-5 lg:p-6 text-left"></th>
                     <th className="p-5 lg:p-6 text-center font-semibold text-foreground">{c('species_table', 'col_1', 'Companion & Small Mammals')}</th>
                     <th className="p-5 lg:p-6 text-center font-semibold text-foreground">{c('species_table', 'col_2', 'Avian')}</th>
                     <th className="p-5 lg:p-6 text-center font-semibold text-foreground">{c('species_table', 'col_3', 'Reptile')}</th>

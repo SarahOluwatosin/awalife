@@ -71,7 +71,7 @@ const BloodAnalysis = () => {
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('overview', 'body', 'Awalife delivers a clinic-ready blood smear workflow with AI-assisted recognition and counting. Results are reported with review-ready images and quantitative outputs, enabling consistent decisions across teams and sites.')}</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">{c('overview', 'cta_primary', 'Contact us')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
-                <Button variant="outline" size="lg" asChild><Link to="/contact">{c('overview', 'cta_secondary', 'See it in action')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
+                <Button variant="outline" size="lg" onClick={() => document.getElementById('blood-sop-section')?.scrollIntoView({ behavior: 'smooth' })}>{c('overview', 'cta_secondary', 'See it in action')}<ArrowRight className="ml-2 w-4 h-4" /></Button>
               </div>
             </motion.div>
             <motion.div className="relative" variants={fadeInRight} style={{ y: y1 }}>
@@ -114,7 +114,7 @@ const BloodAnalysis = () => {
         </div>
       </motion.section>
 
-      <motion.section ref={section2Ref} className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
+      <motion.section id="blood-sop-section" ref={section2Ref} className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="space-y-8">
             <motion.div className="space-y-6 text-center max-w-3xl mx-auto" variants={fadeInLeft}>
@@ -132,7 +132,7 @@ const BloodAnalysis = () => {
               </ul>
             </motion.div>
             <motion.div className="relative w-full" variants={fadeInRight} style={{ y: y2 }}>
-              <div className="rounded-2xl overflow-hidden">
+              <div className="rounded-2xl overflow-hidden max-w-3xl mx-auto">
                 <img src={images.ai100vet} alt="Blood SOP Video" data-override-id="blood-sop" className="w-full h-full object-cover rounded-xl" />
               </div>
             </motion.div>

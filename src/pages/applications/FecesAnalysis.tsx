@@ -65,7 +65,7 @@ const FecesAnalysis = () => {
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('overview', 'body', 'Awalife streamlines fecal screening with a slide-free workflow and two sampling options, delivering review-ready images and actionable findings in under 30 minutes - designed for consistent interpretation and documentation.')}</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">{c('overview', 'cta_primary', 'Contact us')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
-                <Button variant="outline" size="lg" asChild><Link to="/contact">{c('overview', 'cta_secondary', 'See it in action')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
+                <Button variant="outline" size="lg" onClick={() => document.getElementById('feces-sop-section')?.scrollIntoView({ behavior: 'smooth' })}>{c('overview', 'cta_secondary', 'See it in action')}<ArrowRight className="ml-2 w-4 h-4" /></Button>
               </div>
             </motion.div>
             <motion.div className="relative" variants={fadeInRight} style={{ y: py1 }}>
@@ -121,7 +121,7 @@ const FecesAnalysis = () => {
         </div>
       </motion.section>
 
-      <motion.section className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
+      <motion.section id="feces-sop-section" className="py-16 lg:py-20" initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div className="relative" variants={fadeInLeft}>

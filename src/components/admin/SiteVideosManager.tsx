@@ -342,7 +342,7 @@ const SiteVideosManager = () => {
                     <label className="flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border py-6 cursor-pointer hover:border-primary/50 hover:bg-accent/50 transition-colors">
                       <Upload className="h-6 w-6 text-muted-foreground" />
                       <span className="text-sm text-muted-foreground">Click to select video</span>
-                      <span className="text-xs text-muted-foreground">MP4, WebM, OGG (max 20MB)</span>
+                      <span className="text-xs text-muted-foreground">MP4, WebM, OGG (max 200MB)</span>
                       <input type="file" accept="video/mp4,video/webm,video/ogg" className="hidden" onChange={e => { const f = e.target.files?.[0]; if (f) setNewFile(f); }} />
                     </label>
                   )}

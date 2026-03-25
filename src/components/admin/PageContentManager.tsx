@@ -3,11 +3,12 @@ import type { LucideIcon } from 'lucide-react';
 import {
   Home, Package, FlaskConical, FolderOpen, Building2, Newspaper,
   ChevronDown, ChevronRight, Loader2, ExternalLink, RefreshCw, Check,
-  Upload, X,
+  Upload, X, Plus,
 } from 'lucide-react';
 import { usePageContent } from '@/contexts/PageContentContext';
 import { uploadToStorage } from '@/lib/storage';
-import { dbSelect } from '@/lib/db';
+import { dbSelect, dbInsert } from '@/lib/db';
+import { supabase } from '@/integrations/supabase/client';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -371,9 +372,10 @@ type PageEditorProps = {
   rows: Row[];
   onSave: (id: string, value: string) => Promise<void>;
   onSaved: () => void;
+  onAddYear?: () => Promise<void>;
 };
 
-const PageEditor = ({ page, rows, onSave, onSaved }: PageEditorProps) => {
+const PageEditor = ({ page, rows, onSave, onSaved, onAddYear }: PageEditorProps) => {
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
 
   if (rows.length === 0) {
@@ -427,6 +429,14 @@ const PageEditor = ({ page, rows, onSave, onSaved }: PageEditorProps) => {
                 {sortedRows.map(row => (
                   <FieldEditor key={row.id} row={row} onSave={onSave} onSaved={onSaved} />
                 ))}
+                {page === 'about' && section === 'journey' && onAddYear && (
+                  <button
+                    onClick={onAddYear}
+                    className="mt-2 w-full flex items-center justify-center gap-2 rounded-lg border border-dashed border-primary/40 py-2.5 text-sm text-primary hover:bg-primary/5 transition-colors"
+                  >
+                    <Plus className="h-4 w-4" /> Add Year
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -439,7 +449,7 @@ const PageEditor = ({ page, rows, onSave, onSaved }: PageEditorProps) => {
 // ─── Main component ───────────────────────────────────────────────────────────
 
 const PageContentManager = () => {
-  const { rows, loading, updateContent } = usePageContent();
+  const { rows, loading, updateContent, refetch } = usePageContent();
   const [selectedPage, setSelectedPage] = useState('home');
   const [openGroups, setOpenGroups] = useState<Set<string>>(() => new Set(['Products', 'Applications', 'Company']));
   const [iframeKey, setIframeKey] = useState(0);
@@ -453,6 +463,19 @@ const PageContentManager = () => {
   };
 
   const handleSaved = () => setIframeKey(k => k + 1);
+
+  const handleAddYear = async () => {
+    const { data } = await supabase.auth.getSession();
+    const token = data.session?.access_token ?? '';
+    const yearCountRow = rows.find(r => r.page === 'about' && r.section === 'journey' && r.key === 'year_count');
+    const n = parseInt(yearCountRow?.value ?? '7', 10) + 1;
+    await dbInsert('page_content', { page: 'about', section: 'journey', key: `year_${n}`, label: `Year ${n}`, value: '', type: 'text' }, token);
+    await dbInsert('page_content', { page: 'about', section: 'journey', key: `year_${n}_highlight`, label: `Year ${n} Highlight`, value: '', type: 'text' }, token);
+    await dbInsert('page_content', { page: 'about', section: 'journey', key: `year_${n}_items`, label: `Year ${n} Milestones (one per line)`, value: '', type: 'textarea' }, token);
+    if (yearCountRow) await updateContent(yearCountRow.id, String(n));
+    await refetch();
+    setIframeKey(k => k + 1);
+  };
 
   const toggleGroup = (label: string) => {
     setOpenGroups(prev => {
@@ -553,7 +576,7 @@ const PageContentManager = () => {
             <h2 className="text-base font-semibold text-foreground">{PAGE_LABELS[selectedPage] ?? selectedPage}</h2>
             <p className="text-xs text-muted-foreground mt-0.5">{pageRows.length} field{pageRows.length !== 1 ? 's' : ''} · Enter to save · Esc to reset</p>
           </div>
-          <PageEditor page={selectedPage} rows={pageRows} onSave={handleSave} onSaved={handleSaved} />
+          <PageEditor page={selectedPage} rows={pageRows} onSave={handleSave} onSaved={handleSaved} onAddYear={selectedPage === 'about' ? handleAddYear : undefined} />
         </div>
       </div>
 

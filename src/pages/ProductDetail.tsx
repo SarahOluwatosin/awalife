@@ -17,10 +17,11 @@ import { sectionVariants, staggerContainer, staggerContainerFast, cardVariants, 
 const ProductDetail = () => {
   const { productId } = useParams();
   const { t } = useLanguage();
-  const { getContent } = usePageContent();
+  const { getContent, refetch } = usePageContent();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    refetch();
   }, [productId]);
 
   const productData: Record<string, any> = {
