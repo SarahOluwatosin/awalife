@@ -217,7 +217,7 @@ const ProductComparison = ({ variant = 'full' }: ProductComparisonProps) => {
           </h2>
           <p className="text-muted-foreground">
             {variant === ‘ai-analyzer’
-              ? c(‘description’, ‘Compare models across sample types and species support to match your clinic\u2019s needs.’)
+              ? c(‘description’, "Compare models across sample types and species support to match your clinic’s needs.")
               : ‘Compare features across our product lineup to find the perfect fit for your practice’}
           </p>
         </div>
