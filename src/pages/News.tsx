@@ -305,9 +305,9 @@ const News = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-              FAQ
+              {getContent('resources', 'faq', 'badge', 'FAQ')}
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="gradient-text">Questions</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{getContent('resources', 'faq', 'title', 'Frequently Asked')} <span className="gradient-text">{getContent('resources', 'faq', 'title_highlight', 'Questions')}</span>{getContent('resources', 'faq', 'title_suffix', '')}</h2>
           </div>
           {data.faq.items.length ?
           <div className="grid md:grid-cols-2 gap-6">

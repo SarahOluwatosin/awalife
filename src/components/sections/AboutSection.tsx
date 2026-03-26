@@ -37,6 +37,7 @@ const AboutSection = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
               {c('title', "World's First AI-Powered")}{' '}
               <span className="text-primary">{c('title_highlight', 'Morphological POCT Platform')}</span>
+              {c('title_suffix', '')}
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-6">
               {c('body_1', 'Awalife becomes the first to enable intelligent morphological analysis of various pet samples—advancing the application and standardization of AI technology in pet diagnostic scenarios.')}

@@ -210,10 +210,10 @@ const ProductComparison = ({ variant = 'full' }: ProductComparisonProps) => {
       <div className={containerClass}>
         <div className="text-center max-w-3xl mx-auto mb-14">
           <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
-            Compare Products
+            {c('badge', 'Compare Products')}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Find the <span className="gradient-text">Right Solution</span>
+            {c('title', 'Find the')} <span className="gradient-text">{c('title_highlight', 'Right Solution')}</span>{c('title_suffix', '')}
           </h2>
           <p className="text-muted-foreground">
             {variant === 'ai-analyzer'

@@ -35,7 +35,7 @@ const CompanyNews = () => {
                 {c('badge', 'Get Updates')}
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                <span className="gradient-text">News</span> Center
+                {c('title', '')} <span className="gradient-text">{c('title_highlight', 'News')}</span>{c('title_suffix', ' Center')}
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
                 {c('description', "Explore company updates, product announcements, and industry events to stay informed on Awalife's latest milestones and innovations.")}

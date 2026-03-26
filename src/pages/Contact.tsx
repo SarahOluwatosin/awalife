@@ -47,11 +47,12 @@ const Contact = () => {
     }
   };
 
+  const cs = (key: string, fb: string) => getContent('contact', 'social', key, fb);
   const contactChips = [
-  { label: 'Email', icon: Mail, href: 'mailto:info@awalife.com.cn', display: 'info@awalife.com.cn' },
-  { label: 'LinkedIn', icon: Linkedin, href: getContent('footer', 'social', 'linkedin_url', 'https://www.linkedin.com/company/awalife'), display: 'linkedin.com/company/awalife' },
-  { label: 'Facebook', icon: Facebook, href: getContent('footer', 'social', 'facebook_url', 'https://www.facebook.com/profile.php?id=61575919264554'), display: 'facebook.com/awalife' },
-  { label: 'Instagram', icon: Instagram, href: getContent('footer', 'social', 'instagram_url', 'https://www.instagram.com/awalife_es'), display: 'instagram.com/awalife_es' }];
+  { label: 'Email',     icon: Mail,      href: `mailto:${cs('email', 'info@awalife.com.cn')}`,                                          display: cs('email', 'info@awalife.com.cn') },
+  { label: 'LinkedIn',  icon: Linkedin,  href: cs('linkedin_url',  'https://www.linkedin.com/company/awalife'),                         display: 'linkedin.com/company/awalife' },
+  { label: 'Facebook',  icon: Facebook,  href: cs('facebook_url',  'https://www.facebook.com/profile.php?id=61575919264554'),            display: 'facebook.com/awalife' },
+  { label: 'Instagram', icon: Instagram, href: cs('instagram_url', 'https://www.instagram.com/awalife_es'),                             display: 'instagram.com/awalife_es' }];
 
 
   return (
@@ -63,7 +64,7 @@ const Contact = () => {
             {/* Left: Text and Contact Icons */}
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('hero', 'badge', 'Get in Touch')}</span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"><span className="gradient-text">{c('hero', 'title_highlight', 'Contact')}</span> {c('hero', 'title_suffix', 'Us')}</h1>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">{c('hero', 'title', '')}<span className="gradient-text">{c('hero', 'title_highlight', 'Contact')}</span> {c('hero', 'title_suffix', 'Us')}</h1>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">{c('hero', 'description', "If you're interested in learning more about Awalife's products or exploring potential business opportunities, feel free to reach out and we'll respond as soon as possible.")}</p>
 
               <p className="text-sm text-muted-foreground mb-6">{c('hero', 'support_text', 'Our dedicated customer support team is always ready to assist you:')}</p>
@@ -104,7 +105,7 @@ const Contact = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="w-full">
             <motion.div variants={fadeInLeft} className="text-left mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4"><span className="gradient-text">{c('form', 'title_highlight', 'Interested in')}</span> {c('form', 'title_suffix', 'Our Products?')}</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{c('form', 'title', '')}<span className="gradient-text">{c('form', 'title_highlight', 'Interested in')}</span> {c('form', 'title_suffix', 'Our Products?')}</h2>
               <p className="text-lg text-muted-foreground">{c('form', 'subtitle', "Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.")}</p>
             </motion.div>
 

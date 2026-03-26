@@ -8,19 +8,19 @@ const Footer = () => {
   const n = (key: string, fb: string) => getContent('footer', 'nav', key, fb);
   const footerLinks = {
     quickLinks: [
-      { label: n('link_ai_analyzer', 'AI Morphology Analyzer'), path: '/products/ai-analyzer' },
-      { label: n('link_dm03', 'DM-03 Microscope Workstation'), path: '/products/dm-03' },
-      { label: n('link_blood', 'Blood Analysis'), path: '/applications/blood' },
-      { label: n('link_urine', 'Urine Analysis'), path: '/applications/urine' },
-      { label: n('link_feces', 'Feces Analysis'), path: '/applications/feces' },
-      { label: n('link_fluid', 'Fluid Analysis'), path: '/applications/pleural-effusion' },
-      { label: n('link_exotic', 'Exotic Animals'), path: '/applications/exotic-animals' },
+      { label: n('link_ai_analyzer', 'AI Morphology Analyzer'), path: n('link_ai_analyzer_url', '/products/ai-analyzer') },
+      { label: n('link_dm03', 'DM-03 Microscope Workstation'), path: n('link_dm03_url', '/products/dm-03') },
+      { label: n('link_blood', 'Blood Analysis'), path: n('link_blood_url', '/applications/blood') },
+      { label: n('link_urine', 'Urine Analysis'), path: n('link_urine_url', '/applications/urine') },
+      { label: n('link_feces', 'Feces Analysis'), path: n('link_feces_url', '/applications/feces') },
+      { label: n('link_fluid', 'Fluid Analysis'), path: n('link_fluid_url', '/applications/pleural-effusion') },
+      { label: n('link_exotic', 'Exotic Animals'), path: n('link_exotic_url', '/applications/exotic-animals') },
     ],
     company: [
-      { label: n('link_about', 'About Awalife'), path: '/company/about' },
-      { label: n('link_news', 'News Center'), path: '/company/news' },
-      { label: n('link_resources', 'Resources'), path: '/resources' },
-      { label: n('link_contact', 'Contact'), path: '/contact' },
+      { label: n('link_about', 'About Awalife'), path: n('link_about_url', '/company/about') },
+      { label: n('link_news', 'News Center'), path: n('link_news_url', '/company/news') },
+      { label: n('link_resources', 'Resources'), path: n('link_resources_url', '/resources') },
+      { label: n('link_contact', 'Contact'), path: n('link_contact_url', '/contact') },
     ],
   };
 

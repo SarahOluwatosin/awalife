@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { usePageContent } from '@/contexts/PageContentContext';
 import { uploadToStorage } from '@/lib/storage';
-import { dbSelect, dbInsert } from '@/lib/db';
+import { dbSelect, dbInsert, dbDelete } from '@/lib/db';
 import { supabase } from '@/integrations/supabase/client';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -180,6 +180,11 @@ const FieldEditor = ({ row, onSave, onSaved }: FEProps) => {
                   try {
                     const url = await uploadToStorage('media', 'brochures', file);
                     setValue(url);
+                    // Auto-save immediately so the URL is persisted without requiring a manual Save click
+                    await onSave(row.id, url);
+                    onSaved();
+                    setFlash(true);
+                    setTimeout(() => setFlash(false), 1500);
                   } catch { /* silent */ } finally {
                     setUploading(false);
                     e.target.value = '';
@@ -219,7 +224,15 @@ const FieldEditor = ({ row, onSave, onSaved }: FEProps) => {
                   key={r.id}
                   type="button"
                   className="w-full text-left px-3 py-2 hover:bg-secondary/50 truncate flex items-center gap-2 transition-colors"
-                  onClick={() => { setValue(r.media_url); setPickerOpen(false); }}
+                  onClick={async () => {
+                    const url = r.media_url;
+                    setValue(url);
+                    setPickerOpen(false);
+                    await onSave(row.id, url);
+                    onSaved();
+                    setFlash(true);
+                    setTimeout(() => setFlash(false), 1500);
+                  }}
                 >
                   <span className="text-[10px] font-bold text-muted-foreground uppercase shrink-0">{r.media_mime?.split('/').pop()?.slice(0,4) || 'file'}</span>
                   <span className="truncate">{r.title}</span>
@@ -248,6 +261,115 @@ const FieldEditor = ({ row, onSave, onSaved }: FEProps) => {
       <p className="text-[10px] text-muted-foreground/50">
         {multiline && !isFile ? 'Ctrl+Enter to save' : 'Enter to save'} · Esc to reset
       </p>
+    </div>
+  );
+};
+
+// ─── NavLinkPairEditor ────────────────────────────────────────────────────────
+
+const ROUTE_OPTIONS = [
+  { label: 'Home',              path: '/' },
+  { label: 'AI Analyzer',       path: '/products/ai-analyzer' },
+  { label: 'DM-03 Microscope',  path: '/products/dm-03' },
+  { label: 'Blood Analysis',    path: '/applications/blood' },
+  { label: 'Urine Analysis',    path: '/applications/urine' },
+  { label: 'Feces Analysis',    path: '/applications/feces' },
+  { label: 'Pleural Effusion',  path: '/applications/pleural-effusion' },
+  { label: 'Exotic Animals',    path: '/applications/exotic-animals' },
+  { label: 'About',             path: '/company/about' },
+  { label: 'News Center',       path: '/company/news' },
+  { label: 'Resources',         path: '/resources' },
+  { label: 'Contact',           path: '/contact' },
+];
+
+type NLProps = {
+  labelRow: Row;
+  urlRow: Row | null;
+  onSave: (id: string, value: string) => Promise<void>;
+  onSaved: () => void;
+};
+
+const NavLinkPairEditor = ({ labelRow, urlRow, onSave, onSaved }: NLProps) => {
+  const [labelVal, setLabelVal] = useState(labelRow.value);
+  const [urlVal, setUrlVal] = useState(urlRow?.value ?? '');
+  const [saving, setSaving] = useState(false);
+  const [flash, setFlash] = useState(false);
+
+  useEffect(() => { setLabelVal(labelRow.value); }, [labelRow.id]);
+  useEffect(() => { if (urlRow) setUrlVal(urlRow.value); }, [urlRow?.id]);
+
+  const labelDirty = labelVal !== labelRow.value;
+  const urlDirty = urlRow ? urlVal !== urlRow.value : false;
+  const dirty = labelDirty || urlDirty;
+
+  const save = async () => {
+    if (!dirty) return;
+    setSaving(true);
+    try {
+      if (labelDirty) await onSave(labelRow.id, labelVal);
+      if (urlRow && urlDirty) await onSave(urlRow.id, urlVal);
+      setFlash(true);
+      onSaved();
+      setTimeout(() => setFlash(false), 1500);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="rounded-lg border border-border/30 p-3 space-y-2.5">
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-xs font-medium text-muted-foreground truncate flex-1">
+          {labelRow.label || labelRow.key}
+        </p>
+        <div className="flex items-center gap-1.5 shrink-0">
+          {flash && (
+            <span className="flex items-center gap-1 text-xs text-emerald-600 font-medium">
+              <Check className="h-3 w-3" /> Saved!
+            </span>
+          )}
+          <button
+            onClick={save}
+            disabled={!dirty || saving}
+            className={`px-2.5 py-1 text-xs font-medium rounded transition-all ${
+              flash
+                ? 'bg-emerald-500 text-white'
+                : dirty
+                  ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                  : 'bg-muted text-muted-foreground opacity-40 cursor-not-allowed'
+            }`}
+          >
+            {saving ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Save'}
+          </button>
+        </div>
+      </div>
+      <div className="space-y-1">
+        <p className="text-[10px] text-muted-foreground/50">Display text</p>
+        <input
+          type="text"
+          value={labelVal}
+          onChange={e => setLabelVal(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === 'Escape') setLabelVal(labelRow.value);
+            if (e.key === 'Enter') { e.preventDefault(); save(); }
+          }}
+          className="w-full rounded border border-border bg-background px-2.5 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary h-9"
+        />
+      </div>
+      {urlRow && (
+        <div className="space-y-1">
+          <p className="text-[10px] text-muted-foreground/50">Page</p>
+          <select
+            value={urlVal}
+            onChange={e => setUrlVal(e.target.value)}
+            className="w-full rounded border border-border bg-background px-2.5 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary h-9"
+          >
+            {ROUTE_OPTIONS.map(opt => (
+              <option key={opt.path} value={opt.path}>{opt.label} — {opt.path}</option>
+            ))}
+          </select>
+        </div>
+      )}
     </div>
   );
 };
@@ -281,7 +403,22 @@ const SECTION_KEY_ORDER: Record<string, string[]> = {
     'btn_submit', 'btn_sending',
     'success_title', 'success_body', 'success_cta',
   ],
-  'footer/nav': ['label_quicklinks', 'label_company', 'label_contact'],
+  'footer/nav': [
+    'label_quicklinks',
+    'link_ai_analyzer', 'link_ai_analyzer_url',
+    'link_dm03', 'link_dm03_url',
+    'link_blood', 'link_blood_url',
+    'link_urine', 'link_urine_url',
+    'link_feces', 'link_feces_url',
+    'link_fluid', 'link_fluid_url',
+    'link_exotic', 'link_exotic_url',
+    'label_company',
+    'link_about', 'link_about_url',
+    'link_news', 'link_news_url',
+    'link_resources', 'link_resources_url',
+    'link_contact', 'link_contact_url',
+    'label_contact',
+  ],
   'exotic/species_table': [
     'group_species',
     'col_1', 'col_2', 'col_3', 'col_4',
@@ -343,7 +480,7 @@ const SECTION_ORDER: Record<string, string[]> = {
   'ai-analyzer': ['hero', 'overview', 'capabilities', 'workflow', 'faq', 'cta'],
   'dm-03':       ['hero', 'overview', 'sample_types', 'hardware', 'capabilities', 'image_hub', 'faq', 'cta'],
   about:         ['hero', 'story', 'metrics', 'journey', 'principles', 'vision', 'values', 'global', 'cta'],
-  contact:       ['hero', 'form'],
+  contact:       ['hero', 'form', 'social'],
   footer:        ['tagline', 'social', 'nav', 'address'],
   news:          ['hero'],
   resources:     ['hero'],
@@ -373,9 +510,10 @@ type PageEditorProps = {
   onSave: (id: string, value: string) => Promise<void>;
   onSaved: () => void;
   onAddYear?: () => Promise<void>;
+  onDeleteYear?: (n: number) => Promise<void>;
 };
 
-const PageEditor = ({ page, rows, onSave, onSaved, onAddYear }: PageEditorProps) => {
+const PageEditor = ({ page, rows, onSave, onSaved, onAddYear, onDeleteYear }: PageEditorProps) => {
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
 
   if (rows.length === 0) {
@@ -426,17 +564,87 @@ const PageEditor = ({ page, rows, onSave, onSaved, onAddYear }: PageEditorProps)
             </button>
             {!isCollapsed && (
               <div className="p-4 space-y-4">
-                {sortedRows.map(row => (
-                  <FieldEditor key={row.id} row={row} onSave={onSave} onSaved={onSaved} />
-                ))}
-                {page === 'about' && section === 'journey' && onAddYear && (
-                  <button
-                    onClick={onAddYear}
-                    className="mt-2 w-full flex items-center justify-center gap-2 rounded-lg border border-dashed border-primary/40 py-2.5 text-sm text-primary hover:bg-primary/5 transition-colors"
-                  >
-                    <Plus className="h-4 w-4" /> Add Year
-                  </button>
-                )}
+                {(page === 'footer' && section === 'nav')
+                  ? (() => {
+                      const QUICK_LINK_KEYS = ['link_ai_analyzer', 'link_dm03', 'link_blood', 'link_urine', 'link_feces', 'link_fluid', 'link_exotic'];
+                      const COMPANY_LINK_KEYS = ['link_about', 'link_news', 'link_resources', 'link_contact'];
+                      const headerRows = sortedRows.filter(r => ['label_quicklinks', 'label_company', 'label_contact'].includes(r.key));
+                      const renderLinkGroup = (keys: string[], title: string) => (
+                        <div className="space-y-2">
+                          <p className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider pt-1">{title}</p>
+                          {keys.map(key => {
+                            const lr = sortedRows.find(r => r.key === key);
+                            const ur = sortedRows.find(r => r.key === `${key}_url`) ?? null;
+                            if (!lr) return null;
+                            return <NavLinkPairEditor key={key} labelRow={lr} urlRow={ur} onSave={onSave} onSaved={onSaved} />;
+                          })}
+                        </div>
+                      );
+                      return (
+                        <>
+                          {headerRows.filter(r => r.key === 'label_quicklinks').map(row => (
+                            <FieldEditor key={row.id} row={row} onSave={onSave} onSaved={onSaved} />
+                          ))}
+                          {renderLinkGroup(QUICK_LINK_KEYS, 'Quick Links')}
+                          {headerRows.filter(r => r.key === 'label_company').map(row => (
+                            <FieldEditor key={row.id} row={row} onSave={onSave} onSaved={onSaved} />
+                          ))}
+                          {renderLinkGroup(COMPANY_LINK_KEYS, 'Company Links')}
+                          {headerRows.filter(r => r.key === 'label_contact').map(row => (
+                            <FieldEditor key={row.id} row={row} onSave={onSave} onSaved={onSaved} />
+                          ))}
+                        </>
+                      );
+                    })()
+                  : (page === 'about' && section === 'journey' && (onAddYear || onDeleteYear))
+                  ? (() => {
+                      const isYearRow = (k: string) => /^year_\d+(_highlight|_items)?$/.test(k);
+                      const headerRows = sortedRows.filter(r => !isYearRow(r.key));
+                      const yearNums = [...new Set(
+                        sortedRows
+                          .map(r => r.key.match(/^year_(\d+)/))
+                          .filter(Boolean)
+                          .map(m => parseInt(m![1], 10))
+                      )].sort((a, b) => a - b);
+                      return (
+                        <>
+                          {headerRows.map(row => (
+                            <FieldEditor key={row.id} row={row} onSave={onSave} onSaved={onSaved} />
+                          ))}
+                          {yearNums.map(n => {
+                            const yearRows = sortedRows.filter(r => r.key === `year_${n}` || r.key === `year_${n}_highlight` || r.key === `year_${n}_items`);
+                            return (
+                              <div key={n} className="rounded-lg border border-border/30 p-3 space-y-3">
+                                <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Year {n}</p>
+                                {yearRows.map(row => (
+                                  <FieldEditor key={row.id} row={row} onSave={onSave} onSaved={onSaved} />
+                                ))}
+                                {onDeleteYear && (
+                                  <button
+                                    onClick={() => onDeleteYear(n)}
+                                    className="w-full flex items-center justify-center gap-2 rounded-lg border border-dashed border-destructive/30 py-2 text-sm text-destructive/70 hover:bg-destructive/5 hover:border-destructive/50 transition-colors"
+                                  >
+                                    <X className="h-3.5 w-3.5" /> Delete Year {n}
+                                  </button>
+                                )}
+                              </div>
+                            );
+                          })}
+                          {onAddYear && (
+                            <button
+                              onClick={onAddYear}
+                              className="w-full flex items-center justify-center gap-2 rounded-lg border border-dashed border-primary/40 py-2.5 text-sm text-primary hover:bg-primary/5 transition-colors"
+                            >
+                              <Plus className="h-4 w-4" /> Add Year
+                            </button>
+                          )}
+                        </>
+                      );
+                    })()
+                  : sortedRows.map(row => (
+                      <FieldEditor key={row.id} row={row} onSave={onSave} onSaved={onSaved} />
+                    ))
+                }
               </div>
             )}
           </div>
@@ -473,6 +681,38 @@ const PageContentManager = () => {
     await dbInsert('page_content', { page: 'about', section: 'journey', key: `year_${n}_highlight`, label: `Year ${n} Highlight`, value: '', type: 'text' }, token);
     await dbInsert('page_content', { page: 'about', section: 'journey', key: `year_${n}_items`, label: `Year ${n} Milestones (one per line)`, value: '', type: 'textarea' }, token);
     if (yearCountRow) await updateContent(yearCountRow.id, String(n));
+    await refetch();
+    setIframeKey(k => k + 1);
+  };
+
+  const handleDeleteYear = async (n: number) => {
+    const { data } = await supabase.auth.getSession();
+    const token = data.session?.access_token ?? '';
+    const journeyRows = rows.filter(r => r.page === 'about' && r.section === 'journey');
+    const yearCountRow = journeyRows.find(r => r.key === 'year_count');
+    const yearCount = parseInt(yearCountRow?.value ?? '0', 10);
+    if (yearCount < 1) return;
+
+    // Shift all years after n down by one
+    for (let i = n; i < yearCount; i++) {
+      const src = (k: string) => journeyRows.find(r => r.key === `year_${i + 1}${k}`);
+      const dst = (k: string) => journeyRows.find(r => r.key === `year_${i}${k}`);
+      for (const suffix of ['', '_highlight', '_items']) {
+        const srcRow = src(suffix);
+        const dstRow = dst(suffix);
+        if (srcRow && dstRow) await updateContent(dstRow.id, srcRow.value);
+      }
+    }
+
+    // Delete the last year's rows
+    for (const suffix of ['', '_highlight', '_items']) {
+      const row = journeyRows.find(r => r.key === `year_${yearCount}${suffix}`);
+      if (row) await dbDelete('page_content', row.id, token);
+    }
+
+    // Decrement year_count
+    if (yearCountRow) await updateContent(yearCountRow.id, String(yearCount - 1));
+
     await refetch();
     setIframeKey(k => k + 1);
   };
@@ -576,7 +816,7 @@ const PageContentManager = () => {
             <h2 className="text-base font-semibold text-foreground">{PAGE_LABELS[selectedPage] ?? selectedPage}</h2>
             <p className="text-xs text-muted-foreground mt-0.5">{pageRows.length} field{pageRows.length !== 1 ? 's' : ''} · Enter to save · Esc to reset</p>
           </div>
-          <PageEditor page={selectedPage} rows={pageRows} onSave={handleSave} onSaved={handleSaved} onAddYear={selectedPage === 'about' ? handleAddYear : undefined} />
+          <PageEditor page={selectedPage} rows={pageRows} onSave={handleSave} onSaved={handleSaved} onAddYear={selectedPage === 'about' ? handleAddYear : undefined} onDeleteYear={selectedPage === 'about' ? handleDeleteYear : undefined} />
         </div>
       </div>
 

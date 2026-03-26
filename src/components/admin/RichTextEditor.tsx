@@ -8,7 +8,7 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Image from '@tiptap/extension-image';
 import {
   Bold, Italic, UnderlineIcon, Heading2, Heading3,
-  List, ListOrdered, AlignLeft, AlignCenter, AlignRight,
+  List, ListOrdered, AlignLeft, AlignCenter, AlignRight, AlignJustify,
   Link2, Undo2, Redo2, Unlink, ImageIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -125,6 +125,9 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write article content.
         </ToolbarButton>
         <ToolbarButton title="Align right" active={editor.isActive({ textAlign: 'right' })} onClick={() => editor.chain().focus().setTextAlign('right').run()}>
           <AlignRight className="h-3.5 w-3.5" />
+        </ToolbarButton>
+        <ToolbarButton title="Justify" active={editor.isActive({ textAlign: 'justify' })} onClick={() => editor.chain().focus().setTextAlign('justify').run()}>
+          <AlignJustify className="h-3.5 w-3.5" />
         </ToolbarButton>
         <div className="w-px mx-1 bg-border/60 self-stretch" />
         <ToolbarButton title="Insert link" active={editor.isActive('link')} onClick={handleSetLink}>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowRight, Check, Download, FileText, Play, Cpu, Zap, Target, Shield, Droplets, Bug, TestTubes, Beaker, PawPrint, Microscope, TrendingUp, FlaskConical, Layers, Plug, Stethoscope } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,7 @@ import ProductComparison from '@/components/product/ProductComparison';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { usePageContent } from '@/contexts/PageContentContext';
 import { images } from '@/lib/images';
+import { dbSelect } from '@/lib/db';
 import { motion } from 'framer-motion';
 import { sectionVariants, staggerContainer, staggerContainerFast, cardVariants, cardSlideUp, fadeInLeft, fadeInRight, blurIn, popIn, viewportOnce, viewportOnceSmall, viewportOnceTiny } from '@/lib/animations';
 
@@ -18,10 +19,16 @@ const ProductDetail = () => {
   const { productId } = useParams();
   const { t } = useLanguage();
   const { getContent, refetch } = usePageContent();
+  // null = still loading, '' = loaded but no URL set, string = URL ready
+  const [brochureUrl, setBrochureUrl] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     refetch();
+    setBrochureUrl(null);
+    dbSelect<{ value: string }>('page_content', `page=eq.${productId}&section=eq.hero&key=eq.brochure_url`)
+      .then(rows => setBrochureUrl(rows[0]?.value || ''))
+      .catch(() => setBrochureUrl(''));
   }, [productId]);
 
   const productData: Record<string, any> = {
@@ -248,9 +255,9 @@ const ProductDetail = () => {
               )}
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
                 {isMicroscope
-                  ? <>{getContent('dm-03', 'hero', 'title', 'Smarter Imaging,')} <span className="gradient-text">{getContent('dm-03', 'hero', 'title_highlight', 'Effortless Operation')}</span></>
+                  ? <>{getContent('dm-03', 'hero', 'title', 'Smarter Imaging,')} <span className="gradient-text">{getContent('dm-03', 'hero', 'title_highlight', 'Effortless Operation')}</span>{getContent('dm-03', 'hero', 'title_suffix', '')}</>
                   : isAIAnalyzer
-                    ? <>{getContent('ai-analyzer', 'hero', 'title', 'AI Series')} <span className="gradient-text">{getContent('ai-analyzer', 'hero', 'title_highlight', 'Morphology Analyzer')}</span></>
+                    ? <>{getContent('ai-analyzer', 'hero', 'title', 'AI Series')} <span className="gradient-text">{getContent('ai-analyzer', 'hero', 'title_highlight', 'Morphology Analyzer')}</span>{getContent('ai-analyzer', 'hero', 'title_suffix', '')}</>
                     : product.name}
               </h1>
               
@@ -289,22 +296,13 @@ const ProductDetail = () => {
                         <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
-                    {(() => {
-                      const brochureUrl = getContent(productId || '', 'hero', 'brochure_url', '');
-                      return brochureUrl ? (
-                        <Button variant="outline" size="lg" className="border-border/50" asChild>
-                          <a href={brochureUrl} target="_blank" rel="noopener noreferrer" download>
-                            <Download className="mr-2 w-4 h-4" />{getContent(productId || '', 'hero', 'cta_secondary', 'Download brochure')}
-                          </a>
-                        </Button>
-                      ) : (
-                        <Button variant="outline" size="lg" className="border-border/50" asChild>
-                          <Link to="/contact">
-                            <Download className="mr-2 w-4 h-4" />{getContent(productId || '', 'hero', 'cta_secondary', 'Download brochure')}
-                          </Link>
-                        </Button>
-                      );
-                    })()}
+                    {brochureUrl ? (
+                      <Button variant="outline" size="lg" className="border-border/50" asChild>
+                        <a href={brochureUrl} target="_blank" rel="noopener noreferrer">
+                          <Download className="mr-2 w-4 h-4" />{getContent(productId || '', 'hero', 'cta_secondary', 'Download brochure')}
+                        </a>
+                      </Button>
+                    ) : null}
                   </>
                 ) : (
                   <>
@@ -337,7 +335,7 @@ const ProductDetail = () => {
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground lg:whitespace-nowrap w-full">
                 {isAIAnalyzer
-                  ? <>{getContent('ai-analyzer', 'capabilities', 'title', 'AI Series Morphology Analyzer from')} <span className="gradient-text">{getContent('ai-analyzer', 'capabilities', 'title_highlight', 'Sample to Diagnosis')}</span></>
+                  ? <>{getContent('ai-analyzer', 'capabilities', 'title', 'AI Series Morphology Analyzer from')} <span className="gradient-text">{getContent('ai-analyzer', 'capabilities', 'title_highlight', 'Sample to Diagnosis')}</span>{getContent('ai-analyzer', 'capabilities', 'title_suffix', '')}</>
                   : <>What It <span className="gradient-text">{getContent(productId || '', 'capabilities', 'title_highlight', 'Can Do')}</span></>}
               </h2>
             </motion.div>
@@ -424,7 +422,7 @@ const ProductDetail = () => {
                 <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                   {getContent('dm-03', 'sample_types', 'badge', 'Sample Types')}
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight"><span className="gradient-text">{getContent('dm-03', 'sample_types', 'title_highlight', 'Samples')}</span> {getContent('dm-03', 'sample_types', 'title_suffix', 'Supported')}</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">{getContent('dm-03', 'sample_types', 'title', '')} <span className="gradient-text">{getContent('dm-03', 'sample_types', 'title_highlight', 'Samples')}</span> {getContent('dm-03', 'sample_types', 'title_suffix', 'Supported')}</h2>
                 <p className="text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                   {getContent('dm-03', 'sample_types', 'subtitle', 'Common veterinary sample types that can be captured and documented with the workstation.')}
                 </p>
@@ -472,7 +470,7 @@ const ProductDetail = () => {
                 <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                   {getContent('dm-03', 'hardware', 'badge', 'Hardware')}
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight"><span className="gradient-text">{getContent('dm-03', 'hardware', 'title', 'High-performance')}</span> {getContent('dm-03', 'hardware', 'title_suffix', 'Hardware')}</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">{getContent('dm-03', 'hardware', 'title', '')} <span className="gradient-text">{getContent('dm-03', 'hardware', 'title_highlight', 'High-performance')}</span> {getContent('dm-03', 'hardware', 'title_suffix', 'Hardware')}</h2>
                 <motion.div className="space-y-5" variants={staggerContainerFast} initial="hidden" whileInView="visible" viewport={viewportOnceTiny}>
                   {[
                     {
@@ -513,13 +511,13 @@ const ProductDetail = () => {
                 {getContent('dm-03', 'capabilities', 'badge', 'Software')}
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
-                <span className="gradient-text">{getContent('dm-03', 'capabilities', 'title_highlight', 'User-friendly Software')}</span> {getContent('dm-03', 'capabilities', 'title_suffix', 'Built for Veterinary Workflows')}
+                {getContent('dm-03', 'capabilities', 'title', '')} <span className="gradient-text">{getContent('dm-03', 'capabilities', 'title_highlight', 'User-friendly Software')}</span> {getContent('dm-03', 'capabilities', 'title_suffix', 'Built for Veterinary Workflows')}
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-2xl">
                 {getContent('dm-03', 'capabilities', 'body', 'It integrates tools for cell counting, scale bars, annotations, and one-click report generation, with an embedded teaching image library for faster training.')}
               </p>
             </motion.div>
-            <div className="w-full rounded-xl overflow-hidden">
+            <div className="max-w-3xl mx-auto w-full rounded-xl overflow-hidden">
               <img
                 src={images.digitalMicroscope}
                 alt="Microscope workstation software"
@@ -552,7 +550,7 @@ const ProductDetail = () => {
                   {getContent('dm-03', 'image_hub', 'title', 'Already Have a Microscope?')}
                 </h2>
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 leading-tight">
-                  <span className="gradient-text">{getContent('dm-03', 'image_hub', 'title_highlight', 'Upgrade it with Awalife Microscope Image Hub.')}</span>
+                  {getContent('dm-03', 'image_hub', 'title_2', '')} <span className="gradient-text">{getContent('dm-03', 'image_hub', 'title_highlight', 'Upgrade it with Awalife Microscope Image Hub.')}</span>{getContent('dm-03', 'image_hub', 'title_suffix', '')}
                 </h2>
                 <p className="text-base text-muted-foreground leading-relaxed mb-6">
                   {getContent('dm-03', 'image_hub', 'body', 'Keep your Leica or Olympus microscope and unlock the same Awalife software workflow—capture, measure, annotate, count, and report on a PC.')}
@@ -712,9 +710,9 @@ const ProductDetail = () => {
           <div className="container mx-auto px-6 lg:px-16 xl:px-24">
             <motion.div className="text-center max-w-3xl mx-auto mb-14" variants={blurIn}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
-                Explore More
+                {getContent(productId || '', 'other_products', 'badge', 'Explore More')}
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Other <span className="gradient-text">Products</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">{getContent(productId || '', 'other_products', 'title', 'Other')} <span className="gradient-text">{getContent(productId || '', 'other_products', 'title_highlight', 'Products')}</span>{getContent(productId || '', 'other_products', 'title_suffix', '')}</h2>
             </motion.div>
             
             <motion.div className="grid md:grid-cols-3 gap-6 lg:gap-8" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnceSmall}>
@@ -753,7 +751,7 @@ const ProductDetail = () => {
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 {getContent('ai-analyzer', 'faq', 'badge', 'FAQ')}
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">{getContent('ai-analyzer', 'faq', 'title', 'Frequently Asked')} <span className="gradient-text">{getContent('ai-analyzer', 'faq', 'title_highlight', 'Questions')}</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">{getContent('ai-analyzer', 'faq', 'title', 'Frequently Asked')} <span className="gradient-text">{getContent('ai-analyzer', 'faq', 'title_highlight', 'Questions')}</span>{getContent('ai-analyzer', 'faq', 'title_suffix', '')}</h2>
             </div>
             {(() => {
               const aiAnalyzerFaqs = [
@@ -809,7 +807,7 @@ const ProductDetail = () => {
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
                 {getContent('dm-03', 'faq', 'badge', 'FAQ')}
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">{getContent('dm-03', 'faq', 'title', 'Frequently Asked')} <span className="gradient-text">{getContent('dm-03', 'faq', 'title_highlight', 'Questions')}</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">{getContent('dm-03', 'faq', 'title', 'Frequently Asked')} <span className="gradient-text">{getContent('dm-03', 'faq', 'title_highlight', 'Questions')}</span>{getContent('dm-03', 'faq', 'title_suffix', '')}</h2>
             </div>
             {(() => {
               const microscopeFaqs = [

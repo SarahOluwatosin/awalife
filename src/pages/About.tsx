@@ -296,7 +296,7 @@ const About = () => {
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               {c('journey', 'badge', 'Our Journey')}
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{c('journey', 'title', 'Key Moments That')} <span className="gradient-text">{c('journey', 'title_highlight', 'Shaped Awalife')}</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{c('journey', 'title', 'Key Moments That')} <span className="gradient-text">{c('journey', 'title_highlight', 'Shaped Awalife')}</span>{c('journey', 'title_suffix', '')}</h2>
             <p className="text-muted-foreground">{c('journey', 'desc', 'From a bold idea in 2020 to a global presence — every milestone reflects our commitment to innovation.')}</p>
           </GsapReveal>
 
@@ -335,7 +335,7 @@ const About = () => {
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">
               {c('principles', 'badge', 'Our Principles')}
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{c('principles', 'title', 'Our Vision and')} <span className="gradient-text">{c('principles', 'title_highlight', 'Core Values')}</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{c('principles', 'title', 'Our Vision and')} <span className="gradient-text">{c('principles', 'title_highlight', 'Core Values')}</span>{c('principles', 'title_suffix', '')}</h2>
             <p className="text-muted-foreground">{c('principles', 'desc', 'The guiding principles that drive every decision, product, and partnership at Awalife.')}</p>
           </GsapReveal>
 
@@ -492,7 +492,7 @@ const About = () => {
 
       <motion.section className="py-20 lg:py-28 bg-white" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('cta', 'title', 'Interested in')} <span className="gradient-text">{c('cta', 'title_highlight', 'Our Products')}</span>?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('cta', 'title', 'Interested in')} <span className="gradient-text">{c('cta', 'title_highlight', 'Our Products')}</span>{c('cta', 'title_suffix', '?')}</h2>
           <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>{c('cta', 'body', "Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.")}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>

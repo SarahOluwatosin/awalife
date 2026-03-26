@@ -87,7 +87,7 @@ const BloodAnalysis = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <GsapReveal direction="up" distance={40} className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('classification', 'badge', 'AI-Powered Classification')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('classification', 'title', 'Deeper Blood')} <span className="gradient-text">{c('classification', 'title_highlight', 'Morphology Classification')}</span> - Built for Clinical Review</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('classification', 'title', 'Deeper Blood')} <span className="gradient-text">{c('classification', 'title_highlight', 'Morphology Classification')}</span>{c('classification', 'title_suffix', ' - Built for Clinical Review')}</h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>{c('classification', 'subtitle', 'Powered by our latest AI model, continuously improving with regular updates.')}</p>
             <div className="mt-6">
               <Button variant="outline" size="lg" asChild>
@@ -120,7 +120,7 @@ const BloodAnalysis = () => {
             <motion.div className="space-y-6 text-center max-w-3xl mx-auto" variants={fadeInLeft}>
               <div>
                 <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('how_it_works', 'badge', 'How It Works')}</span>
-                <h3 className="text-2xl md:text-3xl font-bold text-foreground">{c('how_it_works', 'title', 'More Count')}</h3>
+                <h3 className="text-2xl md:text-3xl font-bold text-foreground">{c('how_it_works', 'title', 'More Count,')} <span className="gradient-text">{c('how_it_works', 'title_highlight', 'Faster Results')}</span>{c('how_it_works', 'title_suffix', '')}</h3>
               </div>
               <ul className={`space-y-4 ${bodyTextClass} text-muted-foreground text-left inline-block`}>
                 {[
@@ -144,7 +144,7 @@ const BloodAnalysis = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('clinical_images', 'badge', 'Clinical Images')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground"><span className="gradient-text">{c('clinical_images', 'title_highlight', 'True-to-life Images')}</span>, Ready for Review</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('clinical_images', 'title', '')}<span className="gradient-text">{c('clinical_images', 'title_highlight', 'True-to-life Images')}</span>{c('clinical_images', 'title_suffix', ', Ready for Review')}</h2>
             <p className={`${bodyTextClass} text-muted-foreground mt-3`}>{c('clinical_images', 'subtitle', "Review your report and verify the images with confidence - and tap into Awalife's clinical specialists whenever needed.")}</p>
           </div>
           <ApplicationImageCarousel pageKey="blood" fallbackImages={fallbackImages} />
@@ -155,7 +155,7 @@ const BloodAnalysis = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('faq', 'badge', 'FAQ')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('faq', 'title', 'Frequently Asked')} <span className="gradient-text">{c('faq', 'title_highlight', 'Questions')}</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('faq', 'title', 'Frequently Asked')} <span className="gradient-text">{c('faq', 'title_highlight', 'Questions')}</span>{c('faq', 'title_suffix', '')}</h2>
           </div>
           {(() => {
             const bloodFaqs = [
@@ -191,7 +191,7 @@ const BloodAnalysis = () => {
 
       <motion.section className="py-20 lg:py-28 bg-white" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('cta', 'title', 'Interested in')} <span className="gradient-text">{c('cta', 'title_highlight', 'Our Products')}</span>?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('cta', 'title', 'Interested in')} <span className="gradient-text">{c('cta', 'title_highlight', 'Our Products')}</span>{c('cta', 'title_suffix', '?')}</h2>
           <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>{c('cta', 'body', "Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.")}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>

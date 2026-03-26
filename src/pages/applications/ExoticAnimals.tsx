@@ -31,7 +31,7 @@ const ExoticAnimals = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('overview', 'badge', 'Multi-Species Support')}</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('overview', 'title', 'Exotics, Small Mammals &')} <span className="gradient-text">{c('overview', 'title_highlight', 'Large Animals')}</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('overview', 'title', 'Exotics, Small Mammals &')} <span className="gradient-text">{c('overview', 'title_highlight', 'Large Animals')}</span>{c('overview', 'title_suffix', '')}</h2>
               <p className={`${bodyTextClass} text-muted-foreground leading-relaxed mb-8`}>{c('overview', 'body', 'Awalife extends morphology-first, AI-assisted analysis beyond dogs and cats—supporting a wider range of species with review-ready reports that combine images and quantitative results. Capabilities may vary by species and sample type.')}</p>
               <div className="flex flex-wrap gap-4">
                 <Button className="btn-gradient" size="lg" asChild><Link to="/contact">{c('overview', 'cta_primary', 'Contact us')}<ArrowRight className="ml-2 w-4 h-4" /></Link></Button>
@@ -49,7 +49,7 @@ const ExoticAnimals = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('species', 'badge', 'Species Coverage')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('species', 'title', 'Supporting Species from Small Mammals to')} <span className="gradient-text">{c('species', 'title_highlight', 'Large Animals')}</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('species', 'title', 'Supporting Species from Small Mammals to')} <span className="gradient-text">{c('species', 'title_highlight', 'Large Animals')}</span>{c('species', 'title_suffix', '')}</h2>
           </div>
           <motion.div className="rounded-2xl border border-border/50 bg-card shadow-sm overflow-hidden" variants={scaleIn}>
             <div className="overflow-x-auto">
@@ -96,7 +96,7 @@ const ExoticAnimals = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div variants={fadeInLeft}>
               <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('low_volume', 'badge', 'Low Volume Sampling')}</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('low_volume', 'title', 'Only 10 μL Blood samples Required for')} <span className="gradient-text">{c('low_volume', 'title_highlight', 'CBC Testing')}</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('low_volume', 'title', 'Only 10 μL Blood samples Required for')} <span className="gradient-text">{c('low_volume', 'title_highlight', 'CBC Testing')}</span>{c('low_volume', 'title_suffix', '')}</h2>
               <p className={`${bodyTextClass} text-muted-foreground mb-6`}>{c('low_volume', 'body', 'Especially for exotic pets, critically ill, anemic, and recovering cats and dogs.')}</p>
               <ul className={`space-y-3 ${bodyTextClass} text-muted-foreground`}>
                 {[
@@ -123,7 +123,7 @@ const ExoticAnimals = () => {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase rounded-full px-4 py-2 mb-3">{c('faq', 'badge', 'FAQ')}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('faq', 'title', 'Frequently Asked')} <span className="gradient-text">{c('faq', 'title_highlight', 'Questions')}</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{c('faq', 'title', 'Frequently Asked')} <span className="gradient-text">{c('faq', 'title_highlight', 'Questions')}</span>{c('faq', 'title_suffix', '')}</h2>
           </div>
           {(() => {
             const exoticFaqs = [
@@ -159,7 +159,7 @@ const ExoticAnimals = () => {
 
       <motion.section className="py-20 lg:py-28 bg-card/50" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants}>
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('cta', 'title', 'Interested in')} <span className="gradient-text">{c('cta', 'title_highlight', 'Our Products')}</span>?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{c('cta', 'title', 'Interested in')} <span className="gradient-text">{c('cta', 'title_highlight', 'Our Products')}</span>{c('cta', 'title_suffix', '?')}</h2>
           <p className={`${bodyTextClass} text-muted-foreground max-w-5xl mx-auto mb-10`}>{c('cta', 'body', "Contact our team for pricing, demonstrations, and technical specifications tailored to your clinic's needs.")}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="btn-gradient group" size="lg" asChild><Link to="/contact">Contact us<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></Link></Button>
