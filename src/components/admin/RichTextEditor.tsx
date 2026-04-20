@@ -9,8 +9,26 @@ import Image from '@tiptap/extension-image';
 import {
   Bold, Italic, UnderlineIcon, Heading2, Heading3,
   List, ListOrdered, AlignLeft, AlignCenter, AlignRight, AlignJustify,
-  Link2, Undo2, Redo2, Unlink, ImageIcon,
+  Link2, Undo2, Redo2, Unlink, ImageIcon, Minimize2, Maximize2,
 } from 'lucide-react';
+
+const AlignableImage = Image.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      'data-align': {
+        default: null,
+        parseHTML: el => el.getAttribute('data-align'),
+        renderHTML: attrs => attrs['data-align'] ? { 'data-align': attrs['data-align'] } : {},
+      },
+      'data-width': {
+        default: null,
+        parseHTML: el => el.getAttribute('data-width'),
+        renderHTML: attrs => attrs['data-width'] ? { 'data-width': attrs['data-width'] } : {},
+      },
+    };
+  },
+});
 import { cn } from '@/lib/utils';
 import { uploadToStorage } from '@/lib/storage';
 import { toast } from '@/hooks/use-toast';
@@ -55,7 +73,7 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write article content.
       Link.configure({ openOnClick: false, HTMLAttributes: { target: '_blank', rel: 'noopener noreferrer' } }),
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       Placeholder.configure({ placeholder }),
-      Image.configure({ inline: false, allowBase64: false }),
+      AlignableImage.configure({ inline: false, allowBase64: false }),
     ],
     content: value,
     onUpdate: ({ editor }) => {
@@ -139,6 +157,18 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write article content.
         <div className="w-px mx-1 bg-border/60 self-stretch" />
         <ToolbarButton title="Insert image" active={false} onClick={() => fileInputRef.current?.click()}>
           <ImageIcon className="h-3.5 w-3.5" />
+        </ToolbarButton>
+        <ToolbarButton title="Image: align left (click image first)" active={editor.getAttributes('image')['data-align'] === 'left'} onClick={() => editor.chain().focus().updateAttributes('image', { 'data-align': 'left' }).run()}>
+          <AlignLeft className="h-3.5 w-3.5 text-primary/70" />
+        </ToolbarButton>
+        <ToolbarButton title="Image: center (click image first)" active={editor.getAttributes('image')['data-align'] === 'center'} onClick={() => editor.chain().focus().updateAttributes('image', { 'data-align': 'center' }).run()}>
+          <AlignCenter className="h-3.5 w-3.5 text-primary/70" />
+        </ToolbarButton>
+        <ToolbarButton title="Image: align right (click image first)" active={editor.getAttributes('image')['data-align'] === 'right'} onClick={() => editor.chain().focus().updateAttributes('image', { 'data-align': 'right' }).run()}>
+          <AlignRight className="h-3.5 w-3.5 text-primary/70" />
+        </ToolbarButton>
+        <ToolbarButton title="Image: half width (click image first)" active={editor.getAttributes('image')['data-width'] === '50%'} onClick={() => editor.chain().focus().updateAttributes('image', { 'data-width': editor.getAttributes('image')['data-width'] === '50%' ? null : '50%' }).run()}>
+          <Minimize2 className="h-3.5 w-3.5 text-primary/70" />
         </ToolbarButton>
         <div className="w-px mx-1 bg-border/60 self-stretch" />
         <ToolbarButton title="Undo" active={false} onClick={() => editor.chain().focus().undo().run()}>

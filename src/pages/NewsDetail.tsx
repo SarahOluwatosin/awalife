@@ -66,17 +66,6 @@ const NewsDetail = () => {
               )}
             </div>
 
-            {/* Cover image */}
-            {item.imageUrl && (
-              <div className="rounded-2xl overflow-hidden border border-border/30 mb-10">
-                <img
-                  src={item.imageUrl}
-                  alt={item.title}
-                  className="w-full h-full aspect-video object-cover rounded-2xl"
-                />
-              </div>
-            )}
-
             {/* Excerpt as lead */}
             {item.excerpt && (
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 font-medium">
@@ -87,7 +76,7 @@ const NewsDetail = () => {
             {/* Full article content */}
             {item.content ? (
               <div
-                className="prose prose-lg max-w-none text-foreground leading-relaxed prose-headings:text-foreground prose-a:text-primary prose-strong:text-foreground prose-li:text-foreground"
+                className="article-content"
                 dangerouslySetInnerHTML={{ __html: item.content }}
               />
             ) : (

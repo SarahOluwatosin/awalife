@@ -119,7 +119,7 @@ const HeroSection = () => {
       <FloatingParticles count={18} />
 
       <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10">
-        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           <motion.div
             className="max-w-xl"
             initial="hidden"
@@ -177,7 +177,7 @@ const HeroSection = () => {
               </span>
             </motion.h1>
 
-            <motion.p variants={fadeUp(0.1)} className="text-lg md:text-xl text-muted-foreground max-w-prose mb-8 leading-relaxed">
+            <motion.p variants={fadeUp(0.1)} className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
               {getContent('home', 'hero', 'subtitle', 'We turn cellular morphology into visible, quantifiable, and review-ready evidence, helping veterinarians diagnose with greater depth and confidence.')}
             </motion.p>
 
