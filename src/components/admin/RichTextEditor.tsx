@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -81,17 +81,42 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write article content.
       onChange(editor.getHTML());
     },
     editorProps: {
-      handleClick(view, _pos, event) {
-        const target = event.target;
-        if (!(target instanceof HTMLImageElement)) return false;
-        const imagePos = view.posAtDOM(target, 0);
-        view.dispatch(view.state.tr.setSelection(NodeSelection.create(view.state.doc, imagePos)));
+      handleClickOn(view, _pos, node, nodePos) {
+        if (node.type.name !== 'image') return false;
+        view.dispatch(view.state.tr.setSelection(NodeSelection.create(view.state.doc, nodePos)));
+        view.focus();
         return true;
       },
     },
   });
 
   if (!editor) return null;
+
+  const applyToSelectedImage = useCallback((attrs: Record<string, unknown>) => {
+    const didApply = editor.chain().focus().command(({ tr, state }) => {
+      const { selection } = state;
+      let imagePos: number | null = null;
+
+      if (selection instanceof NodeSelection && selection.node.type.name === 'image') {
+        imagePos = selection.from;
+      } else {
+        const { $from } = selection;
+        if ($from.nodeAfter?.type.name === 'image') imagePos = $from.pos;
+        else if ($from.nodeBefore?.type.name === 'image') imagePos = $from.pos - $from.nodeBefore.nodeSize;
+      }
+
+      if (imagePos === null) return false;
+      const node = state.doc.nodeAt(imagePos);
+      if (!node || node.type.name !== 'image') return false;
+
+      tr.setNodeMarkup(imagePos, undefined, { ...node.attrs, ...attrs });
+      return true;
+    }).run();
+
+    if (!didApply) {
+      toast({ title: 'Click an image first', description: 'Select an image in the editor to align or resize it.' });
+    }
+  }, [editor]);
 
   const handleSetLink = () => {
     const prev = editor.getAttributes('link').href ?? '';
@@ -168,17 +193,40 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write article content.
         <ToolbarButton title="Insert image" active={false} onClick={() => fileInputRef.current?.click()}>
           <ImageIcon className="h-3.5 w-3.5" />
         </ToolbarButton>
-        <ToolbarButton title="Image: align left (click image first)" active={editor.getAttributes('image')['data-align'] === 'left'} onClick={() => editor.chain().focus().updateAttributes('image', { 'data-align': 'left' }).run()}>
+        <ToolbarButton
+          title="Image: align left (click image first)"
+          active={editor.getAttributes('image')['data-align'] === 'left'}
+          onClick={() => applyToSelectedImage({ 'data-align': 'left' })}
+        >
           <AlignLeft className="h-3.5 w-3.5 text-primary/70" />
         </ToolbarButton>
-        <ToolbarButton title="Image: center (click image first)" active={editor.getAttributes('image')['data-align'] === 'center'} onClick={() => editor.chain().focus().updateAttributes('image', { 'data-align': 'center' }).run()}>
+        <ToolbarButton
+          title="Image: center (click image first)"
+          active={editor.getAttributes('image')['data-align'] === 'center'}
+          onClick={() => applyToSelectedImage({ 'data-align': 'center' })}
+        >
           <AlignCenter className="h-3.5 w-3.5 text-primary/70" />
         </ToolbarButton>
-        <ToolbarButton title="Image: align right (click image first)" active={editor.getAttributes('image')['data-align'] === 'right'} onClick={() => editor.chain().focus().updateAttributes('image', { 'data-align': 'right' }).run()}>
+        <ToolbarButton
+          title="Image: align right (click image first)"
+          active={editor.getAttributes('image')['data-align'] === 'right'}
+          onClick={() => applyToSelectedImage({ 'data-align': 'right' })}
+        >
           <AlignRight className="h-3.5 w-3.5 text-primary/70" />
         </ToolbarButton>
-        <ToolbarButton title="Image: half width (click image first)" active={editor.getAttributes('image')['data-width'] === '50%'} onClick={() => editor.chain().focus().updateAttributes('image', { 'data-width': editor.getAttributes('image')['data-width'] === '50%' ? null : '50%' }).run()}>
+        <ToolbarButton
+          title="Image: half width (click image first)"
+          active={editor.getAttributes('image')['data-width'] === '50%'}
+          onClick={() => applyToSelectedImage({ 'data-width': editor.getAttributes('image')['data-width'] === '50%' ? null : '50%' })}
+        >
           <Minimize2 className="h-3.5 w-3.5 text-primary/70" />
+        </ToolbarButton>
+        <ToolbarButton
+          title="Image: full width (click image first)"
+          active={!editor.getAttributes('image')['data-width']}
+          onClick={() => applyToSelectedImage({ 'data-width': null })}
+        >
+          <Maximize2 className="h-3.5 w-3.5 text-primary/70" />
         </ToolbarButton>
         <div className="w-px mx-1 bg-border/60 self-stretch" />
         <ToolbarButton title="Undo" active={false} onClick={() => editor.chain().focus().undo().run()}>
