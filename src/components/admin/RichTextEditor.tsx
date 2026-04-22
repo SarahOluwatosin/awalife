@@ -6,6 +6,7 @@ import Link from '@tiptap/extension-link';
 import TextAlign from '@tiptap/extension-text-align';
 import Placeholder from '@tiptap/extension-placeholder';
 import Image from '@tiptap/extension-image';
+import { NodeSelection } from '@tiptap/pm/state';
 import {
   Bold, Italic, UnderlineIcon, Heading2, Heading3,
   List, ListOrdered, AlignLeft, AlignCenter, AlignRight, AlignJustify,
@@ -78,6 +79,15 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write article content.
     content: value,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
+    },
+    editorProps: {
+      handleClick(view, _pos, event) {
+        const target = event.target;
+        if (!(target instanceof HTMLImageElement)) return false;
+        const imagePos = view.posAtDOM(target, 0);
+        view.dispatch(view.state.tr.setSelection(NodeSelection.create(view.state.doc, imagePos)));
+        return true;
+      },
     },
   });
 
@@ -195,12 +205,6 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write article content.
       {/* Editor area */}
       <EditorContent
         editor={editor}
-        onClick={event => {
-          const target = event.target;
-          if (!(target instanceof HTMLImageElement)) return;
-          const pos = editor.view.posAtDOM(target, 0);
-          editor.commands.setNodeSelection(pos);
-        }}
         className={[
           'prose prose-sm max-w-none flex-1 p-3 focus-within:outline-none min-h-[240px]',
           '[&_.ProseMirror]:outline-none [&_.ProseMirror]:min-h-[220px]',
