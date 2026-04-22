@@ -1,5 +1,6 @@
-import { useCallback, useRef } from 'react';
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEditor, EditorContent, NodeViewWrapper, ReactNodeViewRenderer } from '@tiptap/react';
+import type { ReactNodeViewProps } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Link from '@tiptap/extension-link';
@@ -12,11 +13,126 @@ import {
   List, ListOrdered, AlignLeft, AlignCenter, AlignRight, AlignJustify,
   Link2, Undo2, Redo2, Unlink, ImageIcon, Minimize2, Maximize2,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { uploadToStorage } from '@/lib/storage';
+import { toast } from '@/hooks/use-toast';
+
+type ResizeSide = 'left' | 'right';
+
+const ResizableImageNodeView = ({ node, updateAttributes, selected, editor }: ReactNodeViewProps) => {
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const [isResizing, setIsResizing] = useState(false);
+
+  const startResize = useCallback((side: ResizeSide) => (event: React.PointerEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const img = imgRef.current;
+    if (!img) return;
+
+    const startX = event.clientX;
+    const startWidth = img.getBoundingClientRect().width || img.naturalWidth || 400;
+    const containerWidth = editor.view.dom.getBoundingClientRect().width || startWidth;
+
+    setIsResizing(true);
+
+    const onMove = (e: PointerEvent) => {
+      const delta = e.clientX - startX;
+      const nextWidth = side === 'right' ? startWidth + delta : startWidth - delta;
+      const clamped = Math.max(140, Math.min(containerWidth, nextWidth));
+      updateAttributes({ width: String(Math.round(clamped)), 'data-width': null });
+    };
+
+    const onUp = () => {
+      setIsResizing(false);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+    };
+
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  }, [editor.view.dom, updateAttributes]);
+
+  useEffect(() => {
+    if (!isResizing) return;
+    const prev = document.body.style.cursor;
+    document.body.style.cursor = 'ew-resize';
+    return () => { document.body.style.cursor = prev; };
+  }, [isResizing]);
+
+  const align = (node.attrs as Record<string, unknown>)['data-align'];
+  const dataWidth = (node.attrs as Record<string, unknown>)['data-width'];
+  const width = (node.attrs as Record<string, unknown>).width;
+  const rawSrc = (node.attrs as Record<string, unknown>).src;
+  const rawAlt = (node.attrs as Record<string, unknown>).alt;
+  const rawTitle = (node.attrs as Record<string, unknown>).title;
+  const src = typeof rawSrc === 'string' ? rawSrc : '';
+  const alt = typeof rawAlt === 'string' ? rawAlt : '';
+  const title = typeof rawTitle === 'string' ? rawTitle : '';
+
+  const alignClass =
+    align === 'center' ? 'mx-auto' :
+    align === 'left' ? 'float-left mr-6 mb-2' :
+    align === 'right' ? 'float-right ml-6 mb-2' :
+    '';
+
+  const showHandles = editor.isEditable && (selected || isResizing);
+
+  return (
+    <NodeViewWrapper
+      className={cn('group relative my-4 max-w-full', alignClass)}
+      data-align={typeof align === 'string' ? align : undefined}
+      data-width={typeof dataWidth === 'string' ? dataWidth : undefined}
+    >
+      <img
+        ref={imgRef}
+        src={src}
+        alt={alt}
+        title={title}
+        width={typeof width === 'string' || typeof width === 'number' ? Number(width) : undefined}
+        data-align={typeof align === 'string' ? align : undefined}
+        data-width={typeof dataWidth === 'string' ? dataWidth : undefined}
+        draggable={false}
+        className={cn(
+          'max-w-full rounded-lg',
+          selected && 'ring-2 ring-primary/30',
+          align === 'center' && 'mx-auto',
+        )}
+      />
+
+      <div
+        role="button"
+        aria-label="Resize image"
+        onPointerDown={startResize('left')}
+        className={cn(
+          'absolute inset-y-0 -left-2 w-3 cursor-ew-resize',
+          'opacity-0 transition-opacity group-hover:opacity-100',
+          showHandles && 'opacity-100',
+        )}
+      />
+      <div
+        role="button"
+        aria-label="Resize image"
+        onPointerDown={startResize('right')}
+        className={cn(
+          'absolute inset-y-0 -right-2 w-3 cursor-ew-resize',
+          'opacity-0 transition-opacity group-hover:opacity-100',
+          showHandles && 'opacity-100',
+        )}
+      />
+    </NodeViewWrapper>
+  );
+};
 
 const AlignableImage = Image.extend({
   addAttributes() {
     return {
       ...this.parent?.(),
+      width: {
+        default: null,
+        parseHTML: el => el.getAttribute('width'),
+        renderHTML: attrs => attrs.width ? { width: attrs.width } : {},
+      },
       'data-align': {
         default: null,
         parseHTML: el => el.getAttribute('data-align'),
@@ -29,10 +145,10 @@ const AlignableImage = Image.extend({
       },
     };
   },
+  addNodeView() {
+    return ReactNodeViewRenderer(ResizableImageNodeView);
+  },
 });
-import { cn } from '@/lib/utils';
-import { uploadToStorage } from '@/lib/storage';
-import { toast } from '@/hooks/use-toast';
 
 type Props = {
   value: string;
@@ -217,14 +333,14 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write article content.
         <ToolbarButton
           title="Image: half width (click image first)"
           active={editor.getAttributes('image')['data-width'] === '50%'}
-          onClick={() => applyToSelectedImage({ 'data-width': editor.getAttributes('image')['data-width'] === '50%' ? null : '50%' })}
+          onClick={() => applyToSelectedImage({ width: null, 'data-width': editor.getAttributes('image')['data-width'] === '50%' ? null : '50%' })}
         >
           <Minimize2 className="h-3.5 w-3.5 text-primary/70" />
         </ToolbarButton>
         <ToolbarButton
           title="Image: full width (click image first)"
           active={!editor.getAttributes('image')['data-width']}
-          onClick={() => applyToSelectedImage({ 'data-width': null })}
+          onClick={() => applyToSelectedImage({ width: null, 'data-width': null })}
         >
           <Maximize2 className="h-3.5 w-3.5 text-primary/70" />
         </ToolbarButton>
