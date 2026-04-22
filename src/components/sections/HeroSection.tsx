@@ -133,7 +133,7 @@ const HeroSection = () => {
             </motion.div>
 
             <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight max-w-3xl"
+              className="text-3xl sm:text-3xl md:text-4xl lg:text-4xl font-bold mb-6 leading-[1.05] max-w-3xl"
               initial="hidden"
               animate="visible"
               variants={{
@@ -177,7 +177,7 @@ const HeroSection = () => {
               </span>
             </motion.h1>
 
-            <motion.p variants={fadeUp(0.1)} className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
+            <motion.p variants={fadeUp(0.1)} className="text-sm md:text-base text-muted-foreground mb-8 leading-relaxed">
               {getContent('home', 'hero', 'subtitle', 'We turn cellular morphology into visible, quantifiable, and review-ready evidence, helping veterinarians diagnose with greater depth and confidence.')}
             </motion.p>
 

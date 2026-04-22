@@ -76,7 +76,13 @@ const NewsDetail = () => {
             {/* Full article content */}
             {item.content ? (
               <div
-                className="article-content"
+                className={[
+                  'article-content',
+                  'prose prose-neutral max-w-none',
+                  'prose-headings:text-foreground prose-p:text-foreground',
+                  'prose-strong:text-foreground prose-a:text-primary',
+                  'prose-ul:list-disc prose-ol:list-decimal',
+                ].join(' ')}
                 dangerouslySetInnerHTML={{ __html: item.content }}
               />
             ) : (

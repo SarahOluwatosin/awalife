@@ -195,6 +195,12 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Write article content.
       {/* Editor area */}
       <EditorContent
         editor={editor}
+        onClick={event => {
+          const target = event.target;
+          if (!(target instanceof HTMLImageElement)) return;
+          const pos = editor.view.posAtDOM(target, 0);
+          editor.commands.setNodeSelection(pos);
+        }}
         className={[
           'prose prose-sm max-w-none flex-1 p-3 focus-within:outline-none min-h-[240px]',
           '[&_.ProseMirror]:outline-none [&_.ProseMirror]:min-h-[220px]',
