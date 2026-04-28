@@ -108,6 +108,12 @@ const HeroSection = () => {
       label: c('metric_3_label', 'Installations Worldwide'),
       decimals: parseInt(c('metric_3_decimals', '0'), 10),
     },
+    {
+      value: parseFloat(c('metric_4_value', '96')),
+      suffix: c('metric_4_suffix', '+'),
+      label: c('metric_4_label', 'Patents Granted'),
+      decimals: parseInt(c('metric_4_decimals', '0'), 10),
+    },
   ];
 
   return (
@@ -196,7 +202,7 @@ const HeroSection = () => {
               </Button>
             </motion.div>
 
-            <motion.div variants={fadeUp(0.25)} className="mt-10 grid gap-8 sm:grid-cols-3">
+            <motion.div variants={fadeUp(0.25)} className="mt-10 grid gap-8 grid-cols-2 sm:grid-cols-4">
               {metrics.map((metric, index) => (
                 <MetricItem key={metric.label} {...metric} delay={index * 120} />
               ))}

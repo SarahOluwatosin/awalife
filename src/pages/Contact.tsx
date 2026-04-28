@@ -4,6 +4,7 @@ import { Mail, Linkedin, Facebook, Instagram, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Layout from '@/components/layout/Layout';
 import { motion } from 'framer-motion';
 import { sectionVariants, fadeInLeft, fadeInRight, viewportOnce } from '@/lib/animations';
@@ -16,7 +17,7 @@ const Contact = () => {
   const { getContent } = usePageContent();
   const c = (section: string, key: string, fb: string) => getContent('contact', section, key, fb);
 
-  const [form, setForm] = useState({ fullName: '', position: '', company: '', email: '', whatsapp: '', country: '', message: '' });
+  const [form, setForm] = useState({ fullName: '', position: '', company: '', email: '', whatsapp: '', country: '', productType: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -26,6 +27,10 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.productType) {
+      toast({ title: 'Please select a product type', variant: 'destructive' });
+      return;
+    }
     setSubmitting(true);
     try {
       await dbInsertPublic('contact_submissions', {
@@ -35,10 +40,11 @@ const Contact = () => {
         email: form.email,
         whatsapp: form.whatsapp,
         country: form.country,
+        product_type: form.productType || null,
         message: form.message,
       });
       setSubmitted(true);
-      setForm({ fullName: '', position: '', company: '', email: '', whatsapp: '', country: '', message: '' });
+      setForm({ fullName: '', position: '', company: '', email: '', whatsapp: '', country: '', productType: '', message: '' });
       toast({ title: 'Message sent!', description: "We'll get back to you at " + form.email + ' as soon as possible.' });
     } catch {
       toast({ title: 'Failed to send message', description: 'Please try emailing us directly at info@awalife.com.cn', variant: 'destructive' });
@@ -144,6 +150,20 @@ const Contact = () => {
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2.5">{c('form', 'label_country', 'Country / Region *')}</label>
                   <Input name="country" value={form.country} onChange={handleChange} required className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2.5">{c('form', 'label_product_type', 'Product Type of Interest *')}</label>
+                  <Select value={form.productType} onValueChange={v => setForm(f => ({ ...f, productType: v }))}>
+                    <SelectTrigger className="bg-background border-border/40 h-12 focus:border-primary/50 transition-colors">
+                      <SelectValue placeholder="Select a product..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="AI Morphology Analyzer">AI Morphology Analyzer</SelectItem>
+                      <SelectItem value="DM-03 Digital Microscope">DM-03 Digital Microscope</SelectItem>
+                      <SelectItem value="Both Products">Both Products</SelectItem>
+                      <SelectItem value="Other / General Inquiry">Other / General Inquiry</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2.5">{c('form', 'label_message', 'Your Message *')}</label>

@@ -95,31 +95,37 @@ const ResizableImageNodeView = ({ node, updateAttributes, selected, editor }: Re
         draggable={false}
         className={cn(
           'max-w-full rounded-lg',
-          selected && 'ring-2 ring-primary/30',
+          selected && 'ring-2 ring-primary',
           align === 'center' && 'mx-auto',
         )}
       />
 
+      {/* Left resize handle */}
       <div
         role="button"
         aria-label="Resize image"
         onPointerDown={startResize('left')}
         className={cn(
-          'absolute inset-y-0 -left-2 w-3 cursor-ew-resize',
+          'absolute inset-y-0 -left-3 w-6 flex items-center justify-center cursor-ew-resize',
           'opacity-0 transition-opacity group-hover:opacity-100',
           showHandles && 'opacity-100',
         )}
-      />
+      >
+        <div className="w-1.5 h-8 rounded-full bg-primary shadow-sm" />
+      </div>
+      {/* Right resize handle */}
       <div
         role="button"
         aria-label="Resize image"
         onPointerDown={startResize('right')}
         className={cn(
-          'absolute inset-y-0 -right-2 w-3 cursor-ew-resize',
+          'absolute inset-y-0 -right-3 w-6 flex items-center justify-center cursor-ew-resize',
           'opacity-0 transition-opacity group-hover:opacity-100',
           showHandles && 'opacity-100',
         )}
-      />
+      >
+        <div className="w-1.5 h-8 rounded-full bg-primary shadow-sm" />
+      </div>
     </NodeViewWrapper>
   );
 };

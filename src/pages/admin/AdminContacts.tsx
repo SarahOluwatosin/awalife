@@ -16,6 +16,7 @@ interface Submission {
   email: string;
   whatsapp: string;
   country: string;
+  product_type: string | null;
   message: string;
   created_at: string;
 }
@@ -128,6 +129,7 @@ const AdminContacts = () => {
                   <div><span className="text-muted-foreground">Company</span><p className="font-medium mt-0.5">{selected.company || '—'}</p></div>
                   <div><span className="text-muted-foreground">Country</span><p className="font-medium mt-0.5">{selected.country || '—'}</p></div>
                   <div><span className="text-muted-foreground">WhatsApp</span><p className="font-medium mt-0.5">{selected.whatsapp || '—'}</p></div>
+                  <div className="col-span-2"><span className="text-muted-foreground">Product Type of Interest</span><p className="font-medium mt-0.5">{selected.product_type || '—'}</p></div>
                 </div>
                 <div>
                   <span className="text-muted-foreground">Email</span>

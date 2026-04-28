@@ -471,19 +471,19 @@ const sortRowKeys = (page: string, section: string, rows: Row[]): Row[] => {
 // ─── Section order matching website layout ────────────────────────────────────
 
 const SECTION_ORDER: Record<string, string[]> = {
-  home:          ['hero', 'why_us', 'products', 'certifications', 'partners', 'cta'],
-  blood:         ['hero', 'overview', 'classification', 'categories', 'how_it_works', 'clinical_images', 'faq', 'cta'],
-  feces:         ['hero', 'overview', 'classification', 'categories', 'direct_sampling', 'flotation', 'clinical_images', 'faq', 'cta'],
-  urine:         ['hero', 'overview', 'classification', 'categories', 'how_it_works', 'clinical_images', 'faq', 'cta'],
-  exotic:        ['hero', 'overview', 'species', 'species_table', 'low_volume', 'faq', 'cta'],
-  pleural:       ['hero', 'overview', 'classification', 'clinical_images', 'faq', 'cta'],
-  'ai-analyzer': ['hero', 'overview', 'capabilities', 'workflow', 'faq', 'cta'],
-  'dm-03':       ['hero', 'overview', 'sample_types', 'hardware', 'capabilities', 'image_hub', 'faq', 'cta'],
-  about:         ['hero', 'story', 'metrics', 'journey', 'principles', 'vision', 'values', 'global', 'cta'],
-  contact:       ['hero', 'form', 'social'],
+  home:          ['seo', 'hero', 'why_us', 'products', 'certifications', 'partners', 'cta'],
+  blood:         ['seo', 'hero', 'overview', 'classification', 'categories', 'how_it_works', 'clinical_images', 'faq', 'cta'],
+  feces:         ['seo', 'hero', 'overview', 'classification', 'categories', 'direct_sampling', 'flotation', 'clinical_images', 'faq', 'cta'],
+  urine:         ['seo', 'hero', 'overview', 'classification', 'categories', 'how_it_works', 'clinical_images', 'faq', 'cta'],
+  exotic:        ['seo', 'hero', 'overview', 'species', 'species_table', 'low_volume', 'faq', 'cta'],
+  pleural:       ['seo', 'hero', 'overview', 'classification', 'clinical_images', 'faq', 'cta'],
+  'ai-analyzer': ['seo', 'hero', 'overview', 'capabilities', 'workflow', 'faq', 'cta'],
+  'dm-03':       ['seo', 'hero', 'overview', 'sample_types', 'hardware', 'capabilities', 'image_hub', 'faq', 'cta'],
+  about:         ['seo', 'hero', 'story', 'metrics', 'journey', 'principles', 'vision', 'values', 'global', 'cta'],
+  contact:       ['seo', 'hero', 'form', 'social'],
   footer:        ['tagline', 'social', 'nav', 'address'],
-  news:          ['hero'],
-  resources:     ['hero'],
+  news:          ['seo', 'hero'],
+  resources:     ['seo', 'hero'],
 };
 
 const sortSections = (page: string, entries: [string, Row[]][]) => {
