@@ -100,31 +100,31 @@ const ResizableImageNodeView = ({ node, updateAttributes, selected, editor }: Re
         )}
       />
 
-      {/* Left resize handle */}
+      {/* Left resize handle — inset so it's never clipped by parent overflow */}
       <div
         role="button"
         aria-label="Resize image"
         onPointerDown={startResize('left')}
         className={cn(
-          'absolute inset-y-0 -left-3 w-6 flex items-center justify-center cursor-ew-resize',
+          'absolute inset-y-0 left-0 w-8 flex items-center justify-start pl-1 cursor-ew-resize',
           'opacity-0 transition-opacity group-hover:opacity-100',
           showHandles && 'opacity-100',
         )}
       >
-        <div className="w-1.5 h-8 rounded-full bg-primary shadow-sm" />
+        <div className="w-2 h-10 rounded-full bg-primary/80 shadow-md backdrop-blur-sm" />
       </div>
-      {/* Right resize handle */}
+      {/* Right resize handle — inset so it's never clipped by parent overflow */}
       <div
         role="button"
         aria-label="Resize image"
         onPointerDown={startResize('right')}
         className={cn(
-          'absolute inset-y-0 -right-3 w-6 flex items-center justify-center cursor-ew-resize',
+          'absolute inset-y-0 right-0 w-8 flex items-center justify-end pr-1 cursor-ew-resize',
           'opacity-0 transition-opacity group-hover:opacity-100',
           showHandles && 'opacity-100',
         )}
       >
-        <div className="w-1.5 h-8 rounded-full bg-primary shadow-sm" />
+        <div className="w-2 h-10 rounded-full bg-primary/80 shadow-md backdrop-blur-sm" />
       </div>
     </NodeViewWrapper>
   );
