@@ -159,7 +159,7 @@ const Contact = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="AI Morphology Analyzer">AI Morphology Analyzer</SelectItem>
-                      <SelectItem value="DM-03 Digital Microscope">DM-03 Digital Microscope</SelectItem>
+                      <SelectItem value="DM-03 Microscope Workstation">DM-03 Microscope Workstation</SelectItem>
                       <SelectItem value="Both Products">Both Products</SelectItem>
                       <SelectItem value="Other / General Inquiry">Other / General Inquiry</SelectItem>
                     </SelectContent>
