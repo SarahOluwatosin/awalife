@@ -53,17 +53,16 @@ export const dbInsertPublic = async (table: string, data: Record<string, unknown
   }
 };
 
-export const dbInsert = async <T = unknown>(table: string, data: Record<string, unknown>, token: string): Promise<T[]> => {
+export const dbInsert = async (table: string, data: Record<string, unknown>, token: string): Promise<void> => {
   const resp = await fetch(restUrl(table), {
     method: 'POST',
-    headers: authHeaders(token),
+    headers: { ...authHeaders(token), 'Prefer': 'return=minimal' },
     body: JSON.stringify(data),
   });
   if (!resp.ok) {
     const err = await resp.text();
     throw new Error(sanitizeError(resp.status, err));
   }
-  return resp.json();
 };
 
 export const dbUpdate = async (table: string, id: string, data: Record<string, unknown>, token: string): Promise<void> => {
