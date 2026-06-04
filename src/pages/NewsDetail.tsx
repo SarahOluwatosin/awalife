@@ -24,10 +24,17 @@ const NewsDetail = () => {
     const title = item.metaTitle || item.title;
     const desc = item.metaDesc || item.excerpt;
     const pageUrl = `${window.location.origin}/company/news/${newsId}`;
+    const fallbackImage = 'https://www.awalife.com/og-cover.jpg';
+    const ogImage = item.imageUrl || fallbackImage;
     document.title = title;
     const setMeta = (property: string, content: string) => {
       let el = document.querySelector(`meta[property="${property}"]`);
       if (!el) { el = document.createElement('meta'); el.setAttribute('property', property); document.head.appendChild(el); }
+      el.setAttribute('content', content);
+    };
+    const setNameMeta = (name: string, content: string) => {
+      let el = document.querySelector(`meta[name="${name}"]`);
+      if (!el) { el = document.createElement('meta'); el.setAttribute('name', name); document.head.appendChild(el); }
       el.setAttribute('content', content);
     };
     setMeta('og:title', title);
@@ -35,15 +42,19 @@ const NewsDetail = () => {
     setMeta('og:type', 'article');
     setMeta('og:url', pageUrl);
     setMeta('og:site_name', 'Awalife');
-    if (item.imageUrl) {
-      setMeta('og:image', item.imageUrl);
-      setMeta('og:image:width', '1200');
-      setMeta('og:image:height', '627');
-    }
+    setMeta('og:image', ogImage);
+    setMeta('og:image:width', '1200');
+    setMeta('og:image:height', '627');
+    setNameMeta('twitter:card', 'summary_large_image');
+    setNameMeta('twitter:title', title);
+    setNameMeta('twitter:description', desc);
+    setNameMeta('twitter:image', ogImage);
     return () => {
       document.title = 'Awalife';
       ['og:title', 'og:description', 'og:type', 'og:url', 'og:site_name', 'og:image', 'og:image:width', 'og:image:height']
         .forEach(p => document.querySelector(`meta[property="${p}"]`)?.remove());
+      ['twitter:card', 'twitter:title', 'twitter:description', 'twitter:image']
+        .forEach(n => document.querySelector(`meta[name="${n}"]`)?.remove());
     };
   }, [item, newsId]);
 
