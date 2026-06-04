@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useEditor, EditorContent, NodeViewWrapper, ReactNodeViewRenderer } from '@tiptap/react';
-import type { ReactNodeViewProps } from '@tiptap/react';
+import type { NodeViewProps } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Link from '@tiptap/extension-link';
@@ -19,7 +19,7 @@ import { toast } from '@/hooks/use-toast';
 
 type ResizeSide = 'left' | 'right';
 
-const ResizableImageNodeView = ({ node, updateAttributes, selected, editor }: ReactNodeViewProps) => {
+const ResizableImageNodeView = ({ node, updateAttributes, selected, editor }: NodeViewProps) => {
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [isResizing, setIsResizing] = useState(false);
 
