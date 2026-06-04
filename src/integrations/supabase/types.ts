@@ -54,6 +54,7 @@ export type Database = {
           id: string
           message: string | null
           position: string | null
+          product_type: string | null
           whatsapp: string | null
         }
         Insert: {
@@ -65,6 +66,7 @@ export type Database = {
           id?: string
           message?: string | null
           position?: string | null
+          product_type?: string | null
           whatsapp?: string | null
         }
         Update: {
@@ -76,6 +78,7 @@ export type Database = {
           id?: string
           message?: string | null
           position?: string | null
+          product_type?: string | null
           whatsapp?: string | null
         }
         Relationships: []
@@ -124,6 +127,7 @@ export type Database = {
           status: string
           title: string
           updated_at: string
+          view_count: number
         }
         Insert: {
           category?: string
@@ -141,6 +145,7 @@ export type Database = {
           status?: string
           title: string
           updated_at?: string
+          view_count?: number
         }
         Update: {
           category?: string
@@ -158,6 +163,7 @@ export type Database = {
           status?: string
           title?: string
           updated_at?: string
+          view_count?: number
         }
         Relationships: []
       }
@@ -376,6 +382,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      increment_news_view_count: {
+        Args: { article_id: string }
+        Returns: undefined
       }
     }
     Enums: {
