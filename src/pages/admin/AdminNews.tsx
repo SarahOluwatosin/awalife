@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Trash2, Plus, Pencil, Upload, X, Image as ImageIcon, Globe } from 'lucide-react';
+import { Trash2, Plus, Pencil, Upload, X, Image as ImageIcon, Globe, Eye } from 'lucide-react';
 import AdminLayout from '@/components/layout/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,7 +21,7 @@ const emptyNews = (): Omit<NewsItem, 'id'> => ({
   title: '', excerpt: '', content: '',
   date: new Date().toISOString().slice(0, 10),
   category: 'Company News', location: '', imageUrl: '',
-  status: 'published', slug: '', metaTitle: '', metaDesc: '', sortOrder: 0,
+  status: 'published', slug: '', metaTitle: '', metaDesc: '', sortOrder: 0, viewCount: 0,
 });
 
 const AdminNews = () => {
@@ -46,27 +46,42 @@ const AdminNews = () => {
   const handleAdd = async (status: 'published' | 'draft') => {
     if (!newNews.title.trim()) return;
     setSaving(true);
-    await addNews({ ...newNews, title: newNews.title.trim(), excerpt: newNews.excerpt.trim(), status });
-    setNewNews(emptyNews());
-    setShowAddForm(false);
-    setSaving(false);
-    toast({ title: status === 'draft' ? 'Article saved as draft' : 'Article published' });
+    try {
+      await addNews({ ...newNews, title: newNews.title.trim(), excerpt: newNews.excerpt.trim(), status });
+      setNewNews(emptyNews());
+      setShowAddForm(false);
+      toast({ title: status === 'draft' ? 'Article saved as draft' : 'Article published' });
+    } catch (err) {
+      toast({ title: err instanceof Error ? err.message : 'Failed to save article', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleSave = async () => {
     if (!editingNews) return;
     setSaving(true);
-    await updateNews(editingNews);
-    setEditingNews(null);
-    setSaving(false);
-    toast({ title: 'News article updated' });
+    try {
+      await updateNews(editingNews);
+      setEditingNews(null);
+      toast({ title: 'News article updated' });
+    } catch (err) {
+      toast({ title: err instanceof Error ? err.message : 'Failed to update article', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDelete = async (id: string) => {
     setSaving(true);
-    await deleteNews(id);
-    setSaving(false);
-    toast({ title: 'News article removed' });
+    try {
+      await deleteNews(id);
+      toast({ title: 'News article removed' });
+    } catch (err) {
+      toast({ title: err instanceof Error ? err.message : 'Failed to remove article', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const ImageUploadArea = ({ imageUrl, onUpload, onClear }: { imageUrl: string; onUpload: (f: File) => void; onClear: () => void }) => (
@@ -203,6 +218,7 @@ const AdminNews = () => {
                       <TableHead className="w-36 whitespace-nowrap">Category</TableHead>
                       <TableHead className="w-28">Date</TableHead>
                       <TableHead className="w-32">Location</TableHead>
+                      <TableHead className="w-20 text-right">Views</TableHead>
                       <TableHead className="w-20 text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -228,6 +244,11 @@ const AdminNews = () => {
                         <TableCell><span className="inline-flex px-2 py-0.5 rounded-full text-[11px] font-medium bg-primary/10 text-primary">{item.category}</span></TableCell>
                         <TableCell className="text-sm text-muted-foreground">{item.date ? new Date(item.date).toLocaleDateString() : '—'}</TableCell>
                         <TableCell className="text-sm text-muted-foreground truncate max-w-[120px]">{item.location || '—'}</TableCell>
+                        <TableCell className="text-right">
+                          <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
+                            <Eye className="h-3.5 w-3.5" />{item.viewCount ?? 0}
+                          </span>
+                        </TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-1">
                             <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setEditingNews({ ...item })}><Pencil className="h-3.5 w-3.5" /></Button>

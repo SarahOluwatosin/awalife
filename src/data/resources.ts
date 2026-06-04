@@ -111,6 +111,7 @@ export type NewsItem = {
   metaTitle: string;
   metaDesc: string;
   sortOrder: number;
+  viewCount: number;
 };
 
 export type ResourcesCMSData = {
@@ -177,6 +178,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       metaTitle: '',
       metaDesc: '',
       sortOrder: 0,
+      viewCount: 0,
     },
     {
       id: 'news-2',
@@ -192,6 +194,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       metaTitle: '',
       metaDesc: '',
       sortOrder: 0,
+      viewCount: 0,
     },
     {
       id: 'news-3',
@@ -207,6 +210,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       metaTitle: '',
       metaDesc: '',
       sortOrder: 0,
+      viewCount: 0,
     },
     {
       id: 'news-4',
@@ -222,6 +226,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       metaTitle: '',
       metaDesc: '',
       sortOrder: 0,
+      viewCount: 0,
     },
     {
       id: 'news-5',
@@ -237,6 +242,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       metaTitle: '',
       metaDesc: '',
       sortOrder: 0,
+      viewCount: 0,
     },
     {
       id: 'news-6',
@@ -252,6 +258,7 @@ export const getDefaultResourcesData = (): ResourcesCMSData => ({
       metaTitle: '',
       metaDesc: '',
       sortOrder: 0,
+      viewCount: 0,
     },
   ],
 });

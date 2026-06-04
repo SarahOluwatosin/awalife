@@ -59,55 +59,85 @@ const AdminResources = () => {
   const handleAddResource = async (status: 'published' | 'draft') => {
     if (!newResource.title.trim() || !newResource.mediaUrl.trim()) return;
     setSaving(true);
-    await addResource({
-      title: newResource.title.trim(), summary: newResource.summary.trim(),
-      kind: newResource.kind, productId: newResource.productId, mediaType: newResource.mediaType,
-      mediaUrl: newResource.mediaUrl.trim(), mediaName: newResource.mediaName.trim(), mediaMime: newResource.mediaMime.trim(),
-      status,
-    });
-    setNewResource(emptyResource());
-    setShowAddForm(false);
-    setSaving(false);
-    toast({ title: status === 'draft' ? 'Resource saved as draft' : 'Resource published' });
+    try {
+      await addResource({
+        title: newResource.title.trim(), summary: newResource.summary.trim(),
+        kind: newResource.kind, productId: newResource.productId, mediaType: newResource.mediaType,
+        mediaUrl: newResource.mediaUrl.trim(), mediaName: newResource.mediaName.trim(), mediaMime: newResource.mediaMime.trim(),
+        status,
+      });
+      setNewResource(emptyResource());
+      setShowAddForm(false);
+      toast({ title: status === 'draft' ? 'Resource saved as draft' : 'Resource published' });
+    } catch (err) {
+      toast({ title: err instanceof Error ? err.message : 'Failed to save resource', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleSaveResource = async () => {
     if (!editingResource) return;
     setSaving(true);
-    await updateResource(editingResource);
-    setEditingResource(null);
-    setSaving(false);
-    toast({ title: 'Resource updated' });
+    try {
+      await updateResource(editingResource);
+      setEditingResource(null);
+      toast({ title: 'Resource updated' });
+    } catch (err) {
+      toast({ title: err instanceof Error ? err.message : 'Failed to update resource', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleRemoveResource = async (id: string) => {
     setSaving(true);
-    await deleteResource(id);
-    setSaving(false);
-    toast({ title: 'Resource removed' });
+    try {
+      await deleteResource(id);
+      toast({ title: 'Resource removed' });
+    } catch (err) {
+      toast({ title: err instanceof Error ? err.message : 'Failed to remove resource', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleAddFaq = async () => {
     setSaving(true);
-    await addFaq({ question: 'New question', answer: 'New answer' });
-    setSaving(false);
-    toast({ title: 'FAQ item added' });
+    try {
+      await addFaq({ question: 'New question', answer: 'New answer' });
+      toast({ title: 'FAQ item added' });
+    } catch (err) {
+      toast({ title: err instanceof Error ? err.message : 'Failed to add FAQ item', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleSaveFaq = async () => {
     if (!editingFaq) return;
     setSaving(true);
-    await updateFaq(editingFaq);
-    setEditingFaq(null);
-    setSaving(false);
-    toast({ title: 'FAQ item updated' });
+    try {
+      await updateFaq(editingFaq);
+      setEditingFaq(null);
+      toast({ title: 'FAQ item updated' });
+    } catch (err) {
+      toast({ title: err instanceof Error ? err.message : 'Failed to update FAQ item', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleRemoveFaq = async (id: string) => {
     setSaving(true);
-    await deleteFaq(id);
-    setSaving(false);
-    toast({ title: 'FAQ item removed' });
+    try {
+      await deleteFaq(id);
+      toast({ title: 'FAQ item removed' });
+    } catch (err) {
+      toast({ title: err instanceof Error ? err.message : 'Failed to remove FAQ item', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const isAddDisabled = saving || !newResource.title.trim() || !newResource.mediaUrl.trim() || (newResource.mediaType === 'upload' && !newResource.mediaName.trim());

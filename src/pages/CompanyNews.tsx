@@ -14,7 +14,7 @@ const CompanyNews = () => {
   const { data } = useResourcesCMS();
   const { getContent } = usePageContent();
   const c = (key: string, fb: string) => getContent('news', 'hero', key, fb);
-  const newsItems = data.news;
+  const newsItems = data.news.filter(n => n.status === 'published');
 
   const categories = ['All', 'Company News', 'Product Updates', 'Events', 'Others'];
   const [activeCategory, setActiveCategory] = useState('All');

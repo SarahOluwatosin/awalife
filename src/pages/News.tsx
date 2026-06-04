@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Download, Play } from 'lucide-react';
+import { ArrowRight, Download, Play, FileText, Globe, FileVideo, FileImage, File } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -107,6 +107,14 @@ const News = () => {
     return columnItems;
   };
 
+  const getPlaceholderIcon = (badge: string) => {
+    if (badge === 'PDF') return FileText;
+    if (badge === 'LINK') return Globe;
+    if (badge === 'VID') return FileVideo;
+    if (badge === 'IMG') return FileImage;
+    return File;
+  };
+
   const renderCard = (item: ResourceItem) => {
     const productLabel = productLabelMap[item.productId] || 'Product';
     const mediaUrl = item.mediaUrl?.trim();
@@ -115,6 +123,7 @@ const News = () => {
     const actionLabel = item.mediaType === 'link' ? 'View resource' : 'Download';
     const ActionIcon = item.mediaType === 'link' ? ArrowRight : Download;
     const badge = getMediaBadge(item);
+    const PlaceholderIcon = getPlaceholderIcon(badge);
 
     return (
       <div
@@ -122,10 +131,12 @@ const News = () => {
         className="group relative flex h-full flex-col rounded-2xl bg-card border border-border/20 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300">
 
         <div className="flex flex-col md:flex-row gap-5 p-5 h-full">
-          <div className="relative w-full md:w-36 lg:w-40 md:flex-shrink-0 aspect-[16/10] md:aspect-[3/4] rounded-xl bg-gradient-to-br from-secondary/80 via-white to-secondary/40 border border-border/30 overflow-hidden">
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute -top-10 -right-8 h-32 w-32 rounded-full bg-primary/10" />
-              <div className="absolute -bottom-12 -left-10 h-40 w-40 rounded-full bg-primary/10" />
+          <div className="relative w-full md:w-36 lg:w-40 md:flex-shrink-0 aspect-[16/10] md:aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-primary/15 via-primary/8 to-secondary/60 border border-primary/15 flex items-center justify-center">
+            <div className="absolute -top-6 -right-6 h-20 w-20 rounded-full bg-primary/15 pointer-events-none" />
+            <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-primary/10 pointer-events-none" />
+            <div className="relative z-10 flex flex-col items-center gap-2">
+              <PlaceholderIcon className="h-9 w-9 text-primary/40" />
+              <span className="text-[9px] font-black tracking-widest uppercase text-primary/35">{badge}</span>
             </div>
           </div>
 
@@ -286,10 +297,10 @@ const News = () => {
             </TabsList>
 
             <TabsContent value="all" className="mt-0">
-              {renderResourcesGrid(data.resources, 'No resources yet.', 0)}
+              {renderResourcesGrid(data.resources.filter(r => r.status === 'published'), 'No resources yet.', 0)}
             </TabsContent>
             {RESOURCE_KIND_CONFIG.map((section, index) => {
-              const sectionResources = data.resources.filter((resource) => resource.kind === section.id);
+              const sectionResources = data.resources.filter((resource) => resource.status === 'published' && resource.kind === section.id);
               return (
                 <TabsContent key={section.id} value={section.id} className="mt-0">
                   {renderResourcesGrid(sectionResources, section.emptyMessage, index + 1)}

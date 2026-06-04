@@ -22,12 +22,23 @@ RUN npm run build
 # ── Stage 2: Serve ───────────────────────────────────────────────────────────
 FROM nginx:1.27-alpine AS runner
 
+# Node.js is needed for the OG server that serves social-crawler meta tags
+RUN apk add --no-cache nodejs
+
 # Copy the built app
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy custom nginx config (handles SPA client-side routing)
+# nginx config: map directive must load before the server block
+COPY nginx.map.conf /etc/nginx/conf.d/00-map.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# OG server — serves pre-rendered OG meta HTML to social crawlers
+COPY og-server.cjs /app/og-server.cjs
+
+# Startup script: launches OG server then nginx in foreground
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/start.sh"]

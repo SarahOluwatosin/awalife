@@ -36,7 +36,7 @@ const GlobalPartnersSection = () => {
             src={images.heroMedtech}
             alt="Global veterinary partners"
             data-override-id="home-partners"
-            className="w-full h-full object-cover aspect-[16/6] rounded-xl transition-transform duration-700 ease-out group-hover:scale-[1.02] will-change-transform"
+            className="w-full h-auto object-contain rounded-xl transition-transform duration-700 ease-out group-hover:scale-[1.02] will-change-transform"
             loading="lazy"
             decoding="async"
             width={1280}

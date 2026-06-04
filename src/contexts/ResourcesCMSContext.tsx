@@ -50,7 +50,7 @@ export const ResourcesCMSProvider = ({ children }: { children: ReactNode }) => {
         id: r.id, title: r.title, excerpt: r.excerpt, content: r.content,
         date: r.date, category: r.category, location: r.location, imageUrl: r.image_url,
         status: r.status ?? 'published', slug: r.slug ?? '', metaTitle: r.meta_title ?? '',
-        metaDesc: r.meta_desc ?? '', sortOrder: r.sort_order ?? 0,
+        metaDesc: r.meta_desc ?? '', sortOrder: r.sort_order ?? 0, viewCount: r.view_count ?? 0,
       }));
 
       const resources: ResourceItem[] = (resourcesRaw as any[]).map(r => ({
