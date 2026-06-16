@@ -103,7 +103,7 @@ const HeroSection = () => {
       decimals: parseInt(c('metric_2_decimals', '1'), 10),
     },
     {
-      value: parseFloat(c('metric_3_value', '8000')),
+      value: parseFloat(c('metric_3_value', '10000')),
       suffix: c('metric_3_suffix', '+'),
       label: c('metric_3_label', 'Installations Worldwide'),
       decimals: parseInt(c('metric_3_decimals', '0'), 10),

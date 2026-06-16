@@ -221,7 +221,7 @@ const About = () => {
   const metrics = [
     { rawValue: 15,   suffix: 'M+', label: c('metrics', 'label_1', 'Images for AI Model Training'), decimals: 0 },
     { rawValue: 2.4,  suffix: 'M+', label: c('metrics', 'label_2', 'Reports Generated'), decimals: 1 },
-    { rawValue: 8000, suffix: '+',  label: c('metrics', 'label_3', 'Installations Worldwide'), decimals: 0 },
+    { rawValue: 10000, suffix: '+',  label: c('metrics', 'label_3', 'Installations Worldwide'), decimals: 0 },
   ];
 
   const TIMELINE_FALLBACKS = [

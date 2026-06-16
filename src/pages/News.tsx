@@ -132,11 +132,11 @@ const News = () => {
 
         <div className="flex flex-col md:flex-row gap-5 p-5 h-full">
           <div className="relative w-full md:w-36 lg:w-40 md:flex-shrink-0 aspect-[16/10] md:aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-primary/15 via-primary/8 to-secondary/60 border border-primary/15 flex items-center justify-center">
-            <div className="absolute -top-6 -right-6 h-20 w-20 rounded-full bg-primary/15 pointer-events-none" />
-            <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-primary/10 pointer-events-none" />
+            <div className="absolute -top-6 -right-6 h-20 w-20 rounded-full bg-primary pointer-events-none" />
+            <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-primary pointer-events-none" />
             <div className="relative z-10 flex flex-col items-center gap-2">
-              <PlaceholderIcon className="h-9 w-9 text-primary/40" />
-              <span className="text-[9px] font-black tracking-widest uppercase text-primary/35">{badge}</span>
+              <PlaceholderIcon className="h-9 w-9 text-white" />
+              <span className="text-[9px] font-black tracking-widest uppercase text-white">{badge}</span>
             </div>
           </div>
 
