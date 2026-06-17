@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, MapPin } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import { useResourcesCMS } from '@/contexts/ResourcesCMSContext';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 
 const NewsDetail = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -13,6 +14,22 @@ const NewsDetail = () => {
   const { data } = useResourcesCMS();
   const item = data.news.find(n => n.id === newsId && n.status === 'published');
   const contentRef = useRef<HTMLDivElement>(null);
+
+  const shareUrl = `https://sozcccgyuxirnesfzlfn.supabase.co/functions/v1/news-og?id=${newsId}`;
+
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: item?.title, url: shareUrl });
+      } else {
+        await navigator.clipboard.writeText(shareUrl);
+        toast({ title: 'Link copied to clipboard' });
+      }
+    } catch {
+      await navigator.clipboard.writeText(shareUrl);
+      toast({ title: 'Link copied to clipboard' });
+    }
+  };
 
   useEffect(() => {
     if (!item) return;
@@ -107,19 +124,24 @@ const NewsDetail = () => {
             </h1>
 
             {/* Meta */}
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8">
-              {item.date && (
-                <span className="flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4 text-primary/70" />
-                  {new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                </span>
-              )}
-              {item.location && (
-                <span className="flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4 text-primary/70" />
-                  {item.location}
-                </span>
-              )}
+            <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-muted-foreground mb-8">
+              <div className="flex flex-wrap items-center gap-4">
+                {item.date && (
+                  <span className="flex items-center gap-1.5">
+                    <Calendar className="w-4 h-4 text-primary/70" />
+                    {new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </span>
+                )}
+                {item.location && (
+                  <span className="flex items-center gap-1.5">
+                    <MapPin className="w-4 h-4 text-primary/70" />
+                    {item.location}
+                  </span>
+                )}
+              </div>
+              <Button variant="outline" size="sm" onClick={handleShare} className="gap-1.5">
+                <Share2 className="w-3.5 h-3.5" /> Share
+              </Button>
             </div>
 
             {/* Excerpt as lead */}
