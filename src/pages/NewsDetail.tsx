@@ -15,7 +15,7 @@ const NewsDetail = () => {
   const item = data.news.find(n => n.id === newsId && n.status === 'published');
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const shareUrl = `https://sozcccgyuxirnesfzlfn.supabase.co/functions/v1/news-og?id=${newsId}`;
+  const shareUrl = `https://news-og.sarahkoluwatosin.workers.dev?id=${newsId}`;
 
   const handleShare = async () => {
     try {
