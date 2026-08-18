@@ -1,6 +1,6 @@
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!
 const SUPABASE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-const SITE_URL = 'https://awalife.lovable.app'
+const SITE_URL = 'https://www.awalife.com'
 const FALLBACK_IMAGE = `${SITE_URL}/og-cover.jpg`
 
 function esc(str: string): string {

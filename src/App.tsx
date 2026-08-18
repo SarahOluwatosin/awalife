@@ -32,11 +32,13 @@ import AdminContacts from "./pages/admin/AdminContacts";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import PageTransition from "@/components/animations/PageTransition";
+import { useCanonical } from "@/hooks/useCanonical";
 
 const queryClient = new QueryClient();
 
 const AnimatedRoutes = () => {
   const location = useLocation();
+  useCanonical();
 
   return (
     <MotionConfig reducedMotion="user">

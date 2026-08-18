@@ -41,7 +41,7 @@ const NewsDetail = () => {
     const title = item.metaTitle || item.title;
     const desc = item.metaDesc || item.excerpt;
     const pageUrl = `${window.location.origin}/company/news/${newsId}`;
-    const fallbackImage = 'https://awalife.lovable.app/og-cover.jpg';
+    const fallbackImage = 'https://www.awalife.com/og-cover.jpg';
     const ogImage = item.imageUrl || fallbackImage;
     document.title = title;
     const setMeta = (property: string, content: string) => {

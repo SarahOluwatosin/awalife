@@ -187,6 +187,32 @@ const ProductDetail = () => {
   };
 
   const product = productData[productId || ''] || productData['ai-100vet-elite'];
+
+  useEffect(() => {
+    const name = getContent(productId || '', 'hero', 'name', product.name);
+    const description = getContent(productId || '', 'overview', 'description', product.description);
+    const image = typeof product.images?.[0] === 'string' ? product.images[0] : undefined;
+    const url = `${window.location.origin}/products/${productId}`;
+
+    document.getElementById('product-jsonld')?.remove();
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'product-jsonld';
+    script.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name,
+      description,
+      ...(image ? { image } : {}),
+      url,
+      brand: { '@type': 'Brand', name: 'Awalife' },
+      manufacturer: { '@type': 'Organization', name: 'Shenzhen Anlv Medical Technology Co., Ltd.' },
+    });
+    document.head.appendChild(script);
+
+    return () => { document.getElementById('product-jsonld')?.remove(); };
+  }, [productId, product, getContent]);
+
   const isAIAnalyzer = productId === 'ai-analyzer';
   const isMicroscope = productId === 'dm-03' || productId === 'microscope';
   const longParagraphClass = 'text-lg';
